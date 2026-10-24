@@ -41,3 +41,26 @@ This records for five minutes even if a phone browser closes, provided the **com
 - Mobile responsive layout and install shortcut
 
 The current recordings are stored in browser IndexedDB, and deleting one there removes it from that browser only. Server recordings will need a separate server-side deletion route.
+
+
+## DVR API prototype (added)
+
+The repository now contains `dvr_server.py`. This is a **local prototype**, not yet connected to the website or deployed. The PC must remain on, with FFmpeg and the Python server running.
+
+On Windows PowerShell, after installing FFmpeg and Python:
+
+```powershell
+$env:SULLY_DVR_TOKEN = python -c "import secrets; print(secrets.token_urlsafe(32))"
+python dvr_server.py
+```
+
+Keep the generated token private. In a second PowerShell window, use the same token to call the API (do not share it or commit it). Endpoints:
+
+- `POST /api/recordings` with JSON `{"url":"https://example.org/permitted-stream.m3u8","title":"My show","duration_seconds":1800}`
+- `GET /api/recordings`
+- `GET /api/recordings/{id}/download`
+- `DELETE /api/recordings/{id}` (completed jobs only)
+
+All requests require `Authorization: Bearer YOUR_TOKEN`. Default bind is `127.0.0.1:8765`; this intentionally is not accessible directly from a remote phone. A secure access design is required before linking the GitHub Pages site.
+
+**Current limitations:** The server stores video files on disk but holds its recording index only in memory. After restarting the Python server, existing video files remain on disk but will not appear in the API list. There is no stop-recording endpoint yet; jobs stop after the requested duration. No cross-device web UI, automatic startup, durable job catalog, HTTPS tunnel, or real-world stream test has been implemented. The current browser recorder remains the website's only active recording interface.
