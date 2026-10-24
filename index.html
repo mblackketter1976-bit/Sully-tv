@@ -92,6 +92,63 @@ footer{text-align:center;color:#9caec8;padding:30px;font-size:12px}
 header{position:relative}
 .welcome{padding:12px}
 }
+
+/* Sully TV midnight-gold ornamental theme — CSS only */
+:root{--gold:#e8c785;--gold-light:#fff0bf;--ink:#080e1d;--panel:#17243d}
+body{
+ background:
+ radial-gradient(ellipse at 50% -10%,rgba(76,112,174,.32),transparent 54%),
+ radial-gradient(circle at 9% 38%,rgba(181,133,63,.11),transparent 32%),
+ radial-gradient(circle at 90% 76%,rgba(55,112,175,.13),transparent 36%),
+ repeating-linear-gradient(135deg,transparent 0 46px,rgba(228,194,125,.018) 47px 48px),
+ linear-gradient(180deg,#0b162b 0%,#0a1020 42%,#101a2c 100%);
+ background-attachment:fixed;
+}
+header{background:linear-gradient(180deg,rgba(20,35,59,.97),rgba(11,19,36,.97));border-bottom:1px solid rgba(232,199,133,.45);box-shadow:0 8px 32px #0007}
+.logo{letter-spacing:1.2px;text-shadow:0 2px 12px #0008}
+.logo span{color:var(--gold-light)}
+nav button,.controls button,.tool,.watch,.save,.more,.install button,.recording button{
+ border:1px solid rgba(241,211,149,.56);
+ border-radius:13px;
+ background:linear-gradient(155deg,#344a6a 0%,#1a2c49 48%,#101d35 100%);
+ box-shadow:inset 0 1px 0 rgba(255,245,211,.25),inset 0 -2px 0 rgba(0,0,0,.25),0 3px 9px #0005;
+ color:#fff4d9;
+ text-shadow:0 1px 2px #0009;
+ transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
+}
+nav button{border-radius:15px;padding:12px 17px}
+nav button.active,.watch,.install button{
+ background:linear-gradient(145deg,#527db4 0%,#285185 48%,#173356 100%);
+ border-color:#f0d99f;
+}
+nav button.pink{background:linear-gradient(145deg,#854d7c,#422747)}
+nav button.pink.active{background:linear-gradient(145deg,#c56da8,#703d78)}
+nav button.purple{background:linear-gradient(145deg,#725a94,#3b2b59)}
+nav button.purple.active{background:linear-gradient(145deg,#a98bd0,#67478e)}
+button:hover{filter:brightness(1.16)}
+button:active{transform:translateY(1px)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f5d992;outline-offset:2px}
+.hero,.panel,.install,.card,.recording{
+ border:1px solid rgba(222,188,119,.48);
+ background:linear-gradient(145deg,rgba(33,51,78,.97),rgba(14,26,46,.98));
+ box-shadow:inset 0 1px 0 rgba(255,235,190,.12),0 10px 28px rgba(0,0,0,.28);
+}
+.hero{border-radius:22px;overflow:hidden}
+.welcome{background:radial-gradient(circle at 10% 0%,rgba(212,175,102,.14),transparent 62%)}
+.welcome h1,h2{color:#ffe9b4;text-shadow:0 2px 10px #0008}
+.card{position:relative;border-radius:17px;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.card::before{content:"";position:absolute;inset:5px;border:1px solid rgba(233,199,131,.18);border-radius:12px;pointer-events:none;z-index:1}
+.card:hover{transform:translateY(-3px);border-color:#f4d99c;box-shadow:0 12px 28px #0008}
+.art{background:radial-gradient(circle at 50% 15%,#3e6088,#1b2c49 70%,#111e34);border-bottom:1px solid rgba(236,203,137,.24)}
+.info h3{color:#fff3d8}
+.info small{color:#bdcce0}
+.save{color:#ffdc9d}
+input,select{background:#15243c;border-color:#a88d61;box-shadow:inset 0 2px 5px #0005}
+#record{background:linear-gradient(145deg,#b83b50,#661d34);border-color:#f0a4a4}
+.install{border-radius:18px}
+.provider{background:linear-gradient(135deg,#35547b,#172a48);color:#ffe6b3}
+@media(prefers-reduced-motion:reduce){.card,button{transition:none}.card:hover{transform:none}}
+
 </style>
 </head>
 <body>
