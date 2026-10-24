@@ -181,6 +181,11 @@ header{position:relative}
 .art{position:relative}
 .livePill{position:absolute;top:8px;left:8px;z-index:2;background:#b62f46;color:white;border:1px solid #f3a1a5;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:.6px;padding:4px 6px;box-shadow:0 2px 7px #0008}
 .card .art img{max-width:90%;max-height:70px}
+
+.guideList{display:grid;gap:8px}
+.guideRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;border:1px solid #a48c62;border-radius:12px;background:#172840}
+.guideRow strong{overflow-wrap:anywhere}.guideRow small{color:#bdcee6}
+@media(max-width:600px){.guideRow{grid-template-columns:1fr auto}.guideRow small{grid-column:1;grid-row:2}.guideRow button{grid-column:2;grid-row:1/3}}
 </style>
 </head>
 <body>
@@ -209,7 +214,11 @@ header{position:relative}
 <div class="controls">
 <div id="now">Choose something to watch.</div>
 <button onclick="skip(-10)">↶ 10s</button>
+<button onclick="changeChannel(-1)">⏮ Channel</button>
 <button onclick="togglePlay()">⏯ Play/Pause</button>
+<button onclick="changeChannel(1)">Channel ⏭</button>
+<button onclick="favoriteCurrent()">♡ Favorite</button>
+<button onclick="openGuide()">📋 Guide</button>
 <button onclick="skip(10)">10s ↷</button>
 <button id="record" hidden onclick="toggleRecord()">🔴 Record</button>
 <button onclick="fullscreen()">⛶ Fullscreen</button>
@@ -269,7 +278,9 @@ const tabs=[
 "🎬 Movies",
 "⭐ Reality",
 "🌎 Worldwide",
-"❤️ Favorites"
+"❤️ Favorites",
+"📋 TV Guide",
+"🆕 Recently Added"
 ];
 
 let tab="🏠 Home";
@@ -278,6 +289,7 @@ let streams=new Map();
 let logos=new Map();
 let favorites=new Set();
 let history=[];
+let unavailable=new Set();
 let page=0;
 let hls=null;
 let current=null;
@@ -300,12 +312,14 @@ let demandSearchToken=0;
 try{
 favorites=new Set(JSON.parse(localStorage.getItem("sully-favorites")||"[]"));
 history=JSON.parse(localStorage.getItem("sully-history")||"[]");
+unavailable=new Set(JSON.parse(localStorage.getItem("sully-unavailable")||"[]"));
 }catch(e){}
 
 function saveState(){
 try{
 localStorage.setItem("sully-favorites",JSON.stringify([...favorites]));
 localStorage.setItem("sully-history",JSON.stringify(history.slice(0,40)));
+localStorage.setItem("sully-unavailable",JSON.stringify([...unavailable].slice(-200)));
 }catch(e){}
 }
 
@@ -365,6 +379,8 @@ return true;
 function filtered(){
 let list=channels.filter(c=>{
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
+if(tab.includes("Recently Added")&&!c._recent)return false;
+if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
 if(!categoryMatch(c))return false;
@@ -452,6 +468,12 @@ const root=$("content");
 root.innerHTML="";
 $("more").hidden=true;
 
+if(tab==="📋 TV Guide"){
+$("filters").hidden=true;
+renderGuide();
+return;
+}
+
 if(tab==="🍿 On Demand"){
 $("filters").hidden=true;
 renderDemand();
@@ -521,6 +543,47 @@ render();
 }
 }
 
+
+function changeChannel(direction){
+const options=filtered().filter(c=>streams.has(c.id));
+if(!options.length)return setNotice("No channels available in this category.");
+const index=current?options.findIndex(c=>c.id===current.id):-1;
+watchChannel(options[(index+direction+options.length)%options.length]);
+}
+function favoriteCurrent(){
+if(!current||!current.id||!streams.has(current.id))return setNotice("Choose a live channel first.");
+if(favorites.has(current.id))favorites.delete(current.id);
+else favorites.add(current.id);
+saveState();render();
+setNotice(favorites.has(current.id)?"Added to Favorites.":"Removed from Favorites.");
+}
+function openGuide(){
+tab="📋 TV Guide";nav();render();
+$("content").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderGuide(){
+const root=$("content");
+$("status").textContent="Channel guide";
+const heading=document.createElement("h2");
+heading.textContent="📋 Live TV Guide";
+root.append(heading);
+const note=document.createElement("p");
+note.className="panel";
+note.textContent="Browse live channels. Exact program schedules are unavailable for many streams, so no show titles are guessed.";
+root.append(note);
+const grid=document.createElement("div");
+grid.className="guideList";
+channels.filter(c=>!unavailable.has(c.id)).slice(0,120).forEach(c=>{
+const row=document.createElement("div");
+row.className="guideRow";
+const name=document.createElement("strong");name.textContent=c.name;
+const details=document.createElement("small");details.textContent="Live stream · Schedule unavailable";
+const watch=document.createElement("button");watch.className="watch";watch.textContent="▶ Watch";watch.onclick=()=>watchChannel(c);
+row.append(name,details,watch);grid.append(row);
+});
+root.append(grid);
+}
+
 function remember(c){
 history=[
 {id:c.id,time:Date.now()},
@@ -573,7 +636,7 @@ hideRecord();
 }
 }
 
-player.addEventListener("playing",()=>setTimeout(checkRecording,500));
+player.addEventListener("playing",()=>{if(current&&current.id&&unavailable.delete(current.id))saveState();setTimeout(checkRecording,500)});
 player.addEventListener("ended",()=>{
 if(recorder&&recorder.state==="recording")stopRecording();
 hideRecord();
@@ -648,6 +711,7 @@ if(sourceIndex<sourceList.length){
 playSource();
 }else{
 $("now").textContent="Playback unavailable for this channel.";
+if(current&&current.id){unavailable.add(current.id);saveState()}
 setNotice("The available streams could not be played on this device.");
 }
 };
@@ -1163,8 +1227,16 @@ channels=cs.filter(c=>
 !c.is_nsfw&&!c.closed&&streams.has(c.id)
 ).map(c=>({
 ...c,
+_recent:false,
 countryName:names.get(c.country)||c.country
 }));
+
+try{
+const previous=JSON.parse(localStorage.getItem("sully-known-channels")||"null");
+const known=Array.isArray(previous)?new Set(previous):null;
+channels.forEach(c=>{c._recent=!!known&&!known.has(c.id)});
+localStorage.setItem("sully-known-channels",JSON.stringify(channels.map(c=>c.id)));
+}catch(e){}
 
 countries.sort((a,b)=>a.name.localeCompare(b.name)).forEach(c=>{
 $("country").add(new Option(c.name,c.code));
