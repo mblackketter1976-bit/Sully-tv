@@ -149,6 +149,17 @@ input,select{background:#15243c;border-color:#a88d61;box-shadow:inset 0 2px 5px 
 .provider{background:linear-gradient(135deg,#35547b,#172a48);color:#ffe6b3}
 @media(prefers-reduced-motion:reduce){.card,button{transition:none}.card:hover{transform:none}}
 
+
+.quickGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:16px}
+.quickTile{min-height:76px;padding:15px 12px;text-align:center;font-weight:800;font-size:15px;line-height:1.35;background:linear-gradient(145deg,#3a5a81,#1b304e);border:1px solid #e8c785;border-radius:16px;box-shadow:inset 0 1px 0 #ffffff33,0 5px 14px #0006;color:#fff1d2}
+.quickTile:hover,.quickTile:focus-visible{background:linear-gradient(145deg,#537eb0,#294b78);transform:translateY(-2px)}
+.homeHub p{margin-bottom:8px}
+#content{scroll-margin-top:135px}
+.backTop{position:fixed;right:15px;bottom:18px;z-index:15;padding:12px 17px;border:1px solid #e8c785;border-radius:30px;background:#203b5f;color:#ffe8b1;font-weight:bold;box-shadow:0 5px 18px #0009}
+@media(min-width:650px){.quickGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1050px){.quickGrid{grid-template-columns:repeat(5,minmax(0,1fr))}nav{flex-wrap:wrap;overflow:visible}}
+@media(max-width:420px){.quickTile{min-height:70px;font-size:14px}#content{scroll-margin-top:125px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.quickTile:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -160,7 +171,7 @@ input,select{background:#15243c;border-color:#a88d61;box-shadow:inset 0 2px 5px 
 </div>
 <input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
 </div>
-<nav id="nav"></nav>
+<nav id="nav" aria-label="Sully TV categories"></nav>
 </header>
 
 <main>
@@ -202,7 +213,8 @@ input,select{background:#15243c;border-color:#a88d61;box-shadow:inset 0 2px 5px 
 </select>
 </div>
 <p id="status">Loading channels...</p>
-<div id="content"></div>
+<div id="content" tabindex="-1"></div>
+<button class="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑ Top</button>
 <button id="more" class="more" hidden>Show More</button>
 </main>
 
@@ -238,7 +250,7 @@ const tabs=[
 "❤️ Favorites"
 ];
 
-let tab=tabs[0];
+let tab="🏠 Home";
 let channels=[];
 let streams=new Map();
 let logos=new Map();
@@ -292,6 +304,7 @@ page=0;
 $("search").value="";
 nav();
 render();
+$("content").scrollIntoView({behavior:"smooth",block:"start"});
 };
 $("nav").append(b);
 });
@@ -431,8 +444,38 @@ $("status").textContent=list.length.toLocaleString()+" channels";
 
 if(tab==="🏠 Home"){
 const panel=document.createElement("div");
-panel.className="panel";
-panel.innerHTML="<h2>Welcome Home 📺</h2><p>Your free television, movies, favorites and recordings in one place.</p>";
+panel.className="panel homeHub";
+const welcome=document.createElement("h2");
+welcome.textContent="What would you like to watch?";
+const intro=document.createElement("p");
+intro.textContent="Choose a category, pick a channel and press Watch. Your favorites and recent shows are one tap away.";
+const shortcuts=document.createElement("div");
+shortcuts.className="quickGrid";
+[
+["📺 Live TV","⭐ Featured"],
+["🎬 Movies","🎬 Movies"],
+["🧠 Documentaries","🧠 Documentaries"],
+["🏆 Sports","🏆 Sports"],
+["💖 Nicol's Station","💖 Nicol's Station"],
+["🔎 Michele's Mysteries","🔎 Michele's Murder Mystery Channel"],
+["❤️ My Favorites","❤️ Favorites"],
+["🔴 My Recordings","🔴 My Recordings"],
+["🍿 On Demand","🍿 On Demand"]
+].forEach(([label,destination])=>{
+const button=document.createElement("button");
+button.className="quickTile";
+button.textContent=label;
+button.onclick=()=>{
+tab=destination;
+page=0;
+$("search").value="";
+nav();
+render();
+$("content").scrollIntoView({behavior:"smooth",block:"start"});
+};
+shortcuts.append(button);
+});
+panel.append(welcome,intro,shortcuts);
 root.append(panel);
 
 if(history.length){
