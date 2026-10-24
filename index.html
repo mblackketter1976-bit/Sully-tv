@@ -349,17 +349,14 @@ function enableEasyChannelCards() {
     card.dataset.easyTap = "yes";
 
     card.style.cursor = "pointer";
-    card.setAttribute("role", "button");
-    card.setAttribute("tabindex", "0");
-
-    card.addEventListener("click", event => {
-      if (event.target.closest("button")) return;
-      const watch = [...card.querySelectorAll("button")]
-        .find(b => /watch/i.test(b.textContent));
-      if (watch) watch.click();
-    });
-
-    card.addEventListener("keydown", event => {
+    card.setAttribute("role", "button"); 
+card.setAttribute("tabindex", "0");    
+card.addEventListener("click", event => {
+  if (event.target.closest("button")) return;
+  const watch = card.querySelector("button");
+  if (watch) watch.click();
+});
+card.addEventListener("keydown", event => {
       if (event.key === "Enter" && event.target === card) {
         event.preventDefault();
         const watch = [...card.querySelectorAll("button")]
