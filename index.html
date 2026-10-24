@@ -226,6 +226,7 @@ header{position:relative}
 <div id="now">Choose something to watch.</div>
 <button onclick="skip(-10)">↶ 10s</button>
 <button onclick="changeChannel(-1)">⏮ Channel</button>
+<button onclick="lastChannel()" title="Return to previously watched live channel">↩ Last Channel</button>
 <button onclick="togglePlay()">⏯ Play/Pause</button>
 <button onclick="changeChannel(1)">Channel ⏭</button>
 <button onclick="favoriteCurrent()">♡ Favorite</button>
@@ -305,6 +306,7 @@ let unavailable=new Set();
 let page=0;
 let hls=null;
 let current=null;
+let previousChannelId=null;
 let sourceList=[];
 let sourceIndex=0;
 let playbackToken=0;
@@ -562,6 +564,12 @@ render();
 }
 
 
+function lastChannel(){
+if(!previousChannelId)return setNotice("Watch two live channels to use Last Channel.");
+const previous=channels.find(c=>c.id===previousChannelId);
+if(!previous)return setNotice("Previous channel is unavailable.");
+watchChannel(previous);
+}
 function changeChannel(direction){
 const options=filtered().filter(c=>streams.has(c.id));
 if(!options.length)return setNotice("No channels available in this category.");
@@ -684,6 +692,7 @@ activeBlobUrl=null;
 }
 
 function watchChannel(c){
+if(current&&streams.has(current.id)&&current.id!==c.id)previousChannelId=current.id;
 clearPlayer();
 current=c;
 $("viewer").hidden=false;
@@ -1182,6 +1191,17 @@ note.className="panel";
 note.textContent="Recordings are saved in this browser, not in the cloud. Download important videos. Protected or unsupported streams cannot be recorded.";
 root.append(note);
 
+const usage=document.createElement("p");
+usage.className="muted";
+usage.textContent="Checking available device storage…";
+root.append(usage);
+if(navigator.storage&&navigator.storage.estimate){navigator.storage.estimate().then(info=>{
+if(!usage.isConnected)return;
+const mb=n=>((n||0)/1048576).toFixed(1);
+usage.textContent="Browser storage: "+mb(info.usage)+" MB used of approximately "+mb(info.quota)+" MB available quota (includes other site data).";
+}).catch(()=>{usage.textContent="Storage estimate unavailable.";});}
+else usage.textContent="Storage estimate unavailable on this browser.";
+
 let rows=[];
 try{
 rows=await database("readonly",s=>s.getAll());
@@ -1298,6 +1318,10 @@ localStorage.setItem("sully-known-channels",JSON.stringify(channels.map(c=>c.id)
 countries.sort((a,b)=>a.code==="US"?-1:b.code==="US"?1:a.name.localeCompare(b.name)).forEach(c=>{
 $("country").add(new Option(c.name,c.code));
 });
+try{
+const savedCountry=localStorage.getItem("sully-country")||"";
+if([...$("country").options].some(o=>o.value===savedCountry))$("country").value=savedCountry;
+}catch(e){}
 
 [...new Set(channels.flatMap(c=>c.categories||[]))]
 .sort().forEach(c=>{
@@ -1318,6 +1342,7 @@ render();
 
 ["country","category","sort"].forEach(id=>{
 $(id).addEventListener("change",()=>{
+if(id==="country"){try{localStorage.setItem("sully-country",$("country").value)}catch(e){}}
 page=0;
 render();
 });
