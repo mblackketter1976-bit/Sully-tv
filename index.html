@@ -195,6 +195,8 @@ header{position:relative}
 .categoryTiles button:first-child{background:linear-gradient(135deg,#a0578a,#5b366d);border-color:#f4d69e}
 .lunaChoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.lunaChoice{display:flex;flex-direction:column;gap:8px;padding:20px 14px;border:1px solid #e8c785;border-radius:14px;text-decoration:none;color:#fff;background:#233452}.lunaChoice small{color:#e0dbea}.lunaChoice:focus-visible,.lunaChoice:hover{outline:2px solid #ffe39e;outline-offset:2px}
 .lunaVideoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;margin-top:18px}.lunaVideoCard{display:flex;flex-direction:column;gap:10px;background:#172740;border:1px solid #a48c62;border-radius:14px;padding:12px}.lunaVideoCard img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}.lunaVideoCard h3{font-size:1rem;line-height:1.35;flex:1}.lunaVideoCard a{color:#ffe39e}.lunaVideoArea{margin:18px 0}.lunaVideoArea iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000;margin-top:10px}
+
+.sponsorSpot{margin:15px 0;padding:19px;border:1px solid #e8c785;border-radius:18px;background:linear-gradient(120deg,#51355c,#1a3152)}.sponsorLabel{font-size:11px;letter-spacing:1px;color:#ffe2a2;font-weight:800}.sponsorSpot h2{margin:8px 0}.sponsorSpot p{line-height:1.5;color:#f1e4f1}.sponsorActions{display:flex;gap:10px;flex-wrap:wrap}.sponsorActions a{display:inline-block;padding:12px 15px;background:#2a5787;border:1px solid #f2d89a;border-radius:10px;color:white;text-decoration:none;font-weight:bold}
 </style>
 </head>
 <body>
@@ -237,7 +239,7 @@ header{position:relative}
 </div>
 </section>
 
-<section class="install">
+<section class="sponsorSpot" aria-label="Sully TV sponsor"><div class="sponsorLabel">✦ SULLY TV ORIGINAL SPONSOR ✦</div><h2>🐾 Meet Luna &amp; Old Sac Shirts &amp; Gifts</h2><p>Discover Luna on the Streets, her children's books, and the Sacramento souvenir shop behind her adventures. Watch our Good Day Sacramento television feature!</p><div class="sponsorActions"><a href="https://www.cbsnews.com/gooddaysacramento/video/shopping-at-old-sacramento-shirts-gifts/" target="_blank" rel="noopener noreferrer">📺 Good Day Sacramento feature</a><a href="https://www.youtube.com/@mblackketter" target="_blank" rel="noopener noreferrer">🐾 Luna's YouTube</a><button class="watch" style="flex:0 1 auto" onclick="tab='🐾 Luna on the Streets';page=0;nav();render();document.getElementById('content').scrollIntoView({behavior:'smooth'})">▶ Luna's Channel</button></div><p style="font-size:12px;margin-bottom:0">The TV feature opens on CBS's website. Animated commercials and future TV appearances coming soon.</p></section><section class="install">
 <h2>📲 Install Sully TV</h2>
 <p>Put Sully TV on your phone or tablet's Home Screen for quick access.</p>
 <button id="installBtn" onclick="installApp()">📲 Install / How To Install</button>
