@@ -8,7 +8,49 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Sully TV">
 <title>Sully TV 5.5</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js">
+/* Arrow keys, Enter and Escape for keyboards and TV remotes that send key events.
+   Native focus and buttons remain functional for touch and screen readers. */
+(function(){
+const focusable='button:not([hidden]):not(:disabled),input:not([hidden]),select:not([hidden]),a[href]';
+function visible(el){return el.getClientRects().length>0&&getComputedStyle(el).visibility!=="hidden"}
+document.addEventListener("keydown",function(event){
+if(event.altKey||event.ctrlKey||event.metaKey)return;
+const target=event.target;
+if(target&&(/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)||target.isContentEditable)){
+if(event.key==="Escape"){target.blur();event.preventDefault()}
+return;
+}
+if(event.key==="Escape"||event.key==="Backspace"){
+if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});event.preventDefault();return}
+if(event.key==="Escape"&&document.activeElement instanceof HTMLElement){document.activeElement.blur();event.preventDefault()}
+return;
+}
+if(!["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(event.key))return;
+const elements=[...document.querySelectorAll(focusable)].filter(visible);
+if(!elements.length)return;
+const active=document.activeElement;
+if(!elements.includes(active)){
+elements[0].focus();event.preventDefault();return;
+}
+const a=active.getBoundingClientRect();
+const ax=a.left+a.width/2,ay=a.top+a.height/2;
+const vertical=event.key==="ArrowUp"||event.key==="ArrowDown";
+const sign=event.key==="ArrowUp"||event.key==="ArrowLeft"?-1:1;
+let best=null,bestScore=Infinity;
+for(const el of elements){
+if(el===active)continue;
+const b=el.getBoundingClientRect();
+const dx=b.left+b.width/2-ax,dy=b.top+b.height/2-ay;
+const primary=vertical?dy:dx,secondary=Math.abs(vertical?dx:dy);
+if(primary*sign<=3)continue;
+const score=Math.abs(primary)+secondary*2.5;
+if(score<bestScore){bestScore=score;best=el}
+}
+if(best){best.focus({preventScroll:true});best.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"});event.preventDefault()}
+});
+})();
+</script>
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
@@ -160,6 +202,12 @@ input,select{background:#15243c;border-color:#a88d61;box-shadow:inset 0 2px 5px 
 @media(min-width:1050px){.quickGrid{grid-template-columns:repeat(5,minmax(0,1fr))}nav{flex-wrap:wrap;overflow:visible}}
 @media(max-width:420px){.quickTile{min-height:70px;font-size:14px}#content{scroll-margin-top:125px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.quickTile:hover{transform:none}}
+
+/* TV remote and keyboard accessibility */
+nav button:focus-visible,.card button:focus-visible,.quickTile:focus-visible,.controls button:focus-visible,.backTop:focus-visible{
+outline:4px solid #ffdf85;outline-offset:3px;box-shadow:0 0 0 7px #0b172b,0 0 26px #ffd47a88;filter:brightness(1.2)}
+.card:focus-within{border-color:#ffe2a1;box-shadow:0 0 0 2px #e8c785,0 10px 30px #0009}
+@media(min-width:900px){.controls button{min-width:90px}}
 </style>
 </head>
 <body>
