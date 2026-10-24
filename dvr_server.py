@@ -22,6 +22,30 @@ JOBS = {}
 LOCK = threading.Lock()
 TOKEN = os.environ.get("SULLY_DVR_TOKEN", "")
 MAX_SECONDS = 4 * 3600
+INDEX = DATA / "index.json"
+
+def persist():
+    payload = [{k:v for k,v in j.items() if not k.startswith("_")} for j in JOBS.values()]
+    tmp = DATA / "index.json.tmp"
+    tmp.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    tmp.replace(INDEX)
+
+def restore():
+    if INDEX.exists():
+        try:
+            for job in json.loads(INDEX.read_text(encoding="utf-8")):
+                if not valid_id(job.get("id", "")): continue
+                if job.get("status") == "recording": job["status"] = "interrupted"
+                JOBS[job["id"]] = job
+        except (ValueError, OSError, TypeError):
+            print("Warning: DVR index could not be loaded", flush=True)
+    for file in DATA.glob("*.ts"):
+        ident = file.stem
+        if valid_id(ident) and ident not in JOBS:
+            JOBS[ident] = {"id":ident, "title":"Recovered recording", "status":"completed",
+                           "started":datetime.fromtimestamp(file.stat().st_mtime, timezone.utc).isoformat()}
+    with LOCK: persist()
+
 
 def snapshot():
     with LOCK:
@@ -30,6 +54,7 @@ def snapshot():
             if proc and job["status"] == "recording" and proc.poll() is not None:
                 job["status"] = "completed" if proc.returncode == 0 and (DATA / (job["id"] + ".ts")).exists() else "failed"
                 job["ended"] = datetime.now(timezone.utc).isoformat()
+        persist()
         return [{k:v for k,v in job.items() if not k.startswith("_")} for job in JOBS.values()]
 
 class Handler(BaseHTTPRequestHandler):
@@ -76,6 +101,9 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if not self.auth(): return
+        parts = self.path.split("/")
+        if len(parts) == 5 and parts[:3] == ["", "api", "recordings"] and parts[4] == "stop" and valid_id(parts[3]):
+            return self.do_POST_STOP(parts[3])
         if self.path != "/api/recordings":
             return self.send_json(404, {"error":"Not found"})
         try:
@@ -102,12 +130,33 @@ class Handler(BaseHTTPRequestHandler):
                                         stderr=log, start_new_session=True)
             job = {"id":ident,"title":title,"status":"recording","duration_seconds":duration,
                    "started":datetime.now(timezone.utc).isoformat(),"_process":proc}
-            with LOCK: JOBS[ident] = job
+            with LOCK:
+                JOBS[ident] = job
+                persist()
             self.send_json(201, {"id":ident,"status":"recording"})
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as e:
             self.send_json(400, {"error":str(e)})
         except OSError:
             self.send_json(500, {"error":"Unable to start FFmpeg"})
+
+    def do_POST_STOP(self, ident):
+        with LOCK:
+            job = JOBS.get(ident)
+            if not job: return self.send_json(404, {"error":"Not found"})
+            proc = job.get("_process")
+            if job["status"] != "recording" or not proc or proc.poll() is not None:
+                return self.send_json(409, {"error":"Not currently recording"})
+            proc.terminate()
+        try:
+            proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
+        with LOCK:
+            job["status"] = "completed" if (DATA / (ident + ".ts")).is_file() else "failed"
+            job["ended"] = datetime.now(timezone.utc).isoformat()
+            persist()
+        self.send_json(200, {"id":ident, "status":job["status"]})
 
     def do_DELETE(self):
         if not self.auth(): return
@@ -120,6 +169,7 @@ class Handler(BaseHTTPRequestHandler):
             if job and job["status"] == "recording":
                 return self.send_json(409, {"error":"Recording in progress; stop it first"})
             JOBS.pop(ident, None)
+            persist()
         removed = False
         for suffix in (".ts", ".log"):
             path = DATA / (ident + suffix)
@@ -140,6 +190,7 @@ def main():
         raise SystemExit("Set SULLY_DVR_TOKEN to a random secret of at least 24 characters")
     if args.host not in ("127.0.0.1", "localhost", "::1"):
         raise SystemExit("Only loopback binding is supported; use a secure private tunnel for remote access")
+    restore()
     print("Sully DVR listening on http://%s:%d" % (args.host, args.port), flush=True)
     ThreadingHTTPServer((args.host, args.port), Handler).serve_forever()
 
