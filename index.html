@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080d19">
-<title>Sully TV 4.0</title>
+<title>Sully TV 4.1</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 <style>
 :root{
@@ -54,6 +54,11 @@ border:1px solid #3c5477;
 border-radius:22px;padding:11px 15px
 }
 nav button.active{background:#277ad9}
+nav button.special{
+border-color:#bd699e;
+background:#432b50
+}
+nav button.special.active{background:#974b83}
 main{max-width:1400px;margin:auto;padding:16px}
 .hero{
 background:linear-gradient(120deg,#1c365d,#0e182b);
@@ -164,6 +169,16 @@ border:1px solid #5a80b1;border-radius:12px
 background:#17253d;color:#b4c5dc;
 padding:25px;border-radius:12px
 }
+.channelIntro{
+background:linear-gradient(120deg,#492849,#1a2442);
+border:1px solid #8c568d;
+border-radius:16px;
+padding:20px;margin:15px 0 25px
+}
+.channelIntro h2{margin:0 0 8px}
+.channelIntro p{
+color:#dfcce0;line-height:1.5;margin:0
+}
 footer{
 text-align:center;padding:30px;
 font-size:12px;color:#8fa3bf;line-height:1.8
@@ -183,6 +198,7 @@ font-size:12px;color:#8fa3bf;line-height:1.8
 </style>
 </head>
 <body>
+
 <header>
 <div class="top">
 <div>
@@ -236,7 +252,7 @@ Explore Channels ↓
 </main>
 
 <footer>
-SULLY TV 4.0
+SULLY TV 4.1
 <br>Free public live television directory
 <br>Some streams may be offline, restricted, or incompatible with your browser.
 </footer>
@@ -250,13 +266,15 @@ const API="https://iptv-org.github.io/api/";
 const tabs=[
 "🏠 Home",
 "⭐ Featured",
+"🛍️ Nicol's Shopping Networks",
+"💖 Nicol's Station",
+"👻 Robinson's Horror Channel",
 "🇺🇸 USA",
 "📍 Local News",
 "🏆 Sports",
 "🧠 Documentaries",
 "🎬 Movies",
 "⭐ Reality",
-"👻 Carrie's Horror",
 "🌎 Worldwide",
 "❤️ Favorites"
 ];
@@ -276,7 +294,26 @@ const categoryPatterns={
 "🧠 Documentaries":/documentary|science|history|nature|space|technology|education|travel|knowledge/i,
 "🎬 Movies":/movie|film|cinema|classic|action|drama/i,
 "⭐ Reality":/reality|entertainment|lifestyle|cooking|shopping|competition|talent/i,
-"👻 Carrie's Horror":/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster/i
+
+"🛍️ Nicol's Shopping Networks":
+/shopping|shop|qvc|hsn|jewelry|jewellery|fashion|boutique|home shopping|shoplc|shop lc|gem shopping|gemporia|ideal world|jtv|tjc|beauty|style|retail/i,
+
+"💖 Nicol's Station":
+/country|western|ranch|cowboy|rodeo|western movie|family|romance|romantic|drama|classic movie|classic film|lifetime|hallmark|heartland|music|talent|singing|voice|competition|entertainment|lifestyle|soap|women|feel good/i,
+
+"👻 Robinson's Horror Channel":
+/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster|scary|scream|creepy|suspense|supernatural/i
+};
+
+const descriptions={
+"🛍️ Nicol's Shopping Networks":
+"Shopping television picked for Nicol — jewelry, fashion, beauty, home shopping, gifts, and more.",
+
+"💖 Nicol's Station":
+"A cozy mix inspired by Dutton Ranch, Gilmore Girls, Steel Magnolias, and The Voice: westerns, family dramas, romance, country entertainment, and music competitions. These are related free channels, not guaranteed streams of those specific shows.",
+
+"👻 Robinson's Horror Channel":
+"The Robinson family's corner of Sully TV: horror movies, paranormal mysteries, ghost stories, supernatural thrills, and spooky entertainment."
 };
 
 let activeTab="🏠 Home";
@@ -317,15 +354,27 @@ return n;
 function navigation(){
 const n=$("nav");
 n.replaceChildren();
+
 for(const t of tabs){
 const b=document.createElement("button");
 b.textContent=t;
 b.className=t===activeTab?"active":"";
+
+if(
+t.includes("Nicol's")||
+t.includes("Robinson's")
+){
+b.classList.add("special");
+}
+
 b.onclick=()=>{
 activeTab=t;
 page=0;
 navigation();
 render();
+$("content").scrollIntoView({
+behavior:"smooth",block:"start"
+});
 };
 n.append(b);
 }
@@ -335,7 +384,11 @@ function eligible(c,t){
 if(t==="❤️ Favorites")return favorites.has(c.id);
 if(t==="🇺🇸 USA")return c.country==="US";
 if(t==="⭐ Featured")return score(c)>20;
-if(categoryPatterns[t])return categoryPatterns[t].test(info(c));
+
+if(categoryPatterns[t]){
+return categoryPatterns[t].test(info(c));
+}
+
 return true;
 }
 
@@ -343,17 +396,22 @@ function filtered(t){
 const query=$("search").value.toLowerCase().trim();
 const country=$("country").value;
 const topic=$("topic").value.toLowerCase();
+
 let result=channels.filter(c=>
 eligible(c,t)&&
 (!country||c.country===country)&&
 (!topic||(c.categories||[]).includes(topic))&&
 (!query||info(c).includes(query))
 );
+
 if($("sort").value==="az"){
 result.sort((a,b)=>a.name.localeCompare(b.name));
 }else{
-result.sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name));
+result.sort((a,b)=>
+score(b)-score(a)||a.name.localeCompare(b.name)
+);
 }
+
 return result;
 }
 
@@ -372,57 +430,82 @@ function play(c){
 current=c;
 sourceIndex=0;
 playSource();
-$("player").scrollIntoView({behavior:"smooth",block:"center"});
+$("player").scrollIntoView({
+behavior:"smooth",block:"center"
+});
 }
 
 function playSource(){
 if(!current)return;
+
 const sources=streams.get(current.id)||[];
+
 if(sourceIndex>=sources.length){
 clearPlayback();
-$("now").textContent=current.name+" — No playable source found.";
+$("now").textContent=
+current.name+" — No playable source found.";
 $("nextSource").classList.add("hidden");
 return;
 }
+
 clearPlayback();
+
 const token=attempt;
 const url=sources[sourceIndex].url;
 const v=$("player");
-$("now").textContent="Connecting to "+current.name+
+
+$("now").textContent=
+"Connecting to "+current.name+
 " ("+(sourceIndex+1)+"/"+sources.length+")";
-$("nextSource").classList.toggle("hidden",sources.length<2);
+
+$("nextSource").classList.toggle(
+"hidden",sources.length<2
+);
 
 let moved=false;
+
 function next(){
 if(token!==attempt||moved||started)return;
 moved=true;
 clearTimeout(timeout);
 sourceIndex++;
+
 if(sourceIndex<sources.length){
 playSource();
 }else{
-$("now").textContent=current.name+
+$("now").textContent=
+current.name+
 " — Stream unavailable. Try another channel.";
 $("nextSource").classList.add("hidden");
 }
 }
+
 timeout=setTimeout(next,12000);
 
 v.onplaying=()=>{
 if(token!==attempt)return;
 started=true;
 clearTimeout(timeout);
-$("now").textContent="▶ Now Playing: "+current.name;
+$("now").textContent=
+"▶ Now Playing: "+current.name;
 };
+
 v.onerror=next;
 
-if(/\.m3u8(?:\?|$)/i.test(url)&&window.Hls&&Hls.isSupported()){
+if(
+/\.m3u8(?:\?|$)/i.test(url)&&
+window.Hls&&Hls.isSupported()
+){
 hls=new Hls();
 hls.loadSource(url);
 hls.attachMedia(v);
+
 hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-if(token===attempt)v.play().catch(()=>{});
+if(token===attempt){
+v.play().catch(()=>{});
+}
 });
+
 hls.on(Hls.Events.ERROR,(_,d)=>{
 if(d.fatal)next();
 });
@@ -433,23 +516,35 @@ v.play().catch(()=>{});
 }
 
 function save(c){
-favorites.has(c.id)?favorites.delete(c.id):favorites.add(c.id);
+if(favorites.has(c.id)){
+favorites.delete(c.id);
+}else{
+favorites.add(c.id);
+}
+
 try{
-localStorage.setItem("sully-tv-favs",JSON.stringify([...favorites]));
+localStorage.setItem(
+"sully-tv-favs",
+JSON.stringify([...favorites])
+);
 }catch(e){}
+
 render();
 }
 
 function makeCard(c){
 const card=document.createElement("article");
 card.className="card";
+
 const art=document.createElement("div");
 art.className="art";
+
 const fallback=document.createElement("div");
 fallback.className="fallback";
 fallback.textContent=c.name.slice(0,16);
 
 const logo=logos.get(c.id);
+
 if(logo){
 const img=document.createElement("img");
 img.src=logo;
@@ -469,39 +564,52 @@ art.append(flag);
 
 const details=document.createElement("div");
 details.className="details";
+
 const title=document.createElement("h3");
 title.textContent=c.name;
+
 const meta=document.createElement("small");
-meta.textContent=c.countryName||c.country||"Worldwide";
+meta.textContent=
+c.countryName||c.country||"Worldwide";
 
 const actions=document.createElement("div");
 actions.className="actions";
+
 const watch=document.createElement("button");
 watch.className="watch";
 watch.textContent="▶ Watch";
 watch.onclick=()=>play(c);
 
 const fav=document.createElement("button");
-fav.className="save"+(favorites.has(c.id)?" saved":"");
+fav.className="save"+
+(favorites.has(c.id)?" saved":"");
 fav.textContent=favorites.has(c.id)?"♥":"♡";
-fav.setAttribute("aria-label","Toggle favorite "+c.name);
+fav.setAttribute(
+"aria-label","Toggle favorite "+c.name
+);
 fav.onclick=()=>save(c);
 
 actions.append(watch,fav);
 details.append(title,meta,actions);
 card.append(art,details);
+
 return card;
 }
 
 function rail(title,items,limit=25){
 const s=document.createElement("section");
 s.className="section";
+
 const heading=document.createElement("div");
 heading.className="heading";
+
 const h=document.createElement("h2");
 h.textContent=title;
+
 const count=document.createElement("small");
-count.textContent=items.length.toLocaleString()+" channels";
+count.textContent=
+items.length.toLocaleString()+" channels";
+
 heading.append(h,count);
 s.append(heading);
 
@@ -512,21 +620,49 @@ empty.textContent="No matching channels found.";
 s.append(empty);
 return s;
 }
+
 const r=document.createElement("div");
 r.className="rail";
-items.slice(0,limit).forEach(c=>r.append(makeCard(c)));
+
+items.slice(0,limit).forEach(c=>{
+r.append(makeCard(c));
+});
+
 s.append(r);
 return s;
+}
+
+function intro(title,description){
+const box=document.createElement("div");
+box.className="channelIntro";
+
+const h=document.createElement("h2");
+h.textContent=title;
+
+const p=document.createElement("p");
+p.textContent=description;
+
+box.append(h,p);
+return box;
 }
 
 function render(){
 const root=$("content");
 root.replaceChildren();
+
 if(!channels.length)return;
 
-if(activeTab==="🏠 Home"&&!$("search").value){
+if(
+activeTab==="🏠 Home"&&
+!$("search").value
+){
 const groups=[
 ["⭐ Featured Channels","⭐ Featured"],
+["🛍️ Nicol's Shopping Networks",
+"🛍️ Nicol's Shopping Networks"],
+["💖 Nicol's Station","💖 Nicol's Station"],
+["👻 Robinson's Horror Channel",
+"👻 Robinson's Horror Channel"],
 ["❤️ Your Favorites","❤️ Favorites"],
 ["🇺🇸 American Television","🇺🇸 USA"],
 ["📍 News & Local TV","📍 Local News"],
@@ -534,64 +670,114 @@ const groups=[
 ["🧠 Documentaries & Science","🧠 Documentaries"],
 ["🎬 Movies & Classics","🎬 Movies"],
 ["⭐ Reality & Entertainment","⭐ Reality"],
-["👻 Carrie's Horror Channel","👻 Carrie's Horror"],
 ["🌎 Explore the World","🌎 Worldwide"]
 ];
+
 for(const [title,key] of groups){
 const items=filtered(key);
-if(items.length)root.append(rail(title,items));
+
+if(items.length){
+root.append(rail(title,items));
 }
-$("status").textContent=channels.length.toLocaleString()+
-" public live channels available in the directory";
+}
+
+$("status").textContent=
+channels.length.toLocaleString()+
+" public live channels indexed";
+
 $("more").classList.add("hidden");
 return;
 }
 
-const items=filtered(activeTab);
-const shown=items.slice(0,(page+1)*80);
-root.append(rail(
-activeTab==="🏠 Home"?"Search Results":activeTab,
-shown,shown.length
-));
-$("status").textContent=items.length.toLocaleString()+
-" channels found — "+shown.length+" shown";
-$("more").classList.toggle("hidden",shown.length>=items.length);
+if(descriptions[activeTab]){
+root.append(
+intro(activeTab,descriptions[activeTab])
+);
 }
 
-$("search").oninput=()=>{page=0;render()};
-$("country").onchange=()=>{page=0;render()};
-$("topic").onchange=()=>{page=0;render()};
-$("sort").onchange=()=>{page=0;render()};
-$("more").onclick=()=>{page++;render()};
-$("explore").onclick=()=>{
-$("content").scrollIntoView({behavior:"smooth"});
+const items=filtered(activeTab);
+const shown=items.slice(0,(page+1)*80);
+
+root.append(rail(
+activeTab==="🏠 Home"?
+"Search Results":activeTab,
+shown,shown.length
+));
+
+$("status").textContent=
+items.length.toLocaleString()+
+" channels found — "+shown.length+" shown";
+
+$("more").classList.toggle(
+"hidden",shown.length>=items.length
+);
+}
+
+$("search").oninput=()=>{
+page=0;render();
 };
+
+$("country").onchange=()=>{
+page=0;render();
+};
+
+$("topic").onchange=()=>{
+page=0;render();
+};
+
+$("sort").onchange=()=>{
+page=0;render();
+};
+
+$("more").onclick=()=>{
+page++;render();
+};
+
+$("explore").onclick=()=>{
+$("content").scrollIntoView({
+behavior:"smooth"
+});
+};
+
 $("stop").onclick=()=>{
 clearPlayback();
 $("now").textContent="Playback stopped.";
 $("nextSource").classList.add("hidden");
 };
+
 $("nextSource").onclick=()=>{
 if(!current)return;
+
 const sources=streams.get(current.id)||[];
 if(!sources.length)return;
+
 sourceIndex=(sourceIndex+1)%sources.length;
 playSource();
 };
+
 $("full").onclick=()=>{
 const v=$("player");
-if(v.requestFullscreen)v.requestFullscreen();
-else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
+
+if(v.requestFullscreen){
+v.requestFullscreen();
+}else if(v.webkitEnterFullscreen){
+v.webkitEnterFullscreen();
+}
 };
 
 async function getJSON(file){
 const r=await fetch(API+file);
-if(!r.ok)throw Error("Failed to load "+file);
+
+if(!r.ok){
+throw Error("Failed to load "+file);
+}
+
 return r.json();
 }
 
 async function init(){
 navigation();
+
 try{
 const [cs,ss,cc,ll]=await Promise.all([
 getJSON("channels.json"),
@@ -600,41 +786,74 @@ getJSON("countries.json"),
 getJSON("logos.json")
 ]);
 
-const names=new Map(cc.map(c=>[c.code,c.name]));
+const names=new Map(
+cc.map(c=>[c.code,c.name])
+);
 
 for(const s of ss){
-if(!s.channel||!s.url||!/^https?:\/\//i.test(s.url))continue;
-if(!streams.has(s.channel))streams.set(s.channel,[]);
+if(
+!s.channel||
+!s.url||
+!/^https?:\/\//i.test(s.url)
+)continue;
+
+if(!streams.has(s.channel)){
+streams.set(s.channel,[]);
+}
+
 streams.get(s.channel).push(s);
 }
 
 for(const l of ll){
-if(l.channel&&l.url&&/^https:\/\//i.test(l.url)){
-if(!logos.has(l.channel)||l.in_use)logos.set(l.channel,l.url);
+if(
+l.channel&&
+l.url&&
+/^https:\/\//i.test(l.url)
+){
+if(!logos.has(l.channel)||l.in_use){
+logos.set(l.channel,l.url);
+}
 }
 }
 
 channels=cs.filter(c=>
-!c.is_nsfw&&!c.closed&&streams.has(c.id)
+!c.is_nsfw&&
+!c.closed&&
+streams.has(c.id)
 ).map(c=>({
 ...c,
 countryName:names.get(c.country)||c.country
 }));
 
-for(const c of [...cc].sort((a,b)=>a.name.localeCompare(b.name))){
-$("country").add(new Option(c.name,c.code));
+for(
+const c of [...cc].sort(
+(a,b)=>a.name.localeCompare(b.name)
+)
+){
+$("country").add(
+new Option(c.name,c.code)
+);
 }
 
-const categories=[...new Set(channels.flatMap(c=>c.categories||[]))].sort();
+const categories=[
+...new Set(
+channels.flatMap(c=>c.categories||[])
+)
+].sort();
+
 for(const c of categories){
 $("topic").add(new Option(c,c));
 }
 
 render();
+
 }catch(e){
-$("status").textContent="Directory unavailable. Reload to retry. "+e.message;
+$("status").textContent=
+"Directory unavailable. Reload to retry. "+
+e.message;
 }
 }
+
 init();
 </script>
 </body>
