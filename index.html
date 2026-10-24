@@ -7,19 +7,16 @@
 <meta name="theme-color" content="#080f20">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Sully TV">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Sully TV - Free live television and on-demand entertainment.">
-<title>Sully TV 5.4</title>
+<title>Sully TV 5.5</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#080f20;color:white;font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:#080f20;color:#fff;font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer;color:white;border:0;touch-action:manipulation}
-button:disabled{opacity:.45}
-a{color:#9acfff}
+[hidden]{display:none!important}
 header{background:#101c32;padding:14px;position:sticky;top:0;z-index:20;border-bottom:1px solid #344968}
 .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .logo{font-size:25px;font-weight:900;white-space:nowrap}
@@ -33,6 +30,8 @@ nav button{background:#243858;border:1px solid #456082;border-radius:22px;paddin
 nav button.active{background:#277ce0}
 nav button.pink{background:#713b6b}
 nav button.pink.active{background:#b94c96}
+nav button.purple{background:#50346e;border-color:#8063a8}
+nav button.purple.active{background:#8952c5}
 main{max-width:1300px;margin:auto;padding:14px}
 .hero{background:linear-gradient(120deg,#203a63,#10192c);border:1px solid #3b5273;border-radius:18px;overflow:hidden}
 .welcome{padding:19px}
@@ -43,7 +42,6 @@ video{display:block;width:100%;aspect-ratio:16/9;background:black}
 .controls button,.tool{background:#304b6d;border:1px solid #527399;border-radius:10px;padding:12px;min-height:44px}
 #now{width:100%;color:#c3dbff;font-size:14px;overflow-wrap:anywhere}
 #record{background:#ad1938}
-[hidden]{display:none!important}
 #notice{padding:0 12px 12px;color:#ffcd90;line-height:1.5}
 .filters{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}
 .filters select{flex:1;min-width:125px}
@@ -67,7 +65,6 @@ h2{font-size:21px}
 .demandSearch input{flex:1}
 .recording{padding:14px;background:#1a2b46;border-radius:12px;margin:10px 0}
 .recording button{margin:5px 5px 0 0}
-a.tool{display:inline-block;text-decoration:none}
 .install{background:linear-gradient(125deg,#1d4776,#18314f);border:1px solid #4d84ba;border-radius:15px;padding:17px;margin:16px 0}
 .install h2{margin:0 0 8px}
 .install p{line-height:1.5;color:#c9dfff}
@@ -95,7 +92,6 @@ header{position:relative}
 </style>
 </head>
 <body>
-
 <header>
 <div class="top">
 <div>
@@ -104,7 +100,7 @@ header{position:relative}
 </div>
 <input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
 </div>
-<nav id="nav" aria-label="Sully TV sections"></nav>
+<nav id="nav"></nav>
 </header>
 
 <main>
@@ -118,7 +114,7 @@ header{position:relative}
 <div>
 <video id="player" controls playsinline preload="none"></video>
 <div class="controls">
-<div id="now" aria-live="polite">Choose something to watch.</div>
+<div id="now">Choose something to watch.</div>
 <button onclick="skip(-10)">↶ 10s</button>
 <button onclick="togglePlay()">⏯ Play/Pause</button>
 <button onclick="skip(10)">10s ↷</button>
@@ -126,11 +122,11 @@ header{position:relative}
 <button onclick="fullscreen()">⛶ Fullscreen</button>
 <button onclick="stopVideo()">■ Stop</button>
 </div>
-<div id="notice" aria-live="polite"></div>
+<div id="notice"></div>
 </div>
 </section>
 
-<section class="install" id="installPanel">
+<section class="install">
 <h2>📲 Install Sully TV</h2>
 <p>Put Sully TV on your phone or tablet's Home Screen for quick access.</p>
 <button id="installBtn" onclick="installApp()">📲 Install / How To Install</button>
@@ -138,21 +134,20 @@ header{position:relative}
 </section>
 
 <div class="filters" id="filters">
-<select id="country" aria-label="Country"><option value="">🌎 All Countries</option></select>
-<select id="category" aria-label="Category"><option value="">All Categories</option></select>
-<select id="sort" aria-label="Sort">
+<select id="country"><option value="">🌎 All Countries</option></select>
+<select id="category"><option value="">All Categories</option></select>
+<select id="sort">
 <option value="featured">Featured First</option>
 <option value="az">A to Z</option>
 </select>
 </div>
-
 <p id="status">Loading channels...</p>
 <div id="content"></div>
-<button id="more" class="more" style="display:none">Show More</button>
+<button id="more" class="more" hidden>Show More</button>
 </main>
 
 <footer>
-SULLY TV 5.4 • Mobile App Edition<br>
+SULLY TV 5.5 • Michele's Murder Mystery Channel<br>
 Free public streaming directory • Availability varies by provider.<br>
 Recordings are stored locally on your device.
 </footer>
@@ -170,6 +165,7 @@ const tabs=[
 "⭐ Featured",
 "🇺🇸 USA",
 "👻 Robinson's Horror Channel",
+"🔎 Michele's Murder Mystery Channel",
 "🍿 On Demand",
 "🔴 My Recordings",
 "▶ Continue Watching",
@@ -219,14 +215,17 @@ localStorage.setItem("sully-history",JSON.stringify(history.slice(0,40)));
 }catch(e){}
 }
 
-function setNotice(text){$("notice").textContent=text||""}
+function setNotice(text){
+$("notice").textContent=text||"";
+}
 
 function nav(){
 $("nav").innerHTML="";
 tabs.forEach(t=>{
 const b=document.createElement("button");
 b.textContent=t;
-b.className=(t===tab?"active ":"")+(t.includes("Nicol")?"pink":"");
+b.className=(t===tab?"active ":"")+
+(t.includes("Nicol")?"pink":t.includes("Michele")?"purple":"");
 b.onclick=()=>{
 tab=t;
 page=0;
@@ -240,13 +239,31 @@ $("nav").append(b);
 
 function categoryMatch(c){
 const text=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
-if(tab.includes("Nicol"))return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|family|romance|drama|music|entertainment|lifestyle|reality|talent|home|classic/.test(text);
-if(tab.includes("Horror"))return /horror|ghost|paranormal|thriller|mystery|scary|suspense|monster/.test(text);
-if(tab.includes("Local News"))return /news|local|regional/.test(text);
-if(tab.includes("Sports"))return /sport|football|soccer|basketball|baseball|golf|racing|tennis|boxing/.test(text);
-if(tab.includes("Documentaries"))return /documentary|history|science|nature|space|education|travel/.test(text);
-if(tab.includes("Movies"))return /movie|film|cinema|classic|drama/.test(text);
-if(tab.includes("Reality"))return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
+
+if(tab.includes("Nicol"))
+return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|family|romance|drama|music|entertainment|lifestyle|reality|talent|home|classic/.test(text);
+
+if(tab.includes("Horror"))
+return /horror|ghost|paranormal|thriller|mystery|scary|suspense|monster/.test(text);
+
+if(tab.includes("Michele"))
+return /true.crime|crime|criminal|murder|unsolved|cold.case|detective|investigation|investigat|police|cop\b|cops\b|forensic|court|justice|law.and.order|mystery|mysteries|wanted|prison|jail|sheriff|law.enforcement|interrogation|evidence|trial|bodycam|body.cam|first.48|dateline|48.hours|crime.scene|serial.killer|missing.person/.test(text);
+
+if(tab.includes("Local News"))
+return /news|local|regional/.test(text);
+
+if(tab.includes("Sports"))
+return /sport|football|soccer|basketball|baseball|golf|racing|tennis|boxing/.test(text);
+
+if(tab.includes("Documentaries"))
+return /documentary|history|science|nature|space|education|travel/.test(text);
+
+if(tab.includes("Movies"))
+return /movie|film|cinema|classic|drama/.test(text);
+
+if(tab.includes("Reality"))
+return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
+
 return true;
 }
 
@@ -261,12 +278,21 @@ if($("category").value&&!(c.categories||[]).includes($("category").value))return
 if($("search").value&&!c.name.toLowerCase().includes($("search").value.toLowerCase()))return false;
 return true;
 });
+
 if(tab.includes("Continue Watching")){
-list.sort((a,b)=>history.findIndex(h=>h.id===a.id)-history.findIndex(h=>h.id===b.id));
+list.sort((a,b)=>
+history.findIndex(h=>h.id===a.id)-
+history.findIndex(h=>h.id===b.id)
+);
 }else if($("sort").value==="az"){
 list.sort((a,b)=>a.name.localeCompare(b.name));
 }else{
-const score=c=>(c.country==="US"?15:0)+(logos.has(c.id)?10:0)+(/news|movie|classic|music|nature|sports/i.test(c.name)?15:0);
+const score=c=>
+(c.country==="US"?15:0)+
+(logos.has(c.id)?10:0)+
+(/news|movie|classic|music|nature|sports/i.test(c.name)?15:0)+
+(tab.includes("Michele")&&/crime|murder|unsolved|police|cops|investigation/i.test(c.name)?50:0);
+
 list.sort((a,b)=>score(b)-score(a));
 }
 return list;
@@ -275,6 +301,7 @@ return list;
 function card(c){
 const el=document.createElement("div");
 el.className="card";
+
 const art=document.createElement("div");
 art.className="art";
 
@@ -284,12 +311,16 @@ img.src=logos.get(c.id);
 img.loading="lazy";
 img.onerror=()=>{art.textContent="📺"};
 art.append(img);
-}else art.textContent="📺";
+}else{
+art.textContent="📺";
+}
 
 const info=document.createElement("div");
 info.className="info";
+
 const title=document.createElement("h3");
 title.textContent=c.name;
+
 const sub=document.createElement("small");
 sub.textContent=c.countryName||c.country||"Live TV";
 
@@ -320,13 +351,14 @@ return el;
 function render(){
 const root=$("content");
 root.innerHTML="";
-$("more").style.display="none";
+$("more").hidden=true;
 
 if(tab==="🍿 On Demand"){
 $("filters").hidden=true;
 renderDemand();
 return;
 }
+
 if(tab==="🔴 My Recordings"){
 $("filters").hidden=true;
 renderRecordings();
@@ -347,14 +379,26 @@ if(history.length){
 const h=document.createElement("h2");
 h.textContent="▶ Continue Watching";
 root.append(h);
+
 const rail=document.createElement("div");
 rail.className="rail";
+
 history.slice(0,12).forEach(item=>{
 const c=channels.find(x=>x.id===item.id);
 if(c)rail.append(card(c));
 });
+
 root.append(rail);
 }
+}
+
+if(tab.includes("Michele")){
+const panel=document.createElement("div");
+panel.className="panel";
+panel.innerHTML=
+"<h2>🔎 Welcome to Michele's Murder Mystery Channel</h2>"+
+"<p>True crime, police investigations, cold cases, unsolved mysteries, and detective programming. Channel selection depends on available public live streams.</p>";
+root.append(panel);
 }
 
 const heading=document.createElement("h2");
@@ -363,24 +407,31 @@ root.append(heading);
 
 const rail=document.createElement("div");
 rail.className="rail";
+
 list.slice(0,(page+1)*60).forEach(c=>rail.append(card(c)));
 root.append(rail);
 
 if(!list.length){
 const p=document.createElement("div");
 p.className="panel";
-p.textContent="No matching channels found.";
+p.textContent="No matching channels found. Try another country or clear the filters.";
 root.append(p);
 }
 
 if(list.length>(page+1)*60){
-$("more").style.display="block";
-$("more").onclick=()=>{page++;render()};
+$("more").hidden=false;
+$("more").onclick=()=>{
+page++;
+render();
+};
 }
 }
 
 function remember(c){
-history=[{id:c.id,time:Date.now()},...history.filter(x=>x.id!==c.id)].slice(0,40);
+history=[
+{id:c.id,time:Date.now()},
+...history.filter(x=>x.id!==c.id)
+].slice(0,40);
 saveState();
 }
 
@@ -441,12 +492,13 @@ clearTimeout(playbackTimer);
 if(recorder&&recorder.state==="recording")stopRecording();
 hideRecord();
 
-if(hls){hls.destroy();hls=null}
+if(hls){
+hls.destroy();
+hls=null;
+}
 
 player.pause();
 player.onerror=null;
-player.onloadedmetadata=null;
-player.ontimeupdate=null;
 player.removeAttribute("src");
 player.load();
 
@@ -462,6 +514,7 @@ current=c;
 remember(c);
 sourceList=streams.get(c.id)||[];
 sourceIndex=0;
+
 $("now").textContent="Loading "+c.name;
 setNotice("");
 playSource();
@@ -478,7 +531,10 @@ $("now").textContent="No playable source available.";
 return;
 }
 
-if(hls){hls.destroy();hls=null}
+if(hls){
+hls.destroy();
+hls=null;
+}
 
 player.pause();
 player.removeAttribute("src");
@@ -492,6 +548,7 @@ if(failed||token!==playbackToken)return;
 failed=true;
 clearTimeout(playbackTimer);
 sourceIndex++;
+
 if(sourceIndex<sourceList.length){
 playSource();
 }else{
@@ -541,8 +598,11 @@ setNotice("This stream does not support seeking.");
 }
 
 function fullscreen(){
-if(player.requestFullscreen)player.requestFullscreen().catch(()=>{});
-else if(player.webkitEnterFullscreen)player.webkitEnterFullscreen();
+if(player.requestFullscreen){
+player.requestFullscreen().catch(()=>{});
+}else if(player.webkitEnterFullscreen){
+player.webkitEnterFullscreen();
+}
 }
 
 function stopVideo(){
@@ -555,19 +615,25 @@ setNotice("");
 function providerCard(name,description,url,emoji){
 const box=document.createElement("div");
 box.className="card";
+
 const art=document.createElement("div");
 art.className="provider";
 art.textContent=emoji+" "+name;
+
 const info=document.createElement("div");
 info.className="info";
+
 const h=document.createElement("h3");
 h.textContent=name;
+
 const p=document.createElement("small");
 p.textContent=description;
+
 const b=document.createElement("button");
 b.className="watch";
 b.textContent="▶ Open";
 b.onclick=()=>window.open(url,"_blank","noopener,noreferrer");
+
 info.append(h,p,b);
 box.append(art,info);
 return box;
@@ -583,7 +649,7 @@ root.append(title);
 
 const note=document.createElement("div");
 note.className="panel";
-note.innerHTML="<h3>Better playback on your phone 📱</h3><p>Movies and shows now open in their original provider's player. This avoids forcing incompatible files into Sully TV's built-in player. Some services may show ads or require their own app.</p>";
+note.innerHTML="<h3>Watch using the original provider 📱</h3><p>Movies and shows open in their original provider's player. Some services may show ads or require their own app.</p>";
 root.append(note);
 
 const providers=document.createElement("div");
@@ -602,14 +668,16 @@ root.append(heading);
 
 const warning=document.createElement("p");
 warning.className="muted";
-warning.textContent="Archive search results are unverified uploads, not a guaranteed playable or rights-cleared catalog. Use the original listing to check availability and permissions.";
+warning.textContent="Archive uploads are not automatically verified as rights-cleared or playable. Check the original listing.";
 root.append(warning);
 
 const search=document.createElement("div");
 search.className="demandSearch";
+
 const input=document.createElement("input");
 input.placeholder="Search classic movies and TV";
 input.value=demandQuery;
+
 const btn=document.createElement("button");
 btn.className="watch";
 btn.textContent="Search";
@@ -618,16 +686,28 @@ demandQuery=input.value.trim()||"classic movies";
 demandPage=1;
 loadDemand();
 };
-input.onkeydown=e=>{if(e.key==="Enter")btn.click()};
+input.onkeydown=e=>{
+if(e.key==="Enter")btn.click();
+};
 search.append(input,btn);
 root.append(search);
 
 const categories=document.createElement("div");
 categories.className="demandSearch";
+
 [
-"Classic Movies","Classic Television","TV Episodes",
-"Cartoons","Documentaries","Science Fiction",
-"Comedy","Horror","Western Movies","Christmas Specials"
+"Classic Movies",
+"Classic Television",
+"TV Episodes",
+"Cartoons",
+"Documentaries",
+"Science Fiction",
+"Comedy",
+"Horror",
+"Western Movies",
+"Christmas Specials",
+"True Crime",
+"Unsolved Mysteries"
 ].forEach(name=>{
 const b=document.createElement("button");
 b.className="tool";
@@ -656,6 +736,7 @@ img.src="https://archive.org/services/img/"+encodeURIComponent(item.identifier);
 
 const info=document.createElement("div");
 info.className="info";
+
 const h=document.createElement("h3");
 h.textContent=item.title;
 
@@ -685,14 +766,20 @@ if(demandResults.length){
 const more=document.createElement("button");
 more.className="more";
 more.textContent="More Movies & Shows";
-more.onclick=()=>{demandPage++;loadDemand(true)};
+more.onclick=()=>{
+demandPage++;
+loadDemand(true);
+};
 root.append(more);
 }
 }
 
 async function loadDemand(append=false){
 const token=++demandSearchToken;
-if(tab==="🍿 On Demand")$("status").textContent="Searching archive...";
+
+if(tab==="🍿 On Demand"){
+$("status").textContent="Searching archive...";
+}
 
 try{
 const words=demandQuery.replace(/["\\():]/g," ").trim();
@@ -703,13 +790,14 @@ const url="https://archive.org/advancedsearch.php?q="+q+
 
 const r=await fetch(url);
 if(!r.ok)throw Error("Archive unavailable");
+
 const data=await r.json();
 if(token!==demandSearchToken)return;
 
 const found=(data.response?.docs||[]).filter(x=>x.identifier&&x.title);
 demandResults=append?[...demandResults,...found]:found;
-if(tab==="🍿 On Demand")render();
 
+if(tab==="🍿 On Demand")render();
 }catch(e){
 if(token===demandSearchToken&&tab==="🍿 On Demand"){
 $("status").textContent="Archive search unavailable. Try the streaming providers above.";
@@ -718,8 +806,11 @@ $("status").textContent="Archive search unavailable. Try the streaming providers
 }
 
 function toggleRecord(){
-if(recorder&&recorder.state==="recording")stopRecording();
-else if(recordable)startRecording();
+if(recorder&&recorder.state==="recording"){
+stopRecording();
+}else if(recordable){
+startRecording();
+}
 }
 
 function startRecording(){
@@ -735,6 +826,7 @@ const mime=recordingFormat();
 recorder=new MediaRecorder(stream,{mimeType:mime});
 chunks=[];
 recordStart=Date.now();
+
 const title=current.name||"Sully TV Recording";
 let failed=false;
 
@@ -750,6 +842,7 @@ setNotice("Recording failed for this stream.");
 recorder.onstop=async()=>{
 clearInterval(recordTimer);
 recordTimer=null;
+
 const type=recorder?.mimeType||"video/webm";
 const blob=new Blob(chunks,{type});
 recorder=null;
@@ -775,10 +868,12 @@ setNotice("🔴 Recording started. Keep this page open.");
 
 recordTimer=setInterval(()=>{
 const s=Math.floor((Date.now()-recordStart)/1000);
-setNotice("🔴 REC "+
+setNotice(
+"🔴 REC "+
 String(Math.floor(s/60)).padStart(2,"0")+":"+
 String(s%60).padStart(2,"0")+
-" — Keep this page open");
+" — Keep this page open"
+);
 },1000);
 
 }catch(e){
@@ -817,8 +912,14 @@ const tx=db.transaction("clips",mode);
 const req=action(tx.objectStore("clips"));
 let result;
 req.onsuccess=()=>result=req.result;
-tx.oncomplete=()=>{db.close();resolve(result)};
-tx.onerror=()=>{db.close();reject(tx.error)};
+tx.oncomplete=()=>{
+db.close();
+resolve(result);
+};
+tx.onerror=()=>{
+db.close();
+reject(tx.error);
+};
 });
 }
 
@@ -829,12 +930,14 @@ title,
 date:new Date().toLocaleString(),
 blob
 };
+
 try{
 await database("readwrite",s=>s.put(entry));
 }catch(e){
 downloadBlob(blob,"Sully-TV-Recording.webm");
 setNotice("Storage unavailable. Recording downloaded instead.");
 }
+
 if(tab==="🔴 My Recordings")render();
 }
 
@@ -869,19 +972,22 @@ rows=await database("readonly",s=>s.getAll());
 note.textContent="Recording storage unavailable.";
 return;
 }
+
 if(tab!=="🔴 My Recordings")return;
 
 if(!rows.length){
 const p=document.createElement("p");
-p.textContent="No recordings yet. The Record button appears only when the browser reports that video capture is available.";
+p.textContent="No recordings yet. The Record button appears only when video capture is supported.";
 root.append(p);
 }
 
 rows.reverse().forEach(item=>{
 const box=document.createElement("div");
 box.className="recording";
+
 const h=document.createElement("h3");
 h.textContent=item.title;
+
 const p=document.createElement("p");
 p.textContent=item.date+" • "+(item.blob.size/1048576).toFixed(1)+" MB";
 
@@ -901,8 +1007,11 @@ const download=document.createElement("button");
 download.className="tool";
 download.textContent="⬇ Download";
 download.onclick=()=>{
-downloadBlob(item.blob,"Sully-TV-"+item.id+
-(item.blob.type.includes("mp4")?".mp4":".webm"));
+downloadBlob(
+item.blob,
+"Sully-TV-"+item.id+
+(item.blob.type.includes("mp4")?".mp4":".webm")
+);
 };
 
 const del=document.createElement("button");
@@ -954,14 +1063,19 @@ if(!logos.has(l.channel)||l.in_use)logos.set(l.channel,l.url);
 
 channels=cs.filter(c=>
 !c.is_nsfw&&!c.closed&&streams.has(c.id)
-).map(c=>({...c,countryName:names.get(c.country)||c.country}));
+).map(c=>({
+...c,
+countryName:names.get(c.country)||c.country
+}));
 
 countries.sort((a,b)=>a.name.localeCompare(b.name)).forEach(c=>{
 $("country").add(new Option(c.name,c.code));
 });
 
 [...new Set(channels.flatMap(c=>c.categories||[]))]
-.sort().forEach(c=>$("category").add(new Option(c,c)));
+.sort().forEach(c=>{
+$("category").add(new Option(c,c));
+});
 
 render();
 
@@ -969,6 +1083,18 @@ render();
 $("status").textContent="Unable to load live channels. Refresh to retry.";
 }
 }
+
+$("search").addEventListener("input",()=>{
+page=0;
+render();
+});
+
+["country","category","sort"].forEach(id=>{
+$(id).addEventListener("change",()=>{
+page=0;
+render();
+});
+});
 
 window.addEventListener("beforeinstallprompt",e=>{
 e.preventDefault();
@@ -990,7 +1116,8 @@ return;
 const ua=navigator.userAgent;
 const ios=/iPhone|iPad|iPod/i.test(ua);
 const android=/Android/i.test(ua);
-const standalone=window.matchMedia("(display-mode: standalone)").matches||
+const standalone=
+window.matchMedia("(display-mode: standalone)").matches||
 navigator.standalone===true;
 
 if(standalone){
@@ -1000,21 +1127,23 @@ return;
 
 if(ios){
 $("installHelp").textContent=
-"On iPhone or iPad: open Sully TV in Safari, tap Share, then Add to Home Screen. Choose Open as Web App if offered.";
+"On iPhone or iPad: open Sully TV in Safari, tap Share, then Add to Home Screen.";
 }else if(android){
 $("installHelp").textContent=
-"On Android: open Sully TV in Chrome, tap the three-dot menu, then Install app or Add to Home screen. The available option depends on your browser.";
+"On Android: open Sully TV in Chrome, tap the three-dot menu, then Install app or Create shortcut.";
 }else{
 $("installHelp").textContent=
 "Open your browser menu and look for Install app, Create shortcut, or Add to Home Screen.";
 }
 
-$("installHelp").scrollIntoView({behavior:"smooth",block:"center"});
+$("installHelp").scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
 }
 
 init();
 loadDemand();
-
 </script>
 </body>
 </html>
