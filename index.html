@@ -93,6 +93,8 @@ header{position:relative}
 .welcome{padding:12px}
 }
 
+.headerGuide{margin-top:8px;padding:8px 12px;background:#24476f;border:1px solid #e8c785;border-radius:10px;color:#fff0c4;font-weight:700;min-height:38px;white-space:nowrap}
+@media(min-width:600px){.top>div:first-child{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.top>div:first-child small{flex-basis:100%}.headerGuide{margin-top:0}}
 /* Sully TV midnight-gold ornamental theme — CSS only */
 :root{--gold:#e8c785;--gold-light:#fff0bf;--ink:#080e1d;--panel:#17243d}
 body{
@@ -204,6 +206,7 @@ header{position:relative}
 <div class="top">
 <div>
 <div class="logo">📺 SULLY <span>TV</span></div>
+<button class="headerGuide" onclick="openGuide()" aria-label="Open TV Guide">📋 TV Guide</button>
 <small>Your world. Your channels.</small>
 </div>
 <input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
