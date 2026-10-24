@@ -186,6 +186,13 @@ header{position:relative}
 .guideRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;border:1px solid #a48c62;border-radius:12px;background:#172840}
 .guideRow strong{overflow-wrap:anywhere}.guideRow small{color:#bdcee6}
 @media(max-width:600px){.guideRow{grid-template-columns:1fr auto}.guideRow small{grid-column:1;grid-row:2}.guideRow button{grid-column:2;grid-row:1/3}}
+
+.lunaHub{border:1px solid #e8c785;border-radius:20px;padding:24px;margin:15px 0;background:radial-gradient(circle at 90% 5%,#805b8866,transparent 45%),linear-gradient(135deg,#263b60,#141e36);box-shadow:0 12px 30px #0007}
+.lunaHub h2{font-size:clamp(25px,4vw,38px);color:#ffebbd;margin:0 0 12px}
+.lunaHub p{line-height:1.6;color:#e0dbea}
+.lunaLaunch{display:inline-block;margin:15px 0;padding:16px 23px;background:linear-gradient(135deg,#a13e72,#61365d);border:1px solid #ffdcaa;border-radius:15px;color:#fff;text-decoration:none;font-weight:bold;box-shadow:0 5px 14px #0006}
+.lunaLaunch:focus-visible{outline:3px solid #ffe39e;outline-offset:3px}
+.categoryTiles button:first-child{background:linear-gradient(135deg,#a0578a,#5b366d);border-color:#f4d69e}
 </style>
 </head>
 <body>
@@ -263,6 +270,7 @@ const player=$("player");
 const API="https://iptv-org.github.io/api/";
 
 const tabs=[
+"🐾 Luna on the Streets",
 "💖 Nicol's Station",
 "🏠 Home",
 "⭐ Featured",
@@ -467,6 +475,12 @@ function render(){
 const root=$("content");
 root.innerHTML="";
 $("more").hidden=true;
+
+if(tab==="🐾 Luna on the Streets"){
+$("filters").hidden=true;
+renderLuna();
+return;
+}
 
 if(tab==="📋 TV Guide"){
 $("filters").hidden=true;
@@ -770,6 +784,29 @@ current=null;
 $("viewer").hidden=true;
 $("now").textContent="Playback stopped.";
 setNotice("");
+}
+
+
+function renderLuna(){
+const root=$("content");
+$("status").textContent="Luna's YouTube videos";
+const panel=document.createElement("section");
+panel.className="lunaHub";
+const heading=document.createElement("h2");
+heading.textContent="🐾 Luna on the Streets";
+const desc=document.createElement("p");
+desc.textContent="Follow Luna the blue-eyed French bulldog on her adventures, read-aloud stories, and cozy videos. Watch her videos free on YouTube.";
+const link=document.createElement("a");
+link.className="lunaLaunch";
+link.href="https://www.youtube.com/results?search_query=Luna+on+the+Streets";
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="▶ Watch Luna on YouTube";
+const hint=document.createElement("p");
+hint.className="muted";
+hint.textContent="Opens YouTube results for Luna on the Streets. A direct channel link can replace this once its exact URL is confirmed.";
+panel.append(heading,desc,link,hint);
+root.append(panel);
 }
 
 function providerCard(name,description,url,emoji){
