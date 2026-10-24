@@ -193,6 +193,7 @@ header{position:relative}
 .lunaLaunch{display:inline-block;margin:15px 0;padding:16px 23px;background:linear-gradient(135deg,#a13e72,#61365d);border:1px solid #ffdcaa;border-radius:15px;color:#fff;text-decoration:none;font-weight:bold;box-shadow:0 5px 14px #0006}
 .lunaLaunch:focus-visible{outline:3px solid #ffe39e;outline-offset:3px}
 .categoryTiles button:first-child{background:linear-gradient(135deg,#a0578a,#5b366d);border-color:#f4d69e}
+.lunaChoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.lunaChoice{display:flex;flex-direction:column;gap:8px;padding:20px 14px;border:1px solid #e8c785;border-radius:14px;text-decoration:none;color:#fff;background:#233452}.lunaChoice small{color:#e0dbea}.lunaChoice:focus-visible,.lunaChoice:hover{outline:2px solid #ffe39e;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -789,26 +790,37 @@ setNotice("");
 
 function renderLuna(){
 const root=$("content");
-$("status").textContent="Luna's YouTube videos";
+$("status").textContent="Luna's official YouTube channel";
 const panel=document.createElement("section");
 panel.className="lunaHub";
 const heading=document.createElement("h2");
 heading.textContent="🐾 Luna on the Streets";
 const desc=document.createElement("p");
-desc.textContent="Follow Luna the blue-eyed French bulldog on her adventures, read-aloud stories, and cozy videos. Watch her videos free on YouTube.";
-const link=document.createElement("a");
-link.className="lunaLaunch";
-link.href="https://www.youtube.com/results?search_query=Luna+on+the+Streets";
-link.target="_blank";
-link.rel="noopener noreferrer";
-link.textContent="▶ Watch Luna on YouTube";
+desc.textContent="Luna's adventures, read-aloud books, Shorts, and cozy Christmas videos. Explore the official YouTube channel.";
+panel.append(heading,desc);
+const choices=[
+["▶ All Luna Videos","https://www.youtube.com/@mblackketter/videos","Browse individual videos"],
+["🎬 Luna Shorts","https://www.youtube.com/@mblackketter/shorts","Watch short adventures"],
+["📚 Playlists","https://www.youtube.com/@mblackketter/playlists","Browse video collections"],
+["🔴 Live & Premieres","https://www.youtube.com/@mblackketter/streams","See live videos"]
+];
+const grid=document.createElement("div");
+grid.className="lunaChoices";
+choices.forEach(([name,url,subtitle])=>{
+const card=document.createElement("a");
+card.className="lunaChoice";
+card.href=url;card.target="_blank";card.rel="noopener noreferrer";
+const label=document.createElement("strong");label.textContent=name;
+const sub=document.createElement("small");sub.textContent=subtitle;
+card.append(label,sub);grid.append(card);
+});
+panel.append(grid);
 const hint=document.createElement("p");
 hint.className="muted";
-hint.textContent="Opens YouTube results for Luna on the Streets. A direct channel link can replace this once its exact URL is confirmed.";
-panel.append(heading,desc,link,hint);
+hint.textContent="Official channel: @mblackketter. Video thumbnails and individual watch links will be added when verified video IDs are available.";
+panel.append(hint);
 root.append(panel);
 }
-
 function providerCard(name,description,url,emoji){
 const box=document.createElement("div");
 box.className="card";
