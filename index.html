@@ -1,1 +1,154 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sully TV</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101525;color:white;font:16px Arial}
+header{padding:18px;background:#202b48}
+h1{margin:0 0 12px}
+nav{display:flex;gap:7px;overflow-x:auto}
+button,select,input{background:#30405e;color:white;border:1px solid #60708b;border-radius:9px;padding:11px;font-size:15px}
+button{cursor:pointer}
+.active{background:#526fc1}
+main{padding:12px}
+video{width:100%;aspect-ratio:16/9;background:black}
+input,select{width:100%;margin:6px 0}
+#results{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.card{background:#202b48;border-radius:12px;padding:14px}
+.card button{margin:4px}
+small{color:#b7c6dc}
+</style>
+</head>
+<body>
+<header>
+<h1>📺 SULLY TV</h1>
+<nav id="nav"></nav>
+</header>
+<main>
+<video id="player" controls playsinline></video>
+<button onclick="full()">⛶ Fullscreen</button>
+<p id="now">Select a channel</p>
+<input id="search" placeholder="Search all channels and folders">
+<select id="country"><option value="">All countries</option></select>
+<select id="topic"><option value="">All subcategories</option></select>
+<p id="status">Loading free TV directory...</p>
+<div id="results"></div>
+</main>
+<script>
+const sections={
+"Worldwide":[],
+"Local":[],
+"Sports":["Football","Soccer","Basketball","Baseball","Hockey","Tennis","Golf","Motorsports","Boxing","MMA","Cricket"],
+"Documentaries":["AI","Aliens","Space","Science","History","Nature","Crime","Travel"],
+"Reality":["Competition","Talent","Cooking","Survival","Dating","Home","Lifestyle"],
+"Carrie's Horror Channel":["Horror","Ghosts","Paranormal","Thriller","Classic Horror","Monsters"],
+"Favorites":[]
+};
+let section="Worldwide",channels=[],streams={};
+let favorites=JSON.parse(localStorage.getItem("sullyFavorites")||"[]");
+const el=id=>document.getElementById(id);
+function nav(){
+el("nav").innerHTML="";
+Object.keys(sections).forEach(name=>{
+let b=document.createElement("button");
+b.textContent=name;
+b.className=name===section?"active":"";
+b.onclick=()=>{section=name;nav();topics();show()};
+el("nav").append(b);
+});
+}
+function topics(){
+let s=el("topic");
+s.innerHTML='<option value="">All subcategories</option>';
+sections[section].forEach(x=>{
+let o=document.createElement("option");
+o.textContent=x;o.value=x;s.append(o);
+});
+}
+function text(c){
+return [c.name,c.country,c.subdivision,c.city,...(c.categories||[])].join(" ").toLowerCase();
+}
+function matches(c){
+let s=text(c),q=el("search").value.toLowerCase().trim();
+let country=el("country").value;
+let topic=el("topic").value.toLowerCase();
+if(q&&!q.split(/\s+/).every(w=>s.includes(w)))return false;
+if(country&&c.country!==country)return false;
+if(section==="Favorites"&&!favorites.includes(c.id))return false;
+if(!q){
+let filters={
+"Sports":/sport|football|soccer|basketball|baseball|hockey|tennis|golf|cricket|racing|boxing/,
+"Documentaries":/documentary|science|history|nature|education|technology/,
+"Reality":/reality|lifestyle|entertainment|cooking|competition|talent/,
+"Carrie's Horror Channel":/horror|ghost|paranormal|thriller|monster|scary/
+};
+if(filters[section]&&!filters[section].test(s))return false;
+}
+if(topic&&!s.includes(topic))return false;
+return true;
+}
+function show(){
+let found=channels.filter(matches).slice(0,80);
+el("status").textContent=found.length+" matching channels (up to 80 shown)";
+el("results").innerHTML="";
+found.forEach(c=>{
+let d=document.createElement("div");d.className="card";
+let h=document.createElement("h3");h.textContent=c.name;d.append(h);
+let p=document.createElement("small");
+p.textContent=[c.country,c.subdivision,c.city].filter(Boolean).join(" • ");
+d.append(p);
+let row=document.createElement("div");
+let watch=document.createElement("button");watch.textContent="▶ Watch";
+watch.onclick=()=>play(c);row.append(watch);
+let fav=document.createElement("button");
+fav.textContent=favorites.includes(c.id)?"♥ Saved":"♡ Favorite";
+fav.onclick=()=>{
+favorites=favorites.includes(c.id)?favorites.filter(x=>x!==c.id):[...favorites,c.id];
+localStorage.setItem("sullyFavorites",JSON.stringify(favorites));show();
+};
+row.append(fav);d.append(row);el("results").append(d);
+});
+}
+function play(c){
+let stream=streams[c.id]?.[0];
+el("now").textContent=c.name;
+let v=el("player");v.pause();v.removeAttribute("src");v.load();
+if(!stream){el("now").textContent+=" — no stream";return}
+v.src=stream.url;
+v.play().catch(()=>{el("now").textContent+=" — playback unavailable in this browser"});
+window.scrollTo(0,0);
+}
+function full(){
+let v=el("player");
+if(v.requestFullscreen)v.requestFullscreen();
+else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
+}
+el("search").oninput=show;
+el("country").onchange=show;
+el("topic").onchange=show;
+nav();topics();
+Promise.all([
+fetch("https://iptv-org.github.io/api/channels.json").then(r=>r.json()),
+fetch("https://iptv-org.github.io/api/streams.json").then(r=>r.json()),
+fetch("https://iptv-org.github.io/api/countries.json").then(r=>r.json())
+]).then(([cs,ss,countries])=>{
+ss.forEach(s=>{
+if(s.channel&&s.url)(streams[s.channel]??=[]).push(s);
+});
+channels=cs.filter(c=>!c.is_nsfw&&streams[c.id]);
+countries.sort((a,b)=>a.name.localeCompare(b.name)).forEach(c=>{
+let o=document.createElement("option");
+o.value=c.code;o.textContent=c.name;el("country").append(o);
+});
+show();
+}).catch(()=>{
+el("status").textContent="Directory unavailable. Check internet connection.";
+});
+</script>
+</body>
+</html>
+
