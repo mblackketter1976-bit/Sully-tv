@@ -194,6 +194,7 @@ header{position:relative}
 .lunaLaunch:focus-visible{outline:3px solid #ffe39e;outline-offset:3px}
 .categoryTiles button:first-child{background:linear-gradient(135deg,#a0578a,#5b366d);border-color:#f4d69e}
 .lunaChoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.lunaChoice{display:flex;flex-direction:column;gap:8px;padding:20px 14px;border:1px solid #e8c785;border-radius:14px;text-decoration:none;color:#fff;background:#233452}.lunaChoice small{color:#e0dbea}.lunaChoice:focus-visible,.lunaChoice:hover{outline:2px solid #ffe39e;outline-offset:2px}
+.lunaVideoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;margin-top:18px}.lunaVideoCard{display:flex;flex-direction:column;gap:10px;background:#172740;border:1px solid #a48c62;border-radius:14px;padding:12px}.lunaVideoCard img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}.lunaVideoCard h3{font-size:1rem;line-height:1.35;flex:1}.lunaVideoCard a{color:#ffe39e}.lunaVideoArea{margin:18px 0}.lunaVideoArea iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000;margin-top:10px}
 </style>
 </head>
 <body>
@@ -788,38 +789,43 @@ setNotice("");
 }
 
 
-function renderLuna(){
+async function renderLuna(){
 const root=$("content");
-$("status").textContent="Luna's official YouTube channel";
-const panel=document.createElement("section");
-panel.className="lunaHub";
-const heading=document.createElement("h2");
-heading.textContent="🐾 Luna on the Streets";
-const desc=document.createElement("p");
-desc.textContent="Luna's adventures, read-aloud books, Shorts, and cozy Christmas videos. Explore the official YouTube channel.";
+$("status").textContent="Luna's YouTube video library";
+const panel=document.createElement("section");panel.className="lunaHub";
+const heading=document.createElement("h2");heading.textContent="🐾 Luna on the Streets";
+const desc=document.createElement("p");desc.textContent="Choose a video to watch Luna's adventures, stories, Shorts and Christmas specials.";
 panel.append(heading,desc);
-const choices=[
-["▶ All Luna Videos","https://www.youtube.com/@mblackketter/videos","Browse individual videos"],
-["🎬 Luna Shorts","https://www.youtube.com/@mblackketter/shorts","Watch short adventures"],
-["📚 Playlists","https://www.youtube.com/@mblackketter/playlists","Browse video collections"],
-["🔴 Live & Premieres","https://www.youtube.com/@mblackketter/streams","See live videos"]
-];
-const grid=document.createElement("div");
-grid.className="lunaChoices";
-choices.forEach(([name,url,subtitle])=>{
-const card=document.createElement("a");
-card.className="lunaChoice";
-card.href=url;card.target="_blank";card.rel="noopener noreferrer";
-const label=document.createElement("strong");label.textContent=name;
-const sub=document.createElement("small");sub.textContent=subtitle;
-card.append(label,sub);grid.append(card);
-});
-panel.append(grid);
-const hint=document.createElement("p");
-hint.className="muted";
-hint.textContent="Official channel: @mblackketter. Video thumbnails and individual watch links will be added when verified video IDs are available.";
-panel.append(hint);
+const link=document.createElement("a");link.className="lunaLaunch";
+link.href="https://www.youtube.com/channel/UCzl5MwPHJN0n2G0L8v4Pptw/videos";
+link.target="_blank";link.rel="noopener noreferrer";link.textContent="▶ View all videos on YouTube";
+panel.append(link);
+const videoArea=document.createElement("div");videoArea.className="lunaVideoArea";videoArea.hidden=true;
+const close=document.createElement("button");close.className="tool";close.textContent="✕ Close video";
+const frame=document.createElement("iframe");frame.title="Luna video player";frame.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";frame.allowFullscreen=true;frame.referrerPolicy="strict-origin-when-cross-origin";
+close.onclick=()=>{frame.removeAttribute("src");videoArea.hidden=true};
+videoArea.append(close,frame);panel.append(videoArea);
+const grid=document.createElement("div");grid.className="lunaVideoGrid";panel.append(grid);
+const message=document.createElement("p");message.textContent="Loading Luna's videos…";panel.append(message);
 root.append(panel);
+try{
+const response=await fetch("./luna-videos.json?t="+Math.floor(Date.now()/3600000),{cache:"no-store"});
+if(!response.ok)throw Error("Video list not generated yet");
+const data=await response.json();
+if(tab!=="🐾 Luna on the Streets")return;
+if(!Array.isArray(data.videos)||!data.videos.length)throw Error("No videos available");
+message.textContent=data.videos.length+" Luna videos · New uploads are added automatically.";
+data.videos.forEach(video=>{
+if(!/^[A-Za-z0-9_-]{11}$/.test(video.id))return;
+const card=document.createElement("article");card.className="lunaVideoCard";
+const img=document.createElement("img");img.src="https://i.ytimg.com/vi/"+video.id+"/hqdefault.jpg";img.alt="Thumbnail for "+video.title;img.loading="lazy";
+const title=document.createElement("h3");title.textContent=video.title;
+const watch=document.createElement("button");watch.className="watch";watch.textContent="▶ Watch here";
+watch.onclick=()=>{frame.src="https://www.youtube-nocookie.com/embed/"+video.id+"?autoplay=1";videoArea.hidden=false;videoArea.scrollIntoView({behavior:"smooth",block:"start"})};
+const youtube=document.createElement("a");youtube.href="https://www.youtube.com/watch?v="+video.id;youtube.target="_blank";youtube.rel="noopener noreferrer";youtube.textContent="Open on YouTube";
+card.append(img,title,watch,youtube);grid.append(card);
+});
+}catch(error){message.textContent="The video gallery is being prepared. You can still browse all Luna videos using the YouTube link above."}
 }
 function providerCard(name,description,url,emoji){
 const box=document.createElement("div");
