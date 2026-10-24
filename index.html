@@ -97,6 +97,7 @@ header{position:relative}
 @media(min-width:600px){.top>div:first-child{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.top>div:first-child small{flex-basis:100%}.headerGuide{margin-top:0}}
 .sesBrand{display:flex;align-items:center;gap:7px;color:#f4d99d;min-width:0;line-height:1.05}.sesBrand strong{font-size:23px;letter-spacing:3px;text-shadow:0 1px 7px #f3c56c88}.sesBrand small{display:block;font-size:9px;letter-spacing:.5px;color:#e6c786;white-space:normal;max-width:165px}.sesPaw{font-size:25px;filter:drop-shadow(0 0 5px #dcb466)}@media(max-width:420px){.sesBrand strong{font-size:18px}.sesBrand small{font-size:8px;max-width:125px}}
 .besLogoImage{width:88px;height:60px;object-fit:contain;border-radius:7px;flex-shrink:0}@media(max-width:420px){.besLogoImage{width:62px;height:43px}}
+.installCompact{max-width:760px;margin:10px auto 0;padding:8px 12px;border-radius:12px;background:linear-gradient(110deg,#1a3150,#14253c);box-shadow:none}.installCompactRow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.installCompactRow span{font-size:13px;color:#f1dcab;font-weight:700}.installCompact button{min-height:34px;padding:7px 13px;font-size:13px;border-radius:9px}.installCompact .hint{margin:5px 0 0;text-align:center;font-size:11px;line-height:1.35}@media(max-width:420px){.installCompact{padding:7px 9px}.installCompactRow{gap:7px}.installCompactRow span{font-size:12px}.installCompact button{font-size:12px}}
 /* Sully TV midnight-gold ornamental theme — CSS only */
 :root{--gold:#e8c785;--gold-light:#fff0bf;--ink:#080e1d;--panel:#17243d}
 body{
@@ -215,6 +216,10 @@ header{position:relative}
 <input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
 </div>
 
+<section class="install installCompact" aria-label="Install Sully TV">
+<div class="installCompactRow"><span>📲 Sully TV on your device</span><button id="installBtn" onclick="installApp()">Install Sully TV</button></div>
+<p class="hint" id="installHelp">Free shortcut for Android, iPhone and tablets.</p>
+</section>
 </header>
 
 <main>
@@ -246,12 +251,7 @@ header{position:relative}
 </div>
 </section>
 
-<section class="sponsorSpot" aria-label="Sully TV sponsor"><div class="sponsorLabel">✦ SULLY TV ORIGINAL SPONSOR ✦</div><h2>🐾 Meet Luna &amp; Old Sac Shirts &amp; Gifts</h2><p>Discover Luna on the Streets, her children's books, and the Sacramento souvenir shop behind her adventures. Watch our Good Day Sacramento television feature!</p><div class="sponsorActions"><a href="https://www.cbsnews.com/gooddaysacramento/video/shopping-at-old-sacramento-shirts-gifts/" target="_blank" rel="noopener noreferrer">📺 Good Day Sacramento feature</a><a href="https://www.youtube.com/@mblackketter" target="_blank" rel="noopener noreferrer">🐾 Luna's YouTube</a><button class="watch" style="flex:0 1 auto" onclick="tab='🐾 Luna on the Streets';page=0;nav();render();document.getElementById('content').scrollIntoView({behavior:'smooth'})">▶ Luna's Channel</button></div><p style="font-size:12px;margin-bottom:0">The TV feature opens on CBS's website. Animated commercials and future TV appearances coming soon.</p></section><section class="install">
-<h2>📲 Install Sully TV</h2>
-<p>Put Sully TV on your phone or tablet's Home Screen for quick access.</p>
-<button id="installBtn" onclick="installApp()">📲 Install / How To Install</button>
-<p class="hint" id="installHelp">Works with Android phones, iPhones and tablets. No subscription required.</p>
-</section>
+<section class="sponsorSpot" aria-label="Sully TV sponsor"><div class="sponsorLabel">✦ SULLY TV ORIGINAL SPONSOR ✦</div><h2>🐾 Meet Luna &amp; Old Sac Shirts &amp; Gifts</h2><p>Discover Luna on the Streets, her children's books, and the Sacramento souvenir shop behind her adventures. Watch our Good Day Sacramento television feature!</p><div class="sponsorActions"><a href="https://www.cbsnews.com/gooddaysacramento/video/shopping-at-old-sacramento-shirts-gifts/" target="_blank" rel="noopener noreferrer">📺 Good Day Sacramento feature</a><a href="https://www.youtube.com/@mblackketter" target="_blank" rel="noopener noreferrer">🐾 Luna's YouTube</a><button class="watch" style="flex:0 1 auto" onclick="tab='🐾 Luna on the Streets';page=0;nav();render();document.getElementById('content').scrollIntoView({behavior:'smooth'})">▶ Luna's Channel</button></div><p style="font-size:12px;margin-bottom:0">The TV feature opens on CBS's website. Animated commercials and future TV appearances coming soon.</p></section>
 
 <div class="filters" id="filters">
 <select id="country"><option value="">🌎 All Countries</option></select>
