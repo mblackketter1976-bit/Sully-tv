@@ -233,5 +233,154 @@ el("status").textContent="Directory unavailable. Check internet connection.";
 });
 </script>
 </body>
+  
+<style>
+body{
+  font-family:system-ui,Arial;
+  background:linear-gradient(150deg,#0b1327,#17294b);
+  min-height:100vh;
+}
+header{
+  background:#1b2d50;
+  border-bottom:2px solid #395788;
+}
+h1{
+  font-size:clamp(28px,5vw,42px);
+  letter-spacing:1px;
+}
+nav{
+  gap:10px;
+  padding:8px 0;
+}
+nav button{
+  flex-shrink:0;
+  min-height:65px;
+  padding:12px 18px;
+  border-radius:16px;
+  font-weight:bold;
+  background:#2d426b;
+}
+nav button.active{
+  background:#5278d1;
+}
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:16px;
+}
+video{
+  display:block;
+  border-radius:16px;
+}
+#now{
+  font-size:19px;
+  font-weight:bold;
+}
+input,select{
+  min-height:54px;
+  font-size:17px;
+  border-radius:14px;
+}
+#results{
+  grid-template-columns:
+    repeat(auto-fit,minmax(170px,1fr));
+  gap:14px;
+}
+.card{
+  border:1px solid #425b88;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 18px #0003;
+}
+.card h3{
+  font-size:20px;
+  line-height:1.25;
+}
+.card button{
+  min-height:46px;
+  font-weight:bold;
+}
+@media(max-width:550px){
+  #results{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+  .card{padding:11px}
+  .card h3{font-size:17px}
+  .card button{
+    padding:9px 6px;
+    font-size:13px;
+  }
+}
+</style>
+
+<script>
+const easyNames = {
+  "Worldwide": "🌎 All TV",
+  "Local": "📍 Local TV",
+  "Sports": "🏆 Sports",
+  "Documentaries": "🧠 Learn",
+  "Reality": "⭐ Reality",
+  "Carrie's Horror Channel": "👻 Horror",
+  "Favorites": "❤️ Favorites"
+};
+
+function makeNavigationEasy() {
+  document.querySelectorAll("#nav button").forEach(button => {
+    const original = button.textContent.trim();
+    if (easyNames[original]) {
+      button.textContent = easyNames[original];
+    }
+  });
+}
+
+const oldNavigation = nav;
+nav = function() {
+  oldNavigation();
+  makeNavigationEasy();
+};
+
+makeNavigationEasy();
+</s
+<script>
+function enableEasyChannelCards() {
+  document.querySelectorAll("#results .card").forEach(card => {
+    if (card.dataset.easyTap) return;
+    card.dataset.easyTap = "yes";
+
+    card.style.cursor = "pointer";
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+
+    card.addEventListener("click", event => {
+      if (event.target.closest("button")) return;
+      const watch = [...card.querySelectorAll("button")]
+        .find(b => /watch/i.test(b.textContent));
+      if (watch) watch.click();
+    });
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" && event.target === card) {
+        event.preventDefault();
+        const watch = [...card.querySelectorAll("button")]
+          .find(b => /watch/i.test(b.textContent));
+        if (watch) watch.click();
+      }
+    });
+  });
+}
+
+const channelGuideObserver = new MutationObserver(
+  enableEasyChannelCards
+);
+
+channelGuideObserver.observe(
+  document.getElementById("results"),
+  {childList:true}
+);
+
+enableEasyChannelCards();
+</script>
+</body>
 </html>
 
