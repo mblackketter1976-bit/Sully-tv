@@ -1,322 +1,167 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080d19">
-<title>Sully TV 4.1</title>
+<meta name="theme-color" content="#091020">
+<title>Sully TV 4.3</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 <style>
-:root{
---bg:#080d19;
---panel:#14223a;
---edge:#314564;
---blue:#348cff;
---muted:#b1c3dc
-}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-margin:0;background:var(--bg);
-color:white;font-family:Arial,system-ui,sans-serif
-}
+body{margin:0;background:#080e1b;color:#f5f8ff;font:15px system-ui,Arial,sans-serif}
 button,input,select{font:inherit}
-button{cursor:pointer;color:white}
-header{
-position:sticky;top:0;z-index:20;
-background:#0d1729f5;
-backdrop-filter:blur(12px);
-border-bottom:1px solid var(--edge);
-padding:13px 18px
-}
-.top{
-display:flex;align-items:center;
-justify-content:space-between;gap:12px
-}
-.logo{font-size:27px;font-weight:900;white-space:nowrap}
-.logo span{color:#65b5ff}
-.tagline{font-size:11px;color:#a4b8d4}
-#search{
-background:#1d2b45;color:white;
-border:1px solid #405576;
-border-radius:25px;padding:12px;
-width:min(48%,350px)
-}
-nav{
-display:flex;gap:8px;overflow-x:auto;
-padding:12px 0 2px;
-scrollbar-width:none
-}
-nav button{
-white-space:nowrap;background:#223451;
-border:1px solid #3c5477;
-border-radius:22px;padding:11px 15px
-}
-nav button.active{background:#277ad9}
-nav button.special{
-border-color:#bd699e;
-background:#432b50
-}
-nav button.special.active{background:#974b83}
-main{max-width:1400px;margin:auto;padding:16px}
-.hero{
-background:linear-gradient(120deg,#1c365d,#0e182b);
-border:1px solid var(--edge);
-border-radius:20px;overflow:hidden;
-margin-bottom:24px
-}
-.heroText{padding:22px}
-.eyebrow{
-font-size:12px;font-weight:bold;
-color:#83c6ff;letter-spacing:2px
-}
-.hero h1{font-size:30px;margin:12px 0}
-.hero p{color:#c4d5ec;line-height:1.5}
-video{
-width:100%;aspect-ratio:16/9;
-display:block;background:#020408
-}
-.playerInfo{
-padding:13px;display:flex;
-gap:9px;align-items:center;flex-wrap:wrap
-}
-#now{flex:1;min-width:180px;color:#c6dcf5}
-.playerInfo button{
-background:#304969;border:1px solid #537196;
-border-radius:10px;padding:11px
-}
-.filters{
-display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-gap:10px;margin:20px 0
-}
-.filters select{
-width:100%;min-width:0;
-background:#1c2d49;color:white;
-border:1px solid #405777;
-padding:13px;border-radius:12px
-}
-#status{color:#9fc7ff;margin:15px 0}
-.section{margin:28px 0}
-.heading{
-display:flex;align-items:center;
-justify-content:space-between;gap:10px;
-margin-bottom:13px
-}
+button{cursor:pointer;color:inherit}
+header{position:sticky;top:0;z-index:10;background:#101a2df5;border-bottom:1px solid #304260;padding:13px 14px}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.brand{font-size:25px;font-weight:900;white-space:nowrap}
+.brand span{color:#67b6ff}
+.sub{font-size:11px;color:#b2c4db}
+#search{min-width:0;width:45%;background:#1d2c47;border:1px solid #415776;border-radius:22px;padding:12px;color:white}
+nav{display:flex;gap:8px;overflow-x:auto;padding:14px 0 3px;scrollbar-width:none}
+nav button{white-space:nowrap;background:#223552;border:1px solid #41587c;border-radius:22px;padding:12px 15px;font-weight:700}
+nav button.active{background:#277bdc}
+nav button.nicol{background:#713c69;border-color:#cc83b6}
+nav button.nicol.active{background:#b04c91}
+main{max-width:1300px;margin:auto;padding:16px}
+.hero{border:1px solid #365174;border-radius:20px;background:linear-gradient(130deg,#1d365d,#0d1729);overflow:hidden}
+.heroText{padding:24px}
+.heroText h1{font-size:30px;margin:10px 0}
+.heroText p{color:#c0d2ea;line-height:1.5}
+.eyebrow{font-size:12px;letter-spacing:2px;color:#8cc6ff;font-weight:800}
+video{display:block;width:100%;aspect-ratio:16/9;background:#02050b}
+.playerControls{padding:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.playerControls button{border:1px solid #567399;background:#304968;padding:11px;border-radius:10px}
+#now{flex:1;min-width:170px;color:#c6dcf5}
+.filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.filters select{min-width:0;width:100%;background:#1c2e4b;color:white;border:1px solid #405777;padding:12px;border-radius:12px}
+#status{color:#9cc7ff;margin:14px 0}
+.intro{padding:18px;border-radius:15px;border:1px solid #a66b9c;background:linear-gradient(120deg,#4c2d50,#202a4a);margin:20px 0}
+.intro h2{margin:0 0 8px}
+.intro p{margin:0;line-height:1.5;color:#eedbec}
+.section{margin:25px 0}
+.heading{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:12px}
 .heading h2{font-size:21px;margin:0}
-.heading small{color:#9fb2ce}
-.rail{
-display:flex;gap:13px;
-overflow-x:auto;padding:3px 2px 15px;
-scroll-snap-type:x proximity
-}
-.card{
-flex:0 0 185px;
-background:#17253d;
-border:1px solid #344b6e;
-border-radius:16px;overflow:hidden;
-scroll-snap-align:start;
-display:flex;flex-direction:column
-}
-.art{
-height:110px;
-background:linear-gradient(135deg,#284875,#101c31);
-display:flex;align-items:center;justify-content:center;
-position:relative;padding:14px
-}
-.art img{
-max-width:100%;max-height:80px;
-object-fit:contain
-}
-.fallback{
-font-size:22px;font-weight:900;
-color:#d0e7ff;text-align:center;
-overflow-wrap:anywhere
-}
-.flag{
-position:absolute;bottom:5px;right:6px;
-font-size:10px;background:#091324cf;
-padding:4px 6px;border-radius:5px
-}
-.details{
-padding:12px;flex:1;
-display:flex;flex-direction:column
-}
-.details h3{
-font-size:15px;margin:0 0 7px;
-line-height:1.3;overflow-wrap:anywhere
-}
-.details small{font-size:12px;color:var(--muted)}
-.actions{display:flex;gap:7px;margin-top:auto;padding-top:14px}
-.watch{
-flex:1;background:#287fdf;border:0;
-padding:11px 7px;border-radius:9px;
-font-weight:800
-}
-.save{
-background:#304764;border:0;
-padding:9px 12px;border-radius:9px;
-font-size:20px
-}
-.save.saved{color:#ff91ad}
-.more{
-display:block;margin:20px auto;
-padding:13px 30px;background:#2b4973;
-border:1px solid #5a80b1;border-radius:12px
-}
+.heading small{color:#aabed8}
+.rail{display:flex;gap:12px;overflow-x:auto;padding:2px 1px 14px;scroll-snap-type:x proximity}
+.card{flex:0 0 180px;background:#17263e;border:1px solid #364c6e;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;scroll-snap-align:start}
+.art{height:106px;display:flex;justify-content:center;align-items:center;padding:14px;background:linear-gradient(130deg,#2b4b7c,#121e33);position:relative}
+.art img{max-width:100%;max-height:78px;object-fit:contain}
+.fallback{font-weight:900;color:#cfe6ff;text-align:center;overflow-wrap:anywhere}
+.flag{position:absolute;bottom:5px;right:5px;background:#081223d9;font-size:10px;border-radius:5px;padding:4px}
+.details{padding:11px;flex:1;display:flex;flex-direction:column}
+.details h3{font-size:15px;margin:0 0 7px;overflow-wrap:anywhere}
+.details small{color:#b2c5dd}
+.actions{display:flex;gap:7px;margin-top:auto;padding-top:13px}
+.watch{background:#287fe3;border:0;border-radius:9px;padding:11px 9px;font-weight:800;flex:1}
+.save{background:#324967;border:0;border-radius:9px;padding:10px;font-size:20px}
+.save.saved{color:#ff96b3}
+.more{display:block;margin:22px auto;padding:13px 27px;background:#2b4973;border:1px solid #5c80b0;border-radius:12px}
 .hidden{display:none!important}
-.empty{
-background:#17253d;color:#b4c5dc;
-padding:25px;border-radius:12px
-}
-.channelIntro{
-background:linear-gradient(120deg,#492849,#1a2442);
-border:1px solid #8c568d;
-border-radius:16px;
-padding:20px;margin:15px 0 25px
-}
-.channelIntro h2{margin:0 0 8px}
-.channelIntro p{
-color:#dfcce0;line-height:1.5;margin:0
-}
-footer{
-text-align:center;padding:30px;
-font-size:12px;color:#8fa3bf;line-height:1.8
-}
+.empty{background:#18273e;color:#b3c7df;padding:20px;border-radius:12px}
+footer{text-align:center;color:#91a7c3;font-size:12px;line-height:1.8;padding:28px}
 @media(min-width:900px){
 .hero{display:grid;grid-template-columns:1fr 1.25fr}
-.heroText{align-self:center;padding:40px}
+.heroText{align-self:center;padding:36px}
 .filters{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:500px){
-.logo{font-size:23px}
+.brand{font-size:22px}
 .card{flex-basis:158px}
-.art{height:95px}
-.art img{max-height:68px}
+.art{height:94px}
+.art img{max-height:66px}
 .heading h2{font-size:19px}
 }
 </style>
 </head>
 <body>
-
 <header>
 <div class="top">
 <div>
-<div class="logo">📺 SULLY <span>TV</span></div>
-<div class="tagline">Your world. Your channels.</div>
+<div class="brand">📺 SULLY <span>TV</span></div>
+<div class="sub">Your world. Your channels.</div>
 </div>
-<input id="search" type="search" placeholder="🔎 Search channels">
+<input id="search" type="search" placeholder="🔎 Search channels" aria-label="Search channels">
 </div>
-<nav id="nav"></nav>
+<nav id="nav" aria-label="Channel categories"></nav>
 </header>
-
 <main>
 <section class="hero">
 <div class="heroText">
 <div class="eyebrow">● FREE LIVE TELEVISION</div>
 <h1>Welcome to Sully TV</h1>
-<p>Thousands of public live channels.
-Find something great to watch, save your favorites,
-and explore television from around the world.</p>
-<button class="watch" id="explore" style="max-width:230px">
-Explore Channels ↓
-</button>
+<p>Discover public live television from around the world, including Nicol's Station and Robinson's Horror Channel.</p>
+<button class="watch" id="explore">Explore channels ↓</button>
 </div>
 <div>
 <video id="player" controls playsinline preload="none"></video>
-<div class="playerInfo">
-<div id="now">Choose a channel to start watching.</div>
+<div class="playerControls">
+<span id="now">Choose a channel to start watching.</span>
 <button id="nextSource" class="hidden">↻ Next Source</button>
 <button id="full">⛶ Fullscreen</button>
 <button id="stop">■ Stop</button>
 </div>
 </div>
 </section>
-
 <div class="filters">
-<select id="country">
-<option value="">🌎 All Countries</option>
-</select>
-<select id="topic">
-<option value="">All Categories</option>
-</select>
+<select id="country"><option value="">🌎 All Countries</option></select>
+<select id="topic"><option value="">All Categories</option></select>
 <select id="sort">
 <option value="featured">Featured First</option>
 <option value="az">A to Z</option>
 </select>
 </div>
-
 <div id="status">Loading channels...</div>
 <div id="content"></div>
 <button id="more" class="more hidden">Show More Channels</button>
 </main>
-
 <footer>
-SULLY TV 4.1
-<br>Free public live television directory
-<br>Some streams may be offline, restricted, or incompatible with your browser.
+SULLY TV 4.3 • Free public streaming directory
+<br>Programs vary by channel. Some streams may be offline or region-restricted.
 </footer>
-
 <script>
-"use strict";
+'use strict';
 
 const $=id=>document.getElementById(id);
-const API="https://iptv-org.github.io/api/";
+const API='https://iptv-org.github.io/api/';
+const NICOL="💖 Nicol's Station";
+const HORROR="👻 Robinson's Horror Channel";
 
 const tabs=[
-"🏠 Home",
-"⭐ Featured",
-"🛍️ Nicol's Shopping Networks",
-"💖 Nicol's Station",
-"👻 Robinson's Horror Channel",
-"🇺🇸 USA",
-"📍 Local News",
-"🏆 Sports",
-"🧠 Documentaries",
-"🎬 Movies",
-"⭐ Reality",
-"🌎 Worldwide",
-"❤️ Favorites"
+NICOL,
+'🏠 Home',
+'⭐ Featured',
+'🇺🇸 USA',
+HORROR,
+'📍 Local News',
+'🏆 Sports',
+'🧠 Documentaries',
+'🎬 Movies',
+'⭐ Reality',
+'🌎 Worldwide',
+'❤️ Favorites'
 ];
 
-const featured=[
+const patterns={
+[NICOL]:/shopping|shop|qvc|hsn|jewel|fashion|boutique|beauty|style|home shopping|gemporia|jtv|tjc|country|western|ranch|cowboy|rodeo|family|romance|romantic|drama|lifetime|hallmark|heartland|music|talent|singing|voice|competition|entertainment|lifestyle|soap|women|feel good/i,
+[HORROR]:/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster|scary|scream|creepy|suspense|supernatural/i,
+'📍 Local News':/news|local|regional/i,
+'🏆 Sports':/sport|football|soccer|basketball|baseball|golf|tennis|hockey|boxing|cricket|racing/i,
+'🧠 Documentaries':/documentary|science|history|nature|space|technology|education|travel|knowledge/i,
+'🎬 Movies':/movie|film|cinema|classic|action|drama/i,
+'⭐ Reality':/reality|entertainment|lifestyle|cooking|shopping|competition|talent/i
+};
+
+const preferred=[
 /pbs/i,/abc news/i,/cbs news/i,/nbc news/i,
 /fox weather/i,/sky news/i,/euronews/i,
-/bloomberg/i,/reuters/i,/al jazeera/i,
-/nasa/i,/earth/i,/nature/i,
-/music/i,/classic/i,/retro/i,
-/comedy/i,/movie/i,/kids/i
+/bloomberg/i,/reuters/i,/nasa/i,/nature/i,
+/music/i,/classic/i,/retro/i,/comedy/i,
+/movie/i,/kids/i
 ];
 
-const categoryPatterns={
-"📍 Local News":/news|local|regional/i,
-"🏆 Sports":/sport|football|soccer|basketball|baseball|golf|tennis|hockey|boxing|cricket|racing/i,
-"🧠 Documentaries":/documentary|science|history|nature|space|technology|education|travel|knowledge/i,
-"🎬 Movies":/movie|film|cinema|classic|action|drama/i,
-"⭐ Reality":/reality|entertainment|lifestyle|cooking|shopping|competition|talent/i,
-
-"🛍️ Nicol's Shopping Networks":
-/shopping|shop|qvc|hsn|jewelry|jewellery|fashion|boutique|home shopping|shoplc|shop lc|gem shopping|gemporia|ideal world|jtv|tjc|beauty|style|retail/i,
-
-"💖 Nicol's Station":
-/country|western|ranch|cowboy|rodeo|western movie|family|romance|romantic|drama|classic movie|classic film|lifetime|hallmark|heartland|music|talent|singing|voice|competition|entertainment|lifestyle|soap|women|feel good/i,
-
-"👻 Robinson's Horror Channel":
-/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster|scary|scream|creepy|suspense|supernatural/i
-};
-
-const descriptions={
-"🛍️ Nicol's Shopping Networks":
-"Shopping television picked for Nicol — jewelry, fashion, beauty, home shopping, gifts, and more.",
-
-"💖 Nicol's Station":
-"A cozy mix inspired by Dutton Ranch, Gilmore Girls, Steel Magnolias, and The Voice: westerns, family dramas, romance, country entertainment, and music competitions. These are related free channels, not guaranteed streams of those specific shows.",
-
-"👻 Robinson's Horror Channel":
-"The Robinson family's corner of Sully TV: horror movies, paranormal mysteries, ghost stories, supernatural thrills, and spooky entertainment."
-};
-
-let activeTab="🏠 Home";
+let tab=NICOL;
 let channels=[];
 let streams=new Map();
 let logos=new Map();
@@ -326,102 +171,79 @@ let current=null;
 let sourceIndex=0;
 let hls=null;
 let attempt=0;
-let timeout=null;
+let watchdog=null;
 let started=false;
 
 try{
-favorites=new Set(JSON.parse(localStorage.getItem("sully-tv-favs")||"[]"));
+favorites=new Set(JSON.parse(localStorage.getItem('sully-tv-favs')||'[]'));
 }catch(e){}
 
 function info(c){
-return [
-c.name,c.id,c.countryName,
-...(c.categories||[])
-].filter(Boolean).join(" ").toLowerCase();
+return [c.name,c.id,c.countryName,...(c.categories||[])]
+.filter(Boolean).join(' ').toLowerCase();
 }
 
 function score(c){
 let n=0;
-const name=c.name||"";
-featured.forEach((r,i)=>{
-if(r.test(name))n+=100-i*3;
+preferred.forEach((r,i)=>{
+if(r.test(c.name))n+=100-i*3;
 });
 if(logos.has(c.id))n+=15;
-if(c.country==="US")n+=8;
+if(c.country==='US')n+=8;
 return n;
 }
 
 function navigation(){
-const n=$("nav");
+const n=$('nav');
 n.replaceChildren();
-
 for(const t of tabs){
-const b=document.createElement("button");
+const b=document.createElement('button');
 b.textContent=t;
-b.className=t===activeTab?"active":"";
-
-if(
-t.includes("Nicol's")||
-t.includes("Robinson's")
-){
-b.classList.add("special");
-}
-
+b.className=(t===tab?'active ':'')+(t===NICOL?'nicol':'');
 b.onclick=()=>{
-activeTab=t;
+tab=t;
 page=0;
 navigation();
 render();
-$("content").scrollIntoView({
-behavior:"smooth",block:"start"
-});
+$('content').scrollIntoView({behavior:'smooth',block:'start'});
 };
 n.append(b);
 }
 }
 
 function eligible(c,t){
-if(t==="❤️ Favorites")return favorites.has(c.id);
-if(t==="🇺🇸 USA")return c.country==="US";
-if(t==="⭐ Featured")return score(c)>20;
-
-if(categoryPatterns[t]){
-return categoryPatterns[t].test(info(c));
-}
-
+if(t==='❤️ Favorites')return favorites.has(c.id);
+if(t==='🇺🇸 USA')return c.country==='US';
+if(t==='⭐ Featured')return score(c)>20;
+if(patterns[t])return patterns[t].test(info(c));
 return true;
 }
 
 function filtered(t){
-const query=$("search").value.toLowerCase().trim();
-const country=$("country").value;
-const topic=$("topic").value.toLowerCase();
-
-let result=channels.filter(c=>
+const q=$('search').value.toLowerCase().trim();
+const country=$('country').value;
+const topic=$('topic').value;
+const a=channels.filter(c=>
 eligible(c,t)&&
 (!country||c.country===country)&&
 (!topic||(c.categories||[]).includes(topic))&&
-(!query||info(c).includes(query))
+(!q||info(c).includes(q))
 );
-
-if($("sort").value==="az"){
-result.sort((a,b)=>a.name.localeCompare(b.name));
+if($('sort').value==='az'){
+a.sort((a,b)=>a.name.localeCompare(b.name));
 }else{
-result.sort((a,b)=>
-score(b)-score(a)||a.name.localeCompare(b.name)
-);
+a.sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name));
 }
-
-return result;
+return a;
 }
 
 function clearPlayback(){
 attempt++;
-clearTimeout(timeout);
+clearTimeout(watchdog);
 if(hls){hls.destroy();hls=null;}
-const v=$("player");
+const v=$('player');
 v.pause();
-v.removeAttribute("src");
+v.removeAttribute('src');
 v.load();
 started=false;
 }
@@ -430,82 +252,57 @@ function play(c){
 current=c;
 sourceIndex=0;
 playSource();
-$("player").scrollIntoView({
-behavior:"smooth",block:"center"
-});
+$('player').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 function playSource(){
 if(!current)return;
-
 const sources=streams.get(current.id)||[];
-
 if(sourceIndex>=sources.length){
 clearPlayback();
-$("now").textContent=
-current.name+" — No playable source found.";
-$("nextSource").classList.add("hidden");
+$('now').textContent=current.name+' — No playable source found.';
+$('nextSource').classList.add('hidden');
 return;
 }
-
 clearPlayback();
-
 const token=attempt;
 const url=sources[sourceIndex].url;
-const v=$("player");
-
-$("now").textContent=
-"Connecting to "+current.name+
-" ("+(sourceIndex+1)+"/"+sources.length+")";
-
-$("nextSource").classList.toggle(
-"hidden",sources.length<2
-);
-
+const v=$('player');
+$('now').textContent='Connecting to '+current.name+
+' ('+(sourceIndex+1)+'/'+sources.length+')';
+$('nextSource').classList.toggle('hidden',sources.length<2);
 let moved=false;
 
 function next(){
 if(token!==attempt||moved||started)return;
 moved=true;
-clearTimeout(timeout);
+clearTimeout(watchdog);
 sourceIndex++;
-
 if(sourceIndex<sources.length){
 playSource();
 }else{
-$("now").textContent=
-current.name+
-" — Stream unavailable. Try another channel.";
-$("nextSource").classList.add("hidden");
+$('now').textContent=current.name+
+' — Stream unavailable. Try another channel.';
+$('nextSource').classList.add('hidden');
 }
 }
 
-timeout=setTimeout(next,12000);
-
+watchdog=setTimeout(next,12000);
 v.onplaying=()=>{
 if(token!==attempt)return;
 started=true;
-clearTimeout(timeout);
-$("now").textContent=
-"▶ Now Playing: "+current.name;
+clearTimeout(watchdog);
+$('now').textContent='▶ Now Playing: '+current.name;
 };
-
 v.onerror=next;
 
-if(
-/\.m3u8(?:\?|$)/i.test(url)&&
-window.Hls&&Hls.isSupported()
-){
+if(/\.m3u8(?:\?|$)/i.test(url)&&window.Hls&&Hls.isSupported()){
 hls=new Hls();
 hls.loadSource(url);
 hls.attachMedia(v);
-
 hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-if(token===attempt){
-v.play().catch(()=>{});
-}
+if(token===attempt)v.play().catch(()=>{});
 });
-
 hls.on(Hls.Events.ERROR,(_,d)=>{
 if(d.fatal)next();
 });
@@ -516,344 +313,212 @@ v.play().catch(()=>{});
 }
 
 function save(c){
-if(favorites.has(c.id)){
-favorites.delete(c.id);
-}else{
-favorites.add(c.id);
-}
-
+if(favorites.has(c.id))favorites.delete(c.id);
+else favorites.add(c.id);
 try{
-localStorage.setItem(
-"sully-tv-favs",
-JSON.stringify([...favorites])
-);
+localStorage.setItem('sully-tv-favs',JSON.stringify([...favorites]));
 }catch(e){}
-
 render();
 }
 
-function makeCard(c){
-const card=document.createElement("article");
-card.className="card";
-
-const art=document.createElement("div");
-art.className="art";
-
-const fallback=document.createElement("div");
-fallback.className="fallback";
+function card(c){
+const a=document.createElement('article');
+a.className='card';
+const art=document.createElement('div');
+art.className='art';
+const fallback=document.createElement('div');
+fallback.className='fallback';
 fallback.textContent=c.name.slice(0,16);
-
 const logo=logos.get(c.id);
 
 if(logo){
-const img=document.createElement("img");
+const img=document.createElement('img');
 img.src=logo;
-img.alt=c.name+" logo";
-img.loading="lazy";
-img.referrerPolicy="no-referrer";
+img.alt=c.name+' logo';
+img.loading='lazy';
+img.referrerPolicy='no-referrer';
 img.onerror=()=>img.replaceWith(fallback);
 art.append(img);
-}else{
-art.append(fallback);
-}
+}else art.append(fallback);
 
-const flag=document.createElement("span");
-flag.className="flag";
-flag.textContent=c.country||"TV";
+const flag=document.createElement('span');
+flag.className='flag';
+flag.textContent=c.country||'TV';
 art.append(flag);
 
-const details=document.createElement("div");
-details.className="details";
-
-const title=document.createElement("h3");
+const details=document.createElement('div');
+details.className='details';
+const title=document.createElement('h3');
 title.textContent=c.name;
-
-const meta=document.createElement("small");
-meta.textContent=
-c.countryName||c.country||"Worldwide";
-
-const actions=document.createElement("div");
-actions.className="actions";
-
-const watch=document.createElement("button");
-watch.className="watch";
-watch.textContent="▶ Watch";
+const meta=document.createElement('small');
+meta.textContent=c.countryName||c.country||'Worldwide';
+const actions=document.createElement('div');
+actions.className='actions';
+const watch=document.createElement('button');
+watch.className='watch';
+watch.textContent='▶ Watch';
 watch.onclick=()=>play(c);
-
-const fav=document.createElement("button");
-fav.className="save"+
-(favorites.has(c.id)?" saved":"");
-fav.textContent=favorites.has(c.id)?"♥":"♡";
-fav.setAttribute(
-"aria-label","Toggle favorite "+c.name
-);
+const fav=document.createElement('button');
+fav.className='save'+(favorites.has(c.id)?' saved':'');
+fav.textContent=favorites.has(c.id)?'♥':'♡';
+fav.setAttribute('aria-label','Save '+c.name);
 fav.onclick=()=>save(c);
-
 actions.append(watch,fav);
 details.append(title,meta,actions);
-card.append(art,details);
-
-return card;
+a.append(art,details);
+return a;
 }
 
 function rail(title,items,limit=25){
-const s=document.createElement("section");
-s.className="section";
-
-const heading=document.createElement("div");
-heading.className="heading";
-
-const h=document.createElement("h2");
+const s=document.createElement('section');
+s.className='section';
+const head=document.createElement('div');
+head.className='heading';
+const h=document.createElement('h2');
 h.textContent=title;
-
-const count=document.createElement("small");
-count.textContent=
-items.length.toLocaleString()+" channels";
-
-heading.append(h,count);
-s.append(heading);
-
+const count=document.createElement('small');
+count.textContent=items.length.toLocaleString()+' channels';
+head.append(h,count);
+s.append(head);
 if(!items.length){
-const empty=document.createElement("div");
-empty.className="empty";
-empty.textContent="No matching channels found.";
-s.append(empty);
+const e=document.createElement('div');
+e.className='empty';
+e.textContent='No matching channels found.';
+s.append(e);
 return s;
 }
-
-const r=document.createElement("div");
-r.className="rail";
-
-items.slice(0,limit).forEach(c=>{
-r.append(makeCard(c));
-});
-
+const r=document.createElement('div');
+r.className='rail';
+items.slice(0,limit).forEach(c=>r.append(card(c)));
 s.append(r);
 return s;
 }
 
-function intro(title,description){
-const box=document.createElement("div");
-box.className="channelIntro";
-
-const h=document.createElement("h2");
-h.textContent=title;
-
-const p=document.createElement("p");
-p.textContent=description;
-
-box.append(h,p);
-return box;
+function intro(){
+const x=document.createElement('div');
+x.className='intro';
+const h=document.createElement('h2');
+h.textContent=tab;
+const p=document.createElement('p');
+p.textContent=tab===NICOL?
+'Shopping, jewelry, fashion, westerns, family drama, romance, and music competitions — inspired by Nicol’s favorites. Specific shows are not guaranteed.':
+'Horror, ghost stories, paranormal mysteries, supernatural suspense, and thrillers.';
+x.append(h,p);
+return x;
 }
 
 function render(){
-const root=$("content");
+const root=$('content');
 root.replaceChildren();
-
 if(!channels.length)return;
 
-if(
-activeTab==="🏠 Home"&&
-!$("search").value
-){
+if(tab==='🏠 Home'&&!$('search').value){
 const groups=[
-["⭐ Featured Channels","⭐ Featured"],
-["🛍️ Nicol's Shopping Networks",
-"🛍️ Nicol's Shopping Networks"],
-["💖 Nicol's Station","💖 Nicol's Station"],
-["👻 Robinson's Horror Channel",
-"👻 Robinson's Horror Channel"],
-["❤️ Your Favorites","❤️ Favorites"],
-["🇺🇸 American Television","🇺🇸 USA"],
-["📍 News & Local TV","📍 Local News"],
-["🏆 Live Sports","🏆 Sports"],
-["🧠 Documentaries & Science","🧠 Documentaries"],
-["🎬 Movies & Classics","🎬 Movies"],
-["⭐ Reality & Entertainment","⭐ Reality"],
-["🌎 Explore the World","🌎 Worldwide"]
+["💖 Nicol's Station",NICOL],
+["👻 Robinson's Horror Channel",HORROR],
+['⭐ Featured Channels','⭐ Featured'],
+['❤️ Your Favorites','❤️ Favorites'],
+['🇺🇸 American Television','🇺🇸 USA'],
+['📍 News & Local TV','📍 Local News'],
+['🏆 Live Sports','🏆 Sports'],
+['🧠 Documentaries','🧠 Documentaries'],
+['🎬 Movies','🎬 Movies'],
+['⭐ Reality','⭐ Reality'],
+['🌎 Worldwide','🌎 Worldwide']
 ];
-
 for(const [title,key] of groups){
-const items=filtered(key);
-
-if(items.length){
-root.append(rail(title,items));
+const a=filtered(key);
+if(a.length)root.append(rail(title,a));
 }
-}
-
-$("status").textContent=
-channels.length.toLocaleString()+
-" public live channels indexed";
-
-$("more").classList.add("hidden");
+$('status').textContent=channels.length.toLocaleString()+
+' public live channels indexed';
+$('more').classList.add('hidden');
 return;
 }
 
-if(descriptions[activeTab]){
-root.append(
-intro(activeTab,descriptions[activeTab])
-);
-}
-
-const items=filtered(activeTab);
+if(tab===NICOL||tab===HORROR)root.append(intro());
+const items=filtered(tab);
 const shown=items.slice(0,(page+1)*80);
-
-root.append(rail(
-activeTab==="🏠 Home"?
-"Search Results":activeTab,
-shown,shown.length
-));
-
-$("status").textContent=
-items.length.toLocaleString()+
-" channels found — "+shown.length+" shown";
-
-$("more").classList.toggle(
-"hidden",shown.length>=items.length
-);
+root.append(rail(tab,shown,shown.length));
+$('status').textContent=items.length.toLocaleString()+
+' channels found — '+shown.length+' shown';
+$('more').classList.toggle('hidden',shown.length>=items.length);
 }
 
-$("search").oninput=()=>{
-page=0;render();
-};
-
-$("country").onchange=()=>{
-page=0;render();
-};
-
-$("topic").onchange=()=>{
-page=0;render();
-};
-
-$("sort").onchange=()=>{
-page=0;render();
-};
-
-$("more").onclick=()=>{
-page++;render();
-};
-
-$("explore").onclick=()=>{
-$("content").scrollIntoView({
-behavior:"smooth"
-});
-};
-
-$("stop").onclick=()=>{
+$('search').oninput=()=>{page=0;render()};
+$('country').onchange=()=>{page=0;render()};
+$('topic').onchange=()=>{page=0;render()};
+$('sort').onchange=()=>{page=0;render()};
+$('more').onclick=()=>{page++;render()};
+$('explore').onclick=()=>$('content').scrollIntoView({behavior:'smooth'});
+$('stop').onclick=()=>{
 clearPlayback();
-$("now").textContent="Playback stopped.";
-$("nextSource").classList.add("hidden");
+$('now').textContent='Playback stopped.';
+$('nextSource').classList.add('hidden');
 };
-
-$("nextSource").onclick=()=>{
+$('nextSource').onclick=()=>{
 if(!current)return;
-
 const sources=streams.get(current.id)||[];
 if(!sources.length)return;
-
 sourceIndex=(sourceIndex+1)%sources.length;
 playSource();
 };
-
-$("full").onclick=()=>{
-const v=$("player");
-
-if(v.requestFullscreen){
-v.requestFullscreen();
-}else if(v.webkitEnterFullscreen){
-v.webkitEnterFullscreen();
-}
+$('full').onclick=()=>{
+const v=$('player');
+if(v.requestFullscreen)v.requestFullscreen();
+else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
 };
 
 async function getJSON(file){
 const r=await fetch(API+file);
-
-if(!r.ok){
-throw Error("Failed to load "+file);
-}
-
+if(!r.ok)throw Error('Failed to load '+file);
 return r.json();
 }
 
 async function init(){
 navigation();
-
 try{
 const [cs,ss,cc,ll]=await Promise.all([
-getJSON("channels.json"),
-getJSON("streams.json"),
-getJSON("countries.json"),
-getJSON("logos.json")
+getJSON('channels.json'),
+getJSON('streams.json'),
+getJSON('countries.json'),
+getJSON('logos.json')
 ]);
-
-const names=new Map(
-cc.map(c=>[c.code,c.name])
-);
+const names=new Map(cc.map(c=>[c.code,c.name]));
 
 for(const s of ss){
-if(
-!s.channel||
-!s.url||
-!/^https?:\/\//i.test(s.url)
-)continue;
-
-if(!streams.has(s.channel)){
-streams.set(s.channel,[]);
-}
-
+if(!s.channel||!s.url||!/^https?:\/\//i.test(s.url))continue;
+if(!streams.has(s.channel))streams.set(s.channel,[]);
 streams.get(s.channel).push(s);
 }
 
 for(const l of ll){
-if(
-l.channel&&
-l.url&&
-/^https:\/\//i.test(l.url)
-){
-if(!logos.has(l.channel)||l.in_use){
-logos.set(l.channel,l.url);
-}
+if(l.channel&&l.url&&/^https:\/\//i.test(l.url)){
+if(!logos.has(l.channel)||l.in_use)logos.set(l.channel,l.url);
 }
 }
 
 channels=cs.filter(c=>
-!c.is_nsfw&&
-!c.closed&&
-streams.has(c.id)
+!c.is_nsfw&&!c.closed&&streams.has(c.id)
 ).map(c=>({
 ...c,
 countryName:names.get(c.country)||c.country
 }));
 
-for(
-const c of [...cc].sort(
-(a,b)=>a.name.localeCompare(b.name)
-)
-){
-$("country").add(
-new Option(c.name,c.code)
-);
+for(const c of [...cc].sort((a,b)=>a.name.localeCompare(b.name))){
+$('country').add(new Option(c.name,c.code));
 }
 
 const categories=[
-...new Set(
-channels.flatMap(c=>c.categories||[])
-)
+...new Set(channels.flatMap(c=>c.categories||[]))
 ].sort();
-
-for(const c of categories){
-$("topic").add(new Option(c,c));
-}
-
+for(const c of categories)$('topic').add(new Option(c,c));
 render();
-
 }catch(e){
-$("status").textContent=
-"Directory unavailable. Reload to retry. "+
-e.message;
+$('status').textContent=
+'Directory unavailable. Reload to retry. '+e.message;
 }
 }
-
 init();
 </script>
 </body>
