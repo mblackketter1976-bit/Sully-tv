@@ -597,9 +597,25 @@ const note=document.createElement("p");
 note.className="panel";
 note.textContent="Browse live channels. Exact program schedules are unavailable for many streams, so no show titles are guessed.";
 root.append(note);
+const toolsRow=document.createElement("div");
+toolsRow.className="demandSearch";
+const guideSearch=document.createElement("input");
+guideSearch.type="search";guideSearch.placeholder="Search the TV guide";guideSearch.setAttribute("aria-label","Search TV guide");
+const guideCountry=document.createElement("select");
+guideCountry.setAttribute("aria-label","Guide country");
+for(const opt of $("country").options)guideCountry.add(new Option(opt.text,opt.value));
+guideCountry.value=$("country").value;
+const count=document.createElement("span");count.className="muted";
+toolsRow.append(guideSearch,guideCountry,count);root.append(toolsRow);
 const grid=document.createElement("div");
 grid.className="guideList";
-channels.filter(c=>!unavailable.has(c.id)).slice(0,120).forEach(c=>{
+root.append(grid);
+const drawGuide=()=>{
+grid.replaceChildren();
+const query=guideSearch.value.trim().toLowerCase();
+const matches=channels.filter(c=>!unavailable.has(c.id)&&(!guideCountry.value||c.country===guideCountry.value)&&(!query||c.name.toLowerCase().includes(query)));
+count.textContent=matches.length.toLocaleString()+" channels · showing first "+Math.min(200,matches.length);
+matches.slice(0,200).forEach(c=>{
 const row=document.createElement("div");
 row.className="guideRow";
 const name=document.createElement("strong");name.textContent=c.name;
@@ -607,7 +623,10 @@ const details=document.createElement("small");details.textContent="Live stream �
 const watch=document.createElement("button");watch.className="watch";watch.textContent="▶ Watch";watch.onclick=()=>watchChannel(c);
 row.append(name,details,watch);grid.append(row);
 });
-root.append(grid);
+};
+guideSearch.addEventListener("input",drawGuide);
+guideCountry.addEventListener("change",drawGuide);
+drawGuide();
 }
 
 function remember(c){
@@ -739,7 +758,7 @@ playSource();
 }else{
 $("now").textContent="Playback unavailable for this channel.";
 if(current&&current.id){unavailable.add(current.id);saveState()}
-setNotice("The available streams could not be played on this device.");
+setNotice("The available streams could not be played on this device. Try another channel or refresh to retry.");
 }
 };
 
