@@ -64,3 +64,12 @@ Keep the generated token private. In a second PowerShell window, use the same to
 All requests require `Authorization: Bearer YOUR_TOKEN`. Default bind is `127.0.0.1:8765`; this intentionally is not accessible directly from a remote phone. A secure access design is required before linking the GitHub Pages site.
 
 **Current limitations:** The server stores video files on disk but holds its recording index only in memory. After restarting the Python server, existing video files remain on disk but will not appear in the API list. There is no stop-recording endpoint yet; jobs stop after the requested duration. No cross-device web UI, automatic startup, durable job catalog, HTTPS tunnel, or real-world stream test has been implemented. The current browser recorder remains the website's only active recording interface.
+
+
+## DVR progress update
+
+The DVR API now writes `recordings/index.json` and restores the catalog on restart. Video files without an index entry are also discovered. It provides `POST /api/recordings/{id}/stop` for a running job, in addition to download and deletion. Stop uses process termination; a stopped MPEG-TS file may still be playable, but this has not been verified on the target PC.
+
+**Important:** Restarting the Python server during an active FFmpeg recording does not necessarily stop the FFmpeg child process. The restored catalog marks previously active jobs `interrupted`, even if their child process continues independently. Manage the host process lifecycle before treating this as a production DVR.
+
+This code has been committed but has not yet been executed or end-to-end tested on the user's host. The website still uses its existing browser recorder until an authenticated, HTTPS-capable connection to the DVR is configured.
