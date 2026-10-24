@@ -175,6 +175,12 @@ header{position:relative}
 @media(min-width:900px){.categoryTiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:1200px){.categoryTiles{grid-template-columns:repeat(5,minmax(0,1fr))}}
 #content{scroll-margin-top:16px}
+
+#viewer[hidden]{display:none!important}
+#viewer{scroll-margin-top:16px;margin-bottom:20px}
+.art{position:relative}
+.livePill{position:absolute;top:8px;left:8px;z-index:2;background:#b62f46;color:white;border:1px solid #f3a1a5;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:.6px;padding:4px 6px;box-shadow:0 2px 7px #0008}
+.card .art img{max-width:90%;max-height:70px}
 </style>
 </head>
 <body>
@@ -191,7 +197,7 @@ header{position:relative}
 
 <main>
 <nav id="nav" class="categoryTiles" aria-label="Sully TV categories"></nav>
-<section class="hero">
+<section class="hero" id="viewer" hidden>
 <div class="welcome">
 <small>● FREE LIVE TV & ON DEMAND</small>
 <h1>Welcome to Sully TV</h1>
@@ -393,15 +399,19 @@ el.className="card";
 
 const art=document.createElement("div");
 art.className="art";
+const live=document.createElement("span");
+live.className="livePill";
+live.textContent="● LIVE";
+art.append(live);
 
 if(logos.has(c.id)){
 const img=document.createElement("img");
 img.src=logos.get(c.id);
 img.loading="lazy";
-img.onerror=()=>{art.textContent="📺"};
+img.onerror=()=>{img.remove();const fallback=document.createElement("span");fallback.textContent="📺";art.append(fallback)};
 art.append(img);
 }else{
-art.textContent="📺";
+const fallback=document.createElement("span");fallback.textContent="📺";art.append(fallback);
 }
 
 const info=document.createElement("div");
@@ -595,6 +605,7 @@ activeBlobUrl=null;
 function watchChannel(c){
 clearPlayer();
 current=c;
+$("viewer").hidden=false;
 remember(c);
 sourceList=streams.get(c.id)||[];
 sourceIndex=0;
@@ -603,7 +614,7 @@ $("now").textContent="Loading "+c.name;
 setNotice("");
 playSource();
 render();
-player.scrollIntoView({behavior:"smooth",block:"center"});
+$("viewer").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 function playSource(){
@@ -692,6 +703,7 @@ player.webkitEnterFullscreen();
 function stopVideo(){
 clearPlayer();
 current=null;
+$("viewer").hidden=true;
 $("now").textContent="Playback stopped.";
 setNotice("");
 }
@@ -1081,9 +1093,11 @@ play.textContent="▶ Play";
 play.onclick=()=>{
 clearPlayer();
 current={name:item.title,id:"recording:"+item.id};
+$("viewer").hidden=false;
 activeBlobUrl=URL.createObjectURL(item.blob);
 player.src=activeBlobUrl;
 player.play().catch(()=>{});
+$("viewer").scrollIntoView({behavior:"smooth",block:"start"});
 player.scrollIntoView({behavior:"smooth"});
 };
 
