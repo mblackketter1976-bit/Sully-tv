@@ -1,336 +1,515 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d19">
 <title>Sully TV</title>
 <style>
+:root{
+ color-scheme:dark;
+ --bg:#080d19;
+ --panel:#141e31;
+ --line:#293650;
+ --muted:#9facbf;
+ --blue:#57a7ff
+}
 *{box-sizing:border-box}
-body{margin:0;background:#101827;color:white;font-family:Arial,sans-serif}
-header{background:#1b2941;padding:18px;text-align:center}
-h1{font-size:34px;margin:0;color:#69caff}
-header p{color:#bbcbe0;margin:8px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#152138}
-button,select,input{background:#304362;color:white;border:1px solid #52688b;border-radius:10px;padding:12px;font-size:15px}
-button{cursor:pointer;touch-action:manipulation}
-button.active{background:#1976d2}
-main{max-width:1200px;margin:auto;padding:12px}
-video{display:block;width:100%;aspect-ratio:16/9;background:black;border-radius:12px}
-#now{padding:12px;color:#bde3ff}
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin:12px 0}
-.filters input,.filters select{width:100%}
-#status{padding:10px;color:#a6d7ff}
-#guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
-.card{background:#233551;border:1px solid #45648c;border-radius:15px;padding:13px;cursor:pointer;min-height:145px;display:flex;flex-direction:column;gap:9px;touch-action:manipulation}
-.card:active{background:#36557f}
-.card h3{font-size:17px;margin:0;overflow-wrap:anywhere}
-.card small{color:#b7c9df}
-.actions{display:flex;gap:6px;margin-top:auto}
-.actions button{padding:9px 7px;font-size:13px;flex:1}
-.watch{background:#166dc1}
-#more{display:none;width:100%;margin-top:18px}
-footer{text-align:center;color:#9eafc8;padding:25px;font-size:12px}
-@media(max-width:500px){
-#guide{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.card{padding:10px}
-.card h3{font-size:15px}
+body{
+ margin:0;background:var(--bg);color:#f4f7ff;
+ font:15px system-ui,Arial,sans-serif
+}
+button,input,select{font:inherit}
+button{cursor:pointer;color:inherit}
+header{
+ position:sticky;top:0;z-index:5;
+ background:#0a1020ee;backdrop-filter:blur(14px);
+ border-bottom:1px solid var(--line);
+ padding:12px max(16px,calc((100vw - 1300px)/2));
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap
+}
+.brand{
+ font-size:25px;font-weight:900;
+ letter-spacing:.5px;white-space:nowrap
+}
+.brand span{color:var(--blue)}
+.tag{font-size:11px;color:var(--muted)}
+nav{
+ display:flex;gap:7px;overflow-x:auto;
+ scrollbar-width:none;flex:1
+}
+nav button,.pill{
+ white-space:nowrap;border:1px solid var(--line);
+ background:#172238;border-radius:24px;padding:10px 14px
+}
+nav button.active{
+ background:#2469c4;border-color:#438cf0
+}
+.search{
+ min-width:160px;flex:1;max-width:300px;
+ background:#1a263b;border:1px solid #344562;
+ border-radius:24px;padding:11px 15px;color:white
+}
+main{max-width:1320px;margin:auto;padding:20px 16px 70px}
+.hero{
+ display:grid;
+ grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+ gap:24px;align-items:center;
+ background:radial-gradient(circle at 80% 20%,#24487d,#101a2d 55%,#101724);
+ border:1px solid var(--line);
+ border-radius:24px;padding:24px
+}
+.eyebrow{
+ font-size:12px;font-weight:800;
+ letter-spacing:2px;color:#83c0ff
+}
+.hero h1{font-size:clamp(27px,4vw,49px);margin:10px 0}
+.hero p{color:#c3d0e4;line-height:1.55}
+.playerwrap{min-width:0}
+video{
+ width:100%;aspect-ratio:16/9;background:#03050b;
+ border-radius:15px;display:block;
+ box-shadow:0 12px 40px #0008
+}
+.controls{
+ display:flex;align-items:center;gap:8px;
+ flex-wrap:wrap;margin-top:12px
+}
+.primary{
+ background:#2d7de1;border:0;border-radius:12px;
+ padding:12px 17px;font-weight:800
+}
+.secondary{
+ background:#253754;border:1px solid #456081;
+ border-radius:12px;padding:11px 14px
+}
+.now{
+ color:#c6d5e9;font-size:13px;overflow-wrap:anywhere
+}
+.filters{
+ display:flex;gap:10px;flex-wrap:wrap;margin:22px 0
+}
+.filters select{
+ min-width:160px;flex:1;background:#172238;
+ border:1px solid #354665;border-radius:12px;
+ padding:12px;color:white
+}
+.sectionhead{
+ display:flex;align-items:baseline;
+ justify-content:space-between;gap:10px;
+ margin:26px 0 12px
+}
+.sectionhead h2{margin:0;font-size:22px}
+.sectionhead small,.status{color:var(--muted)}
+.rail{
+ display:flex;gap:13px;overflow-x:auto;
+ padding:4px 2px 14px;scroll-snap-type:x proximity
+}
+.tile{
+ flex:0 0 215px;min-height:177px;
+ background:linear-gradient(140deg,#233c62,#162238 65%);
+ border:1px solid #354866;border-radius:17px;
+ padding:16px;display:flex;flex-direction:column;
+ justify-content:space-between;scroll-snap-align:start
+}
+.tile h3{
+ margin:0;font-size:17px;line-height:1.3;
+ overflow-wrap:anywhere
+}
+.tile small{color:#b7c9e1}
+.tile .actions{display:flex;gap:7px;margin-top:15px}
+.tile button{
+ border:0;border-radius:9px;padding:10px;font-weight:700
+}
+.tile .watch{background:#3b86e7;flex:1}
+.tile .fav{background:#354763;min-width:42px}
+.tile .fav.saved{color:#ff8eaa}
+.empty{
+ color:#a9b9d0;padding:25px;
+ background:#141e31;border-radius:12px
+}
+.status{padding:8px 0}
+.more{
+ display:block;margin:20px auto;padding:13px 30px;
+ background:#263b5d;border:1px solid #4c6a93;
+ border-radius:12px
+}
+.hidden{display:none!important}
+footer{
+ text-align:center;color:#8292aa;
+ font-size:12px;padding:30px
+}
+.notice{
+ font-size:12px;color:#91a2bb;margin-top:14px
+}
+@media(max-width:800px){
+ header{gap:10px}
+ .brand{font-size:22px}
+ nav{order:3;flex-basis:100%}
+ .search{max-width:none}
+ .hero{grid-template-columns:1fr;padding:17px}
+ .hero .playerwrap{grid-row:1}
+ .hero h1{font-size:27px}
+ .tile{flex-basis:180px;min-height:167px}
+ .sectionhead h2{font-size:19px}
+}
+@media(prefers-reduced-motion:reduce){
+ *{scroll-behavior:auto!important}
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 </head>
 <body>
 <header>
-<h1>📺 SULLY TV</h1>
-<p>Your world. Your channels. Your entertainment.</p>
+ <div>
+  <div class="brand">📺 SULLY <span>TV</span></div>
+  <div class="tag">Your world. Your channels.</div>
+ </div>
+ <input id="search" class="search" type="search"
+ placeholder="🔎 Search channels" aria-label="Search channels">
+ <nav id="nav" aria-label="Categories"></nav>
 </header>
-
-<nav id="nav"></nav>
-
 <main>
-<video id="player" controls playsinline></video>
-<div id="now">Select a channel from the guide below.</div>
-<button id="fullscreen">⛶ Fullscreen</button>
-
+<section class="hero">
+ <div>
+  <div class="eyebrow">FREE LIVE TELEVISION</div>
+  <h1>Something great is always on.</h1>
+  <p>Explore public live channels from around the world.
+  Find your favorites, discover something new,
+  and watch with one tap.</p>
+  <div class="controls">
+   <button class="primary" id="browse">Explore channels ↓</button>
+   <span class="now" id="now">Choose a channel below to start watching.</span>
+  </div>
+ </div>
+ <div class="playerwrap">
+  <video id="player" controls playsinline preload="none"></video>
+  <div class="controls">
+   <button class="secondary" id="full">⛶ Fullscreen</button>
+   <button class="secondary" id="stop">■ Stop</button>
+  </div>
+ </div>
+</section>
 <div class="filters">
-<input id="search" type="search" placeholder="🔎 Search channels">
-<select id="country"><option value="">🌎 All Countries</option></select>
-<select id="region"><option value="">All States / Regions</option></select>
-<select id="topic"><option value="">All Subcategories</option></select>
+ <select id="country" aria-label="Country">
+  <option value="">🌎 All countries</option>
+ </select>
+ <select id="region" aria-label="State or region">
+  <option value="">All states / regions</option>
+ </select>
+ <select id="topic" aria-label="Subcategory">
+  <option value="">All subcategories</option>
+ </select>
 </div>
-
-<div id="status">Loading free television channels...</div>
-<div id="guide"></div>
-<button id="more">Show More Channels</button>
+<div id="status" class="status" role="status">
+ Loading free channel directory…
+</div>
+<div id="content"></div>
+<button class="more hidden" id="more">Show more channels</button>
+<p class="notice">
+ Sully TV indexes publicly listed streams.
+ Some broadcasters block playback, restrict regions,
+ or go offline. No paid channels or subscription bypasses.
+</p>
 </main>
-
 <footer>
-Sully TV • Free public channel directory<br>
-Some broadcasts may be offline or restricted by region.
+ Made for free viewing • Powered by the public IPTV-org directory
 </footer>
-
 <script>
-"use strict";
+'use strict';
 
 const $=id=>document.getElementById(id);
 
-const categories={
-"🌎 All TV":[],
-"📍 Local TV":[],
-"🏆 Sports":["Football","Soccer","Basketball","Baseball","Hockey","Tennis","Golf","Motorsports","Boxing","Cricket"],
-"🧠 Documentaries":["Science","History","Nature","Space","Technology","Travel","Education"],
-"⭐ Reality":["Entertainment","Lifestyle","Cooking","Music","Shopping"],
-"👻 Carrie's Horror Channel":["Horror","Paranormal","Mystery","Thriller"],
-"❤️ Favorites":[]
+const sections={
+ '🏠 Home':[],
+ '🌎 Worldwide':[],
+ '📍 Local TV':[],
+ '🏆 Sports':['Football','Soccer','Basketball','Baseball','Hockey','Tennis','Golf','Motorsports','Boxing','Cricket'],
+ '🧠 Documentaries':['Science','History','Nature','Space','Technology','Travel','Education'],
+ '⭐ Reality':['Entertainment','Lifestyle','Cooking','Music','Shopping'],
+ '👻 Carrie’s Horror':['Horror','Paranormal','Mystery','Thriller'],
+ '❤️ Favorites':[]
 };
 
-let section="🌎 All TV";
+const patterns={
+ sports:/sport|football|soccer|basketball|baseball|hockey|tennis|golf|motorsport|boxing|mma|cricket/i,
+ docs:/documentary|science|history|nature|space|technology|education|travel|knowledge|discovery/i,
+ reality:/reality|entertainment|lifestyle|cooking|music|shopping|competition|talent/i,
+ horror:/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster/i,
+ local:/news|local|regional|general/i
+};
+
+let section='🏠 Home';
 let channels=[];
 let streams=new Map();
-let countries=new Map();
 let page=0;
 let hls=null;
+let active=null;
 let favorites=new Set();
 
 try{
-favorites=new Set(JSON.parse(localStorage.getItem("sully-tv-favs")||"[]"));
-}catch(e){}
+ favorites=new Set(JSON.parse(localStorage.getItem('sully-tv-favs')||'[]'));
+}catch{}
 
-const sports=/sport|football|soccer|basketball|baseball|hockey|tennis|golf|motorsport|boxing|mma|cricket/i;
-const docs=/documentary|science|history|nature|space|technology|education|travel|knowledge|discovery/i;
-const reality=/reality|entertainment|lifestyle|cooking|music|shopping|competition|talent/i;
-const horror=/horror|paranormal|ghost|haunt|thriller|mystery|terror|monster/i;
+const info=c=>[
+ c.name,c.id,c.country,c.countryName,
+ c.subdivision,c.city,...(c.categories||[])
+].filter(Boolean).join(' ');
 
-function renderNav(){
-const nav=$("nav");
-nav.replaceChildren();
-for(const name of Object.keys(categories)){
-const b=document.createElement("button");
-b.textContent=name;
-b.className=name===section?"active":"";
-b.onclick=()=>{
-section=name;
-page=0;
-$("search").value="";
-$("topic").value="";
-renderNav();
-renderTopics();
-renderGuide();
+function nav(){
+ const n=$('nav');
+ n.replaceChildren();
+ for(const name of Object.keys(sections)){
+  const b=document.createElement('button');
+  b.textContent=name;
+  b.className=section===name?'active':'';
+  b.onclick=()=>{
+   section=name;
+   page=0;
+   nav();
+   topics();
+   render();
+  };
+  n.append(b);
+ }
+}
+
+function topics(){
+ const t=$('topic');
+ t.replaceChildren(new Option('All subcategories',''));
+ for(const x of sections[section]){
+  t.add(new Option(x,x));
+ }
+}
+
+function regions(){
+ const s=$('region'),old=s.value;
+ s.replaceChildren(new Option('All states / regions',''));
+ const code=$('country').value;
+ const values=[...new Set(
+  channels.filter(c=>!code||c.country===code)
+  .map(c=>c.subdivision).filter(Boolean)
+ )].sort();
+ for(const x of values)s.add(new Option(x,x));
+ if(values.includes(old))s.value=old;
+}
+
+function category(c,s){
+ const txt=info(c);
+ if(s==='❤️ Favorites')return favorites.has(c.id);
+ if(s==='📍 Local TV')return patterns.local.test(txt)||!!c.subdivision;
+ if(s==='🏆 Sports')return patterns.sports.test(txt);
+ if(s==='🧠 Documentaries')return patterns.docs.test(txt);
+ if(s==='⭐ Reality')return patterns.reality.test(txt);
+ if(s==='👻 Carrie’s Horror')return patterns.horror.test(txt);
+ return true;
+}
+
+function filtered(s){
+ const q=$('search').value.toLowerCase().trim();
+ const country=$('country').value;
+ const region=$('region').value;
+ const topic=$('topic').value.toLowerCase();
+ return channels.filter(c=>
+  category(c,s)&&
+  (!country||c.country===country)&&
+  (!region||c.subdivision===region)&&
+  (!topic||info(c).toLowerCase().includes(topic))&&
+  (!q||info(c).toLowerCase().includes(q))
+ );
+}
+
+function stop(){
+ if(hls){
+  hls.destroy();
+  hls=null;
+ }
+ const v=$('player');
+ v.pause();
+ v.removeAttribute('src');
+ v.load();
+}
+
+function play(c){
+ const source=streams.get(c.id);
+ if(!source)return;
+ stop();
+ active=c;
+ $('now').textContent='Loading: '+c.name;
+ const v=$('player'),url=source.url;
+ const failed=()=>{
+  $('now').textContent=c.name+' — stream unavailable here. Try another channel.';
+ };
+ if(/\.m3u8(?:\?|$)/i.test(url)&&window.Hls&&Hls.isSupported()){
+  hls=new Hls();
+  hls.loadSource(url);
+  hls.attachMedia(v);
+  hls.on(Hls.Events.MANIFEST_PARSED,()=>{
+   v.play().catch(()=>{});
+  });
+  hls.on(Hls.Events.ERROR,(_,d)=>{
+   if(d.fatal)failed();
+  });
+ }else{
+  v.src=url;
+  v.play().catch(()=>{});
+ }
+ v.onerror=failed;
+ v.onplaying=()=>{
+  $('now').textContent='Now playing: '+c.name;
+ };
+ v.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function favorite(c){
+ favorites.has(c.id)?favorites.delete(c.id):favorites.add(c.id);
+ try{
+  localStorage.setItem('sully-tv-favs',JSON.stringify([...favorites]));
+ }catch{}
+ render();
+}
+
+function tile(c){
+ const a=document.createElement('article');
+ a.className='tile';
+ const top=document.createElement('div');
+ const h=document.createElement('h3');
+ const meta=document.createElement('small');
+ h.textContent=c.name;
+ meta.textContent=[
+  c.countryName||c.country,c.subdivision,c.city
+ ].filter(Boolean).join(' • ');
+ top.append(h,meta);
+ const actions=document.createElement('div');
+ actions.className='actions';
+ const watch=document.createElement('button');
+ watch.className='watch';
+ watch.textContent='▶ Watch';
+ watch.onclick=()=>play(c);
+ const fav=document.createElement('button');
+ fav.className='fav'+(favorites.has(c.id)?' saved':'');
+ fav.textContent=favorites.has(c.id)?'♥':'♡';
+ fav.setAttribute('aria-label','Toggle favorite for '+c.name);
+ fav.onclick=()=>favorite(c);
+ actions.append(watch,fav);
+ a.append(top,actions);
+ return a;
+}
+
+function rail(title,items,limit=24){
+ const block=document.createElement('section');
+ const head=document.createElement('div');
+ head.className='sectionhead';
+ const h=document.createElement('h2');
+ h.textContent=title;
+ const count=document.createElement('small');
+ count.textContent=items.length.toLocaleString()+' channels';
+ head.append(h,count);
+ block.append(head);
+ if(!items.length){
+  const empty=document.createElement('div');
+  empty.className='empty';
+  empty.textContent='No channels found in this section.';
+  block.append(empty);
+  return block;
+ }
+ const r=document.createElement('div');
+ r.className='rail';
+ for(const c of items.slice(0,limit))r.append(tile(c));
+ block.append(r);
+ return block;
+}
+
+function render(){
+ const root=$('content');
+ root.replaceChildren();
+ if(!channels.length){
+  $('status').textContent='Loading free channel directory…';
+  $('more').classList.add('hidden');
+  return;
+ }
+ if(section==='🏠 Home'&&!$('search').value&&!$('topic').value){
+  const groups=[
+   ['❤️ Your Favorites','❤️ Favorites'],
+   ['🏆 Sports','🏆 Sports'],
+   ['🧠 Documentaries','🧠 Documentaries'],
+   ['⭐ Reality','⭐ Reality'],
+   ['👻 Carrie’s Horror','👻 Carrie’s Horror'],
+   ['📍 Local TV','📍 Local TV'],
+   ['🌎 Discover Live TV','🌎 Worldwide']
+  ];
+  for(const [title,key] of groups){
+   const items=filtered(key);
+   if(items.length)root.append(rail(title,items));
+  }
+  $('status').textContent=channels.length.toLocaleString()+' public channels indexed';
+  $('more').classList.add('hidden');
+  return;
+ }
+ const items=filtered(section);
+ const visible=items.slice(0,(page+1)*80);
+ root.append(rail(
+  section==='🏠 Home'?'Search results':section,
+  visible,visible.length
+ ));
+ $('status').textContent=items.length.toLocaleString()+
+  ' matching channels ('+visible.length+' shown)';
+ $('more').classList.toggle('hidden',visible.length>=items.length);
+}
+
+$('browse').onclick=()=>{
+ $('content').scrollIntoView({behavior:'smooth'});
 };
-nav.append(b);
-}
-}
-
-function renderTopics(){
-const select=$("topic");
-select.replaceChildren(new Option("All Subcategories",""));
-for(const topic of categories[section]){
-select.add(new Option(topic,topic));
-}
-}
-
-function renderRegions(){
-const select=$("region");
-const old=select.value;
-select.replaceChildren(new Option("All States / Regions",""));
-const code=$("country").value;
-const regions=[...new Set(
-channels.filter(c=>!code||c.country===code)
-.map(c=>c.subdivision).filter(Boolean)
-)].sort();
-for(const r of regions)select.add(new Option(r,r));
-if(regions.includes(old))select.value=old;
-}
-
-function matches(c){
-const info=[
-c.name,
-c.id,
-c.country,
-c.countryName,
-c.subdivision,
-c.city,
-...(c.categories||[])
-].filter(Boolean).join(" ").toLowerCase();
-
-if(section==="❤️ Favorites"&&!favorites.has(c.id))return false;
-if(section==="🏆 Sports"&&!sports.test(info))return false;
-if(section==="🧠 Documentaries"&&!docs.test(info))return false;
-if(section==="⭐ Reality"&&!reality.test(info))return false;
-if(section==="👻 Carrie's Horror Channel"&&!horror.test(info))return false;
-if(section==="📍 Local TV"&&!(/news|local|regional|general/i.test(info)||c.subdivision))return false;
-
-if($("country").value&&c.country!==$("country").value)return false;
-if($("region").value&&c.subdivision!==$("region").value)return false;
-if($("topic").value&&!info.includes($("topic").value.toLowerCase()))return false;
-if($("search").value&&!info.includes($("search").value.toLowerCase().trim()))return false;
-return true;
-}
-
-function playChannel(c){
-const source=streams.get(c.id);
-if(!source)return;
-
-const video=$("player");
-
-if(hls){
-hls.destroy();
-hls=null;
-}
-
-video.pause();
-video.removeAttribute("src");
-video.load();
-
-$("now").textContent="Now playing: "+c.name;
-
-const url=source.url;
-
-if(/\.m3u8(?:\?|$)/i.test(url)&&window.Hls&&Hls.isSupported()){
-hls=new Hls();
-hls.loadSource(url);
-hls.attachMedia(video);
-hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-video.play().catch(()=>{});
-});
-hls.on(Hls.Events.ERROR,(_,data)=>{
-if(data.fatal)$("now").textContent=c.name+" — Stream unavailable. Try another channel.";
-});
-}else{
-video.src=url;
-video.play().catch(()=>{});
-}
-
-video.onerror=()=>{
-$("now").textContent=c.name+" — This stream cannot play here.";
+$('full').onclick=()=>{
+ const v=$('player');
+ if(v.requestFullscreen)v.requestFullscreen();
+ else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
 };
-
-video.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function toggleFavorite(c){
-if(favorites.has(c.id))favorites.delete(c.id);
-else favorites.add(c.id);
-try{
-localStorage.setItem("sully-tv-favs",JSON.stringify([...favorites]));
-}catch(e){}
-renderGuide();
-}
-
-function makeCard(c){
-const card=document.createElement("article");
-card.className="card";
-card.tabIndex=0;
-card.setAttribute("role","button");
-card.setAttribute("aria-label","Watch "+c.name);
-
-const title=document.createElement("h3");
-title.textContent=c.name;
-
-const meta=document.createElement("small");
-meta.textContent=[c.countryName||c.country,c.subdivision,c.city].filter(Boolean).join(" • ");
-
-const actions=document.createElement("div");
-actions.className="actions";
-
-const watch=document.createElement("button");
-watch.className="watch";
-watch.textContent="▶ Watch";
-watch.onclick=e=>{
-e.stopPropagation();
-playChannel(c);
+$('stop').onclick=()=>{
+ stop();
+ $('now').textContent='Playback stopped.';
 };
+$('search').oninput=()=>{page=0;render()};
+$('country').onchange=()=>{page=0;regions();render()};
+$('region').onchange=()=>{page=0;render()};
+$('topic').onchange=()=>{page=0;render()};
+$('more').onclick=()=>{page++;render()};
 
-const fav=document.createElement("button");
-fav.textContent=favorites.has(c.id)?"♥ Saved":"♡ Save";
-fav.onclick=e=>{
-e.stopPropagation();
-toggleFavorite(c);
-};
-
-actions.append(watch,fav);
-card.append(title,meta,actions);
-
-card.onclick=e=>{
-if(!e.target.closest("button"))playChannel(c);
-};
-
-card.onkeydown=e=>{
-if((e.key==="Enter"||e.key===" ")&&e.target===card){
-e.preventDefault();
-playChannel(c);
-}
-};
-
-return card;
+async function get(file){
+ const r=await fetch('https://iptv-org.github.io/api/'+file);
+ if(!r.ok)throw Error(file+' unavailable');
+ return r.json();
 }
 
-function renderGuide(){
-const found=channels.filter(matches);
-const visible=found.slice(0,(page+1)*80);
-const fragment=document.createDocumentFragment();
-
-for(const c of visible)fragment.append(makeCard(c));
-
-$("guide").replaceChildren(fragment);
-$("status").textContent=found.length.toLocaleString()+" channels found — "+visible.length+" shown";
-$("more").style.display=visible.length<found.length?"block":"none";
+async function init(){
+ nav();
+ topics();
+ try{
+  const [cs,ss,cc]=await Promise.all([
+   get('channels.json'),
+   get('streams.json'),
+   get('countries.json')
+  ]);
+  const names=new Map(cc.map(c=>[c.code,c.name]));
+  for(const s of ss){
+   if(s.channel&&s.url&&/^https?:\/\//i.test(s.url)&&!streams.has(s.channel)){
+    streams.set(s.channel,s);
+   }
+  }
+  channels=cs.filter(c=>!c.is_nsfw&&streams.has(c.id))
+   .map(c=>({...c,countryName:names.get(c.country)||c.country}));
+  for(const c of [...cc].sort((a,b)=>a.name.localeCompare(b.name))){
+   $('country').add(new Option(c.name,c.code));
+  }
+  regions();
+  render();
+ }catch(e){
+  $('status').textContent=
+   'Could not load channel directory. Check connection and reload. '+e.message;
+ }
 }
-
-$("search").oninput=()=>{page=0;renderGuide()};
-$("country").onchange=()=>{page=0;renderRegions();renderGuide()};
-$("region").onchange=()=>{page=0;renderGuide()};
-$("topic").onchange=()=>{page=0;renderGuide()};
-$("more").onclick=()=>{page++;renderGuide()};
-
-$("fullscreen").onclick=()=>{
-const v=$("player");
-if(v.requestFullscreen)v.requestFullscreen();
-else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
-};
-
-async function getJSON(file){
-const response=await fetch("https://iptv-org.github.io/api/"+file);
-if(!response.ok)throw Error(file+" unavailable");
-return response.json();
-}
-
-async function initialize(){
-renderNav();
-renderTopics();
-
-try{
-const [allChannels,allStreams,allCountries]=await Promise.all([
-getJSON("channels.json"),
-getJSON("streams.json"),
-getJSON("countries.json")
-]);
-
-countries=new Map(allCountries.map(c=>[c.code,c.name]));
-
-for(const s of allStreams){
-if(s.channel&&s.url&&/^https?:\/\//i.test(s.url)&&!streams.has(s.channel)){
-streams.set(s.channel,s);
-}
-}
-
-channels=allChannels
-.filter(c=>!c.is_nsfw&&streams.has(c.id))
-.map(c=>({...c,countryName:countries.get(c.country)||c.country}));
-
-for(const c of [...allCountries].sort((a,b)=>a.name.localeCompare(b.name))){
-$("country").add(new Option(c.name,c.code));
-}
-
-renderRegions();
-renderGuide();
-
-}catch(error){
-$("status").textContent="Channel directory could not load. Check your internet connection and refresh. "+error.message;
-}
-}
-
-initialize();
+init();
 </script>
 </body>
 </html>
