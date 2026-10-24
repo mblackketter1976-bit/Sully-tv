@@ -37,7 +37,9 @@ small{color:#b7c6dc}
 <select id="topic"><option value="">All subcategories</option></select>
 <p id="status">Loading free TV directory...</p>
 <div id="results"></div>
-</main>
+</m
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+ain>
 <script>
 const sections={
 "Worldwide":[],
@@ -113,15 +115,96 @@ localStorage.setItem("sullyFavorites",JSON.stringify(favorites));show();
 row.append(fav);d.append(row);el("results").append(d);
 });
 }
+
+let hlsPlayer=null;
+let playToken=0;
+
 function play(c){
-let stream=streams[c.id]?.[0];
-el("now").textContent=c.name;
-let v=el("player");v.pause();v.removeAttribute("src");v.load();
-if(!stream){el("now").textContent+=" — no stream";return}
-v.src=stream.url;
-v.play().catch(()=>{el("now").textContent+=" — playback unavailable in this browser"});
-window.scrollTo(0,0);
+  const v=el("player");
+  const feeds=streams[c.id]||[];
+  const token=++playToken;
+  let index=0;
+
+  if(hlsPlayer){
+    hlsPlayer.destroy();
+    hlsPlayer=null;
+  }
+
+  v.pause();
+  v.removeAttribute("src");
+  v.load();
+  el("now").textContent="Loading "+c.name+"...";
+
+  function nextFeed(){
+    if(token!==playToken)return;
+
+    if(hlsPlayer){
+      hlsPlayer.destroy();
+      hlsPlayer=null;
+    }
+
+    v.pause();
+    v.removeAttribute("src");
+    v.load();
+
+    if(index>=feeds.length){
+      el("now").textContent=
+        c.name+" — No playable stream available";
+      return;
+    }
+
+    const feed=feeds[index++];
+    const url=feed.url;
+    el("now").textContent=
+      "Loading "+c.name+" (feed "+index+"/"+feeds.length+")";
+
+    const fallback=()=>{
+      if(token===playToken)nextFeed();
+    };
+
+    v.onerror=fallback;
+
+    if(/\.m3u8(?:\?|$)/i.test(url) &&
+       window.Hls && Hls.isSupported()){
+
+      const h=new Hls({
+        enableWorker:true,
+        maxBufferLength:20
+      });
+
+      hlsPlayer=h;
+
+      h.on(Hls.Events.ERROR,(_,data)=>{
+        if(data.fatal && hlsPlayer===h)fallback();
+      });
+
+      h.on(Hls.Events.MANIFEST_PARSED,()=>{
+        if(token!==playToken)return;
+        v.play().catch(()=>{
+          el("now").textContent=
+            c.name+" — Tap play on the video";
+        });
+      });
+
+      h.loadSource(url);
+      h.attachMedia(v);
+
+    }else{
+      v.src=url;
+      v.play().catch(fallback);
+    }
+  }
+
+  v.onplaying=()=>{
+    if(token===playToken)
+      el("now").textContent="Now playing: "+c.name;
+  };
+
+  nextFeed();
+  window.scrollTo(0,0);
 }
+
+
 function full(){
 let v=el("player");
 if(v.requestFullscreen)v.requestFullscreen();
