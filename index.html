@@ -46,8 +46,8 @@ video{display:block;width:100%;aspect-ratio:16/9;background:black}
 .filters{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}
 .filters select{flex:1;min-width:125px}
 h2{font-size:21px}
-.rail{display:flex;gap:12px;overflow-x:auto;padding:6px 0 15px}
-.card{flex:0 0 165px;background:#17263f;border:1px solid #344d70;border-radius:15px;overflow:hidden}
+.rail{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;padding:6px 0 15px;overflow:visible}
+.card{min-width:0;background:#17263f;border:1px solid #344d70;border-radius:15px;overflow:hidden}
 .art{height:100px;background:linear-gradient(135deg,#315380,#17253e);display:flex;align-items:center;justify-content:center;padding:12px}
 .art img{max-width:100%;max-height:75px;object-fit:contain}
 .info{padding:11px}
@@ -58,6 +58,8 @@ h2{font-size:21px}
 .save{background:#364c6a;padding:10px;border-radius:9px;min-width:44px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .grid .card{width:auto}
+@media(min-width:850px){.rail{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1150px){.rail{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .more{display:block;margin:20px auto;padding:13px 24px;background:#2a4770;border-radius:10px}
 .panel{background:#17263e;border:1px solid #344d70;border-radius:13px;padding:16px;margin:12px 0}
 .panel p{color:#b9cce3;line-height:1.5}
@@ -77,7 +79,8 @@ footer{text-align:center;color:#9caec8;padding:30px;font-size:12px}
 #search{width:46%}
 .welcome h1{font-size:23px}
 .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.card{flex-basis:145px}
+.rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{min-width:0}
 .controls{gap:6px}
 .controls button{padding:10px;font-size:13px}
 }
