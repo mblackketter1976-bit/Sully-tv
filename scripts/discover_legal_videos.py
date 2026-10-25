@@ -18,10 +18,9 @@ def main():
     known={i["id"] for i in items}
     today=datetime.now(timezone.utc).date().isoformat()
     # Query file namespace for video files, rotating categories across runs.
-    terms=["filetype:video NASA","filetype:video nature","filetype:video animation","filetype:video science","filetype:video history","filetype:video documentary"]
+    terms=["NASA","nature","animation","science","history","documentary"]
     offset=int(os.environ.get("GITHUB_RUN_NUMBER","0"))%len(terms)
-    query=terms[offset]
-    found=request({"action":"query","generator":"search","gsrsearch":query,"gsrnamespace":6,"gsrlimit":35,"prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiextmetadatafilter":"LicenseShortName|LicenseUrl|Artist|UsageTerms|Copyrighted","format":"json","formatversion":2})
+    query=terms[offset]+" filetype:video"\n    found=request({"action":"query","generator":"search","gsrsearch":query,"gsrnamespace":6,"gsrlimit":50,"prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiextmetadatafilter":"LicenseShortName|LicenseUrl|Artist|UsageTerms|Copyrighted","format":"json","formatversion":2})
     added=0
     for page in found.get("query",{}).get("pages",[]):
         infos=page.get("imageinfo") or []
@@ -32,7 +31,7 @@ def main():
         if license_name not in ALLOWED:continue
         if get("Copyrighted").lower()=="true" and license_name in {"pd","public domain"}:continue
         mime=info.get("mime","")
-        if not mime.startswith("video/"):continue
+        if mime not in {"video/webm","video/mp4","video/ogg"}:continue
         url=info.get("url","")
         if not url.startswith("https://upload.wikimedia.org/"):continue
         pid="commons:"+str(page["pageid"])
@@ -44,5 +43,5 @@ def main():
     data["items"]=items[:3000]
     data["lastDiscovery"]=today
     PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
-    print("Added",added,"videos; total",len(items))
+    print("Query:",query,"Added",added,"videos; total",len(items))
 if __name__=="__main__":main()
