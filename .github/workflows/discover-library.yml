@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '17 */6 * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/discover_library.py'
+      - '.github/workflows/discover-library.yml'
 permissions:
   contents: write
 concurrency:
