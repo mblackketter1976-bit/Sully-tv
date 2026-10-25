@@ -1332,6 +1332,37 @@ function sullyDirectory(){
  more.onclick=()=>{count+=60;draw()};
  draw();
 }
+// Refresh the active room when the server-side discovery catalog changes.
+// One lightweight check per minute, never a blocking wait between user searches.
+let sullyDiscoveryRoomKey="";
+let sullyDiscoverySignature="";
+let sullyDiscoveryBusy=false;
+function sullyActiveDiscoveryKey(){
+ const opts=sullySubcategories[tab];
+ return tab+"|"+(tab==="🎬 Movies"?sullyMovieGenre:(opts?(sullySubSelection[tab]||opts[0][0]):""))+"|"+(sullyEnglishOnly?"en":sullySelectedLanguage);
+}
+async function sullyCheckNewCatalog(){
+ if(document.hidden||sullyDiscoveryBusy||tab==="🏠 Home")return;
+ const key=sullyActiveDiscoveryKey();
+ if(key!==sullyDiscoveryRoomKey){sullyDiscoveryRoomKey=key;sullyDiscoverySignature="";}
+ sullyDiscoveryBusy=true;
+ try{
+  const response=await fetch("./data/legal-library.json?live="+Date.now(),{cache:"no-store"});
+  if(!response.ok)return;
+  const data=await response.json();
+  const signature=JSON.stringify((data.items||[]).map(x=>[x.id,x.status,x.kind]));
+  if(!sullyDiscoverySignature){sullyDiscoverySignature=signature;return;}
+  if(signature!==sullyDiscoverySignature){
+   sullyDiscoverySignature=signature;
+   sullyCatalogCache=Promise.resolve(data);
+   sullyPlayableCache=null;
+   const active=sullyActiveDiscoveryKey();
+   if(active===key)render();
+  }
+ }catch(e){console.warn("Catalog refresh unavailable",e)}
+ finally{sullyDiscoveryBusy=false}
+}
+setInterval(sullyCheckNewCatalog,60000);
 function render(){
 const root=$("content");
 root.innerHTML="";
