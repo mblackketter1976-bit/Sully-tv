@@ -382,6 +382,20 @@ header .top{flex-wrap:wrap}
 .sullyInventoryTotal{font-size:clamp(19px,2.5vw,28px);padding-bottom:12px;border-bottom:1px solid #6c7890}.sullyInventoryBreakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}.sullyInventoryStat{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;background:#0d203b;font-size:14px;color:#dce8f8}.sullyInventoryStat strong{font-size:26px;color:#f5d18c}
 .sullyLibraryEntry{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.sullyLibraryPoster{width:140px;max-width:34%;aspect-ratio:16/9;flex-shrink:0;border-radius:9px;overflow:hidden;background:#0c1a30;display:grid;place-items:center}.sullyLibraryPoster img{width:100%;height:100%;object-fit:cover}.sullyLibraryPoster.sullyNoThumbnail:after{content:"🎬";font-size:34px}.sullyLibraryEntryInfo{flex:1 1 145px;min-width:0}@media(max-width:460px){.sullyLibraryPoster{width:100px}}
 </style>
+<style id="sullyRoomPolish">
+.sullyRoomHeading{margin:10px 0 12px;padding:18px 22px}
+.sullyRoomHeading h1{margin:0 0 6px;font-size:clamp(1.25rem,3vw,1.85rem)}
+.sullyRoomHeading p{margin:0;opacity:.8}
+.sullyRoomLanguages button,.sullyRoomLanguages select{min-height:42px;border-radius:9px;padding:8px 12px}
+.sullyRoomLiveDisclosure{margin:18px 0;padding:14px;border:1px solid #53647e;border-radius:15px;background:#15243b}
+.sullyRoomLiveDisclosure summary{cursor:pointer;font-size:1.05rem;font-weight:700;padding:7px 3px}
+.sullyRoomLiveDisclosure[open] summary{margin-bottom:12px}
+.sullyCompactRoomRail{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:12px;overflow:visible}
+.sullyCompactRoomRail .card{min-width:0!important;width:auto!important}
+.sullyCompactRoomRail .card button{font-size:.86rem}
+.sullyFanHub{margin:16px 0}
+@media(max-width:560px){.sullyCompactRoomRail{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sullyCompactRoomRail .card{font-size:.88rem}}
+</style>
 </head>
 <body>
 <header>
@@ -1139,11 +1153,18 @@ function sullyFanLive(){
  const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
  const re=rules[tab];
  const matches=channels.filter(c=>!unavailable.has(c.id)&&streams.has(c.id)&&sullyLanguageMatches(c)&&re.test(sullyChannelText(c)));
- const h=document.createElement("h2");h.textContent="🔴 Live "+hub.name+" TV";root.append(h);
- const p=document.createElement("p");p.className="muted";p.textContent=matches.length?matches.length+" matching live channels available from the public TV directory. Tap Watch to play.":"No matching live channels are currently listed in the public TV directory. Official video searches are below.";root.append(p);
- if(matches.length){const rail=document.createElement("div");rail.className="rail";matches.slice(0,60).forEach(c=>rail.append(card(c)));root.append(rail)}
+ const details=document.createElement("details");details.className="sullyRoomLiveDisclosure";
+ const summary=document.createElement("summary");summary.textContent="📡 Live "+hub.name+" channels ("+matches.length+")";details.append(summary);
+ const note=document.createElement("p");note.className="muted";note.textContent="Live public streams; listings depend on the provider. Open this section to browse.";details.append(note);
+ if(matches.length){
+  const rail=document.createElement("div");rail.className="rail sullyCompactRoomRail";
+  matches.slice(0,48).forEach(c=>rail.append(card(c)));
+  details.append(rail);
+ }else{
+  const empty=document.createElement("p");empty.textContent="No matching live channels with the selected language information.";details.append(empty);
+ }
+ root.append(details);
 }
-
 
 function sullyNetflixStandup(){
  const root=$("content"),panel=document.createElement("section");panel.className="sullyFanHub";
@@ -1258,7 +1279,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanLive();return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
