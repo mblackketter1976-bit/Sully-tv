@@ -1275,7 +1275,7 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
-if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
+if(tab==="☰ More Channels"){$("filters").hidden=true;try{sullyDirectory()}catch(e){console.error("Directory error",e);const p=document.createElement("p");p.className="panel";p.textContent="Channel directory unavailable: "+e.message;root.append(p)}return;}
 
 if(tab==="🏠 Home"){
  $("filters").hidden=true;
@@ -1329,7 +1329,8 @@ if(tab==="🎬 Movies"||tab==="🇺🇸 USA"||tab==="🌎 Worldwide"||sullySubca
  sullyPlayableGenre(root,genre,tab==="🎬 Movies"?"movie":tab==="🇺🇸 USA"?"usa":tab==="🌎 Worldwide"?"all":"genre");
 }
 
-const list=filtered();
+let list=[];
+try{list=filtered()}catch(e){console.error("Room filter error",tab,e);const warning=document.createElement("p");warning.className="panel";warning.textContent="Unable to filter this room: "+e.message;root.append(warning)}
 $("status").textContent=list.length.toLocaleString()+" channels";
 
 if(tab==="🏠 Home"){
