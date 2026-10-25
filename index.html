@@ -351,6 +351,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullySearchForm{position:relative}.sullySuggestions{position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:100;background:#142541;border:1px solid #d5b777;border-radius:12px;box-shadow:0 14px 28px #000a;max-height:360px;overflow-y:auto}.sullySuggestion{display:flex;align-items:center;gap:10px;width:100%;padding:12px;background:transparent;border-bottom:1px solid #344b6a;text-align:left;min-height:49px}.sullySuggestion:last-child{border-bottom:0}.sullySuggestion:focus-visible,.sullySuggestion:active{background:#355781}.sullySuggestion img{width:36px;height:30px;object-fit:contain}.sullySuggestion span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sullySuggestion small{font-size:10px;color:#f2ce78}
 .sullyTitleResults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 20px}.sullyTitleResults a{display:block;background:#244c78;color:#fff;text-decoration:none;border:1px solid #d5b777;border-radius:12px;padding:15px 12px;font-size:14px;font-weight:800}.sullyTitleResults a:focus-visible{outline:3px solid #f3d38a;outline-offset:2px}
 .sullyServicePrefs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}.sullyServicePrefs label{display:flex;align-items:center;gap:4px;background:#263d5e;color:white;border:1px solid #647c9a;padding:9px;border-radius:10px;font-size:13px}.sullyServicePrefs input{width:17px;height:17px;accent-color:#f0c76b}.sullyServiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyServiceCard{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #657d9c;border-radius:12px;background:#1a304f;color:white}.sullyServiceStatus{font-size:11px;color:#e9d29c}.sullyServiceActions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}.sullyServiceActions a{padding:9px;border-radius:8px;background:#315d8c;border:1px solid #bdab80;color:white;text-decoration:none;font-size:12px;font-weight:700}.sullyServiceActions a:last-child:not(:first-child){background:#664622}@media(min-width:750px){.sullyServiceGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.sullyServiceActions button{padding:11px 13px;border-radius:9px;background:#315d8c;color:#fff;border:1px solid #bdab80;font-weight:800}
 </style>
 </head>
 <body>
@@ -571,11 +572,20 @@ function sullySuggest(){
 function sullyTitleSearch(q){
  const root=$("content");root.replaceChildren();$("more").hidden=true;$("filters").hidden=true;
  const h=document.createElement("h2");h.textContent="🔎 Search results for “"+q+"”";root.append(h);
- const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&c.name.toLowerCase().includes(q.toLowerCase())).slice(0,30);
+ const liveTitle=document.createElement("h2");liveTitle.textContent="🔴 LIVE TV — FIRST";root.append(liveTitle);
+ const liveInfo=document.createElement("p");liveInfo.className="muted";liveInfo.textContent="Sully TV checks live channels before streaming services. Individual program schedules aren't indexed yet.";root.append(liveInfo);
+ const needle=q.toLowerCase();
+ const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&c.name.toLowerCase().includes(needle)).sort((a,b)=>Number(b.name.toLowerCase()===needle)-Number(a.name.toLowerCase()===needle)||Number(b.name.toLowerCase().startsWith(needle))-Number(a.name.toLowerCase().startsWith(needle))).slice(0,30);
  if(matches.length){
-  const label=document.createElement("h3");label.textContent="🔴 Matching live channels";root.append(label);
+  const label=document.createElement("h3");label.textContent="▶ Matching live channels ("+matches.length+")";root.append(label);
   const rail=document.createElement("div");rail.className="rail";matches.forEach(c=>rail.append(card(c)));root.append(rail);
+ }else{
+  const p=document.createElement("p");p.className="panel";p.textContent="No live channel names match “"+q+"”. The show could still be airing on TV; program-by-program listings aren't searchable yet.";root.append(p);
  }
+ const liveActions=document.createElement("div");liveActions.className="sullyServiceActions";
+ [["📺 Browse Live TV","🇺🇸 USA"],["📋 TV Guide","📋 TV Guide"],["🎬 Movie Channels","🎬 Movies"]].forEach(([label,target])=>{const btn=document.createElement("button");btn.type="button";btn.textContent=label;btn.onclick=()=>sullyCategory(target);liveActions.append(btn)});
+ root.append(liveActions);
+ const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
  const h2=document.createElement("h3");h2.textContent="🎬 Find this movie or show";root.append(h2);
  const note=document.createElement("p");note.className="muted";note.textContent="Search these services for the exact title. Availability, subscriptions, and playback depend on the provider. Results open in their own websites or apps.";root.append(note);
 
