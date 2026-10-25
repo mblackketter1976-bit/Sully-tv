@@ -962,60 +962,50 @@ function sullyMovieGenreMatch(c){
  if(!match)return true;
  return match[1].test(sullyChannelText(c));
 }
-function sullyRoomOnDemandBrowse(){
- const root=$("content"),wrap=document.createElement("section");wrap.className="sullyMovieDiscovery";
- const opts=sullySubcategories[tab];
- const chosenSub=opts?(sullySubSelection[tab]||opts[0][0]):"";
- const allSub=!!chosenSub&&chosenSub===opts[0][0];
- const label=tab.replace(/^[^\\p{L}]+/u,"").trim();
- const topic=[label,allSub?"":chosenSub].filter(Boolean).join(" ");
- const lang=sullyLanguageNames[sullyEnglishOnly?"en":sullySelectedLanguage]||"";
- const h=document.createElement("h2");h.textContent="▶ On-demand "+(chosenSub&&!allSub?chosenSub+" · ":"")+label;wrap.append(h);
- const intro=document.createElement("p");intro.className="muted";intro.textContent="Find programs and videos for this category. On-demand sources appear first; live channels are below.";wrap.append(intro);
- const grid=document.createElement("div");grid.className="sullyProgramButtonGrid";
- const links=[
- ["▶️","Browse programs","YouTube video results","https://www.youtube.com/results?search_query="+encodeURIComponent([topic,lang,"official full episodes videos"].filter(Boolean).join(" "))],
- ["🎬","Full-length videos","YouTube full-program search","https://www.youtube.com/results?search_query="+encodeURIComponent([topic,lang,"full length official"].filter(Boolean).join(" "))],
- ["🍿","Free on-demand","Tubi catalog","https://tubitv.com/"],
- ["📺","More on-demand","Plex catalog","https://watch.plex.tv/"]
- ];
- links.forEach(([emoji,name,description,url])=>{
- const a=document.createElement("a");a.className="sullyProgramButton";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
- const icon=document.createElement("span");icon.textContent=emoji;
- const title=document.createElement("strong");title.textContent=name;
- const detail=document.createElement("small");detail.textContent=description;
- a.append(icon,title,detail);grid.append(a);
+function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
+ const wrap=document.createElement("section");wrap.className="sullyMovieDiscovery";
+ const h=document.createElement("h2");h.textContent="🎞️ "+(subtitle||category)+" — titles to watch";wrap.append(h);
+ const status=document.createElement("p");status.className="muted";status.textContent="Looking for directly accessible titles…";wrap.append(status);
+ const grid=document.createElement("div");grid.className="sullyLibraryResults";wrap.append(grid);
+ const fallback=document.createElement("details");
+ const summary=document.createElement("summary");summary.textContent="Other free streaming services (browse their catalogs)";fallback.append(summary);
+ const links=document.createElement("div");links.className="sullyProgramButtonGrid";
+ const topic=[subtitle&& !/^All /i.test(subtitle)?subtitle:category,"full movie or episode"].filter(Boolean).join(" ");
+ [["Tubi","https://tubitv.com/"],["Pluto TV","https://pluto.tv/"],["Plex","https://watch.plex.tv/"],["YouTube","https://www.youtube.com/results?search_query="+encodeURIComponent(topic)],["Internet Archive","https://archive.org/details/movies"]].forEach(([name,url])=>{
+  const a=document.createElement("a");a.className="sullyProgramButton";a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a);
  });
- wrap.append(grid);
- const note=document.createElement("p");note.className="muted";note.textContent="These links help discover programs; providers may not have a match for every category or language. Playback and availability are controlled by each provider.";wrap.append(note);
+ fallback.append(links);wrap.append(fallback);
  root.append(wrap);
+ const roomKey=sullyActiveDiscoveryKey();
+ sullyGetPlayable().then(items=>{
+  if(!wrap.isConnected||roomKey!==sullyActiveDiscoveryKey())return;
+  const filter=(subtitle&&!/^All /i.test(subtitle)?subtitle:category).toLowerCase().replace(/documentary films/g,"documentary");
+  const tokens=filter.split(/[^a-z0-9]+/).filter(t=>t.length>3&&!["movies","movie","channel","station","featured","worldwide"].includes(t));
+  const found=items.filter(item=>{
+   const kind=String(item.kind||"").toLowerCase();
+   if(moviesOnly&&!["movie","short","documentary"].includes(kind))return false;
+   if(!sullyLanguageMatches(item))return false;
+   const hay=[item.title,item.description,item.kind,...(item.genres||[])].join(" ").toLowerCase();
+   return !tokens.length||tokens.some(t=>hay.includes(t));
+  });
+  status.textContent=found.length?found.length+" available title(s) — tap one to watch directly":"No verified individual titles for this category yet. Automatic discovery will add them when available.";
+  found.slice(0,80).forEach(item=>{
+   const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.playback.url;a.target="_blank";a.rel="noopener noreferrer";
+   const title=document.createElement("strong");title.textContent="▶ "+item.title;
+   const meta=document.createElement("small");meta.textContent=(item.kind||"Video")+" · Direct video";
+   a.append(title,meta);grid.append(a);
+  });
+ }).catch(()=>{if(wrap.isConnected)status.textContent="Title catalog temporarily unavailable."});
+ return wrap;
+}
+function sullyRoomOnDemandBrowse(){
+ const root=$("content"),opts=sullySubcategories[tab];
+ const selected=opts?(sullySubSelection[tab]||opts[0][0]):"";
+ const label=tab.replace(/^[^\\p{L}]+/u,"").trim();
+ sullyDirectTitleDiscovery(root,label,selected,false);
 }
 function sullyMovieOnDemandBrowse(){
- const wrap=document.createElement("section");wrap.className="sullyMovieDiscovery";
- const title=document.createElement("h2");title.textContent="🍿 "+(sullyMovieGenre==="All Movies"?"Find movies to watch":sullyMovieGenre+" movies to watch");wrap.append(title);
- const intro=document.createElement("p");intro.className="muted";intro.textContent="Browse on-demand movies by genre. These buttons open the provider's movie selection; live TV channels are listed separately below.";wrap.append(intro);
- const grid=document.createElement("div");grid.className="sullyProgramButtonGrid";
- const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;
- const language=sullyLanguageNames[chosen]||"";
- const genre=sullyMovieGenre==="All Movies"?"":sullyMovieGenre.replace("Documentary Films","Documentary");
- const searchTerms=[genre,language,"full movie official free"].filter(Boolean).join(" ");
- const sources=[
-  ["🎬","Find full movies","YouTube official uploads","https://www.youtube.com/results?search_query="+encodeURIComponent(searchTerms)],
-  ["🍿","Tubi movies","Free on-demand catalog","https://tubitv.com/"],
-  ["📺","Pluto TV movies","Free movies on demand","https://pluto.tv/"],
-  ["🎞️","Plex movies","Free movie catalog","https://watch.plex.tv/"],
-  ["📽️","Internet Archive","Public-domain and archival films","https://archive.org/details/movies"]
- ];
- sources.forEach(([emoji,name,desc,url])=>{
-  const a=document.createElement("a");a.className="sullyProgramButton";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
-  const symbol=document.createElement("span");symbol.textContent=emoji;
-  const strong=document.createElement("strong");strong.textContent=name;
-  const small=document.createElement("small");small.textContent=desc;
-  a.append(symbol,strong,small);grid.append(a);
- });
- wrap.append(grid);
- const caveat=document.createElement("p");caveat.className="muted";caveat.textContent="Provider catalogs change and may require selecting the genre or language on their site. These are discovery links, not verified individual movie listings.";wrap.append(caveat);
- return wrap;
+ return sullyDirectTitleDiscovery(document.createDocumentFragment(),"Movies",sullyMovieGenre==="All Movies"?"":sullyMovieGenre,true);
 }
 function sullyMovieGenreBar(){
  const wrap=document.createElement("section");wrap.className="sullyMovieGenres";
