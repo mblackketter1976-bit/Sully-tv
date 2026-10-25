@@ -2364,7 +2364,7 @@ $("category").add(new Option(c,c));
 
 tab="🏠 Home";
 nav();render();
-window.scrollTo({top:0,behavior:"instant"});
+requestAnimationFrame(()=>jumpToCategory());
 
 }catch(e){
 $("status").textContent="Unable to load live channels. Refresh to retry.";
