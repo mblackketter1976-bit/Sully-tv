@@ -802,7 +802,7 @@ header #sullyQuickPanel .sullyThemeFooter{position:sticky;bottom:0;z-index:1005;
 header #sullyQuickPanel .sullyThemeFooter button,
 header #sullyQuickPanel .sullyThemeCloseTop{position:relative;z-index:1006;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation}
 header #sullyQuickPanel .sullyThemeCloseTop{margin-left:auto!important;min-height:36px;padding:8px 14px!important}
-</style></head>
+</style><style id="sullyKidsTV2026">.sullyKidsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px;margin:16px 0}.sullyKidsShow{display:flex;flex-direction:column;gap:9px;padding:18px;min-height:155px;border:1px solid #ffffff70;border-radius:16px;background:linear-gradient(145deg,rgba(26,103,147,.86),rgba(70,47,116,.8));color:white;text-decoration:none;cursor:pointer;box-shadow:0 5px 18px #0004}.sullyKidsShow:hover,.sullyKidsShow:focus-visible{outline:3px solid #ffde87;transform:translateY(-2px)}.sullyKidsShow strong{font-size:21px}.sullyKidsShow small{color:#e7f2ff}.sullyKidsShow>span:last-child{margin-top:auto;font-weight:bold;color:#ffe69e}.sullyKidsRank{font-size:12px;font-weight:bold;color:#fff0b0}</style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
@@ -1321,7 +1321,7 @@ function sullyMenu(){
  const heading=document.createElement("div");heading.className="sullyMenuHeading";heading.textContent="Browse Sully TV";m.append(heading);
  const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
  const groups=[
- ["🎬 Watch by Genre",["🎬 Movies","🎤 Mike's Standup","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
+ ["🎬 Watch by Genre",["🎬 Movies","🧸 Kids TV (2–8)","🎤 Mike's Standup","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["☰ More Channels","🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
  ["🏠 More",["📱 Streaming Platforms","🍿 On Demand","📚 Library","📋 TV Guide"]]
@@ -1376,7 +1376,7 @@ function nav(){
  const section=(title,desc)=>{const h=document.createElement("div");h.className="tileSection";h.textContent=title;n.append(h);if(desc){const p=document.createElement("p");p.className="tileIntro";p.textContent=desc;n.append(p)}};
  if(tab==="🏠 Home"){
   section("What do you want to watch?","Tap a picture to start browsing live channels.");
-  ["📺 Live TV","🎬 Movies","🏆 Sports","🎤 Mike's Standup","🎀 Hello Kitty","☰ More Channels"].forEach(t=>n.append(sullyTile(t,"tileMain")));
+  ["📺 Live TV","🎬 Movies","🏆 Sports","🧸 Kids TV (2–8)","🎤 Mike's Standup","🎀 Hello Kitty","☰ More Channels"].forEach(t=>n.append(sullyTile(t,"tileMain")));
   section("Our Channels","Pick your favorite station.");
   ["🐾 Luna on the Streets","💖 Nicol's Station","🔎 Michele's Murder Mystery Channel","🍥 Summy's Anime"].forEach(t=>n.append(sullyTile(t,"tileFamily")));
   section("Quick Access");
@@ -2037,6 +2037,37 @@ function sullyStreamingRoom(){
  }
  search.addEventListener("input",draw);draw();
 }
+const sullyKidsShows=[
+ ["Bluey","2–8","https://www.youtube.com/@BlueyOfficial","Most-watched kids' streaming show"],
+ ["PAW Patrol","2–8","https://www.youtube.com/results?search_query=PAW+Patrol+official+full+episodes","Popular rescue adventures"],
+ ["SpongeBob SquarePants","6–8","https://www.youtube.com/@SpongeBobOfficial","Comedy for older kids"],
+ ["Peppa Pig","2–6","https://www.youtube.com/@PeppaPigOfficial","Preschool favorite"],
+ ["Gabby's Dollhouse","3–8","https://www.youtube.com/results?search_query=Gabby%27s+Dollhouse+official+episodes","Imaginative adventures"],
+ ["Sesame Street","2–8","https://www.youtube.com/@SesameStreet","Learning and friendship"],
+ ["Ms. Rachel","2–5","https://www.youtube.com/@msrachel","Early learning and songs"],
+ ["CoComelon","2–5","https://www.youtube.com/@CoComelon","Nursery rhymes and music"],
+ ["Numberblocks","3–8","https://www.youtube.com/@Numberblocks","Learn numbers"],
+ ["Super Simple Songs","2–6","https://www.youtube.com/@SuperSimpleSongs","Sing and learn"],
+ ["Daniel Tiger's Neighborhood","2–6","https://www.youtube.com/results?search_query=Daniel+Tiger+PBS+KIDS+official+episodes","Social-emotional learning"],
+ ["Wild Kratts","5–8","https://www.youtube.com/results?search_query=Wild+Kratts+PBS+KIDS+official+episodes","Animals and science"]
+];
+function sullyKidsRoom(){
+ const root=$("content");$("filters").hidden=true;
+ $("status").textContent="Kids TV · Ages 2–8 · Popular favorites first";
+ const intro=document.createElement("p");intro.className="panel";
+ intro.textContent="Popular shows, with links to official creators or searches for their official videos. Full episodes may vary by provider; a listing is not a guarantee of free playback.";
+ root.append(intro);
+ const grid=document.createElement("div");grid.className="sullyKidsGrid";
+ sullyKidsShows.forEach(([name,ages,url,description],index)=>{
+  const a=document.createElement("a");a.className="sullyKidsShow";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
+  const rank=document.createElement("span");rank.className="sullyKidsRank";rank.textContent="#"+(index+1)+" · Ages "+ages;
+  const title=document.createElement("strong");title.textContent=name;
+  const sub=document.createElement("small");sub.textContent=description;
+  const action=document.createElement("span");action.textContent="▶ Find official videos";
+  a.append(rank,title,sub,action);grid.append(a);
+ });
+ root.append(grid);
+}
 function render(){
 const root=$("content");
 root.innerHTML="";
@@ -2052,6 +2083,7 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
+if(tab==="🧸 Kids TV (2–8)"){sullyKidsRoom();return;}
 if(tab==="📱 Streaming Platforms"){$("filters").hidden=true;sullyStreamingRoom();return;}
 if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
 
