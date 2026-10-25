@@ -485,6 +485,9 @@ body[data-station="movies"] .sullyRoomHeading{background:#121b27!important;borde
 <style id="sullyStandupPremium">
 .sullyStandupWatch{margin:12px 0 24px}.sullyStandupWatch h2{color:#e6d3b2;font-size:clamp(19px,2.5vw,26px);margin-bottom:6px}.sullyStandupGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:15px}.sullyStandupCard{overflow:hidden;background:#171e27;border:1px solid #394452;border-radius:11px;box-shadow:0 4px 20px #0003}.sullyStandupCard>img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.sullyStandupCard>img[hidden]{display:none}.sullyStandupBody{display:flex;flex-direction:column;gap:8px;padding:13px}.sullyStandupBody strong{color:#f0ede7;font-size:15px}.sullyStandupBody small{color:#aeb8c5}.sullyStandupBody button{background:#373b3e;color:#f3e6ce;border:1px solid #ac9876;border-radius:6px;padding:10px;cursor:pointer;font-weight:650}.sullyStandupBody a{color:#c5cbd5;font-size:12px;text-decoration:underline}.sullyStandupPlayer{display:block;width:100%;aspect-ratio:16/9;border:0}
 </style>
+<style id="sullyRetroGuide1983">
+.sullyRetroGuideTitle{font-family:Georgia,serif;letter-spacing:.075em;color:#e7d9b7;margin:14px 0 6px}.sullyGuideToolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0;padding:10px;background:#1a242e;border:1px solid #59616b;border-radius:7px}.sullyGuideToolbar input,.sullyGuideToolbar select{min-height:36px;max-width:190px;background:#222e39;border:1px solid #5c6871;color:#f0e8d7;border-radius:4px;padding:6px}.sullyGuideToolbar button{background:#39444b;border:1px solid #82785f;color:#f0e8d7;padding:9px 11px;border-radius:4px}.sullyGuideClock{color:#e7d9b7;font-weight:bold;font-size:13px}.sullyRetroGuideScroll{width:100%;overflow-x:auto;border:2px solid #a39470;border-radius:4px;background:#151d24}.sullyRetroGuideTable{min-width:790px}.sullyRetroGuideRow{display:grid;grid-template-columns:205px repeat(6,minmax(95px,1fr));min-height:60px}.sullyRetroGuideRow>*{min-width:0;border-right:1px solid #53606b;border-bottom:1px solid #47515a}.sullyRetroGuideHead{min-height:43px;position:sticky;top:0;z-index:2;background:#b9ad91;color:#19232b}.sullyRetroGuideTime{display:flex;align-items:center;justify-content:center;font-weight:800;font-family:Georgia,serif;font-size:14px;border-color:#83785f}.sullyRetroGuideStation{display:flex;align-items:center;gap:9px;padding:9px;text-align:left;overflow:hidden}.sullyRetroGuideStationButton{background:#29343d;color:#f0e9d9}.sullyRetroGuideStationButton:hover{background:#43515b}.sullyRetroGuideNumber{display:flex;align-items:center;justify-content:center;flex:0 0 34px;height:31px;background:#d4c5a1;color:#17212a;border-radius:5px;font-weight:900;font-family:Georgia,serif}.sullyRetroGuideName{font-size:12px;font-weight:700;overflow-wrap:anywhere;line-height:1.3}.sullyRetroGuideCell{padding:10px 8px;display:flex;align-items:center;text-align:left;font-size:12px;line-height:1.25}.sullyRetroGuideUnknown{background:#1d2730;color:#9da8af;font-style:italic}.sullyRetroGuideProgram{background:#394b55;color:#f4eddb;font-weight:700;cursor:pointer}.sullyRetroGuideProgram:hover{background:#526775}.sullyRetroGuideRow:nth-child(2n+1) .sullyRetroGuideUnknown{background:#222e38}@media(max-width:760px){.sullyRetroGuideRow{grid-template-columns:155px repeat(6,minmax(100px,1fr))}.sullyRetroGuideTable{min-width:755px}.sullyRetroGuideStation{padding:5px}.sullyRetroGuideNumber{flex-basis:27px;height:27px}.sullyRetroGuideName{font-size:11px}.sullyGuideToolbar input,.sullyGuideToolbar select{max-width:150px}}
+</style>
 </head>
 <body>
 <header>
@@ -1843,76 +1846,85 @@ jumpToCategory();
 sullySavePlace();
 }
 function renderGuide(){
-const root=$("content");
-$("status").textContent="Organized channel guide";
-const heading=document.createElement("h2");heading.textContent="📋 Live TV Guide";root.append(heading);
-const note=document.createElement("p");note.className="muted";note.textContent="Compact channel grid · Exact program schedules aren't available for every stream.";root.append(note);
-const controls=document.createElement("div");controls.className="demandSearch";
-const search=document.createElement("input");search.type="search";search.placeholder="Find a channel…";search.setAttribute("aria-label","Search guide");
-const country=document.createElement("select");country.setAttribute("aria-label","Guide country");
-for(const opt of $("country").options)country.add(new Option(opt.text,opt.value));
-country.value=$("country").value;
-const category=document.createElement("select");category.setAttribute("aria-label","Guide category");
-["All Categories","News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"].forEach(x=>category.add(new Option(x,x)));
-const language=document.createElement("select");language.setAttribute("aria-label","Guide language");
-[["all","All Languages"],["en","English"],["es","Spanish"],["fr","French"],["de","German"],["pt","Portuguese"],["it","Italian"],["ja","Japanese"],["ko","Korean"],["zh","Chinese"],["hi","Hindi"],["ar","Arabic"],["ru","Russian"],["unknown","Unknown / unverified"]].forEach(([v,n])=>language.add(new Option(n,v)));
-language.value=sullyEnglishOnly?"en":sullySelectedLanguage;
-const countries=[...new Set(channels.map(c=>String(c.country||"").trim().toUpperCase()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-country.replaceChildren(new Option("All Countries",""));
-countries.forEach(code=>country.add(new Option(code,code)));
-country.value="";
-const count=document.createElement("span");count.className="muted";
-controls.append(search,category,country,language,count);root.append(controls);
-const grid=document.createElement("div");grid.className="sullyCompactGuide";root.append(grid);
-const more=document.createElement("button");more.className="watch";more.textContent="Show more channels";root.append(more);
-let limit=48;
-function group(c){
- const t=[c.name,c.group,c.category,c.genre,c.description].filter(Boolean).join(" ").toLowerCase();
- if(/news|weather|politic|cnn|bbc world|reuters/.test(t))return "News";
- if(/sport|football|basketball|soccer|racing|espn|golf|tennis/.test(t))return "Sports";
- if(/movie|cinema|film|hollywood/.test(t))return "Movies";
- if(/kid|child|cartoon|junior|nickelodeon/.test(t))return "Kids";
- if(/music|radio|concert|mtv/.test(t))return "Music";
- if(/documentary|history|science|nature|wildlife|discovery/.test(t))return "Documentaries";
- if(/comedy|stand.up|sitcom/.test(t))return "Comedy";
- if(/entertainment|reality|drama|series|show/.test(t))return "Entertainment";
- return "Other";
-}
-function draw(){
- grid.replaceChildren();
- const q=search.value.trim().toLowerCase();
- const matches=channels.filter(c=>{
- if(unavailable.has(c.id))return false;
- if(country.value&&String(c.country||"").toUpperCase()!==country.value)return false;
- if(q&&!c.name.toLowerCase().includes(q))return false;
- if(category.value!=="All Categories"&&group(c)!==category.value)return false;
- const detected=sullyDetectLanguage(c);
- if(language.value==="unknown")return detected.confidence==="unknown";
- if(language.value!=="all"&&!detected.codes.includes(language.value))return false;
- return true;
-}).sort((a,b)=>group(a).localeCompare(group(b))||String(a.country||"").localeCompare(String(b.country||""))||a.name.localeCompare(b.name));
- const visible=matches.slice(0,limit);
- count.textContent=matches.length.toLocaleString()+" channels · showing "+visible.length;
- const sections=category.value==="All Categories"?["News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"]:[category.value];
- sections.forEach(section=>{
-  const entries=visible.filter(c=>group(c)===section);
-  if(!entries.length)return;
-  const h=document.createElement("h3");h.textContent=section+" ("+matches.filter(c=>group(c)===section).length+")";grid.append(h);
-  const shelf=document.createElement("div");shelf.className="sullyCompactGuideGrid";grid.append(shelf);
-  entries.forEach(c=>{
-   const card=document.createElement("button");card.className="sullyCompactGuideCard";card.type="button";card.onclick=()=>watchChannel(c);
-   const img=document.createElement("img");img.loading="lazy";img.alt="";img.referrerPolicy="no-referrer";
-   const logo=c.logo||c.tvgLogo||c.image||"";
-   if(logo&&/^https?:\/\//.test(logo)){img.src=logo;img.onerror=()=>img.remove();card.append(img);}
-   const name=document.createElement("strong");name.textContent=c.name;
-   const badge=document.createElement("small");badge.textContent="▶ Live · "+(c.country||"??")+" · "+(sullyDetectLanguage(c).codes.map(x=>sullyLanguageNames[x]||x).join("/")||"Language ?");card.append(name,badge);shelf.append(card);
+ const root=$("content");$("status").textContent="TV Guide · Live channel lineup";
+ const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only verified program data is shown; blank schedules are never guessed.";root.append(intro);
+ const toolbar=document.createElement("div");toolbar.className="sullyGuideToolbar";
+ const search=document.createElement("input");search.type="search";search.placeholder="Find a station…";search.setAttribute("aria-label","Search stations");
+ const genre=document.createElement("select");genre.setAttribute("aria-label","Channel genre");
+ ["All Categories","News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"].forEach(x=>genre.add(new Option(x,x)));
+ const country=document.createElement("select");country.setAttribute("aria-label","Channel country");country.add(new Option("All Countries",""));
+ [...new Set(channels.map(c=>String(c.country||"").trim().toUpperCase()).filter(Boolean))].sort().forEach(x=>country.add(new Option(x,x)));
+ const language=document.createElement("select");language.setAttribute("aria-label","Channel language");
+ [["all","All Languages"],["en","English"],["es","Spanish"],["fr","French"],["de","German"],["pt","Portuguese"],["it","Italian"],["ja","Japanese"],["ko","Korean"],["zh","Chinese"],["unknown","Unknown"]].forEach(([v,t])=>language.add(new Option(t,v)));
+ language.value=sullyEnglishOnly?"en":sullySelectedLanguage;
+ const back=document.createElement("button");back.textContent="◀ Earlier";back.type="button";
+ const now=document.createElement("button");now.textContent="NOW";now.type="button";
+ const forward=document.createElement("button");forward.textContent="Later ▶";forward.type="button";
+ const clock=document.createElement("span");clock.className="sullyGuideClock";
+ const count=document.createElement("span");count.className="muted";
+ toolbar.append(search,genre,country,language,back,now,forward,clock,count);root.append(toolbar);
+ const scroller=document.createElement("div");scroller.className="sullyRetroGuideScroll";root.append(scroller);
+ const more=document.createElement("button");more.className="watch";more.textContent="Show more stations";root.append(more);
+ let offset=0,limit=36;
+ function group(c){
+  const t=[c.name,...(c.categories||[])].join(" ").toLowerCase();
+  if(/news|weather|politic|cnn|bbc world|reuters/.test(t))return "News";
+  if(/sport|football|basketball|soccer|racing|espn|golf|tennis/.test(t))return "Sports";
+  if(/movie|cinema|film|hollywood/.test(t))return "Movies";
+  if(/kid|child|cartoon|junior|nickelodeon/.test(t))return "Kids";
+  if(/music|radio|concert|mtv/.test(t))return "Music";
+  if(/documentary|history|science|nature|wildlife|discovery/.test(t))return "Documentaries";
+  if(/comedy|stand.up|sitcom/.test(t))return "Comedy";
+  if(/entertainment|reality|drama|series|show/.test(t))return "Entertainment";
+  return "Other";
+ }
+ const fmt=d=>d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+ function draw(){
+  scroller.replaceChildren();
+  const base=new Date();base.setMinutes(Math.floor(base.getMinutes()/30)*30,0,0);base.setMinutes(base.getMinutes()+offset*30);
+  const slots=Array.from({length:6},(_,i)=>new Date(base.getTime()+i*1800000));
+  const endTime=new Date(base.getTime()+slots.length*1800000);
+  clock.textContent=base.toLocaleDateString([],{weekday:"short",month:"short",day:"numeric"})+" · "+fmt(base)+"–"+fmt(endTime);
+  const matches=channels.filter(c=>{
+   if(unavailable.has(c.id)||sullyFailed(c.id)||!streams.has(c.id))return false;
+   if(country.value&&String(c.country||"").toUpperCase()!==country.value)return false;
+   if(search.value&&!c.name.toLowerCase().includes(search.value.trim().toLowerCase()))return false;
+   if(genre.value!=="All Categories"&&group(c)!==genre.value)return false;
+   const lang=sullyDetectLanguage(c);
+   if(language.value==="unknown")return lang.confidence==="unknown";
+   return language.value==="all"||lang.codes.includes(language.value);
+  }).sort((a,b)=>group(a).localeCompare(group(b))||a.name.localeCompare(b.name));
+  const shown=matches.slice(0,limit);count.textContent=shown.length+" / "+matches.length+" channels";
+  const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
+  const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
+  const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
+  slots.forEach(d=>{const el=document.createElement("div");el.className="sullyRetroGuideTime";el.textContent=fmt(d);header.append(el)});table.append(header);
+  shown.forEach((c,i)=>{
+   const row=document.createElement("div");row.className="sullyRetroGuideRow";row.setAttribute("role","row");
+   const station=document.createElement("button");station.className="sullyRetroGuideStation sullyRetroGuideStationButton";station.type="button";station.title="Watch "+c.name;station.onclick=()=>watchChannel(c);
+   const number=document.createElement("span");number.className="sullyRetroGuideNumber";number.textContent=String(i+1).padStart(2,"0");
+   const name=document.createElement("span");name.textContent=c.name;name.className="sullyRetroGuideName";station.append(number,name);row.append(station);
+   // Display schedules only when actual start/end timestamps are provided.
+   const programs=Array.isArray(c.programs)?c.programs:Array.isArray(c.schedule)?c.schedule:[];
+   const verified=programs.filter(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start));
+   let any=false;
+   for(let j=0;j<slots.length;){
+    const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<=t&&Date.parse(p.end)>t);
+    if(!p){const empty=document.createElement("div");empty.className="sullyRetroGuideCell sullyRetroGuideUnknown";empty.textContent=j===0?"LIVE · Schedule unavailable":"—";empty.title="No verified program information for this time";row.append(empty);j++;continue;}
+    let span=1;while(j+span<slots.length&&Date.parse(p.end)>slots[j+span].getTime()&&Date.parse(p.start)<=slots[j+span].getTime())span++;
+    const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";show.style.gridColumn="span "+span;show.textContent=p.title;show.title=p.title+" · "+fmt(new Date(p.start))+"–"+fmt(new Date(p.end))+" · Watch "+c.name;show.onclick=()=>watchChannel(c);row.append(show);any=true;j+=span;
+   }
+   table.append(row);
   });
- });
- more.hidden=limit>=matches.length;more.textContent="Show more channels ("+(matches.length-visible.length)+" remaining)";
-}
-more.onclick=()=>{limit+=48;draw();};
-[search,country,category,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=48;draw();}));
-draw();
+  scroller.append(table);
+  if(!shown.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No stations match these filters.";scroller.append(empty)}
+  more.hidden=shown.length>=matches.length;more.textContent="Show more stations ("+(matches.length-shown.length)+" remaining)";
+ }
+ back.onclick=()=>{offset-=6;draw()};forward.onclick=()=>{offset+=6;draw()};now.onclick=()=>{offset=0;draw()};
+ more.onclick=()=>{limit+=36;draw()};
+ [search,genre,country,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=36;draw()}));
+ draw();
 }
 
 function remember(c){
