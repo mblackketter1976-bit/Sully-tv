@@ -1108,7 +1108,7 @@ function sullyTitleSearch(q){
  const liveTitle=document.createElement("h2");liveTitle.textContent="🔴 LIVE TV — FIRST";root.append(liveTitle);
  const liveInfo=document.createElement("p");liveInfo.className="muted";liveInfo.textContent="Sully TV checks live channels before streaming services. Individual program schedules aren't indexed yet.";root.append(liveInfo);
  const needle=q.toLowerCase();
- const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&sullySearchScore(c.name,q)>=55).sort((a,b)=>sullySearchScore(b.name,q)-sullySearchScore(a.name,q)).slice(0,30);
+ const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&!sullyFailed(c.id)&&sullySearchScore(c.name,q)>=55).sort((a,b)=>sullySearchScore(b.name,q)-sullySearchScore(a.name,q)).slice(0,30);
  if(matches.length){
   const label=document.createElement("h3");label.textContent="▶ Matching live channels ("+matches.length+")";root.append(label);
   const rail=document.createElement("div");rail.className="rail";matches.forEach(c=>rail.append(card(c)));root.append(rail);
@@ -1573,7 +1573,7 @@ function filtered(){
 let list=channels.filter(c=>{
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
 if(tab.includes("Recently Added")&&!c._recent)return false;
-if((unavailable.has(c.id)||sullyFailed(c.id))&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
+if(unavailable.has(c.id)||sullyFailed(c.id))return false;
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
 if(!sullyLanguageMatches(c))return false;
@@ -2006,7 +2006,7 @@ if(tab==="🏠 Home"){
   const details=document.createElement("details");details.className="sullyContinueDisclosure";
   const summary=document.createElement("summary");summary.textContent="Continue Watching";details.append(summary);
   const rail=document.createElement("div");rail.className="rail";
-  history.slice(0,12).forEach(item=>{const c=channels.find(x=>x.id===item.id);if(c)rail.append(card(c))});
+  history.slice(0,12).forEach(item=>{const c=channels.find(x=>x.id===item.id);if(c&&!unavailable.has(c.id)&&!sullyFailed(c.id))rail.append(card(c))});
   details.append(rail);root.append(details);
  }
  return;
