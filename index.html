@@ -225,6 +225,21 @@ header .guideCompact{margin:9px 12px 0!important;background:transparent}
 header .top>div:first-child{width:100%}
 @media(max-width:600px){header{background:#071733!important}header::before{background-size:contain;aspect-ratio:2048 / 768}header .top{margin:8px 8px 0!important}header .guideCompact{margin:8px 8px 0!important}}
 
+
+/* Compact controls: more channels visible without scrolling */
+header .top{padding:7px 10px!important;margin-top:7px!important;gap:6px}
+header .top>div:first-child{gap:7px;justify-content:center}
+header .top .logo{font-size:22px}
+header .top .installCompact{padding:5px 9px!important;margin:0!important}
+header .top .installCompactRow{gap:7px}
+header .top .installCompact .hint{margin:2px 0 0!important;font-size:10px}
+header .top>div:first-child>small{display:none}
+header #search{padding:8px 11px;min-height:38px;width:min(100%,430px)}
+header .guideCompact{margin:5px 8px 0!important;padding:0}
+header .guideCompact .headerGuide{min-height:35px;padding:6px 15px}
+header{padding-bottom:7px!important}
+@media(max-width:600px){header .top{padding:7px!important}header .top .logo{font-size:19px}header .top .installCompactRow span{font-size:11px}header .top .installCompact button{padding:6px 9px;font-size:12px}header .top .installCompact .hint{display:none}}
+
 </style>
 </head>
 <body>
