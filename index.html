@@ -271,11 +271,20 @@ header .sullyQuickBar{display:grid!important;grid-template-columns:repeat(6,minm
 header .sullyQuickBar .headerGuide{width:100%!important;min-width:0!important;max-width:none!important;flex:none!important;min-height:40px!important;padding:6px 2px!important;font-size:clamp(8px,1.65vw,13px)!important;line-height:1.15;white-space:normal!important;overflow-wrap:normal;text-align:center;display:flex;align-items:center;justify-content:center}
 @media(max-width:600px){header .sullyQuickBar{gap:3px!important;padding-inline:3px!important}header .sullyQuickBar .headerGuide{font-size:clamp(8px,1.8vw,11px)!important;padding:5px 1px!important;border-radius:7px!important;letter-spacing:-.15px}}
 
+
+/* Previous-screen navigation, visible at top left without covering Luna */
+header .top{position:relative}
+header .sullyBack{position:absolute;left:10px;top:10px;z-index:2;background:#234770;border:1px solid #d9b56b;border-radius:10px;color:#fff4cf;padding:8px 12px;font-weight:700;font-size:13px;min-height:38px}
+header .sullyBack:disabled{opacity:.48;cursor:default}
+header .top>div:first-of-type{padding-left:85px}
+@media(max-width:600px){header .sullyBack{left:6px;top:6px;padding:6px 8px;font-size:12px;min-height:33px}header .top>div:first-of-type{padding-left:62px}}
+
 </style>
 </head>
 <body>
 <header>
 <div class="top">
+<button id="sullyBack" class="sullyBack" onclick="sullyGoBack()" aria-label="Go back to previous screen" title="Back" disabled>← Back</button>
 <div>
 <div class="logo">📺 SULLY <span>TV</span></div>
 <div class="sesBrand" aria-label="BES Blackketter Entertainment featuring Luna"><img class="besLogoImage" src="data:image/webp;base64,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" alt="Blackketter Entertainment B and E gold pillar logo featuring Luna"></div>
@@ -426,6 +435,30 @@ $("notice").textContent=text||"";
 
 
 /* Jump directly to the selected category, below the sticky header. */
+
+const sullyScreenHistory=[];
+function sullyRememberScreen(){
+ const entry={tab,viewerVisible:!$("viewer").hidden,scrollY:window.scrollY};
+ const last=sullyScreenHistory[sullyScreenHistory.length-1];
+ if(!last||last.tab!==entry.tab||last.viewerVisible!==entry.viewerVisible)sullyScreenHistory.push(entry);
+ if(sullyScreenHistory.length>30)sullyScreenHistory.shift();
+ sullyUpdateBack();
+}
+function sullyUpdateBack(){
+ const btn=$("sullyBack");
+ if(btn)btn.disabled=!sullyScreenHistory.length;
+}
+function sullyGoBack(){
+ const previous=sullyScreenHistory.pop();
+ if(!previous){sullyUpdateBack();return}
+ tab=previous.tab;page=0;$("search").value="";
+ nav();render();
+ if(!previous.viewerVisible&& !$("viewer").hidden){$("viewer").hidden=true;try{player.pause()}catch(e){}}
+ else if(previous.viewerVisible&&current){$("viewer").hidden=false}
+ sullyUpdateBack();
+ requestAnimationFrame(()=>window.scrollTo({top:Math.max(0,previous.scrollY),behavior:"instant"}));
+}
+
 function jumpToCategory(){
  const target=$("content");
  if(!target)return;
@@ -443,6 +476,7 @@ b.textContent=t;
 b.className=(t===tab?"active ":"")+
 (t.includes("Nicol")?"pink":t.includes("Michele")?"purple":"");
 b.onclick=()=>{
+if(t!==tab)sullyRememberScreen();
 tab=t;
 page=0;
 $("search").value="";
@@ -681,7 +715,7 @@ setNotice(favorites.has(current.id)?"Added to Favorites.":"Removed from Favorite
 /* Quick-access controls: no external services or paid dependencies */
 let sullySleepTimeout=null;
 let sullySleepEndsAt=0;
-function quickFavorites(){tab="❤️ Favorites";page=0;nav();render();jumpToCategory();}
+function quickFavorites(){if(tab!=="❤️ Favorites")sullyRememberScreen();tab="❤️ Favorites";page=0;nav();render();jumpToCategory();}
 function surpriseMe(){
  const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&(!current||c.id!==current.id));
  if(!playable.length)return setNotice("No other playable channels are loaded yet.");
@@ -714,6 +748,7 @@ function setSullyCompact(enabled){localStorage.setItem("sully-compact-cards",ena
 document.body.classList.toggle("sullyCompactCards",localStorage.getItem("sully-compact-cards")==="yes");
 
 function openGuide(){
+if(tab!=="📋 TV Guide")sullyRememberScreen();
 tab="📋 TV Guide";nav();render();
 jumpToCategory();
 }
@@ -841,6 +876,7 @@ activeBlobUrl=null;
 }
 
 function watchChannel(c){
+if($("viewer").hidden)sullyRememberScreen();
 if(current&&streams.has(current.id)&&current.id!==c.id)previousChannelId=current.id;
 clearPlayer();
 current=c;
