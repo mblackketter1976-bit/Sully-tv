@@ -32,6 +32,28 @@ class TestSullyEPG(unittest.TestCase):
         xml = b'<tv><programme channel="a" start="invalid" stop="invalid"><title>Bad</title></programme></tv>'
         self.assertEqual(normalize(xml, {"a": "A"}, "test")["programmes"], 0)
 
+    def test_rejects_implausibly_long_programme(self):
+        xml = b'<tv><programme channel="a" start="20261025010000 +0000" stop="20261027020000 +0000"><title>Impossible</title></programme></tv>'
+        self.assertEqual(normalize(xml, {"a": "A"}, "test")["programmes"], 0)
+
+    def test_cli_writes_valid_json_and_preserves_previous_on_empty(self):
+        import json
+        import tempfile
+        from sully_epg_engine import main
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            source = base / "guide.xml"
+            mapping = base / "mapping.json"
+            target = base / "out.json"
+            mapping.write_text('{"a":"A"}', encoding="utf-8")
+            source.write_text('<tv><programme channel="a" start="20261025180000 -0700" stop="20261025190000 -0700"><title>News</title></programme></tv>', encoding="utf-8")
+            self.assertEqual(main(["engine", str(source), str(mapping), "fixture", str(target)]), 0)
+            self.assertEqual(json.loads(target.read_text(encoding="utf-8"))["programmes"], 1)
+            original = target.read_bytes()
+            source.write_text("<tv/>", encoding="utf-8")
+            self.assertEqual(main(["engine", str(source), str(mapping), "fixture", str(target)]), 1)
+            self.assertEqual(target.read_bytes(), original)
+
     def test_rejects_large_xml(self):
         with self.assertRaises(ValueError):
             normalize(b"x" * (5_000_001), {}, "test")
