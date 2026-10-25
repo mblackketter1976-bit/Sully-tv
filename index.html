@@ -361,6 +361,12 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyRecommendations{margin:18px 0;padding:15px;border:1px solid #526c8a;border-radius:13px;background:#142743}.sullyRecommendations h3{margin:0 0 6px}.sullyRecommendations p{margin:0 0 12px}.sullyRecGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyRecButton{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#24476d;color:white;border:1px solid #8ca2bb;border-radius:10px;padding:12px;cursor:pointer}.sullyRecButton small{color:#c9d7e9}@media(max-width:440px){.sullyRecGrid{grid-template-columns:1fr}}
 .sullyLegalLibrary{margin:14px 0 26px;padding:14px;border:1px solid #637d9c;border-radius:14px;background:#162b49}.sullyLegalGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.sullyLegalCard{display:flex;flex-direction:column;gap:10px;background:#213d60;border:1px solid #526e8f;border-radius:11px;padding:13px;overflow-wrap:anywhere}.sullyLegalCard small{color:#c9d7e9}.sullyLegalCard button{padding:11px;background:#e0bb69;color:#172840;border:0;border-radius:8px;font-weight:800}.sullyLegalCard a{color:#e5d09a;font-size:12px}.sullyInfoPanel video{margin:12px 0}
 .sullyAlphabet{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}.sullyLetter{min-width:38px;min-height:40px;padding:8px;border-radius:8px;background:#25486d;color:white;border:1px solid #6e87a3;font-weight:800;cursor:pointer}.sullyLetter.selected{background:#e2bf76;color:#182a43;border-color:#e2bf76}.sullyLetter:disabled{opacity:.3;cursor:default}.sullyLibraryResults{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.sullyLibraryEntry{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#1b3455;border:1px solid #55718e;border-radius:10px;padding:13px}.sullyLibraryEntryInfo{display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.sullyLibraryEntryInfo small{color:#b9cce0}.sullyLibraryEntry button{flex-shrink:0;background:#e0bb69;color:#182a43;border:0;border-radius:8px;padding:10px;font-weight:800}@media(max-width:450px){.sullyLibraryResults{grid-template-columns:1fr}}
+
+/* Keep Back and Home together as persistent navigation controls. */
+#sullyHome{position:fixed!important;top:max(8px,env(safe-area-inset-top))!important;left:96px!important;z-index:1000!important;box-shadow:0 3px 12px #000a;background:#193d70!important;border:1px solid #e3bc75!important;min-height:42px!important;min-width:75px!important}
+@media(max-width:600px){#sullyHome{top:max(7px,env(safe-area-inset-top))!important;left:82px!important;min-height:38px!important;min-width:66px!important}}
+#sullyLibraryShortcut{background:linear-gradient(145deg,#bb9142,#75531e);color:#fff7dc;border:1px solid #f3d58b;white-space:nowrap}
+@media(max-width:650px){#sullyLibraryShortcut{padding:8px 7px;font-size:12px}.sullySearchForm{gap:4px}}
 </style>
 </head>
 <body>
@@ -377,7 +383,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 </section>
 <small>Your world. Your channels.</small>
 </div>
-<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
+<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><button type="button" id="sullyLibraryShortcut" onclick="sullyCategory('📚 Library')" aria-label="Open playable library" title="Library">📚 Library</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
 </div>
 
 <div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
