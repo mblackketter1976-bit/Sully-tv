@@ -554,14 +554,14 @@ let demandSearchToken=0;
 try{
 favorites=new Set(JSON.parse(localStorage.getItem("sully-favorites")||"[]"));
 history=JSON.parse(localStorage.getItem("sully-history")||"[]");
-unavailable=new Set(JSON.parse(localStorage.getItem("sully-unavailable")||"[]"));
+unavailable=new Set();localStorage.removeItem("sully-unavailable");
 }catch(e){}
 
 function saveState(){
 try{
 localStorage.setItem("sully-favorites",JSON.stringify([...favorites]));
 localStorage.setItem("sully-history",JSON.stringify(history.slice(0,40)));
-localStorage.setItem("sully-unavailable",JSON.stringify([...unavailable].slice(-200)));
+// Temporary playback failures are not saved as permanent channel bans.
 }catch(e){}
 }
 
@@ -1753,8 +1753,8 @@ setNotice("This stream is slow. Trying another source ("+(sourceIndex+1)+" of "+
 playSource();
 }else{
 $("now").textContent="Playback unavailable for this channel.";
-if(current&&current.id){unavailable.add(current.id);saveState()}
-setNotice("This channel isn\'t responding. Choose another channel below, or tap Retry to try again.");
+// Keep this channel discoverable; the stream may recover later.
+setNotice("This channel isn\'t responding. This source may block outside playback. Try another channel, or use its official provider website.");
 }
 };
 
@@ -1764,14 +1764,14 @@ $("now").textContent="⏳ Connecting to "+current.name+" ("+(sourceIndex+1)+"/"+
 if(sourceIndex===0)setNotice("Connecting to live TV… If this stream is slow, Sully TV will try another source automatically.");
 playbackTimer=setTimeout(()=>{
 if(token===playbackToken&&player.readyState<3)fallback();
-},8500);
+},15000);
 
 if(/\.m3u8(\?|$)/i.test(s.url)&&window.Hls&&Hls.isSupported()){
 hls=new Hls();
 hls.loadSource(s.url);
 hls.attachMedia(player);
 hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-player.play().catch(()=>{});
+player.play().catch(e=>{if(e.name==="NotAllowedError")setNotice("Tap Play to start this stream on your device.");});
 });
 hls.on(Hls.Events.ERROR,(e,d)=>{
 if(d.fatal)fallback();
@@ -1779,7 +1779,7 @@ if(d.fatal)fallback();
 }else{
 player.src=s.url;
 player.onerror=fallback;
-player.play().catch(()=>{});
+player.play().catch(e=>{if(e.name==="NotAllowedError")setNotice("Tap Play to start this stream on your device.");else fallback();});
 }
 
 }
