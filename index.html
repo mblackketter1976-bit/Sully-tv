@@ -597,34 +597,8 @@ function sullySuggest(){
  })}
  panel.hidden=false;
  if(q.length<2)return;
- function displayShows(results){
-  if(request!==sullySuggestRequest||input.value.trim()!==q)return;
-  const old=panel.querySelector(".sullyExternalSuggestions");if(old)old.remove();
-  const wrapper=document.createElement("div");wrapper.className="sullyExternalSuggestions";
-  const items=(Array.isArray(results)?results:[]).map(x=>x.show).filter(x=>x&&x.name).slice(0,6);
-  if(items.length){
-   const heading=document.createElement("div");heading.className="sullySuggestHeading";heading.textContent="🎬 Shows beyond Sully TV";wrapper.append(heading);
-   items.forEach(show=>{
-    const b=document.createElement("button");b.type="button";b.className="sullySuggestion";
-    if(show.image&&show.image.medium){const img=document.createElement("img");img.src=show.image.medium;img.alt="";img.loading="lazy";b.append(img)}
-    const name=document.createElement("span");name.textContent=show.name;b.append(name);
-    const tag=document.createElement("small");tag.textContent="SHOW";b.append(tag);
-    b.onclick=()=>{input.value=show.name;sullyHideSuggestions();input.blur();sullyTitleSearch(show.name);jumpToCategory()};wrapper.append(b)
-   });
-  }
-  panel.append(wrapper);panel.hidden=!panel.querySelector(".sullySuggestion");
- }
- if(sullySuggestCache.has(lower)){displayShows(sullySuggestCache.get(lower));return}
- sullySuggestTimer=setTimeout(async()=>{
-  try{
-   const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q));
-   if(!response.ok)return;
-   const data=await response.json();
-   sullyLibraryRemember(data.map(item=>item.show));
-   sullySuggestCache.set(lower,data);if(sullySuggestCache.size>80)sullySuggestCache.delete(sullySuggestCache.keys().next().value);
-   displayShows(data)
-  }catch(e){}
- },350);
+ // Suggestions only show playable live channels. Metadata-only shows stay hidden.
+ panel.hidden=!panel.querySelector(".sullySuggestion");
 }
 
 
@@ -687,10 +661,9 @@ function sullyTitleSearch(q){
  const liveActions=document.createElement("div");liveActions.className="sullyServiceActions";
  [["📺 Browse Live TV","🇺🇸 USA"],["📋 TV Guide","📋 TV Guide"],["🎬 Movie Channels","🎬 Movies"]].forEach(([label,target])=>{const btn=document.createElement("button");btn.type="button";btn.textContent=label;btn.onclick=()=>sullyCategory(target);liveActions.append(btn)});
  root.append(liveActions);
- const catalogSlot=document.createElement("div");root.append(catalogSlot);sullyCatalogLookup(q,catalogSlot,generation);
  const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
  const panel=document.createElement("section");panel.className="sullyDiscovery";root.append(panel);
- const headingMain=document.createElement("h3");headingMain.textContent="🎬 “"+q+"” — availability not confirmed";panel.append(headingMain);
+ const headingMain=document.createElement("h3");headingMain.textContent="🎬 No verified playable match for “"+q+"”";panel.append(headingMain);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Sully TV hasn't verified a playable source for this title yet. That doesn't mean it's unavailable everywhere. We're expanding our legal catalog; meanwhile, see related recommendations below.";panel.append(intro);
  const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
  const summary=document.createElement("summary");summary.textContent="Optional: search external services manually";details.append(summary);
