@@ -1,7 +1,583 @@
 {
   "version": 1,
   "description": "Sully TV curated, legally playable media catalog. Add only rights-verified items. Never infer redistribution rights from free access.",
-  "items": [],
+  "items": [
+    {
+      "id": "commons:46671233",
+      "title": "Glass Half - 3D animation with OpenGL cartoon rendering",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Glass_Half_-_3D_animation_with_OpenGL_cartoon_rendering.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Glass_Half_-_3D_animation_with_OpenGL_cartoon_rendering.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Blender Foundation",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:50409539",
+      "title": "Galaxy Collision Animation- James Webb Space Telescope Science",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Galaxy_Collision_Animation-_James_Webb_Space_Telescope_Science.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Galaxy_Collision_Animation-_James_Webb_Space_Telescope_Science.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "James Webb Space Telescope (JWST)",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:78181584",
+      "title": "Joy & Heron - Animated CGI Spot by Passion Pictures",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Joy_%26_Heron_-_Animated_CGI_Spot_by_Passion_Pictures.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Joy_%26_Heron_-_Animated_CGI_Spot_by_Passion_Pictures.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Client: JD.com\nAgency: 180.ai\nDirectors: Kyra &amp; Constantin\nChief Creative Officer: Kenneth Kuan\nCreative: Kenneth Kuan, Ben Too, Xu Kun, Lim Yanshan, Xu Chao\nAgency Producer: Nancy Wang, Violette Xue\nAccount Service: Peter Lo, Bonnie Tian, Wang Mengdi\nProduction Company: Passion Pictures Melbourne\nAnimation Producer: Sibylle Preuss\nAnimation Supervisor: Ferran Casas\nCG Supervisor: Alex Holman\nHead of CG: Jason Nicholas\nVFX Supervisor: Dave Walker\nSound Design: Nami Strack\nMusic &amp; Sound M",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:84797248",
+      "title": "Matches animation of chain reaction with slow elements",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Matches_animation_of_chain_reaction_with_slow_elements.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Matches_animation_of_chain_reaction_with_slow_elements.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Truekit",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:85727760",
+      "title": "La limace, l'escargot et la tortue",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/La_limace%2C_l%27escargot_et_la_tortue.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:La_limace%2C_l%27escargot_et_la_tortue.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "Hector P.",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:87035535",
+      "title": "Animation of Solar Orbiter's trajectory - polar view",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Animation_of_Solar_Orbiter%27s_trajectory_-_polar_view.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Animation_of_Solar_Orbiter%27s_trajectory_-_polar_view.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Phoenix7777",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:99014777",
+      "title": "Lost in Compression",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Lost_in_Compression.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lost_in_Compression.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Alessia Signorino",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:110864603",
+      "title": "CarAnimation1",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/CarAnimation1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:CarAnimation1.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "DanielT200",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:110934591",
+      "title": "CarAnimation 2Scenes",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/CarAnimation_2Scenes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:CarAnimation_2Scenes.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "DanielT200",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:112258979",
+      "title": "BMWLoopAnimation",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/BMWLoopAnimation.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BMWLoopAnimation.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "DanielT200",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:112259099",
+      "title": "UglyCar",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/UglyCar.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:UglyCar.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "DanielT200",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:120102947",
+      "title": "Lunar Gateway orbit animation moon north",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Lunar_Gateway_orbit_animation_moon_north.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lunar_Gateway_orbit_animation_moon_north.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "Holger Isenberg https://areo.info",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:134693469",
+      "title": "Dismorfia animada",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Dismorfia_animada.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Dismorfia_animada.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Qza Castellanos acc.qza lli",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:136806581",
+      "title": "Internet Archive logo - animated",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Internet_Archive_logo_-_animated.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Internet_Archive_logo_-_animated.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Elominius",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:142165496",
+      "title": "Animation of the anatomy and physiology of the human brain AS",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Animation_of_the_anatomy_and_physiology_of_the_human_brain_AS.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Animation_of_the_anatomy_and_physiology_of_the_human_brain_AS.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "AgnieszkaStarostecka",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:146455564",
+      "title": "Rohingya PSEA Animation (w. Subtitles) (1L orFryEgM)",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Rohingya_PSEA_Animation_%28w._Subtitles%29_%281L_orFryEgM%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Rohingya_PSEA_Animation_%28w._Subtitles%29_%281L_orFryEgM%29.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Bengal Creative Media",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:146686337",
+      "title": "DOWNFALL OF Min Aung Hlaing I The End of Military Junta in 2024 I Animation Film",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/DOWNFALL_OF_Min_Aung_Hlaing_I_The_End_of_Military_Junta_in_2024_I_Animation_Film.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:DOWNFALL_OF_Min_Aung_Hlaing_I_The_End_of_Military_Junta_in_2024_I_Animation_Film.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "WOIOWOfficial",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:163971881",
+      "title": "Preparation-du-poulet-realisatrice-marcko-wiki-loves-africa-cote-divoire-fan-club",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Preparation-du-poulet-realisatrice-marcko-wiki-loves-africa-cote-divoire-fan-club.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:Preparation-du-poulet-realisatrice-marcko-wiki-loves-africa-cote-divoire-fan-club.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "KoffiMARCKO",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:165811982",
+      "title": "YouCut 20250522 135409364",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/YouCut_20250522_135409364.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:YouCut_20250522_135409364.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "Fue creado Por Demo Animatiom",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:179940761",
+      "title": "Moon 360 animation 4k",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Moon_360_animation_4k.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:Moon_360_animation_4k.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "Wikideas1",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:180012584",
+      "title": "Micronautas recolectando polen sobre ala de mariposa, animación con IA basada en imagen real de ala de mariposa con polen",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Micronautas_recolectando_polen_sobre_ala_de_mariposa%2C_animaci%C3%B3n_con_IA_basada_en_imagen_real_de_ala_de_mariposa_con_polen.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Micronautas_recolectando_polen_sobre_ala_de_mariposa%2C_animaci%C3%B3n_con_IA_basada_en_imagen_real_de_ala_de_mariposa_con_polen.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Brandon Antonio Segura Torres &amp; Priscilla Vieto Bonilla",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:180012586",
+      "title": "Micronautas observando muñequito de nieve hecho de polen sobre el pelo de una mariposa, animación con IA basada en imagen real",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Micronautas_observando_mu%C3%B1equito_de_nieve_hecho_de_polen_sobre_el_pelo_de_una_mariposa%2C_animaci%C3%B3n_con_IA_basada_en_imagen_real.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Micronautas_observando_mu%C3%B1equito_de_nieve_hecho_de_polen_sobre_el_pelo_de_una_mariposa%2C_animaci%C3%B3n_con_IA_basada_en_imagen_real.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Brandon Antonio Segura Torres &amp; Priscilla Vieto Bonilla",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:193588443",
+      "title": "Mandelbrot set deep zoom animation by Graphiq",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Mandelbrot_set_deep_zoom_animation_by_Graphiq.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mandelbrot_set_deep_zoom_animation_by_Graphiq.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "GraphiqYT",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:193590647",
+      "title": "Burning Ship deep zoom animation by Graphiq",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Burning_Ship_deep_zoom_animation_by_Graphiq.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Burning_Ship_deep_zoom_animation_by_Graphiq.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "GraphiqYT",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    },
+    {
+      "id": "commons:200553952",
+      "title": "Animation-Hiperombo- Stretch",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Animation-Hiperombo-_Stretch.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Animation-Hiperombo-_Stretch.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Antias1111",
+        "verifiedAt": "2026-10-25",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-25",
+      "status": "verified"
+    }
+  ],
   "itemSchema": {
     "id": "unique stable ID",
     "title": "Program title",
@@ -26,5 +602,6 @@
     },
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
-  }
+  },
+  "lastDiscovery": "2026-10-25"
 }
