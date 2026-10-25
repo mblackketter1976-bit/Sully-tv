@@ -949,6 +949,42 @@ function sullySuccess(id){
 }
 setInterval(()=>{if(Object.keys(sullyFailures).some(id=>Number(sullyFailures[id])<=Date.now()))render()},60000);
 
+const sullyProbeCache=new Map();
+async function sullyProbeStream(url){
+ const previous=sullyProbeCache.get(url);
+ if(previous&&Date.now()-previous.time<300000)return previous.ok;
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),6000);
+ let ok=null;
+ try{
+  const r=await fetch(url,{signal:controller.signal,mode:"cors",cache:"no-store"});
+  if(!r.ok)ok=false;
+  else if(/\\.m3u8(?:[?#]|$)/i.test(url)){
+   const manifest=(await r.text()).slice(0,150000);
+   ok=manifest.includes("#EXTM3U")&&(manifest.includes("#EXTINF")||manifest.includes("#EXT-X-STREAM-INF"));
+  }else ok=true;
+ }catch(e){ok=null}
+ finally{clearTimeout(timer)}
+ sullyProbeCache.set(url,{time:Date.now(),ok});
+ return ok;
+}
+async function sullyPreflightVisible(){
+ const targets=channels.filter(c=>!sullyFailed(c.id)).slice(0,80);
+ let position=0;
+ async function worker(){
+  while(position<targets.length){
+   const ch=targets[position++],sources=streams.get(ch.id)||[];
+   let good=false,inconclusive=false;
+   for(const s of sources.slice(0,3)){
+    const result=await sullyProbeStream(s.url);
+    if(result===true){good=true;break}
+    if(result===null)inconclusive=true;
+   }
+   if(!good&&!inconclusive&&sources.length<=3&&sources.length)sullyFailure(ch.id);
+  }
+ }
+ await Promise.all([worker(),worker(),worker(),worker()]);
+ render();
+}
 let page=0;
 let hls=null;
 let current=null;
@@ -3478,6 +3514,7 @@ countryName:names.get(c.country)||c.country,
 languages:[...(feedLanguages.get(c.id)||[])],
 _languageFromFeed:!!feedLanguages.get(c.id)?.size
 })).map(sullyTagChannel);
+setTimeout(()=>sullyPreflightVisible().catch(console.warn),1800);
 
 try{
 const previous=JSON.parse(localStorage.getItem("sully-known-channels")||"null");
