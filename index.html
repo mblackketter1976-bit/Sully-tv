@@ -367,6 +367,11 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 @media(max-width:600px){#sullyHome{top:max(7px,env(safe-area-inset-top))!important;left:82px!important;min-height:38px!important;min-width:66px!important}}
 #sullyLibraryShortcut{background:linear-gradient(145deg,#bb9142,#75531e);color:#fff7dc;border:1px solid #f3d58b;white-space:nowrap}
 @media(max-width:650px){#sullyLibraryShortcut{padding:8px 7px;font-size:12px}.sullySearchForm{gap:4px}}
+
+/* Independent category rooms, with the home screen as the lobby. */
+.sullyRoomHeading{padding:18px 20px;margin:0 0 18px;border:1px solid #d8b16b;border-radius:16px;background:linear-gradient(135deg,#173963,#0a1a33);box-shadow:0 6px 20px #0005}
+.sullyRoomHeading h1{margin:0 0 6px;color:#f3cf83;font-size:clamp(22px,3vw,32px)}
+.sullyRoomHeading p{margin:0;color:#c5d7e9}
 </style>
 </head>
 <body>
@@ -806,9 +811,8 @@ function nav(){
   section("Quick Access");
   ["❤️ Favorites","▶ Continue Watching","🔴 My Recordings","📋 TV Guide","🍿 On Demand"].forEach(t=>n.append(sullyTile(t,"tileExtra")));
  }else{
-  section("Browse channels");
-  const shortcuts=["🇺🇸 USA","🎬 Movies","🏆 Sports","🧠 Documentaries","⭐ Reality","🍥 Summy's Anime","🎤 Mike's Standup","💖 Nicol's Station","🐾 Luna on the Streets","🔎 Michele's Murder Mystery Channel","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🌎 Worldwide","🍿 On Demand","❤️ Favorites","📋 TV Guide","🔴 My Recordings"];
-  shortcuts.filter(t=>t!==tab).forEach(t=>n.append(sullyTile(t,"tileExtra")));
+  // Each category is its own room. The global Categories control remains
+  // available for switching rooms; Back and Home handle navigation.
  }
 }
 
@@ -1171,6 +1175,13 @@ function sullyFanHub(){
 function render(){
 const root=$("content");
 root.innerHTML="";
+if(tab!=="🏠 Home"){
+ const room=document.createElement("section");room.className="sullyRoomHeading";
+ const heading=document.createElement("h1");heading.textContent=tab;room.append(heading);
+ const desc=document.createElement("p");desc.textContent="Your "+tab.replace(/^[^\\p{L}]+/u,"").trim()+" room · Browse and watch available programs below.";room.append(desc);
+ root.append(room);
+}
+
 $("more").hidden=true;
 
 if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
