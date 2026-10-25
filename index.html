@@ -240,6 +240,18 @@ header .guideCompact .headerGuide{min-height:35px;padding:6px 15px}
 header{padding-bottom:7px!important}
 @media(max-width:600px){header .top{padding:7px!important}header .top .logo{font-size:19px}header .top .installCompactRow span{font-size:11px}header .top .installCompact button{padding:6px 9px;font-size:12px}header .top .installCompact .hint{display:none}}
 
+
+/* One-row, equally sized Sully TV quick controls */
+header .sullyQuickBar{display:flex!important;flex-wrap:nowrap!important;justify-content:center;align-items:stretch;gap:7px;overflow-x:auto;scrollbar-width:thin;padding:4px 8px 8px!important;max-width:100%;width:100%;box-sizing:border-box}
+header .sullyQuickBar .headerGuide{flex:0 0 142px;width:142px;min-width:142px;min-height:38px!important;white-space:nowrap;font-size:13px;padding:8px 6px!important;margin:0!important;background:#24476f;border:1px solid #e8c785;border-radius:10px;color:#fff0c4}
+header .sullyQuickBar .quickGuide{background:#ae2334!important;border-color:#f5a3a6;color:#fff}
+header .sullyQuickBar .headerGuide:focus-visible{outline:2px solid #fff;outline-offset:2px}
+header .sullyQuickPanel{max-width:780px;margin:6px auto 3px;padding:12px;border:1px solid #d3aa65;border-radius:12px;background:#102849;color:#fff;text-align:center}
+header .sullyQuickPanel button,header .sullyQuickPanel select{margin:5px;padding:8px 11px;background:#24476f;border:1px solid #d3aa65;border-radius:9px;color:#fff}
+header .sullyQuickPanel p{margin:7px 0}
+@media(max-width:740px){header .sullyQuickBar{justify-content:flex-start!important}}
+
+.sullyCompactCards .rail,.sullyCompactCards .grid{gap:7px}.sullyCompactCards .card .art{height:70px}.sullyCompactCards .card .info{padding:7px}.sullyCompactCards .card .info h3{min-height:0;margin-bottom:3px}
 </style>
 </head>
 <body>
@@ -257,7 +269,14 @@ header{padding-bottom:7px!important}
 <input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
 </div>
 
-<div class="guideCompact"><button class="headerGuide" onclick="openGuide()" aria-label="Open TV Guide">📋 TV Guide</button></div>
+<div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
+<button class="headerGuide quickGuide" onclick="openGuide()">📋 TV Guide</button>
+<button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
+<button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
+<button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
+<button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
+</div>
+<div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
 </header>
 
 <main>
@@ -627,6 +646,35 @@ else favorites.add(current.id);
 saveState();render();
 setNotice(favorites.has(current.id)?"Added to Favorites.":"Removed from Favorites.");
 }
+
+/* Quick-access controls: no external services or paid dependencies */
+let sullySleepTimeout=null;
+let sullySleepEndsAt=0;
+function quickFavorites(){tab="❤️ Favorites";page=0;nav();render();$("content").scrollIntoView({behavior:"smooth",block:"start"});}
+function surpriseMe(){
+ const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&(!current||c.id!==current.id));
+ if(!playable.length)return setNotice("No other playable channels are loaded yet.");
+ watchChannel(playable[Math.floor(Math.random()*playable.length)]);
+}
+function closeSullyPanel(){const p=$("sullyQuickPanel");p.hidden=true;p.innerHTML="";}
+function showSullyPanel(html){const p=$("sullyQuickPanel");if(!p.hidden&&p.dataset.panel===html.slice(0,20)){closeSullyPanel();return}p.dataset.panel=html.slice(0,20);p.innerHTML=html;p.hidden=false;}
+function openSleepTimer(){
+ const remaining=sullySleepTimeout?Math.max(1,Math.ceil((sullySleepEndsAt-Date.now())/60000)):0;
+ showSullyPanel('<strong>🌙 Sleep Timer</strong><p>'+(remaining?'Playback stops in about '+remaining+' minute(s).':'Automatically stop video playback after:')+'</p><button onclick="setSullySleep(15)">15 min</button><button onclick="setSullySleep(30)">30 min</button><button onclick="setSullySleep(60)">60 min</button><button onclick="setSullySleep(90)">90 min</button><button onclick="setSullySleep(0)">Cancel</button>');
+}
+function setSullySleep(minutes){
+ if(sullySleepTimeout)clearTimeout(sullySleepTimeout);
+ sullySleepTimeout=null;sullySleepEndsAt=0;
+ if(minutes){sullySleepEndsAt=Date.now()+minutes*60000;sullySleepTimeout=setTimeout(()=>{sullySleepTimeout=null;sullySleepEndsAt=0;player.pause();if(typeof hls!=="undefined"&&hls){hls.destroy();hls=null}player.removeAttribute("src");player.load();setNotice("🌙 Sleep timer finished. Playback stopped.");closeSullyPanel()},minutes*60000)}
+ showSullyPanel('<strong>🌙 Sleep Timer</strong><p>'+(minutes?'Set for '+minutes+' minutes. Keep Sully TV open for the timer to work.':'Timer canceled.')+'</p><button onclick="closeSullyPanel()">Close</button>');
+}
+function openSullySettings(){
+ const saved=localStorage.getItem("sully-compact-cards")==="yes";
+ showSullyPanel('<strong>⚙️ Sully TV Settings</strong><p>Display preferences are saved on this device.</p><button onclick="setSullyCompact('+(!saved)+')">'+(saved?'Turn off compact cards':'Use compact channel cards')+'</button><button onclick="closeSullyPanel()">Close</button>');
+}
+function setSullyCompact(enabled){localStorage.setItem("sully-compact-cards",enabled?"yes":"no");document.body.classList.toggle("sullyCompactCards",enabled);openSullySettings();}
+document.body.classList.toggle("sullyCompactCards",localStorage.getItem("sully-compact-cards")==="yes");
+
 function openGuide(){
 tab="📋 TV Guide";nav();render();
 $("content").scrollIntoView({behavior:"smooth",block:"start"});
