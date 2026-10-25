@@ -1005,7 +1005,7 @@ function sullyRoomOnDemandBrowse(){
  sullyDirectTitleDiscovery(root,label,selected,false);
 }
 function sullyMovieOnDemandBrowse(){
- return sullyDirectTitleDiscovery(document.createDocumentFragment(),"Movies",sullyMovieGenre==="All Movies"?"":sullyMovieGenre,true);
+ const holder=document.createElement("div");sullyDirectTitleDiscovery(holder,"Movies",sullyMovieGenre==="All Movies"?"":sullyMovieGenre,true);return holder;
 }
 function sullyMovieGenreBar(){
  const wrap=document.createElement("section");wrap.className="sullyMovieGenres";
