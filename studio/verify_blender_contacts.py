@@ -114,16 +114,33 @@ def main(output):
                 bpy.context.collection.objects.link(copy)
                 copy.location.y += (frame//9)*1.05
                 copy.location.x -= expected['root'][0]
+    # Verify the baked action between keys too; exact per-frame targets alone
+    # do not prove the animation will remain planted during interpolation.
+    if rig.animation_data and rig.animation_data.action:
+        for curve in rig.animation_data.action.fcurves:
+            for key in curve.keyframe_points: key.interpolation='LINEAR'
+    replay_error=0.0
+    for index in range(360):
+        scene.frame_set(index+1,subframe=.5)
+        expected=pose((index+.5)/24,walk)
+        depsgraph=bpy.context.evaluated_depsgraph_get()
+        for name, leg in expected['legs'].items():
+            if leg['state']!='stance': continue
+            evaluated=meshes[name].evaluated_get(depsgraph);mesh=evaluated.to_mesh()
+            sole=evaluated.matrix_world @ mesh.vertices[soles[name]].co
+            replay_error=max(replay_error,(sole-Vector(leg['foot'])).length)
+            evaluated.to_mesh_clear()
     report={'kind':'skinned-fixture-only','blender':bpy.app.version_string,'framesChecked':361,
             'maxBoneEndpointError':joint_error,'maxEvaluatedSoleError':sole_error,
             'maxEvaluatedStanceDrift':drift,'minimumEvaluatedMeshHeight':minimum_z,
-            'approvedCharacterUsed':False}
+            'maxBakedHalfFrameStanceError':replay_error,'approvedCharacterUsed':False}
     (output/'blender-contact-report.json').write_text(json.dumps(report,indent=2))
     print('CONTACT_MEASUREMENTS',json.dumps(report),flush=True)
     assert joint_error<1e-5, report
     assert sole_error<1e-5, report
     assert drift<1e-5, report
     assert minimum_z>-1e-5, report
+    assert replay_error<.001, report
     for ob in meshes.values(): ob.hide_render=True
     rig.hide_render=True
     bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.005))
