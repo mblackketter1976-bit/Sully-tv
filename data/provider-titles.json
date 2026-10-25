@@ -28,6 +28,23 @@
       "provider": "Netflix",
       "access": "Subscription",
       "url": "https://www.netflix.com/title/81033865"
+    },
+    {
+      "id": "paramount-dutton-ranch-2026",
+      "title": "Dutton Ranch",
+      "aliases": [
+        "The Dutton Ranch",
+        "Dutton ranch"
+      ],
+      "year": 2026,
+      "kind": "show",
+      "genres": [
+        "Drama",
+        "Western"
+      ],
+      "provider": "Paramount+",
+      "access": "Subscription",
+      "url": "https://www.paramountplus.com/shows/dutton-ranch/"
     }
   ]
 }
