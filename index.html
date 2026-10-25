@@ -1086,38 +1086,21 @@ function sullyOfficialAnime(){
 }
 
 function categoryMatch(c){
-const text=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
-
-if(tab.includes("Nicol"))
-return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|cowboy|rodeo|family|romance|romantic|drama|lifetime|music|entertainment|lifestyle|reality|talent|competition|dating|survivor|housewives|home|classic|movie|film/.test(text);
-
-if(tab.includes("Horror"))
-return /horror|ghost|paranormal|thriller|mystery|scary|suspense|monster/.test(text);
-
-if(tab.includes("Michele"))
-return /true.crime|crime|criminal|murder|unsolved|cold.case|detective|investigation|investigat|police|cop\b|cops\b|forensic|court|justice|law.and.order|mystery|mysteries|wanted|prison|jail|sheriff|law.enforcement|interrogation|evidence|trial|bodycam|body.cam|first.48|dateline|48.hours|crime.scene|serial.killer|missing.person/.test(text);
-
-if(tab.includes("Local News"))
-return /news|local|regional/.test(text);
-
-if(tab.includes("Sports"))
-return /sport|football|soccer|basketball|baseball|golf|racing|tennis|boxing/.test(text);
-
-if(tab.includes("Documentaries"))
-return /documentary|history|science|nature|space|education|travel/.test(text);
-
-if(tab.includes("Movies"))
-return /movie|film|cinema|classic|drama/.test(text);
-
-if(tab==="🍥 Summy's Anime")
-return /anime|manga|otaku|japanese.cartoon|crunchyroll|retrocrush|animax|aniplus/.test(text)||(c.categories||[]).includes("animation");
-
-if(tab.includes("Reality"))
-return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
-
-return true;
+ const name=String(c.name||"").toLowerCase();
+ const categories=(c.categories||[]).map(x=>String(x).toLowerCase());
+ const text=name+" "+categories.join(" ");
+ // Use explicit channel identity or provider category, never incidental program descriptions.
+ if(tab.includes("Nicol"))return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|cowboy|rodeo|family|romance|romantic|drama|lifetime|lifestyle|reality|talent|competition|dating|home|classic|movie|film|music/.test(text);
+ if(tab.includes("Horror"))return /horror|ghost|paranormal|thriller|scary|suspense|monster|haunt|fright/.test(text);
+ if(tab.includes("Michele"))return /true.crime|crime|criminal|murder|unsolved|cold.case|detective|investigat|police|\\bcops?\\b|forensic|court|justice|law.and.order|mystery|wanted|prison|jail|sheriff|bodycam|interrogation|serial.killer|missing.person/.test(text);
+ if(tab.includes("Local News"))return categories.includes("news")||/news|local|regional/.test(name);
+ if(tab.includes("Sports"))return categories.includes("sports")||/sport|football|soccer|basketball|baseball|golf|racing|tennis|boxing/.test(name);
+ if(tab.includes("Documentaries"))return categories.includes("documentary")||/documentary|history|science|nature|space|education|travel/.test(name);
+ if(tab.includes("Movies"))return categories.includes("movies")||/movie|film|cinema|classic/.test(name);
+ if(tab==="🍥 Summy's Anime")return /anime|manga|otaku|japanese.cartoon|crunchyroll|retrocrush|animax|aniplus/.test(text)||categories.includes("animation");
+ if(tab.includes("Reality"))return categories.includes("reality")||/reality|competition|talent|game.show|unscripted/.test(name);
+ return true;
 }
-
 
 /* Movie-channel genre subcategories. Labels describe channels, not individual scheduled films. */
 const sullyMovieGenres=[
