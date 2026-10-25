@@ -296,6 +296,7 @@ header .top>div:first-of-type{padding-left:0!important}
 .sullyMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-content:start}.sullyMenuHeading{grid-column:1/-1;color:#f7d898;font-size:17px;font-weight:800;text-align:center;padding:4px}.sullyMenuGroup{grid-column:1/-1;color:#f3d18a;font-size:13px;font-weight:800;border-bottom:1px solid #806c51;padding:10px 3px 5px;margin-top:3px}.sullyMenu .sullyMenuChoice{font-size:12px;min-height:42px}.sullyMenu .selected{background:#9c2539!important;border-color:#ffd3a1!important}.sullyMenu .sullyMenuClose{grid-column:1/-1!important}
 .sullyMovieGenres{background:#102b50;border:1px solid #d6b376;border-radius:13px;padding:12px;margin:8px 0 15px;color:#ffe2a6}.sullyMovieGenres strong{display:block;margin-bottom:9px;font-size:16px}.sullyMovieGenreButtons{display:flex;flex-wrap:wrap;gap:6px}.sullyMovieGenreButtons button{border:1px solid #d8b477;border-radius:9px;background:#244974;color:#fff;padding:9px 13px;min-height:39px;font-weight:700}.sullyMovieGenreButtons button.selected{background:#ac2537;color:white;border-color:#ffc7b8}.sullyMovieGenres p{font-size:11px;color:#b9c9df;margin:9px 0 0}
 .sullyOfficialAnime{background:#0e2c4b;border:1px solid #d3b16c;border-radius:13px;padding:12px;margin:12px 0;color:#fff}.sullyOfficialAnime h3{margin:0 0 7px;color:#f8d88b}.sullyOfficialAnime p{font-size:12px;color:#d6dfef}.sullyOfficialLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.sullyOfficialLinks a{display:block;text-decoration:none;background:#234a78;border:1px solid #d9b676;border-radius:9px;color:#fff;padding:12px;font-size:12px;font-weight:700}
+.sullyFanHub{padding:18px;border:1px solid #d5b778;border-radius:14px;background:#102b50;color:white}.sullyFanHub h2{color:#ffd8e7}.sullyFanHub p{color:#dce6f4;font-size:13px}.sullyFanHub h3{margin-top:20px}.sullyFanTopics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sullyFanLink{display:block;background:#244c7d;color:#fff!important;text-decoration:none;border:1px solid #dfbb76;border-radius:9px;padding:12px;margin:6px 0;font-weight:700;font-size:13px}.sullyFanSearch{display:flex;gap:8px;margin-top:16px}.sullyFanSearch input{flex:1;min-width:0;padding:10px;border-radius:8px}.sullyFanSearch button{border-radius:8px;padding:10px;background:#ad2e50;color:white}
 </style>
 </head>
 <body>
@@ -400,6 +401,10 @@ const tabs=[
 "🧠 Documentaries",
 "🎬 Movies",
 "🍥 Summy's Anime",
+"🎀 Hello Kitty",
+"🏰 Disney",
+"🦸 Marvel",
+"⚡ DC",
 "⭐ Reality",
 "🌎 Worldwide",
 "❤️ Favorites",
@@ -488,7 +493,7 @@ function sullyMenu(){
  const heading=document.createElement("div");heading.className="sullyMenuHeading";heading.textContent="Browse Sully TV";m.append(heading);
  const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
  const groups=[
- ["🎬 Watch by Genre",["🎬 Movies","🍥 Summy's Anime","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
+ ["🎬 Watch by Genre",["🎬 Movies","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
  ["🏠 More",["🏠 Home","🍿 On Demand","📋 TV Guide"]]
@@ -790,10 +795,39 @@ el.append(art,info);
 return el;
 }
 
+
+/* Free, provider-hosted discovery hubs: no scraping, unauthorized rebroadcasts or API keys. */
+const sullyFanHubs={
+ "🎀 Hello Kitty":{name:"Hello Kitty",color:"#ff7aaf",channel:"@HelloKittyandFriends",topics:["Episodes","Cartoons","Shorts","Music","Friends"],queries:["Hello Kitty and Friends official full episodes","Hello Kitty official cartoon","Hello Kitty official shorts","Hello Kitty Sanrio music official","Sanrio Hello Kitty friends official"]},
+ "🏰 Disney":{name:"Disney",color:"#b3d8ff",channel:"@Disney",topics:["Clips","Trailers","Music","Animation","Behind the Scenes"],queries:["Disney official clips","Disney official trailers","Disney official songs","Disney animation official shorts","Disney official behind the scenes"]},
+ "🦸 Marvel":{name:"Marvel",color:"#ff8585",channel:"@marvel",topics:["Trailers","Animation","Heroes","Behind the Scenes","Interviews"],queries:["Marvel Entertainment official trailers","Marvel official animation","Marvel official superheroes clips","Marvel Studios behind the scenes","Marvel Entertainment official interviews"]},
+ "⚡ DC":{name:"DC",color:"#a7d0ff",channel:"@dcofficial",topics:["Trailers","Animation","Batman","Superman","Behind the Scenes"],queries:["DC official trailers","DC official animated clips","DC official Batman videos","DC official Superman videos","DC official behind the scenes"]}
+};
+function sullyFanHub(){
+ const hub=sullyFanHubs[tab],root=$("content");
+ $("status").textContent=hub.name+" official video discovery";
+ const panel=document.createElement("section");panel.className="sullyFanHub";
+ const h=document.createElement("h2");h.textContent=tab;panel.append(h);
+ const p=document.createElement("p");p.textContent="Find videos from official sources. Select a topic to search YouTube, or visit the official channel. Results and playback are provided by YouTube; this page does not host or continuously crawl videos.";panel.append(p);
+ const channel=document.createElement("a");channel.className="sullyFanLink";channel.href="https://www.youtube.com/"+hub.channel;channel.target="_blank";channel.rel="noopener noreferrer";channel.textContent="▶ Open official "+hub.name+" channel ↗";panel.append(channel);
+ const label=document.createElement("h3");label.textContent="Explore "+hub.name;panel.append(label);
+ const grid=document.createElement("div");grid.className="sullyFanTopics";
+ hub.topics.forEach((topic,i)=>{const a=document.createElement("a");a.className="sullyFanLink";a.href="https://www.youtube.com/results?search_query="+encodeURIComponent(hub.queries[i]);a.target="_blank";a.rel="noopener noreferrer";a.textContent=topic+" ↗";grid.append(a)});
+ panel.append(grid);
+ const form=document.createElement("form");form.className="sullyFanSearch";
+ const inp=document.createElement("input");inp.type="search";inp.placeholder="Search "+hub.name+" videos";inp.setAttribute("aria-label","Search "+hub.name+" videos");
+ const btn=document.createElement("button");btn.type="submit";btn.textContent="🔎 Search";
+ form.onsubmit=e=>{e.preventDefault();const q=inp.value.trim();if(q)window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(hub.name+" official "+q),"_blank","noopener,noreferrer")};
+ form.append(inp,btn);panel.append(form);
+ root.append(panel);
+}
+
 function render(){
 const root=$("content");
 root.innerHTML="";
 $("more").hidden=true;
+
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
