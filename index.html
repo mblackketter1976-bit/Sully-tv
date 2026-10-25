@@ -670,6 +670,25 @@ body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceSaturn{right:0
 body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceMoon{left:7%;top:38%;transform:scale(.76)}
 @media(max-width:700px){.sullySpaceMoon{left:-12%;top:57%;width:43vw}.sullySpaceSaturn{right:-32%;top:42%;width:85vw;height:55vw}.sullySpaceSun{right:3%;top:15%;width:15vw}}
 @media(prefers-reduced-motion:no-preference){.sullySpaceMoon{animation:sullyMoonFloat 45s ease-in-out infinite alternate}.sullySpaceSaturn{animation:sullySaturnFloat 60s ease-in-out infinite alternate}@keyframes sullyMoonFloat{to{translate:10px -18px}}@keyframes sullySaturnFloat{to{translate:-12px 15px}}}
+</style><style id="sullyCinematicEnvironmentStandard2026">
+/* Unified cinematic treatment: scene depth, photographic surfaces, consistent glass UI. */
+body[data-sully-theme]:not([data-sully-theme="classic"]){--scene-depth:rgba(3,9,20,.20);background-image:linear-gradient(180deg,#0000002b,var(--scene-depth)),var(--sully-photo)!important;background-size:cover!important;background-position:center!important}
+body[data-sully-theme]:not([data-sully-theme="classic"])::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 35%,#0000004d 100%);box-shadow:inset 0 0 120px #00000042}
+body[data-sully-theme]:not([data-sully-theme="classic"]) header,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .panel,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyQuickPanel{box-shadow:0 12px 40px #0004,inset 0 1px 0 #ffffff20!important}
+body[data-sully-theme]:not([data-sully-theme="classic"]) .categoryTiles button,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .headerGuide{box-shadow:0 8px 22px #0005,inset 0 1px 0 #ffffff36!important}
+body[data-sully-theme="rain"]{--scene-depth:#06132330}
+body[data-sully-theme="snow"]{--scene-depth:#10253619}
+body[data-sully-theme="sunshine"]{--scene-depth:#49230b25}
+body[data-sully-theme="ocean"]{--scene-depth:#021d2e25}
+body[data-sully-theme="forest"]{--scene-depth:#06180d32}
+body[data-sully-theme="retro"]{--scene-depth:#18082928}
+body[data-sully-theme="space"]{--scene-depth:#02031318}
+body[data-sully-theme="rain"] #sullyAtmosphereCanvas,body[data-sully-theme="snow"] #sullyAtmosphereCanvas,body[data-sully-theme="ocean"] #sullyAtmosphereCanvas{opacity:.24}
+body[data-sully-theme="forest"] #sullyAtmosphereCanvas,body[data-sully-theme="sunshine"] #sullyAtmosphereCanvas,body[data-sully-theme="retro"] #sullyAtmosphereCanvas{opacity:.12}
+@media(max-width:750px){body[data-sully-theme]:not([data-sully-theme="classic"])::before{background-image:linear-gradient(180deg,#0000002b,var(--scene-depth)),var(--sully-photo)!important}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
