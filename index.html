@@ -652,6 +652,7 @@ function sullyTitleSearch(q){
  const generation=++sullySearchGeneration;
  const root=$("content");root.replaceChildren();$("more").hidden=true;$("filters").hidden=true;
  const h=document.createElement("h2");h.textContent="🔎 Search results for “"+q+"”";root.append(h);
+ sullyPlayableGenre(root,q);
  const liveTitle=document.createElement("h2");liveTitle.textContent="🔴 LIVE TV — FIRST";root.append(liveTitle);
  const liveInfo=document.createElement("p");liveInfo.className="muted";liveInfo.textContent="Sully TV checks live channels before streaming services. Individual program schedules aren't indexed yet.";root.append(liveInfo);
  const needle=q.toLowerCase();
@@ -1198,6 +1199,7 @@ return;
 $("filters").hidden=false;
 if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 else if(sullySubcategories[tab])root.append(sullySubBar());
+if(tab==="🎬 Movies"||sullySubcategories[tab])sullyPlayableGenre(root,tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"":sullyMovieGenre):((sullySubSelection[tab]||tab).replace(/^All /,"")));
 
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
@@ -1635,6 +1637,33 @@ box.append(art,info);
 return box;
 }
 
+let sullyPlayableCache=null;
+async function sullyGetPlayable(){if(!sullyPlayableCache)sullyPlayableCache=fetch("./data/legal-library.json").then(r=>{if(!r.ok)throw Error("Library unavailable");return r.json()}).then(d=>(d.items||[]).filter(x=>x.status==="verified"&&x.title&&x.playback?.url&&x.rights?.source&&x.rights?.basis)).catch(e=>{sullyPlayableCache=null;throw e});return sullyPlayableCache}
+function sullyPlayableGenre(root,term){
+ const section=document.createElement("section");section.className="sullyLegalLibrary";root.append(section);
+ const heading=document.createElement("h2");heading.textContent="▶ Playable "+(term||"programs");section.append(heading);
+ const status=document.createElement("p");status.className="muted";status.textContent="Checking licensed library…";section.append(status);
+ const list=document.createElement("div");list.className="sullyLibraryResults";section.append(list);
+ const view=tab;
+ sullyGetPlayable().then(items=>{
+  if(!section.isConnected||view!==tab)return;
+  const tokens=String(term||"").toLowerCase().split(/\\s+/).filter(x=>x.length>2);
+  const found=items.filter(item=>{if(!tokens.length)return true;const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();return tokens.some(t=>hay.includes(t))});
+  status.textContent=found.length?found.length+" playable title(s)":"No verified playable titles here yet.";
+  found.slice(0,72).forEach(item=>{
+   const card=document.createElement("article");card.className="sullyLibraryEntry";
+   const name=document.createElement("strong");name.textContent=item.title;card.append(name);
+   const watch=document.createElement("button");watch.textContent="▶ Watch";watch.onclick=()=>{
+    const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";const panel=document.createElement("div");panel.className="sullyInfoPanel";
+    const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyInfoClose";
+    const video=document.createElement("video");video.controls=true;video.playsInline=true;video.preload="metadata";video.src=item.playback.url;video.style.cssText="width:100%;max-height:55vh";
+    const source=document.createElement("a");source.href=item.rights.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent="Source and license ↗";
+    const dismiss=()=>{video.pause();overlay.remove()};close.onclick=dismiss;overlay.onclick=e=>{if(e.target===overlay)dismiss()};
+    panel.append(close,video,source);overlay.append(panel);document.body.append(overlay)
+   };card.append(watch);list.append(card)
+  })
+ }).catch(()=>{if(section.isConnected)status.textContent="Library temporarily unavailable."})
+}
 function sullyLibrarySortTitle(title){
  return String(title||"").trim().replace(/^(?:a|the)\s+/i,"").trim()||String(title||"").trim();
 }
@@ -1698,6 +1727,7 @@ $("status").textContent="Free on-demand streaming services";
 const title=document.createElement("h2");
 title.textContent="🍿 Sully TV On Demand";
 root.append(title);
+sullyPlayableGenre(root,"");
 
 const note=document.createElement("div");
 note.className="panel";
@@ -1788,66 +1818,14 @@ categories.className="demandSearch";
 const b=document.createElement("button");
 b.className="tool";
 b.textContent=name;
-b.onclick=()=>{
-demandQuery=name;
-demandPage=1;
-loadDemand();
+b.onclick=()=>{const previous=root.querySelector(".sullyDemandSelected");if(previous)previous.remove();const selected=document.createElement("section");selected.className="sullyDemandSelected";categories.after(selected);sullyPlayableGenre(selected,name)
 };
 categories.append(b);
 });
 root.append(categories);
 
-const grid=document.createElement("div");
-grid.className="grid";
-root.append(grid);
+// Do not display unverified archive results as playable listings.
 
-demandResults.forEach(item=>{
-const c=document.createElement("div");
-c.className="card";
-
-const img=document.createElement("img");
-img.style.cssText="width:100%;height:170px;object-fit:cover;background:#263b59";
-img.loading="lazy";
-img.src="https://archive.org/services/img/"+encodeURIComponent(item.identifier);
-
-const info=document.createElement("div");
-info.className="info";
-
-const h=document.createElement("h3");
-h.textContent=item.title;
-
-const b=document.createElement("button");
-b.className="watch";
-b.textContent="↗ Open Video";
-b.onclick=()=>{
-window.open(
-"https://archive.org/details/"+encodeURIComponent(item.identifier),
-"_blank","noopener,noreferrer"
-);
-};
-
-info.append(h,b);
-c.append(img,info);
-grid.append(c);
-});
-
-if(!demandResults.length){
-const p=document.createElement("p");
-p.className="muted";
-p.textContent="Choose a category or search to explore the archive.";
-root.append(p);
-}
-
-if(demandResults.length){
-const more=document.createElement("button");
-more.className="more";
-more.textContent="More Movies & Shows";
-more.onclick=()=>{
-demandPage++;
-loadDemand(true);
-};
-root.append(more);
-}
 }
 
 async function loadDemand(append=false){
