@@ -32,3 +32,6 @@ A completed 45–60 second scene can be commissioned only after the short benchm
 
 ## Status honesty
 Hardware: identified from screenshots. Pipeline: NOT selected. Lip-sync: NOT tested. Pilot: NOT produced. Desktop application control: NOT connected.
+
+## Recovery update — 2026-10-25
+Prior attempts have now been recovered and inspected: V42 vector mechanical proof, Blender sources through V54, and the blue-eyed poster reference. These do not establish an approved rig or production pipeline. A separate branch `luna-grounded-motion-benchmark` adds a stdlib contact prototype and six passing local motion tests; see `LUNA_MOTION_VERIFICATION_001.md` for exact evidence and limits. Applying it to approved art, mesh deformation checks, rendering, turn/dialogue tests and workstation execution remain outstanding.

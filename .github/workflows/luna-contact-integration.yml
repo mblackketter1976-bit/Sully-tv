@@ -1,0 +1,26 @@
+name: Luna evaluated mesh contact check
+on:
+  push:
+    branches: [luna-grounded-motion-benchmark]
+    paths: ['studio/**', '.github/workflows/luna-contact-integration.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  blender-contact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install free Blender runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender
+      - name: Check actual armature and evaluated mesh contacts
+        run: blender --background --threads 2 --python-exit-code 1 --python studio/verify_blender_contacts.py -- /tmp/luna-contact-check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: luna-contact-integration
+          path: /tmp/luna-contact-check/
+          retention-days: 7

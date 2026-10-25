@@ -59,3 +59,12 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 - **Measured:** initial current-data fetch normalized 40 listings on CNN.us, MSNOW.us and BYUTV.us; 25 local Python tests passed. No guarantee of full-day coverage or exact stream programming. Run 40242497404 passed Python, isolated guide checks and full HTML startup/navigation at desktop and phone sizes using controlled channel metadata and the real candidate guide.
 - **UI improvement:** source/license visible; scheduled start/end times visible without hover; two short programmes sharing a half-hour cell are both shown.
 - **Next review:** browser CI and full-app preview, then actual stream/feed alignment; expand exact mappings conservatively. See TV_GUIDE_PROVIDER_003.md.
+
+### BA-003 — Luna foot-contact motion core — 2026-10-25
+- **Need:** connected limbs and stable planted feet before another long render.
+- **Observed:** saved V42 vector proof source; V53 Blender walking section; full V54 static-study source; poster pixels. Blender's official IK constraint documentation reviewed (linked in LUNA_MOTION_VERIFICATION_001.md); runtime/UI comparison remains pending.
+- **Strengths/weaknesses:** existing builds preserve reusable scenes and character-study work, but sine-driven paws are not world-contact constraints. Blender supplies general chain IK; the missing piece in our prototype is explicit contact timing/targets and independent verification.
+- **Rights/cost/dependencies:** original stdlib-only Python; no third-party code or paid API. Blender/software and individual asset rights remain separate audit items. No production tool replacement chosen.
+- **Decision:** provisional HYBRID — test a portable target contract while preserving prior artwork and established rig/renderer tools.
+- **Built/tested:** six local motion tests passed; default 361-pose benchmark has zero sampled stance drift and segment error below 1e-12 metres. Not tested on a deformed mesh or rendered character. No superiority claim over Blender or Cartoon Animator.
+- **Next review:** rendered, approved character-rig integration; compare visual quality, correction effort and workstation performance before adopting the full pipeline.
