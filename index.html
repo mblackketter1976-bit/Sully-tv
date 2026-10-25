@@ -293,6 +293,7 @@ header .top>div:first-of-type{padding-left:0!important}
 .sullySwipe{display:flex;justify-content:space-between;align-items:center;gap:5px;border:1px solid #bc9d68;border-radius:10px;margin-top:10px;padding:7px;touch-action:pan-y;user-select:none}.sullySwipe span{font-size:11px;color:#d4dcf0;text-align:center}.sullySwipe button{background:#224876;border:1px solid #d7b577;border-radius:8px;padding:8px;color:white}
 @media(max-width:500px){.sullyFloat{bottom:60px;right:7px}.sullyFloat button{padding:8px;font-size:11px}}
 
+.sullyMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-content:start}.sullyMenuHeading{grid-column:1/-1;color:#f7d898;font-size:17px;font-weight:800;text-align:center;padding:4px}.sullyMenuGroup{grid-column:1/-1;color:#f3d18a;font-size:13px;font-weight:800;border-bottom:1px solid #806c51;padding:10px 3px 5px;margin-top:3px}.sullyMenu .sullyMenuChoice{font-size:12px;min-height:42px}.sullyMenu .selected{background:#9c2539!important;border-color:#ffd3a1!important}.sullyMenu .sullyMenuClose{grid-column:1/-1!important}
 </style>
 </head>
 <body>
@@ -477,7 +478,23 @@ function sullyGoBack(){
 
 /* Sully navigation suite */
 function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
-function sullyMenu(){const m=$("sullyMenu");m.hidden=!m.hidden;if(!m.hidden){m.replaceChildren();const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);tabs.forEach(t=>{const b=document.createElement("button");b.textContent=t;b.onclick=()=>sullyCategory(t);m.append(b)})}}
+function sullyMenu(){
+ const m=$("sullyMenu");m.hidden=!m.hidden;
+ if(m.hidden)return;
+ m.replaceChildren();
+ const heading=document.createElement("div");heading.className="sullyMenuHeading";heading.textContent="Browse Sully TV";m.append(heading);
+ const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
+ const groups=[
+ ["🎬 Watch by Genre",["🎬 Movies","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
+ ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
+ ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
+ ["🏠 More",["🏠 Home","🍿 On Demand","📋 TV Guide"]]
+ ];
+ groups.forEach(([label,items])=>{
+  const title=document.createElement("div");title.className="sullyMenuGroup";title.textContent=label;m.append(title);
+  items.forEach(t=>{if(!tabs.includes(t))return;const b=document.createElement("button");b.textContent=t;b.className="sullyMenuChoice";if(t===tab)b.classList.add("selected");b.onclick=()=>sullyCategory(t);m.append(b)})
+ });
+}
 function sullySearch(){const m=$("sullyMenu");m.hidden=true;const el=$("search");window.scrollTo({top:Math.max(0,window.scrollY+el.getBoundingClientRect().top-90),behavior:"instant"});el.focus({preventScroll:true});el.select()}
 async function sullyPiP(){try{if(document.pictureInPictureElement){await document.exitPictureInPicture();return}if(!document.pictureInPictureEnabled||!player.requestPictureInPicture||player.readyState<2)throw Error("unsupported");await player.requestPictureInPicture()}catch(e){setNotice("Mini Player is unavailable for this stream or browser.")}}
 let sullyTouch=null;
