@@ -543,8 +543,23 @@ body[data-sully-theme]:not([data-sully-theme="classic"]) .tileSection,body[data-
 .sullyThemeChooser button{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;padding:12px!important;min-height:85px;cursor:pointer}
 .sullyThemeChooser button[aria-pressed="true"]{outline:3px solid var(--at-accent,#f0ce86);outline-offset:1px}
 .sullyThemeChooser small{font-size:11px;opacity:.85}
+</style><style id="sullyImmersiveAtmospheres">
+/* Fixed scenic layer sits behind the existing interface, never affects geometry or hit testing. */
+#sullyAtmosphereCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+body[data-sully-theme="classic"] #sullyAtmosphereCanvas{display:none}
+body[data-sully-theme]:not([data-sully-theme="classic"]){background-image:none!important;background-color:var(--at-bg)!important}
+body[data-sully-theme]:not([data-sully-theme="classic"])>header,
+body[data-sully-theme]:not([data-sully-theme="classic"])>main,
+body[data-sully-theme]:not([data-sully-theme="classic"])>footer,
+body[data-sully-theme]:not([data-sully-theme="classic"])>.sullyFloat,
+body[data-sully-theme]:not([data-sully-theme="classic"])>.sullyMenu{position:relative;z-index:1}
+body[data-sully-theme]:not([data-sully-theme="classic"])>header{background:color-mix(in srgb,var(--at-panel) 90%,transparent)!important;backdrop-filter:blur(12px)}
+body[data-sully-theme]:not([data-sully-theme="classic"]) .sponsorSpot{background:color-mix(in srgb,var(--at-panel) 94%,transparent)!important}
+body[data-sully-theme]:not([data-sully-theme="classic"]) .categoryTiles button{box-shadow:0 8px 24px #0007,inset 0 1px 0 #ffffff30!important}
+@media(prefers-reduced-motion:reduce){#sullyAtmosphereCanvas{animation:none!important}}
 </style></head>
 <body>
+<canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <header>
 
 <div class="top">
@@ -1992,9 +2007,91 @@ function showSullyShareLink(url){showSullyPanel('<strong>📤 Share Sully TV</st
 const sullyThemeOptions=[
  ["classic","📺 Original","Classic Sully TV"],["space","🚀 Space","Stars & galaxies"],["rain","🌧️ Rainy Night","Stormy blue"],["snow","❄️ Snowfall","Winter sky"],["sunshine","☀️ Sunshine","Golden sunset"],["ocean","🌊 Ocean","Deep sea"],["forest","🌲 Forest","Evergreen"],["retro","🕹️ Retro","Vintage arcade"]
 ];
+const sullySceneCanvas=document.getElementById("sullyAtmosphereCanvas");
+const sullySceneContext=sullySceneCanvas.getContext("2d",{alpha:false});
+let sullySceneFrame=0,sullySceneW=0,sullySceneH=0,sullySceneTheme="",sullySceneParticles=[];
+const sullySceneRandom=(seed)=>{let x=seed>>>0;return()=>((x=(Math.imul(1664525,x)+1013904223)>>>0)/4294967296)};
+function sullySceneCircle(ctx,x,y,r,inner,outer){
+ const g=ctx.createRadialGradient(x-r*.32,y-r*.38,r*.03,x,y,r);
+ g.addColorStop(0,inner);g.addColorStop(.65,outer);g.addColorStop(1,"#020711");
+ ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+}
+function sullySceneBackground(ctx,w,h,stops){
+ const g=ctx.createLinearGradient(0,0,w*.55,h);
+ stops.forEach(([p,c])=>g.addColorStop(p,c));ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+}
+function sullySceneDraw(time){
+ if(!sullySceneContext)return;
+ const theme=document.body.dataset.sullyTheme||"classic";
+ if(theme==="classic"){sullySceneFrame=0;return}
+ const ctx=sullySceneContext,w=sullySceneW,h=sullySceneH,t=time*.001;
+ ctx.clearRect(0,0,w,h);
+ const rand=sullySceneRandom(23061);
+ if(theme==="space"){
+  sullySceneBackground(ctx,w,h,[[0,"#02030c"],[.45,"#10152c"],[1,"#030611"]]);
+  const nebula=ctx.createRadialGradient(w*.72,h*.28,8,w*.72,h*.28,w*.6);
+  nebula.addColorStop(0,"#51387e80");nebula.addColorStop(.4,"#253f7250");nebula.addColorStop(1,"#00000000");ctx.fillStyle=nebula;ctx.fillRect(0,0,w,h);
+  for(let i=0;i<400;i++){const x=rand()*w,y=rand()*h,r=.35+rand()*1.45;ctx.fillStyle="rgba(235,243,255,"+(.25+rand()*.7)+")";ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()}
+  // Warm distant sun with layered luminous corona.
+  const sx=w*.89,sy=h*.12,sr=Math.min(w,h)*.10;
+  const glow=ctx.createRadialGradient(sx,sy,sr*.15,sx,sy,sr*4.4);glow.addColorStop(0,"#fff5cfff");glow.addColorStop(.12,"#ffc45baa");glow.addColorStop(.4,"#ff8e1833");glow.addColorStop(1,"#ff8e1800");ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+  sullySceneCircle(ctx,sx,sy,sr,"#fff7d1","#ffb951");
+  // Saturn-like ringed planet, illuminated sphere and perspective rings.
+  const px=w*.74,py=h*.59,pr=Math.min(w,h)*.19;
+  ctx.save();ctx.translate(px,py);ctx.rotate(-.27);ctx.strokeStyle="#c5b7b977";ctx.lineWidth=pr*.16;ctx.beginPath();ctx.ellipse(0,0,pr*1.82,pr*.44,0,0,Math.PI*2);ctx.stroke();ctx.restore();
+  sullySceneCircle(ctx,px,py,pr,"#c3c1bb","#384b6b");
+  ctx.save();ctx.translate(px,py);ctx.rotate(-.27);ctx.strokeStyle="#e5cdb9b0";ctx.lineWidth=pr*.11;ctx.beginPath();ctx.ellipse(0,0,pr*1.82,pr*.44,0,0,Math.PI);ctx.stroke();ctx.restore();
+  // Detailed cratered moon.
+  const mx=w*.15,my=h*.71,mr=Math.min(w,h)*.15;
+  sullySceneCircle(ctx,mx,my,mr,"#f0f0e8","#747f8e");
+  for(let i=0;i<37;i++){const dx=(rand()*2-1)*mr*.82,dy=(rand()*2-1)*mr*.82;if(dx*dx+dy*dy>mr*mr*.73)continue;const cr=mr*(.025+rand()*.095);ctx.fillStyle="#36495b66";ctx.beginPath();ctx.arc(mx+dx,my+dy,cr,0,7);ctx.fill();ctx.strokeStyle="#e4e9e644";ctx.lineWidth=1;ctx.stroke()}
+ }else if(theme==="rain"){
+  sullySceneBackground(ctx,w,h,[[0,"#071320"],[.5,"#18344b"],[1,"#08141f"]]);
+  const cityY=h*.77;for(let i=0;i<45;i++){const x=rand()*w,bw=18+rand()*55,bh=35+rand()*h*.29;ctx.fillStyle=i%3?"#07121dcc":"#10273acc";ctx.fillRect(x,cityY-bh,bw,bh);for(let j=0;j<7;j++){if(rand()>.75){ctx.fillStyle="#f6d89d70";ctx.fillRect(x+rand()*bw,cityY-bh+rand()*bh,3,5)}}}
+  ctx.strokeStyle="#a5d8fa5c";ctx.lineWidth=1.2;for(let i=0;i<200;i++){const x=rand()*w,y=(rand()*h+t*(220+rand()*140))%h;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-9,y+27);ctx.stroke()}
+  const fog=ctx.createLinearGradient(0,h*.55,0,h);fog.addColorStop(0,"#8fb8cc00");fog.addColorStop(1,"#8fb8cc29");ctx.fillStyle=fog;ctx.fillRect(0,0,w,h);
+ }else if(theme==="snow"){
+  sullySceneBackground(ctx,w,h,[[0,"#183449"],[.58,"#557a8f"],[1,"#b4d4de"]]);
+  ctx.fillStyle="#f0f6ffdd";ctx.beginPath();ctx.moveTo(0,h*.83);for(let x=0;x<=w;x+=20)ctx.lineTo(x,h*(.79+Math.sin(x*.008)*.04));ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.fill();
+  for(let i=0;i<160;i++){const x=(rand()*w+Math.sin(t*.5+i)*17+w)%w,y=(rand()*h+t*(15+rand()*38))%h,r=1+rand()*3;ctx.fillStyle="#fff"+(i%2?"cc":"88");ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()}
+ }else if(theme==="sunshine"){
+  sullySceneBackground(ctx,w,h,[[0,"#25426b"],[.47,"#e78c6d"],[1,"#eabf72"]]);
+  const sx=w*.77,sy=h*.33,sr=Math.min(w,h)*.17;const g=ctx.createRadialGradient(sx,sy,0,sx,sy,sr*3);g.addColorStop(0,"#fff5b5");g.addColorStop(.3,"#ffdb8877");g.addColorStop(1,"#ffcf7a00");ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle="#fff3c2";ctx.beginPath();ctx.arc(sx,sy,sr,0,7);ctx.fill();
+  for(let i=0;i<4;i++){const yy=h*(.70+i*.09);ctx.fillStyle=["#a86462","#8d5858","#6e5360","#42435a"][i];ctx.beginPath();ctx.moveTo(0,h);ctx.lineTo(0,yy);for(let x=0;x<=w;x+=15)ctx.lineTo(x,yy+Math.sin(x*.005+i)*25+Math.sin(x*.013+i)*10);ctx.lineTo(w,h);ctx.fill()}
+ }else if(theme==="ocean"){
+  sullySceneBackground(ctx,w,h,[[0,"#053c59"],[.5,"#086277"],[1,"#021b30"]]);
+  for(let i=0;i<16;i++){const x=rand()*w;const g=ctx.createLinearGradient(x,0,x+120,h);g.addColorStop(0,"#9dfcff28");g.addColorStop(1,"#9dfcff00");ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+30,0);ctx.lineTo(x+170,h);ctx.lineTo(x+80,h);ctx.fill()}
+  for(let i=0;i<85;i++){const x=rand()*w,y=(rand()*h-t*(8+rand()*16)+h*10)%h,r=1+rand()*6;ctx.strokeStyle="#c8ffff55";ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.stroke()}
+  ctx.fillStyle="#031b25";ctx.beginPath();ctx.moveTo(0,h);for(let x=0;x<=w;x+=15)ctx.lineTo(x,h*.89+Math.sin(x*.016)*14);ctx.lineTo(w,h);ctx.fill();
+ }else if(theme==="forest"){
+  sullySceneBackground(ctx,w,h,[[0,"#152d29"],[.55,"#355d49"],[1,"#0c1d1a"]]);
+  const fog=ctx.createRadialGradient(w*.52,h*.4,0,w*.52,h*.4,w*.65);fog.addColorStop(0,"#a8cda33d");fog.addColorStop(1,"#a8cda300");ctx.fillStyle=fog;ctx.fillRect(0,0,w,h);
+  for(let layer=0;layer<3;layer++){for(let i=0;i<35;i++){const x=rand()*w,y=h*(.6+layer*.16),size=45+rand()*125+layer*45;ctx.fillStyle=["#1b3b34aa","#102e29dd","#081c1ae8"][layer];ctx.beginPath();ctx.moveTo(x,y-size);ctx.lineTo(x-size*.33,y);ctx.lineTo(x+size*.33,y);ctx.fill();ctx.fillRect(x-3,y-5,6,30)}}
+  for(let i=0;i<34;i++){const x=rand()*w,y=rand()*h;const g=ctx.createRadialGradient(x,y,0,x,y,10);g.addColorStop(0,"#d9ff99b0");g.addColorStop(1,"#d9ff9900");ctx.fillStyle=g;ctx.fillRect(x-10,y-10,20,20)}
+ }else{
+  sullySceneBackground(ctx,w,h,[[0,"#20102d"],[.6,"#55316c"],[1,"#151c36"]]);
+  ctx.strokeStyle="#fa5abf44";ctx.lineWidth=1;for(let i=0;i<28;i++){const y=h*.67+i*i*1.8;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+  for(let i=-18;i<=18;i++){ctx.beginPath();ctx.moveTo(w*.5,h*.65);ctx.lineTo(w*.5+i*w*.13,h);ctx.stroke()}
+  const g=ctx.createRadialGradient(w*.5,h*.55,5,w*.5,h*.55,h*.35);g.addColorStop(0,"#ffbb8f88");g.addColorStop(1,"#ffbb8f00");ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+ }
+ if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&["rain","snow","ocean"].includes(theme))sullySceneFrame=requestAnimationFrame(sullySceneDraw);
+ else sullySceneFrame=0;
+}
+function sullyRefreshScene(){
+ cancelAnimationFrame(sullySceneFrame);sullySceneFrame=0;
+ if(!sullySceneContext)return;
+ const dpr=Math.min(window.devicePixelRatio||1,1.5);
+ sullySceneW=window.innerWidth;sullySceneH=window.innerHeight;
+ sullySceneCanvas.width=Math.round(sullySceneW*dpr);sullySceneCanvas.height=Math.round(sullySceneH*dpr);
+ sullySceneContext.setTransform(dpr,0,0,dpr,0,0);
+ if(document.body.dataset.sullyTheme!=="classic")sullySceneFrame=requestAnimationFrame(sullySceneDraw);
+}
+window.addEventListener("resize",()=>{clearTimeout(window.sullySceneResizeTimer);window.sullySceneResizeTimer=setTimeout(sullyRefreshScene,150)});
+document.addEventListener("visibilitychange",()=>{if(document.hidden){cancelAnimationFrame(sullySceneFrame);sullySceneFrame=0}else sullyRefreshScene()});
 function sullyApplyTheme(id){
  const selected=sullyThemeOptions.some(x=>x[0]===id)?id:"classic";
  document.body.dataset.sullyTheme=selected;
+ sullyRefreshScene();
  try{localStorage.setItem("sully-appearance-theme",selected)}catch(e){}
 }
 function openSullyThemes(){
