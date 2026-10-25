@@ -537,9 +537,10 @@ function sullyRememberScreen(){
 }
 function sullyUpdateBack(){
  const btn=$("sullyBack");
- if(btn)btn.disabled=!sullyScreenHistory.length;
+ if(btn)btn.disabled=!sullyScreenHistory.length&&!$("content").dataset.sullySearchActive;
 }
 function sullyGoHome(){
+ delete $("content").dataset.sullySearchActive;
  if(tab!=="🏠 Home"||!$("viewer").hidden)sullyRememberScreen();
  tab="🏠 Home";page=0;
  $("search").value="";sullyHideSuggestions();
@@ -550,6 +551,7 @@ function sullyGoHome(){
 }
 function sullyGoBack(){
  const previous=sullyScreenHistory.pop();
+ delete $("content").dataset.sullySearchActive;
  if(!previous){sullyUpdateBack();return}
  tab=previous.tab;page=0;$("search").value="";
  nav();render();
@@ -645,6 +647,8 @@ async function sullyCatalogLookup(q,slot,generation){
 }
 
 function sullyTitleSearch(q){
+ if(!$("content").dataset.sullySearchActive){sullyRememberScreen()}
+ $("content").dataset.sullySearchActive="1";
  const generation=++sullySearchGeneration;
  const root=$("content");root.replaceChildren();$("more").hidden=true;$("filters").hidden=true;
  const h=document.createElement("h2");h.textContent="🔎 Search results for “"+q+"”";root.append(h);
@@ -723,7 +727,7 @@ if(q)sullyTitleSearch(q);else render();
 if(input)input.blur();
 jumpToCategory();
 }
-function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
+function sullyCategory(t){delete $("content").dataset.sullySearchActive;if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
 function sullyMenu(){
  const m=$("sullyMenu");m.hidden=!m.hidden;
  if(m.hidden)return;
