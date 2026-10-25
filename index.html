@@ -1383,10 +1383,11 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyProgramButtons();sullyFanLive();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyDirectTitleDiscovery(root,sullyFanHubs[tab].name||tab,"",false);sullyProgramButtons();sullyFanLive();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
+sullyDirectTitleDiscovery(root,"Luna","",false);
 renderLuna();
 return;
 }
@@ -1399,11 +1400,13 @@ return;
 
 if(tab==="🍿 On Demand"){
 $("filters").hidden=true;
+sullyDirectTitleDiscovery(root,"On Demand","",false);
 renderDemand();
 return;
 }
 if(tab==="📚 Library"){
 $("filters").hidden=true;
+sullyDirectTitleDiscovery(root,"Library","",false);
 renderLibrary();
 return;
 }
