@@ -5,9 +5,11 @@
     {
       "id": "commons:46671233",
       "title": "Glass Half - 3D animation with OpenGL cartoon rendering",
-      "kind": "other",
+      "kind": "short",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -30,7 +32,11 @@
       "title": "Galaxy Collision Animation- James Webb Space Telescope Science",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Space",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -51,9 +57,12 @@
     {
       "id": "commons:78181584",
       "title": "Joy & Heron - Animated CGI Spot by Passion Pictures",
-      "kind": "other",
+      "kind": "short",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Nature"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -76,7 +85,9 @@
       "title": "Matches animation of chain reaction with slow elements",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -99,7 +110,9 @@
       "title": "La limace, l'escargot et la tortue",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Nature"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -122,7 +135,11 @@
       "title": "Animation of Solar Orbiter's trajectory - polar view",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Space",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -143,9 +160,11 @@
     {
       "id": "commons:99014777",
       "title": "Lost in Compression",
-      "kind": "other",
+      "kind": "short",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -168,7 +187,9 @@
       "title": "CarAnimation1",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -191,7 +212,9 @@
       "title": "CarAnimation 2Scenes",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -214,7 +237,9 @@
       "title": "BMWLoopAnimation",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -260,7 +285,11 @@
       "title": "Lunar Gateway orbit animation moon north",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Space",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -306,7 +335,9 @@
       "title": "Internet Archive logo - animated",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -329,7 +360,10 @@
       "title": "Animation of the anatomy and physiology of the human brain AS",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -352,7 +386,9 @@
       "title": "Rohingya PSEA Animation (w. Subtitles) (1L orFryEgM)",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -375,7 +411,9 @@
       "title": "DOWNFALL OF Min Aung Hlaing I The End of Military Junta in 2024 I Animation Film",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -444,7 +482,11 @@
       "title": "Moon 360 animation 4k",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Space",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -513,7 +555,10 @@
       "title": "Mandelbrot set deep zoom animation by Graphiq",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation",
+        "Science"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -536,7 +581,9 @@
       "title": "Burning Ship deep zoom animation by Graphiq",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
@@ -559,7 +606,9 @@
       "title": "Animation-Hiperombo- Stretch",
       "kind": "other",
       "year": "",
-      "genres": [],
+      "genres": [
+        "Animation"
+      ],
       "description": "Openly licensed video from Wikimedia Commons",
       "poster": "",
       "playback": {
