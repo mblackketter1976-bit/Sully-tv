@@ -36,7 +36,7 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 - **Build it / improve it:** independent small XMLTV parser, explicit verified channel mapping, source provenance, provider adapters, graceful no-guide state, offline tests.
 - **Acceptance criteria:** synthetic tests pass; no fabricated listings; channel playback unaffected; source licensing verified; real matched-channel coverage measured; fallback behavior tested.
 - **Decision:** HYBRID — build our own normalization and reliability layer; adopt legally authorized data sources and standards where appropriate.
-- **Status:** source and six offline tests committed to development branch, unexecuted; no live deployment.
+- **Status:** source and six offline tests committed; six tests executed locally on a matching copy and passed on 2026-10-25; GitHub Actions CI result not yet confirmed; no live deployment.
 - **Next review:** after test execution and first verified authorized provider evaluation.
 
 ### BA-002 — Sully TV streaming interface — 2026-10-25
