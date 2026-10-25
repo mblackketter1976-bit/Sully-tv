@@ -504,7 +504,18 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 @media (hover:none){button:not(:disabled):hover{filter:none}}
 @media (prefers-reduced-motion:reduce){button,[role="button"]{transition:none!important;scroll-behavior:auto!important}}
 </style>
-<style id="sullyYouTubeQuickStyle">.sullyQuickBar .sullyYouTubeQuick{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#b91c1c;color:#fff;border:1px solid #ed5757;border-radius:10px;padding:10px 15px;min-height:44px;font-weight:800;text-decoration:none;white-space:nowrap;transition:filter .16s ease,transform .16s ease}.sullyQuickBar .sullyYouTubeQuick:hover{filter:brightness(1.16)}.sullyQuickBar .sullyYouTubeQuick:active{transform:scale(.975)}</style><style id="sullyYouTubeBrandPolish">.sullyQuickBar .sullyYouTubeQuick{background:#fff!important;color:#151515!important;border:1px solid #d8d8d8!important;border-radius:999px!important;gap:9px!important;padding:9px 15px!important;box-shadow:0 2px 9px rgba(0,0,0,.18);font-weight:800;letter-spacing:-.035em}.sullyQuickBar .sullyYouTubeQuick:hover{background:#f2f2f2!important;filter:none!important;box-shadow:0 4px 14px rgba(0,0,0,.25)}.sullyYouTubeMark{display:block;flex:none}.sullyYouTubeWordmark{font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1}</style></head>
+<style id="sullyYouTubeQuickStyle">.sullyQuickBar .sullyYouTubeQuick{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#b91c1c;color:#fff;border:1px solid #ed5757;border-radius:10px;padding:10px 15px;min-height:44px;font-weight:800;text-decoration:none;white-space:nowrap;transition:filter .16s ease,transform .16s ease}.sullyQuickBar .sullyYouTubeQuick:hover{filter:brightness(1.16)}.sullyQuickBar .sullyYouTubeQuick:active{transform:scale(.975)}</style><style id="sullyYouTubeBrandPolish">.sullyQuickBar .sullyYouTubeQuick{background:#fff!important;color:#151515!important;border:1px solid #d8d8d8!important;border-radius:999px!important;gap:9px!important;padding:9px 15px!important;box-shadow:0 2px 9px rgba(0,0,0,.18);font-weight:800;letter-spacing:-.035em}.sullyQuickBar .sullyYouTubeQuick:hover{background:#f2f2f2!important;filter:none!important;box-shadow:0 4px 14px rgba(0,0,0,.25)}.sullyYouTubeMark{display:block;flex:none}.sullyYouTubeWordmark{font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1}</style><style id="sullyStreamingPlatformsStyles">
+.sullyPlatformsSearch{display:block;width:min(100%,530px);margin:16px 0 22px}
+.sullyPlatformsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px}
+.sullyPlatformTile{display:flex;flex-direction:column;gap:9px;min-height:190px;padding:20px 16px;border-radius:16px;border:1px solid #405063;background:linear-gradient(155deg,#263340,#111a25);color:#fff;text-decoration:none;transition:transform .16s,border-color .16s,box-shadow .16s}
+.sullyPlatformTile:hover,.sullyPlatformTile:focus-visible{transform:translateY(-3px);border-color:#e0c58c;box-shadow:0 10px 24px #0005}
+.sullyPlatformMark{font-size:35px;font-weight:900;line-height:1.1;min-height:42px}
+.sullyPlatformTile strong{font-size:18px;line-height:1.25}
+.sullyPlatformTile small{color:#bdc7d1;font-size:12px;line-height:1.4}
+.sullyPlatformOpen{margin-top:auto;color:#f3d18b;font-weight:700;font-size:12px}
+@media(max-width:500px){.sullyPlatformsGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyPlatformTile{padding:15px 11px;min-height:177px}.sullyPlatformTile strong{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.sullyPlatformTile{transition:none}}
+</style></head>
 <body>
 <header>
 
@@ -553,7 +564,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 <button class="headerGuide quickGuide" onclick="openGuide()">📋 TV Guide</button>
 <button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
 <button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
-<a class="headerGuide sullyYouTubeQuick" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="Open YouTube in a new tab" title="Open YouTube"><svg class="sullyYouTubeMark" viewBox="0 0 32 22" width="32" height="22" aria-hidden="true" focusable="false"><rect x="0" y="0" width="32" height="22" rx="6" fill="#FF0033"/><path d="M13 5.5L22 11L13 16.5Z" fill="#fff"/></svg><span class="sullyYouTubeWordmark">YouTube</span></a>
+
 <button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
 <button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
 <button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
@@ -597,6 +608,7 @@ const API="https://iptv-org.github.io/api/";
 
 const tabs=[
 "🏠 Home",
+"📱 Streaming Platforms",
 "☰ More Channels",
 "🐾 Luna on the Streets",
 "💖 Nicol's Station",
@@ -986,7 +998,7 @@ function sullyMenu(){
  ["🎬 Watch by Genre",["🎬 Movies","🎤 Mike's Standup","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["☰ More Channels","🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
- ["🏠 More",["🍿 On Demand","📚 Library","📋 TV Guide"]]
+ ["🏠 More",["📱 Streaming Platforms","🍿 On Demand","📚 Library","📋 TV Guide"]]
  ];
  groups.forEach(([label,items])=>{
   const title=document.createElement("div");title.className="sullyMenuGroup";title.textContent=label;m.append(title);
@@ -1042,7 +1054,7 @@ function nav(){
   section("Our Channels","Pick your favorite station.");
   ["🐾 Luna on the Streets","💖 Nicol's Station","🔎 Michele's Murder Mystery Channel","🍥 Summy's Anime"].forEach(t=>n.append(sullyTile(t,"tileFamily")));
   section("Quick Access");
-  ["❤️ Favorites","▶ Continue Watching","🔴 My Recordings","📋 TV Guide","🍿 On Demand"].forEach(t=>n.append(sullyTile(t,"tileExtra")));
+  ["📱 Streaming Platforms","❤️ Favorites","▶ Continue Watching","🔴 My Recordings","📋 TV Guide","🍿 On Demand"].forEach(t=>n.append(sullyTile(t,"tileExtra")));
  }else{
   // Each category is its own room. The global Categories control remains
   // available for switching rooms; Back and Home handle navigation.
@@ -1653,6 +1665,47 @@ async function sullyCheckNewCatalog(){
  finally{sullyDiscoveryBusy=false}
 }
 setInterval(sullyCheckNewCatalog,60000);
+const sullyStreamingPlatforms=[
+ {name:"YouTube",url:"https://www.youtube.com/",mark:"▶",color:"#ff0033",type:"Free videos; optional Premium"},
+ {name:"YouTube TV",url:"https://tv.youtube.com/",mark:"▶",color:"#e5262f",type:"Live TV subscription"},
+ {name:"Peacock",url:"https://www.peacocktv.com/",mark:"●",color:"#b998f0",type:"Streaming subscription"},
+ {name:"Paramount+",url:"https://www.paramountplus.com/",mark:"✦",color:"#2474e6",type:"Streaming subscription"},
+ {name:"Disney+",url:"https://www.disneyplus.com/",mark:"✧",color:"#6b9dff",type:"Streaming subscription"},
+ {name:"Netflix",url:"https://www.netflix.com/",mark:"N",color:"#e50914",type:"Streaming subscription"},
+ {name:"Hulu",url:"https://www.hulu.com/",mark:"h",color:"#1ce783",type:"Streaming subscription"},
+ {name:"Prime Video",url:"https://www.primevideo.com/",mark:"▶",color:"#49a8e8",type:"Streaming subscription"},
+ {name:"Max",url:"https://www.hbomax.com/",mark:"M",color:"#b2a2ff",type:"Streaming subscription"},
+ {name:"Apple TV",url:"https://tv.apple.com/",mark:"◉",color:"#eeeeee",type:"Streaming subscription"},
+ {name:"Tubi",url:"https://tubitv.com/",mark:"t",color:"#ffda33",type:"Free with ads"},
+ {name:"Pluto TV",url:"https://pluto.tv/",mark:"●",color:"#f5e8cf",type:"Free live TV and on-demand"},
+ {name:"The Roku Channel",url:"https://therokuchannel.roku.com/",mark:"R",color:"#b99aff",type:"Free and premium content"},
+ {name:"Plex",url:"https://watch.plex.tv/",mark:"▶",color:"#f4b33e",type:"Free and premium content"},
+ {name:"PBS",url:"https://www.pbs.org/video/",mark:"PBS",color:"#8ac4f0",type:"Free shows; some member-only"},
+ {name:"Crunchyroll",url:"https://www.crunchyroll.com/",mark:"◉",color:"#ff8c28",type:"Anime; free and paid options"},
+ {name:"Discovery+",url:"https://www.discoveryplus.com/",mark:"d+",color:"#8cbeff",type:"Streaming subscription"},
+ {name:"Sling TV",url:"https://www.sling.com/",mark:"S",color:"#6fd4f7",type:"Live TV subscription"}
+];
+function sullyStreamingRoom(){
+ const root=$("content");$("status").textContent="Official streaming platforms · Select a service";
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="One place for official streaming services. Choose a tile to open the provider in a new tab or its supported app. Subscriptions, availability and sign-in are managed by each service.";root.append(intro);
+ const search=document.createElement("input");search.type="search";search.className="sullyPlatformsSearch";search.placeholder="Find a streaming service…";search.setAttribute("aria-label","Search streaming platforms");root.append(search);
+ const grid=document.createElement("div");grid.className="sullyPlatformsGrid";root.append(grid);
+ const count=document.createElement("p");count.className="muted";root.append(count);
+ function draw(){
+  grid.replaceChildren();const q=search.value.trim().toLowerCase();
+  const matches=sullyStreamingPlatforms.filter(p=>(p.name+" "+p.type).toLowerCase().includes(q));
+  matches.forEach(p=>{
+   const a=document.createElement("a");a.className="sullyPlatformTile";a.href=p.url;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label","Open "+p.name+" official website");a.title="Open "+p.name+" (official site)";
+   const mark=document.createElement("span");mark.className="sullyPlatformMark";mark.textContent=p.mark;mark.style.color=p.color;
+   const name=document.createElement("strong");name.textContent=p.name;
+   const type=document.createElement("small");type.textContent=p.type;
+   const open=document.createElement("span");open.className="sullyPlatformOpen";open.textContent="Open service ↗";
+   a.append(mark,name,type,open);grid.append(a);
+  });
+  count.textContent=matches.length+" platforms"+(q?" matching your search":"");
+ }
+ search.addEventListener("input",draw);draw();
+}
 function render(){
 const root=$("content");
 root.innerHTML="";
@@ -1668,6 +1721,7 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
+if(tab==="📱 Streaming Platforms"){$("filters").hidden=true;sullyStreamingRoom();return;}
 if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
 
 if(tab==="🏠 Home"){
