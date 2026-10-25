@@ -9,7 +9,7 @@ on:
       - 'scripts/update_tv_guide.py'
       - '.github/workflows/update-tv-guide.yml'
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: sully-epg-update
   cancel-in-progress: false
@@ -24,12 +24,6 @@ jobs:
           python-version: '3.12'
       - name: Fetch and validate public XMLTV guide sources
         run: python scripts/update_tv_guide.py
-      - name: Publish schedule updates
+      - name: Validate generated guide output (test only)
         run: |
-          if ! git diff --quiet -- data/tv-guide.json; then
-            git config user.name "sully-guide-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/tv-guide.json
-            git commit -m "Refresh sourced TV Guide program listings"
-            git push
-          fi
+          python -c 'import json,pathlib; p=pathlib.Path("data/tv-guide.json"); d=json.loads(p.read_text()); print("Guide channels:",len(d.get("channels",{}))); assert d.get("channels"), "No channels in generated guide"'
