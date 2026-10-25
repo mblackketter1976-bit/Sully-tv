@@ -547,7 +547,7 @@ function sullyUpdateBack(){
 }
 function sullyGoHome(){
  delete $("content").dataset.sullySearchActive;
- if(tab!=="🏠 Home"||!$("viewer").hidden)sullyRememberScreen();
+ if(tab!=="🏠 Home"||!$("viewer").hidden||$("content").dataset.sullySearchActive)sullyRememberScreen();
  tab="🏠 Home";page=0;
  $("search").value="";sullyHideSuggestions();
  const menu=$("sullyMenu");if(menu)menu.hidden=true;
@@ -556,11 +556,14 @@ function sullyGoHome(){
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function sullyGoBack(){
+ const wasSearch=!!$("content").dataset.sullySearchActive;
  const previous=sullyScreenHistory.pop();
  delete $("content").dataset.sullySearchActive;
- if(!previous){sullyUpdateBack();return}
+ if(!previous){if(wasSearch){$("search").value="";nav();render();sullyUpdateBack()}else sullyGoHome();return}
+ sullyHideSuggestions();
  tab=previous.tab;page=0;$("search").value="";
- nav();render();
+ const menu=$("sullyMenu");if(menu)menu.hidden=true;
+ nav();render();sullySavePlace();
  if(!previous.viewerVisible&& !$("viewer").hidden){$("viewer").hidden=true;try{player.pause()}catch(e){}}
  else if(previous.viewerVisible&&current){$("viewer").hidden=false}
  sullyUpdateBack();
@@ -734,7 +737,7 @@ if(q)sullyTitleSearch(q);else render();
 if(input)input.blur();
 jumpToCategory();
 }
-function sullyCategory(t){delete $("content").dataset.sullySearchActive;if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
+function sullyCategory(t){if(t!==tab||$("content").dataset.sullySearchActive)sullyRememberScreen();delete $("content").dataset.sullySearchActive;tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
 function sullyMenu(){
  const m=$("sullyMenu");m.hidden=!m.hidden;
  if(m.hidden)return;
@@ -803,7 +806,6 @@ function nav(){
   section("Quick Access");
   ["❤️ Favorites","▶ Continue Watching","🔴 My Recordings","📋 TV Guide","🍿 On Demand"].forEach(t=>n.append(sullyTile(t,"tileExtra")));
  }else{
-  n.append(sullyTile("🏠 Home","tileExtra"));
   section("Browse channels");
   const shortcuts=["🇺🇸 USA","🎬 Movies","🏆 Sports","🧠 Documentaries","⭐ Reality","🍥 Summy's Anime","🎤 Mike's Standup","💖 Nicol's Station","🐾 Luna on the Streets","🔎 Michele's Murder Mystery Channel","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🌎 Worldwide","🍿 On Demand","❤️ Favorites","📋 TV Guide","🔴 My Recordings"];
   shortcuts.filter(t=>t!==tab).forEach(t=>n.append(sullyTile(t,"tileExtra")));
