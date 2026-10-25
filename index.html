@@ -1184,6 +1184,20 @@ if(tab!=="🏠 Home"){
 
 $("more").hidden=true;
 
+// The homepage is a lobby, not an endless live-channel listing.
+// All channel cards remain available inside their category rooms.
+if(tab==="🏠 Home"){
+ $("filters").hidden=true;
+ $("status").textContent="Choose a room to start watching";
+ if(history.length){
+  const h=document.createElement("h2");h.textContent="▶ Continue Watching";root.append(h);
+  const rail=document.createElement("div");rail.className="rail";
+  history.slice(0,12).forEach(item=>{const c=channels.find(x=>x.id===item.id);if(c)rail.append(card(c))});
+  root.append(rail);
+ }
+ return;
+}
+
 if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
 
 if(tab==="🐾 Luna on the Streets"){
