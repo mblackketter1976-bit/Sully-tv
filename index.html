@@ -881,7 +881,7 @@ body.sullyKidsMode .sullyKidsArt{height:77%!important;object-fit:contain!importa
 body.sullyKidsMode .sullyKidsShow strong{z-index:2!important;background:#fffffff0;border-radius:10px;padding:3px 8px;max-width:100%}
 body.sullyKidsMode .sullyKidsPlay{z-index:2!important}
 @media(max-width:600px){body.sullyKidsMode .sullyKidsShow{min-height:250px!important}}
-</style></head>
+</style><style id="sullyKidsLanguageLive2026">body.sullyKidsMode .sullyKidsLanguageSwitch{display:block;margin:0 auto 12px;padding:13px 28px;border-radius:30px;border:4px solid white;background:#ffe47b;color:#29446a;font-size:clamp(20px,3vw,26px);font-weight:900;cursor:pointer;box-shadow:0 5px 0 #d2a85b}body.sullyKidsMode .sullyKidsOfficialLive{min-height:180px!important}body.sullyKidsMode .sullyKidsOfficialLive .sullyKidsFallback{font-size:65px!important}</style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
@@ -1518,7 +1518,7 @@ function sullyOfficialAnime(){
  ["RetroCrush","https://www.retrocrush.tv/"]
  ];
  const grid=document.createElement("div");grid.className="sullyOfficialLinks";
- links.forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="▶ "+name+" ↗";grid.append(a)});
+ links.forEach(([name,url])=>{const a=document.createElement("a");a.href=sullyKidsLanguage==="es"?"https://www.youtube.com/results?search_query="+encodeURIComponent(name+" oficial español episodios"):url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="▶ "+name+" ↗";grid.append(a)});
  wrap.append(grid);return wrap;
 }
 
@@ -2156,6 +2156,28 @@ async function sullyKidsArt(name,img){
   }
  }catch(e){}
 }
+let sullyKidsLanguage="en";
+const sullyKidsOfficialLive=[
+ {name:"PBS KIDS",emoji:"🟢",url:"https://pbskids.org/video/livetv",lang:"en"},
+ {name:"Nick Jr. / Peppa Pig",emoji:"🐷",url:"https://pluto.tv/us/watch/live-tv/category/kids-us/",lang:"en"},
+ {name:"Baby Shark TV",emoji:"🦈",url:"https://pluto.tv/us/watch/live-tv/category/kids-us/",lang:"en"},
+ {name:"LEGO Kids TV",emoji:"🧱",url:"https://pluto.tv/us/watch/live-tv/category/kids-us/",lang:"en"},
+ {name:"Nickelodeon en español",emoji:"🐾",url:"https://pluto.tv/us/watch/live-tv/category/kids-us/",lang:"es"},
+ {name:"El Reino Infantil",emoji:"🎵",url:"https://pluto.tv/us/watch/live-tv/category/kids-us/",lang:"es"}
+];
+function sullyKidsExternalLive(root){
+ const heading=document.createElement("h2");heading.className="sullyKidsOutsideHeading";heading.textContent=sullyKidsLanguage==="es"?"📡 Televisión infantil gratis":"📡 More free kids' live TV";
+ const note=document.createElement("p");note.className="sullyKidsLiveStatus";note.textContent=sullyKidsLanguage==="es"?"Canales infantiles en sitios oficiales. Se abren fuera de Sully TV.":"Official live-TV providers. These open their own players; availability may vary.";
+ const grid=document.createElement("div");grid.className="sullyKidsGrid";
+ sullyKidsOfficialLive.filter(x=>x.lang===sullyKidsLanguage).forEach(x=>{
+  const link=document.createElement("a");link.className="sullyKidsShow sullyKidsOfficialLive";link.href=x.url;link.target="_blank";link.rel="noopener noreferrer";
+  const symbol=document.createElement("span");symbol.className="sullyKidsFallback";symbol.textContent=x.emoji;
+  const name=document.createElement("strong");name.textContent=x.name;
+  const action=document.createElement("span");action.className="sullyKidsPlay";action.textContent=sullyKidsLanguage==="es"?"↗ Ver TV gratis":"↗ Free live TV";
+  link.append(symbol,name,action);grid.append(link);
+ });
+ root.append(heading,note,grid);
+}
 const sullyKidsLivePattern=/\\b(kids?|children|junior|cartoon|toons?|baby|preschool|nick jr|pbs kids|boomerang|ducktv|pocoyo|babyfirst|kidoodle|happy kids|kidstv)\\b/i;
 const sullyKidsPlaybackCache=new Map();
 async function sullyKidsTestPlayback(source){
@@ -2181,7 +2203,15 @@ async function sullyKidsTestPlayback(source){
  });
 }
 async function sullyKidsLoadLive(grid,status){
- const matches=channels.filter(c=>sullyKidsLivePattern.test(c.name+" "+(c.categories||[]).join(" "))&&!sullyFailed(c.id)&&!unavailable.has(c.id)&&streams.has(c.id)).slice(0,18);
+ const matches=channels.filter(c=>{
+  const language=String(c.languages?.[0]||c.language||"").toLowerCase();
+  const region=String(c.country||"").toLowerCase();
+  const name=String(c.name||"");
+  const likelySpanish=/espa[nñ]ol|infantil|niños|castellano|latino|española/i.test(name);
+  const likelyEnglish=/english/i.test(name);
+  const correctLanguage=sullyKidsLanguage==="es"?(language==="spa"||language==="es"||likelySpanish):(language==="eng"||language==="en"||likelyEnglish||(!language&&!likelySpanish&&region!=="mx"));
+  return sullyKidsLivePattern.test(name+" "+(c.categories||[]).join(" "))&&correctLanguage&&!sullyFailed(c.id)&&!unavailable.has(c.id)&&streams.has(c.id);
+ }).slice(0,75);
  if(!matches.length){status.textContent="No kids' live channels are available to test right now. Try the official shows below.";return}
  let cursor=0,found=0;
  async function worker(){
@@ -2215,14 +2245,18 @@ function sullyKidsRoom(){
  const root=$("content");$("filters").hidden=true;
  $("status").textContent="Kids TV · Pick a show";
  const hero=document.createElement("div");hero.className="sullyKidsHero";
- const heading=document.createElement("h2");heading.textContent="🌈 What do you want to watch?";
+ const heading=document.createElement("h2");heading.textContent=sullyKidsLanguage==="es"?"🌈 ¿Qué quieres ver?":"🌈 What do you want to watch?";
+ const languageButton=document.createElement("button");languageButton.type="button";languageButton.className="sullyKidsLanguageSwitch";
+ languageButton.textContent=sullyKidsLanguage==="es"?"🇺🇸 English":"🇪🇸 Español";
+ languageButton.setAttribute("aria-label",sullyKidsLanguage==="es"?"Cambiar a inglés":"Cambiar a español");
+ languageButton.onclick=()=>{sullyKidsLanguage=sullyKidsLanguage==="en"?"es":"en";render()};
  const agebar=document.createElement("div");agebar.className="sullyKidsAges";
- const liveHeading=document.createElement("h2");liveHeading.className="sullyKidsLiveHeading";liveHeading.textContent="📺 Watch right here";
+ const liveHeading=document.createElement("h2");liveHeading.className="sullyKidsLiveHeading";liveHeading.textContent=sullyKidsLanguage==="es"?"📺 Ver aquí":"📺 Watch right here";
  const liveStatus=document.createElement("p");liveStatus.className="sullyKidsLiveStatus";liveStatus.textContent="Checking kids' live channels for working video…";
  const liveGrid=document.createElement("div");liveGrid.className="sullyKidsGrid";
- const outsideHeading=document.createElement("h2");outsideHeading.className="sullyKidsOutsideHeading";outsideHeading.textContent="🌟 More favorite shows";
+ const outsideHeading=document.createElement("h2");outsideHeading.className="sullyKidsOutsideHeading";outsideHeading.textContent=sullyKidsLanguage==="es"?"🌟 Más programas favoritos":"🌟 More favorite shows";
  const grid=document.createElement("div");grid.className="sullyKidsGrid";
- const groups=[["🌟 All shows",0],["🧸 Ages 2–4",4],["🎒 Ages 5–8",8]];
+ const groups=[["🌟 All / Todos",0],["🧸 2–4",4],["🎒 5–8",8]];
  let selected=0;
  function paint(){
   grid.replaceChildren();
@@ -2232,7 +2266,7 @@ function sullyKidsRoom(){
    const img=document.createElement("img");img.className="sullyKidsArt";img.alt="";img.hidden=true;img.loading="lazy";
    const fallback=document.createElement("span");fallback.className="sullyKidsFallback";fallback.textContent=({"Bluey":"🐶","PAW Patrol":"🐕","SpongeBob SquarePants":"🧽","Peppa Pig":"🐷","Gabby's Dollhouse":"🐱","Sesame Street":"🧸","Ms. Rachel":"🎵","CoComelon":"🍉","Numberblocks":"🔢","Super Simple Songs":"🎶","Daniel Tiger's Neighborhood":"🐯","Wild Kratts":"🦁"})[name]||"🌟";
    const title=document.createElement("strong");title.textContent=name;
-   const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="↗ Official videos";
+   const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent=sullyKidsLanguage==="es"?"↗ Videos oficiales":"↗ Official videos";
    a.append(img,fallback,title,play);grid.append(a);sullyKidsArt(name,img);
   });
  }
@@ -2249,7 +2283,9 @@ function sullyKidsRoom(){
   const symbol=document.createElement("span");symbol.textContent=emoji;symbol.setAttribute("aria-hidden","true");
   const label=document.createElement("small");label.textContent=name;item.append(symbol,label);favorites.append(item);
  });
- hero.append(heading,dinos,favorites,agebar);root.append(hero,liveHeading,liveStatus,liveGrid,outsideHeading,grid);
+ hero.append(heading,languageButton,dinos,favorites,agebar);root.append(hero,liveHeading,liveStatus,liveGrid);
+ sullyKidsExternalLive(root);
+ root.append(outsideHeading,grid);
  sullyKidsLoadLive(liveGrid,liveStatus);
  const note=document.createElement("p");note.className="sullyKidsParentNote";note.textContent="For grown-ups: Live channels appear only after a browser playback test succeeds. External show links open another website; availability and recommendations are controlled by that website. Adult supervision recommended.";root.append(note);
  paint();
