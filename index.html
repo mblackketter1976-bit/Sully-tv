@@ -1403,7 +1403,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyDirectTitleDiscovery(root,sullyFanHubs[tab].name||tab,"",false);sullyProgramButtons();sullyFanLive();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();sullyDirectTitleDiscovery(root,sullyFanHubs[tab].name||tab,"",false);sullyProgramButtons();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
@@ -1438,13 +1438,8 @@ return;
 }
 
 $("filters").hidden=false;
-if(tab==="🎬 Movies"){root.append(sullyMovieGenreBar());root.append(sullyMovieOnDemandBrowse());}
+if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 else if(sullySubcategories[tab])root.append(sullySubBar());
-if(tab!=="🎬 Movies")sullyRoomOnDemandBrowse();
-if(tab==="🎬 Movies"||tab==="🇺🇸 USA"||tab==="🌎 Worldwide"||sullySubcategories[tab]){
- const genre=tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"":sullyMovieGenre):sullySubcategories[tab]?((sullySubSelection[tab]||tab).replace(/^All /,"")):"";
- sullyPlayableGenre(root,genre,tab==="🎬 Movies"?"movie":tab==="🇺🇸 USA"?"usa":tab==="🌎 Worldwide"?"all":"genre");
-}
 
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
@@ -1487,6 +1482,13 @@ rail.className="rail";
 
 list.slice(0,(page+1)*60).forEach(c=>rail.append(card(c)));
 root.append(rail);
+
+if(tab==="🎬 Movies")root.append(sullyMovieOnDemandBrowse());
+else sullyRoomOnDemandBrowse();
+if(tab==="🎬 Movies"||tab==="🇺🇸 USA"||tab==="🌎 Worldwide"||sullySubcategories[tab]){
+ const genre=tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"":sullyMovieGenre):sullySubcategories[tab]?((sullySubSelection[tab]||tab).replace(/^All /,"")):"";
+ sullyPlayableGenre(root,genre,tab==="🎬 Movies"?"movie":tab==="🇺🇸 USA"?"usa":tab==="🌎 Worldwide"?"all":"genre");
+}
 
 if(!list.length&&tab!=="🎬 Movies"){
  const p=document.createElement("div");p.className="panel";
