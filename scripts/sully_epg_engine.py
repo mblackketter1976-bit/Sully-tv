@@ -87,6 +87,33 @@ def normalize(xml_bytes: bytes, channel_map: dict[str, str], source_id: str) -> 
             "matched_channels": len(result), "programmes": sum(map(len, result.values()))}
 
 
+
+def to_sully_tv_guide(normalized: dict, generated_at: datetime | None = None) -> dict:
+    """Convert normalized XMLTV output to Sully TV's current JSON contract."""
+    if not isinstance(normalized, dict) or not isinstance(normalized.get("channels"), dict):
+        raise ValueError("Invalid normalized guide")
+    generated_at = generated_at or datetime.now(timezone.utc)
+    if generated_at.tzinfo is None:
+        raise ValueError("Generation time must include a timezone")
+    channels = {}
+    for channel_id, programmes in normalized["channels"].items():
+        if not isinstance(programmes, list):
+            raise ValueError("Invalid programme list")
+        valid = []
+        for programme in programmes:
+            if not all(isinstance(programme.get(k), str) and programme[k] for k in ("title", "start", "stop", "source")):
+                continue
+            valid.append({"title": programme["title"], "start": programme["start"],
+                          "end": programme["stop"], "source": programme["source"]})
+        if valid:
+            channels[channel_id] = valid
+    sources = {}
+    for programmes in channels.values():
+        for programme in programmes:
+            sources[programme["source"]] = sources.get(programme["source"], 0) + 1
+    return {"updated": generated_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "channels": channels, "sourceCounts": sources}
+
 def main(argv: list[str]) -> int:
     if len(argv) != 5:
         print("Usage: python scripts/sully_epg_engine.py INPUT.xml MAPPING.json SOURCE_ID OUTPUT.json", file=sys.stderr)
@@ -100,6 +127,7 @@ def main(argv: list[str]) -> int:
     if not data["programmes"]:
         print("No verified mapped programmes; refusing empty output", file=sys.stderr)
         return 1
+    data = to_sully_tv_guide(data)
     # Write completely before replacing the destination; never publish partial JSON.
     destination = Path(output_path)
     temporary = None
@@ -115,7 +143,7 @@ def main(argv: list[str]) -> int:
     finally:
         if temporary is not None and temporary.exists():
             temporary.unlink()
-    print(f"Validated {data['programmes']} programmes across {data['matched_channels']} channels")
+    print(f"Validated {sum(len(p) for p in data['channels'].values())} programmes across {len(data['channels'])} channels")
     return 0
 
 
