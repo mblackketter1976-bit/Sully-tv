@@ -78,11 +78,17 @@ def main(output):
     walk=Walk(); rig,mapping,meshes,soles=build_fixture(walk)
     scene=bpy.context.scene
     scene.render.fps=24
+    scene.frame_start=1;scene.frame_end=361
+    for bone in rig.pose.bones: bone.rotation_mode='QUATERNION'
     drift=joint_error=sole_error=0.0; minimum_z=math.inf; previous={}
     snapshots={0,9,18,27}
-    for frame in range(73):
+    for frame in range(361):
         expected=pose(frame/24,walk)
         apply_pose(rig,mapping,frame+1,expected)
+        for bone in rig.pose.bones:
+            bone.keyframe_insert(data_path='location',frame=frame+1)
+            bone.keyframe_insert(data_path='rotation_quaternion',frame=frame+1)
+            bone.keyframe_insert(data_path='scale',frame=frame+1)
         depsgraph=bpy.context.evaluated_depsgraph_get()
         for name, leg in expected['legs'].items():
             roles=mapping['legs'][name]
@@ -108,7 +114,7 @@ def main(output):
                 bpy.context.collection.objects.link(copy)
                 copy.location.y += (frame//9)*1.05
                 copy.location.x -= expected['root'][0]
-    report={'kind':'skinned-fixture-only','blender':bpy.app.version_string,'framesChecked':73,
+    report={'kind':'skinned-fixture-only','blender':bpy.app.version_string,'framesChecked':361,
             'maxBoneEndpointError':joint_error,'maxEvaluatedSoleError':sole_error,
             'maxEvaluatedStanceDrift':drift,'minimumEvaluatedMeshHeight':minimum_z,
             'approvedCharacterUsed':False}
@@ -133,6 +139,13 @@ def main(output):
     camera.data.type='ORTHO';camera.data.ortho_scale=5.8;scene.camera=camera
     scene.render.image_settings.file_format='PNG';scene.render.filepath=str(output/'contact-fixture.png')
     bpy.ops.render.render(write_still=True)
+    for ob in list(bpy.data.objects):
+        if ob.name.startswith('POSE_'): ob.hide_render=True;ob.hide_viewport=True
+    for ob in meshes.values(): ob.hide_render=False
+    scene.frame_set(1)
+    camera.location=(3,-4,2.5)
+    camera.rotation_euler=(Vector((1.8,0,.25))-camera.location).to_track_quat('-Z','Y').to_euler()
+    camera.data.ortho_scale=5.8
     bpy.ops.wm.save_as_mainfile(filepath=str(output/'contact-fixture.blend'))
     print('LUNA_BLENDER_CONTACT_PASS',json.dumps(report),flush=True)
 
