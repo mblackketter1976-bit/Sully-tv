@@ -690,21 +690,10 @@ function sullyTitleSearch(q){
  const catalogSlot=document.createElement("div");root.append(catalogSlot);sullyCatalogLookup(q,catalogSlot,generation);
  const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
  const panel=document.createElement("section");panel.className="sullyDiscovery";root.append(panel);
- const headingMain=document.createElement("h3");headingMain.textContent="🎬 Find “"+q+"”";panel.append(headingMain);
- const intro=document.createElement("p");intro.className="muted";intro.textContent="Check where to stream, rent, or buy in the US. Availability opens on an independent guide.";panel.append(intro);
- const guides=document.createElement("div");guides.className="sullyAvailabilityGuides";panel.append(guides);
- const jw=document.createElement("a");jw.href="https://www.justwatch.com/us/search?q="+encodeURIComponent(q);jw.target="_blank";jw.rel="noopener noreferrer";jw.textContent="Find on JustWatch ↗";guides.append(jw);
- const w2=document.createElement("a");w2.href="https://what2c.tv/search";w2.target="_blank";w2.rel="noopener noreferrer";w2.textContent="Search what2c.tv ↗";guides.append(w2);
- const recommendation=document.createElement("section");recommendation.className="sullyRecommendations";root.append(recommendation);
- const recHeading=document.createElement("h3");recHeading.textContent="🍿 If you can't find it, try these";recommendation.append(recHeading);
- const recText=document.createElement("p");recText.className="muted";recText.textContent="Availability for “"+q+"” is not verified. These are suggestions, not confirmed streams.";recommendation.append(recText);
- const recGrid=document.createElement("div");recGrid.className="sullyRecGrid";recommendation.append(recGrid);
- const western=/tombstone|wyatt earp|western|gunfight|cowboy|deadwood|ok corral|true grit|unforgiven|young guns/i.test(q);
- const suggestions=western?[["Wyatt Earp","1994 · Western"],["Young Guns","1988 · Western"],["3:10 to Yuma","2007 · Western"],["True Grit","2010 · Western"]]:[];
- if(!suggestions.length){const p=document.createElement("p");p.className="muted";p.textContent="Try a different title or explore live channels. More personalized recommendations are coming.";recGrid.append(p)}
- suggestions.forEach(([name,description])=>{const btn=document.createElement("button");btn.type="button";btn.className="sullyRecButton";const label=document.createElement("strong");label.textContent=name;const meta=document.createElement("small");meta.textContent=description;btn.append(label,meta);btn.onclick=()=>{const input=$("search");input.value=name;sullyTitleSearch(name);window.scrollTo({top:0,behavior:"smooth"})};recGrid.append(btn)});
+ const headingMain=document.createElement("h3");headingMain.textContent="🎬 “"+q+"” — availability not confirmed";panel.append(headingMain);
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Sully TV hasn't verified a playable source for this title yet. That doesn't mean it's unavailable everywhere. We're expanding our legal catalog; meanwhile, see related recommendations below.";panel.append(intro);
  const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
- const summary=document.createElement("summary");summary.textContent="More options · My subscriptions and individual services";details.append(summary);
+ const summary=document.createElement("summary");summary.textContent="Optional: search external services manually";details.append(summary);
  const extra=document.createElement("div");extra.className="sullySearchExtrasBody";details.append(extra);
  const services=[
  {name:"Tubi",free:true,search:q=>"https://tubitv.com/search/"+encodeURIComponent(q),home:"https://tubitv.com/"},
