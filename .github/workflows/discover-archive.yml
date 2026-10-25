@@ -1,0 +1,35 @@
+name: Discover open-license archive films
+on:
+  schedule:
+    - cron: '41 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/discover_archive.py'
+      - '.github/workflows/discover-archive.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sully-archive-discovery
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/discover_archive.py
+      - name: Publish newly indexed films
+        run: |
+          if ! git diff --quiet -- data/archive-titles.json || [ -n "$(git ls-files --others --exclude-standard data/archive-titles.json)" ]; then
+            git config user.name "sully-library-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/archive-titles.json
+            git commit -m "Index open-license Internet Archive films"
+            git pull --rebase
+            git push
+          fi
