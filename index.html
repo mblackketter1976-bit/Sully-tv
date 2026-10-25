@@ -4,7 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080f20">
+<meta name="theme-color" content="#071733">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./sully-icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Sully TV">
 <title>Sully TV | Blackketter Entertainment</title>
@@ -252,6 +255,8 @@ header .sullyQuickPanel p{margin:7px 0}
 @media(max-width:740px){header .sullyQuickBar{justify-content:flex-start!important}}
 
 .sullyCompactCards .rail,.sullyCompactCards .grid{gap:7px}.sullyCompactCards .card .art{height:70px}.sullyCompactCards .card .info{padding:7px}.sullyCompactCards .card .info h3{min-height:0;margin-bottom:3px}
+@supports(padding:max(0px)){body{padding-bottom:env(safe-area-inset-bottom)}header{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}}
+@media(display-mode:standalone){header{top:0}body{overscroll-behavior-y:contain}}
 </style>
 </head>
 <body>
@@ -1513,6 +1518,7 @@ block:"center"
 });
 }
 
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
 init();
 loadDemand();
 /* Arrow keys, Enter and Escape for keyboards and TV remotes that send key events.
