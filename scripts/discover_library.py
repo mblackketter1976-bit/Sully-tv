@@ -21,10 +21,14 @@ SEARCHES = [
     "filetype:video space NASA", "filetype:video travel",
     "filetype:video comedy film", "filetype:video animation",
     "filetype:video silent film", "filetype:video educational film",
+    "filetype:video western film", "filetype:video romantic comedy",
+    "filetype:video horror film", "filetype:video action film",
+    "filetype:video sports documentary", "filetype:video true crime",
+    "filetype:video cartoons", "filetype:video space documentary",
 ]
 ALLOWED = {"cc0", "public-domain", "pd", "cc-by-4.0", "cc-by-3.0", "cc-by-sa-4.0", "cc-by-sa-3.0"}
 VIDEO_EXT = (".webm", ".ogv", ".ogg", ".mp4")
-LIMIT_PER_RUN = 45
+LIMIT_PER_RUN = 100
 
 def request(params):
     url = API + "?" + urllib.parse.urlencode(params)
@@ -94,7 +98,7 @@ def discover():
             if not clean_title:
                 continue
             item = {"id":key,"title":clean_title,"kind":classify(clean_title,description),
-                    "year":"","genres":[],"description":description[:450] or "Freely licensed video on Wikimedia Commons",
+                    "year":"","genres":genres_for(clean_title,description),"description":description[:450] or "Freely licensed video on Wikimedia Commons",
                     "poster":"","playback":{"type":"direct","url":url},
                     "rights":{"basis":license_code,"source":source,"licenseUrl":license_url,
                               "attribution":attribution,"notes":"License metadata from Wikimedia Commons; review third-party rights for redistribution"},
