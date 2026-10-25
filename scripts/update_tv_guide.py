@@ -41,9 +41,9 @@ def xmltv_time(raw):
         return None
 
 def main():
-    streams = json_api("streams.json")
+    streams = json.loads(fetch(API + "streams.json", 32_000_000))
     live = {x.get("channel") for x in streams if x.get("channel") and x.get("url")}
-    guides = json_api("guides.json")
+    guides = json.loads(fetch(API + "guides.json", 32_000_000))
     by_url = defaultdict(set)
     for g in guides:
         channel = g.get("channel")
