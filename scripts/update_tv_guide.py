@@ -44,6 +44,9 @@ def main():
     streams = json.loads(fetch(API + "streams.json", 32_000_000))
     live = {x.get("channel") for x in streams if x.get("channel") and x.get("url")}
     guides = json.loads(fetch(API + "guides.json", 32_000_000))
+    print("DIAGNOSTIC: stream records =", len(streams), "live channel IDs =", len(live), "guide records =", len(guides), flush=True)
+    if guides:
+        print("DIAGNOSTIC: first guide keys =", sorted(guides[0].keys()), flush=True)
     by_url = defaultdict(set)
     for g in guides:
         channel = g.get("channel")
@@ -55,6 +58,7 @@ def main():
                 by_url[url].add(channel)
     # Prefer sources covering the most live stations, avoid a large global download.
     choices = sorted(by_url, key=lambda u: len(by_url[u]), reverse=True)[:12]
+    print("DIAGNOSTIC: matching guide URLs =", len(by_url), "selected =", len(choices), flush=True)
     results = defaultdict(list)
     sources = {}
     for url in choices:
