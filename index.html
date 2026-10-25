@@ -381,6 +381,16 @@ header .top{flex-wrap:wrap}
 .sullyInventoryCounter{font-size:clamp(17px,2vw,23px);font-weight:800;color:#f5d18c;background:#162c4a;border:1px solid #c49d5d;border-radius:12px;padding:15px 18px;margin:14px 0}
 .sullyInventoryTotal{font-size:clamp(19px,2.5vw,28px);padding-bottom:12px;border-bottom:1px solid #6c7890}.sullyInventoryBreakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}.sullyInventoryStat{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;background:#0d203b;font-size:14px;color:#dce8f8}.sullyInventoryStat strong{font-size:26px;color:#f5d18c}
 .sullyLibraryEntry{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.sullyLibraryPoster{width:140px;max-width:34%;aspect-ratio:16/9;flex-shrink:0;border-radius:9px;overflow:hidden;background:#0c1a30;display:grid;place-items:center}.sullyLibraryPoster img{width:100%;height:100%;object-fit:cover}.sullyLibraryPoster.sullyNoThumbnail:after{content:"🎬";font-size:34px}.sullyLibraryEntryInfo{flex:1 1 145px;min-width:0}@media(max-width:460px){.sullyLibraryPoster{width:100px}}
+
+/* Compact, grouped TV guide */
+.sullyCompactGuide{display:block;margin:12px 0}
+.sullyCompactGuide h3{font-size:16px;margin:18px 0 8px;color:#ffe4a8}
+.sullyCompactGuideGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:9px}
+.sullyCompactGuideCard{min-width:0;min-height:104px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;padding:10px 7px;border:1px solid #776f68;border-radius:10px;background:#172840;color:#fff;cursor:pointer;text-align:center}
+.sullyCompactGuideCard img{width:100%;height:40px;object-fit:contain}
+.sullyCompactGuideCard strong{font-size:12px;line-height:1.3;overflow-wrap:anywhere}
+.sullyCompactGuideCard small{font-size:10px;color:#a9d6fc}
+@media(max-width:600px){.sullyCompactGuideGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.sullyCompactGuideCard{min-height:88px;padding:7px 4px}.sullyCompactGuideCard img{height:32px}.sullyCompactGuideCard strong{font-size:11px}}
 </style>
 <style id="sullyRoomPolish">
 .sullyRoomHeading{margin:10px 0 12px;padding:18px 22px}
@@ -1655,44 +1665,59 @@ sullySavePlace();
 }
 function renderGuide(){
 const root=$("content");
-$("status").textContent="Channel guide";
-const heading=document.createElement("h2");
-heading.textContent="📋 Live TV Guide";
-root.append(heading);
-const note=document.createElement("p");
-note.className="panel";
-note.textContent="Browse live channels. Exact program schedules are unavailable for many streams, so no show titles are guessed.";
-root.append(note);
-const toolsRow=document.createElement("div");
-toolsRow.className="demandSearch";
-const guideSearch=document.createElement("input");
-guideSearch.type="search";guideSearch.placeholder="Search the TV guide";guideSearch.setAttribute("aria-label","Search TV guide");
-const guideCountry=document.createElement("select");
-guideCountry.setAttribute("aria-label","Guide country");
-for(const opt of $("country").options)guideCountry.add(new Option(opt.text,opt.value));
-guideCountry.value=$("country").value;
+$("status").textContent="Organized channel guide";
+const heading=document.createElement("h2");heading.textContent="📋 Live TV Guide";root.append(heading);
+const note=document.createElement("p");note.className="muted";note.textContent="Compact channel grid · Exact program schedules aren't available for every stream.";root.append(note);
+const controls=document.createElement("div");controls.className="demandSearch";
+const search=document.createElement("input");search.type="search";search.placeholder="Find a channel…";search.setAttribute("aria-label","Search guide");
+const country=document.createElement("select");country.setAttribute("aria-label","Guide country");
+for(const opt of $("country").options)country.add(new Option(opt.text,opt.value));
+country.value=$("country").value;
+const category=document.createElement("select");category.setAttribute("aria-label","Guide category");
+["All Categories","News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"].forEach(x=>category.add(new Option(x,x)));
 const count=document.createElement("span");count.className="muted";
-toolsRow.append(guideSearch,guideCountry,count);root.append(toolsRow);
-const grid=document.createElement("div");
-grid.className="guideList";
-root.append(grid);
-const drawGuide=()=>{
-grid.replaceChildren();
-const query=guideSearch.value.trim().toLowerCase();
-const matches=channels.filter(c=>!unavailable.has(c.id)&&(!guideCountry.value||c.country===guideCountry.value)&&(!query||c.name.toLowerCase().includes(query)));
-count.textContent=matches.length.toLocaleString()+" channels · showing first "+Math.min(200,matches.length);
-matches.slice(0,200).forEach(c=>{
-const row=document.createElement("div");
-row.className="guideRow";
-const name=document.createElement("strong");name.textContent=c.name;
-const details=document.createElement("small");details.textContent="Live stream · Schedule unavailable";
-const watch=document.createElement("button");watch.className="watch";watch.textContent="▶ Watch";watch.onclick=()=>watchChannel(c);
-row.append(name,details,watch);grid.append(row);
-});
-};
-guideSearch.addEventListener("input",drawGuide);
-guideCountry.addEventListener("change",drawGuide);
-drawGuide();
+controls.append(search,country,category,count);root.append(controls);
+const grid=document.createElement("div");grid.className="sullyCompactGuide";root.append(grid);
+const more=document.createElement("button");more.className="watch";more.textContent="Show more channels";root.append(more);
+let limit=48;
+function group(c){
+ const t=[c.name,c.group,c.category,c.genre,c.description].filter(Boolean).join(" ").toLowerCase();
+ if(/news|weather|politic|cnn|bbc world|reuters/.test(t))return "News";
+ if(/sport|football|basketball|soccer|racing|espn|golf|tennis/.test(t))return "Sports";
+ if(/movie|cinema|film|hollywood/.test(t))return "Movies";
+ if(/kid|child|cartoon|junior|nickelodeon/.test(t))return "Kids";
+ if(/music|radio|concert|mtv/.test(t))return "Music";
+ if(/documentary|history|science|nature|wildlife|discovery/.test(t))return "Documentaries";
+ if(/comedy|stand.up|sitcom/.test(t))return "Comedy";
+ if(/entertainment|reality|drama|series|show/.test(t))return "Entertainment";
+ return "Other";
+}
+function draw(){
+ grid.replaceChildren();
+ const q=search.value.trim().toLowerCase();
+ const matches=channels.filter(c=>!unavailable.has(c.id)&&(!country.value||c.country===country.value)&&(!q||c.name.toLowerCase().includes(q))&&(category.value==="All Categories"||group(c)===category.value));
+ const visible=matches.slice(0,limit);
+ count.textContent=matches.length.toLocaleString()+" channels · showing "+visible.length;
+ const sections=category.value==="All Categories"?["News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"]:[category.value];
+ sections.forEach(section=>{
+  const entries=visible.filter(c=>group(c)===section);
+  if(!entries.length)return;
+  const h=document.createElement("h3");h.textContent=section+" ("+matches.filter(c=>group(c)===section).length+")";grid.append(h);
+  const shelf=document.createElement("div");shelf.className="sullyCompactGuideGrid";grid.append(shelf);
+  entries.forEach(c=>{
+   const card=document.createElement("button");card.className="sullyCompactGuideCard";card.type="button";card.onclick=()=>watchChannel(c);
+   const img=document.createElement("img");img.loading="lazy";img.alt="";img.referrerPolicy="no-referrer";
+   const logo=c.logo||c.tvgLogo||c.image||"";
+   if(logo&&/^https?:\/\//.test(logo)){img.src=logo;img.onerror=()=>img.remove();card.append(img);}
+   const name=document.createElement("strong");name.textContent=c.name;
+   const badge=document.createElement("small");badge.textContent="▶ Live";card.append(name,badge);shelf.append(card);
+  });
+ });
+ more.hidden=limit>=matches.length;more.textContent="Show more channels ("+(matches.length-visible.length)+" remaining)";
+}
+more.onclick=()=>{limit+=48;draw();};
+[search,country,category].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=48;draw();}));
+draw();
 }
 
 function remember(c){
