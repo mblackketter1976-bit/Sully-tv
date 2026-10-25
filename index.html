@@ -377,6 +377,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 header #viewer{flex-basis:100%;width:100%;order:1;margin:12px 0;box-sizing:border-box}
 header .sullySearchForm{order:2}
 header .top{flex-wrap:wrap}
+.sullyDirectoryControls{padding:16px;border:1px solid #bd9858;border-radius:14px;background:#142943;margin:12px 0}.sullyDirectoryFilters{display:flex;flex-wrap:wrap;gap:10px}.sullyDirectoryFilters>*{flex:1 1 170px;min-width:0;padding:12px;border-radius:9px;background:#0b1930;color:white;border:1px solid #b8965a}
 </style>
 </head>
 <body>
@@ -470,6 +471,7 @@ const API="https://iptv-org.github.io/api/";
 
 const tabs=[
 "🏠 Home",
+"☰ More Channels",
 "🐾 Luna on the Streets",
 "💖 Nicol's Station",
 "🎤 Mike's Standup",
@@ -758,7 +760,7 @@ function sullyMenu(){
  const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
  const groups=[
  ["🎬 Watch by Genre",["🎬 Movies","🎤 Mike's Standup","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
- ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
+ ["📺 Live TV",["☰ More Channels","🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
  ["🏠 More",["🍿 On Demand","📚 Library","📋 TV Guide"]]
  ];
@@ -803,7 +805,7 @@ function sullyTile(t,kind){
  const label=document.createElement("span");label.className="tileLabel";label.textContent=t.replace(/^[^\p{L}]+/u,"").trim();
  b.append(icon,label);
  b.setAttribute("aria-label",t);
- b.onclick=()=>{if(t==="📺 Live TV"){sullyCategory("🇺🇸 USA");return}if(t==="☰ More Channels"){sullyCategory("⭐ Featured");return}sullyCategory(t)};
+ b.onclick=()=>{if(t==="📺 Live TV"){sullyCategory("🇺🇸 USA");return}if(t==="☰ More Channels"){sullyCategory(t);return}sullyCategory(t)};
  return b;
 }
 function nav(){
@@ -1179,6 +1181,49 @@ function sullyFanHub(){
  root.append(panel);
 }
 
+let sullyDirectoryCountry="",sullyDirectoryGenre="All",sullyDirectoryQuery="";
+function sullyDirectory(){
+ const root=$("content");
+ const panel=document.createElement("section");panel.className="sullyDirectoryControls";
+ const intro=document.createElement("p");intro.textContent="Browse live channels by genre and country. Duplicate-looking listings are grouped here; their original streams remain available.";panel.append(intro);
+ const controls=document.createElement("div");controls.className="sullyDirectoryFilters";
+ const genre=document.createElement("select");genre.setAttribute("aria-label","Filter channels by genre");
+ const genres=["All","News","Movies","Sports","Music","Comedy","Kids","Documentary","Entertainment","Lifestyle","Religious"];
+ genres.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v==="All"?"All genres":v;genre.append(o)});genre.value=sullyDirectoryGenre;
+ const country=document.createElement("select");country.setAttribute("aria-label","Filter channels by country");
+ const allCountries=[...new Set(channels.map(c=>c.country).filter(Boolean))].sort();
+ [["","All countries"],...allCountries.map(code=>[code,channels.find(c=>c.country===code)?.countryName||code])].forEach(([v,label])=>{const o=document.createElement("option");o.value=v;o.textContent=label;country.append(o)});country.value=sullyDirectoryCountry;
+ const search=document.createElement("input");search.type="search";search.placeholder="Search channel names";search.setAttribute("aria-label","Search directory");search.value=sullyDirectoryQuery;
+ controls.append(genre,country,search);panel.append(controls);root.append(panel);
+ const status=document.createElement("p");root.append(status);
+ const rail=document.createElement("div");rail.className="rail";root.append(rail);
+ const more=document.createElement("button");more.className="tool";more.textContent="Show more channels";root.append(more);
+ let count=60;
+ function draw(){
+  const term=sullyDirectoryQuery.toLowerCase().trim();
+  const selected=channels.filter(c=>{
+   if(!streams.has(c.id)||unavailable.has(c.id))return false;
+   if(sullyDirectoryCountry&&c.country!==sullyDirectoryCountry)return false;
+   if(term&&!c.name.toLowerCase().includes(term))return false;
+   if(sullyDirectoryGenre!=="All"){
+    const hay=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
+    const tests={News:/news|weather|current.affairs/,Movies:/movie|film|cinema|western/,Sports:/sport|football|basketball|baseball|soccer|espn/,Music:/music|radio|concert|hits/,Comedy:/comedy|funny|sitcom/,Kids:/kids|children|cartoon|family|animation/,Documentary:/documentary|history|science|nature|wildlife/,Entertainment:/entertainment|variety|reality/,Lifestyle:/lifestyle|food|cooking|travel|fashion|home/,Religious:/religious|faith|christian|gospel|church/};
+    if(!tests[sullyDirectoryGenre]?.test(hay))return false;
+   }
+   return true;
+  });
+  const unique=[];const seen=new Set();
+  selected.forEach(c=>{const key=(c.name||"").toLowerCase().replace(/\\b(?:live|hd|sd|fhd|4k)\\b/g,"").replace(/[^a-z0-9]/g,"")+"|"+(c.country||"");if(seen.has(key))return;seen.add(key);unique.push(c)});
+  status.textContent=unique.length.toLocaleString()+" distinct channel listings";
+  rail.replaceChildren();unique.slice(0,count).forEach(c=>rail.append(card(c)));
+  more.hidden=count>=unique.length;
+ }
+ genre.onchange=()=>{sullyDirectoryGenre=genre.value;count=60;draw()};
+ country.onchange=()=>{sullyDirectoryCountry=country.value;count=60;draw()};
+ search.oninput=()=>{sullyDirectoryQuery=search.value;count=60;draw()};
+ more.onclick=()=>{count+=60;draw()};
+ draw();
+}
 function render(){
 const root=$("content");
 root.innerHTML="";
@@ -1193,6 +1238,8 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
+if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
+
 if(tab==="🏠 Home"){
  $("filters").hidden=true;
  $("status").textContent="Choose a room to start watching";
