@@ -899,7 +899,26 @@ body.sullyKidsMode .sullyKidsLiveHeading,body.sullyKidsMode .sullyKidsOutsideHea
 body.sullyKidsMode .sullyKidsLiveStatus,body.sullyKidsMode .sullyKidsParentNote{color:#284567!important;background:#ffffffd9;border-radius:14px;padding:10px 14px}
 body.sullyKidsMode .sullyKidsShow{box-shadow:0 7px 0 #8bb3cc88,0 10px 18px #294f6a24!important}
 @media(prefers-reduced-motion:reduce){body.sullyKidsMode .sullyDino,body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{animation:none!important}}
-</style></head>
+</style>
+<style id="sullyGuideModernPilot2026">
+/* Phase 1 visual pilot: scoped exclusively to the existing Live TV Guide. */
+.sullyRetroGuideTitle{font-family:Arial,sans-serif!important;letter-spacing:.01em!important;color:#f7f9ff!important;font-size:clamp(22px,2.4vw,32px);margin:18px 0 8px}
+.sullyGuideToolbar{background:#17191e!important;border:1px solid #34373f!important;border-radius:14px!important;padding:12px!important;gap:9px!important}
+.sullyGuideToolbar button,.sullyGuideToolbar select,.sullyGuideToolbar input{background:#25272c;color:#f7f7f7;border:1px solid #41434b;border-radius:9px!important}
+.sullyRetroGuideScroll{background:#151618!important;border:1px solid #34363b!important;border-radius:14px!important;overflow:auto;max-width:100%;scrollbar-color:#6d727e #191b20}
+.sullyRetroGuideTable{min-width:900px!important;background:#151618!important;color:#f6f7f8!important}
+.sullyRetroGuideHead{background:#202226!important;color:#d7d8db!important;position:sticky;top:0;z-index:3}
+.sullyRetroGuideRow{border-bottom:1px solid #303237!important}
+.sullyRetroGuideStation{background:#1c1e22!important;color:#f6f7f8!important;border-right:1px solid #393b40!important}
+.sullyRetroGuideStationButton{position:sticky;left:0;z-index:2;text-align:left!important}
+.sullyRetroGuideHead .sullyRetroGuideStation{position:sticky;left:0;z-index:4}
+.sullyRetroGuideCell{background:#24262a!important;color:#f7f7f7!important;border:2px solid #17191d!important;border-radius:9px!important;text-align:left!important;padding:12px!important}
+.sullyRetroGuideProgram:hover,.sullyRetroGuideProgram:focus-visible{background:#35475b!important;outline:2px solid #75b9ff;outline-offset:-2px}
+.sullyRetroGuideUnknown{color:#aeb2bb!important;background:#1d1f23!important}
+.sullyRetroGuideTime{background:#202226!important;color:#d4d7dc!important}
+@media(max-width:600px){.sullyRetroGuideTable{min-width:760px!important}.sullyGuideToolbar{gap:7px!important}.sullyRetroGuideTitle{font-size:22px}}
+</style>
+</head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
