@@ -843,6 +843,28 @@ function sullyFanLive(){
  if(matches.length){const rail=document.createElement("div");rail.className="rail";matches.slice(0,60).forEach(c=>rail.append(card(c)));root.append(rail)}
 }
 
+
+function sullyNetflixStandup(){
+ const root=$("content"),panel=document.createElement("section");panel.className="sullyFanHub";
+ const h=document.createElement("h2");h.textContent="🎤 Stand-Up on Netflix";panel.append(h);
+ const p=document.createElement("p");p.textContent="Already have Netflix? Browse stand-up specials there using your own subscription. Netflix plays in its own app or website, not inside Sully TV. Titles and availability can change.";panel.append(p);
+ const picks=[
+ ["All Stand-Up Comedy","Stand-Up Comedy"],
+ ["Matt Rife","Matt Rife"],
+ ["Eddie Murphy","Eddie Murphy"],
+ ["Joe Rogan","Joe Rogan"],
+ ["Dave Chappelle","Dave Chappelle"],
+ ["Ali Wong","Ali Wong"],
+ ["Bill Burr","Bill Burr"],
+ ["Gabriel Iglesias","Gabriel Iglesias"],
+ ["Kevin Hart","Kevin Hart"],
+ ["John Mulaney","John Mulaney"]
+ ];
+ const grid=document.createElement("div");grid.className="sullyFanTopics";
+ picks.forEach(([label,query])=>{const a=document.createElement("a");a.className="sullyFanLink";a.href="https://www.netflix.com/search?q="+encodeURIComponent(query);a.target="_blank";a.rel="noopener noreferrer";a.textContent="▶ "+label+" on Netflix ↗";grid.append(a)});
+ panel.append(grid);root.append(panel);
+}
+
 function sullyFanHub(){
  const hub=sullyFanHubs[tab],root=$("content");
  $("status").textContent=hub.name+" official video discovery";
@@ -867,7 +889,7 @@ const root=$("content");
 root.innerHTML="";
 $("more").hidden=true;
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();sullyFanHub();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
