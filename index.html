@@ -603,6 +603,38 @@ function sullyMovieGenreBar(){
  return wrap;
 }
 
+
+/* Contextual subcategory buttons for channel sections */
+const sullySubcategories={
+ "🏆 Sports":[["All Sports",null],["Football",/football|nfl|gridiron/],["Basketball",/basketball|nba|wnba/],["Baseball",/baseball|mlb|softball/],["Soccer",/soccer|football.club|futbol|fútbol|fifa/],["Motorsports",/racing|nascar|formula|motorsport|motorcycle|f1\b/],["Combat",/boxing|mma|wrestling|ufc|fight/],["Golf",/golf|pga/],["Tennis",/tennis|atp|wta/]],
+ "🧠 Documentaries":[["All Documentaries",null],["History",/history|historical|ancient|war|heritage/],["Science",/science|physics|technology|discovery|experiment/],["Nature",/nature|wildlife|animal|planet|earth|ocean/],["Space",/space|cosmos|astronomy|nasa|universe/],["Travel",/travel|explore|adventure|geograph/],["Crime",/crime|investigation|forensic|mystery/]],
+ "⭐ Reality":[["All Reality",null],["Competition",/competition|contest|talent|challenge|game.show|survivor/],["Cooking",/cook|food|chef|baking|kitchen/],["Home & DIY",/home|house|renovation|diy|garden|property/],["Lifestyle",/lifestyle|fashion|beauty|wellness/],["Dating",/dating|romance|love|relationship/],["Adventure",/adventure|survival|outdoor|expedition/]],
+ "📍 Local News":[["All News",null],["Local",/local|regional|city|county/],["Weather",/weather|forecast|meteorolog/],["Politics",/politic|government|capitol|congress/],["Business",/business|finance|market|econom/],["World",/world|global|international/]],
+ "👻 Robinson's Horror Channel":[["All Horror",null],["Paranormal",/paranormal|ghost|haunt|spirit/],["Monsters",/monster|creature|vampire|zombie/],["Thrillers",/thriller|suspense|mystery/],["Classic Horror",/classic|vintage|retro|old.horror/]],
+ "🔎 Michele's Murder Mystery Channel":[["All Mysteries",null],["Unsolved",/unsolved|cold.case|missing/],["Police",/police|cops|sheriff|bodycam|body.cam/],["Investigations",/investigat|detective|forensic|evidence/],["Courtroom",/court|trial|justice|law/],["Serial Killers",/serial.killer|murder|homicide/]],
+ "💖 Nicol's Station":[["All Nicol's",null],["Shopping",/shopping|qvc|hsn|retail/],["Fashion & Beauty",/fashion|beauty|jewel|style/],["Romance",/romance|romantic|love|drama/],["Country",/country|western|ranch/],["Home & Lifestyle",/home|lifestyle|family|garden/],["Music",/music|concert|talent|sing/]],
+ "🌎 Worldwide":[["All Worldwide",null],["News",/news|world|international/],["Music",/music|radio|concert/],["Sports",/sport|football|soccer|basketball/],["Movies",/movie|film|cinema/],["Culture",/culture|travel|heritage|history/]],
+ "🇺🇸 USA":[["All USA",null],["News",/news|weather/],["Sports",/sport|football|baseball|basketball/],["Movies",/movie|film|cinema/],["Music",/music|concert|radio/],["Kids",/kids|children|cartoon|family/]],
+ "⭐ Featured":[["All Featured",null],["Movies",/movie|film|cinema/],["Sports",/sport|football|basketball/],["News",/news|weather/],["Entertainment",/entertainment|music|reality|comedy/]]
+};
+const sullySubSelection={};
+function sullySubMatch(c){
+ const opts=sullySubcategories[tab];if(!opts)return true;
+ const chosen=sullySubSelection[tab]||opts[0][0],entry=opts.find(o=>o[0]===chosen);
+ return !entry||!entry[1]||entry[1].test((c.name+" "+(c.categories||[]).join(" ")).toLowerCase());
+}
+function sullySubBar(){
+ const options=sullySubcategories[tab];if(!options)return null;
+ const wrap=document.createElement("section");wrap.className="sullyMovieGenres";
+ const title=document.createElement("strong");title.textContent="Explore "+tab.replace(/^[^\p{L}]+/u,"").trim();wrap.append(title);
+ const buttons=document.createElement("div");buttons.className="sullyMovieGenreButtons";
+ const selected=sullySubSelection[tab]||options[0][0];
+ options.forEach(([name])=>{const b=document.createElement("button");b.textContent=name;b.className=name===selected?"selected":"";b.onclick=()=>{sullySubSelection[tab]=name;page=0;render();jumpToCategory()};buttons.append(b)});
+ wrap.append(buttons);
+ const note=document.createElement("p");note.textContent="Filters match channel names and categories; individual program schedules may differ.";wrap.append(note);
+ return wrap;
+}
+
 function filtered(){
 let list=channels.filter(c=>{
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
@@ -611,6 +643,7 @@ if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Wa
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
 if(!categoryMatch(c))return false;
+if(!sullySubMatch(c))return false;
 if(tab==="🎬 Movies"&&!sullyMovieGenreMatch(c))return false;
 if($("country").value&&c.country!==$("country").value)return false;
 if($("category").value&&!(c.categories||[]).includes($("category").value))return false;
@@ -726,6 +759,7 @@ return;
 
 $("filters").hidden=false;
 if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
+else if(sullySubcategories[tab])root.append(sullySubBar());
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
 
