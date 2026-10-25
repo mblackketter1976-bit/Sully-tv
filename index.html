@@ -1122,6 +1122,7 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
   const matches=items.filter(item=>{
    if(moviesOnly&&item.kind!=="movie"&&!awardChoice)return false;
    if(awardChoice)return (item.awards||[]).some(a=>a.name===awardName&&a.status===awardStatus);
+   if((item.rooms||[]).some(room=>category.toLowerCase().includes(room.toLowerCase())))return true;
    return !tokens.length||tokens.some(t=>[item.title,...(item.genres||[]),item.kind].join(" ").toLowerCase().includes(t));
   });
   if(!matches.length)return;
