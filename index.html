@@ -1899,10 +1899,12 @@ function renderGuide(){
    if(language.value==="unknown")return lang.confidence==="unknown";
    return language.value==="all"||lang.codes.includes(language.value);
   }).sort((a,b)=>group(a).localeCompare(group(b))||a.name.localeCompare(b.name));
-  const shown=matches.slice(0,limit);count.textContent=shown.length+" / "+matches.length+" channels";
   const updated=sullyGuideData?.updated?new Date(sullyGuideData.updated):null;
-  const age=updated&&Number.isFinite(updated.getTime())?Date.now()-updated.getTime():Infinity;
-  guideStatus.textContent=age<36*3600000?"Program listings updated "+updated.toLocaleString()+" · Sourced schedules only": "Program listings currently unavailable or outdated · Live stations still work";
+  const fresh=updated&&Number.isFinite(updated.getTime())&&Date.now()-updated.getTime()<36*3600000;
+  const scheduled=matches.filter(c=>fresh&&(sullyGuideData.channels[c.id]||[]).some(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&slots.some(d=>Date.parse(p.start)<=d.getTime()&&Date.parse(p.end)>d.getTime())));
+  const shown=scheduled.slice(0,limit);count.textContent=shown.length+" / "+scheduled.length+" scheduled channels";
+
+  guideStatus.textContent=fresh?"Verified program listings updated "+updated.toLocaleString()+" · Only channels with actual scheduled shows appear":"Waiting for fresh verified program listings · No unscheduled channels shown";
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
   const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
@@ -1915,18 +1917,17 @@ function renderGuide(){
    // Display schedules only when actual start/end timestamps are provided.
    const programs=sullyGuideData?.channels?.[c.id]||[];
    const verified=programs.filter(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&Date.parse(p.end)>Date.now()-3600000);
-   let any=false;
    for(let j=0;j<slots.length;){
     const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<=t&&Date.parse(p.end)>t);
     if(!p){const empty=document.createElement("div");empty.className="sullyRetroGuideCell sullyRetroGuideUnknown";empty.textContent=j===0?"LIVE · Schedule unavailable":"—";empty.title="No verified program information for this time";row.append(empty);j++;continue;}
     let span=1;while(j+span<slots.length&&Date.parse(p.end)>slots[j+span].getTime()&&Date.parse(p.start)<=slots[j+span].getTime())span++;
-    const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";show.style.gridColumn="span "+span;show.textContent=p.title;show.title=p.title+" · "+fmt(new Date(p.start))+"–"+fmt(new Date(p.end))+" · Watch "+c.name;show.onclick=()=>watchChannel(c);row.append(show);any=true;j+=span;
+    const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";show.style.gridColumn="span "+span;show.textContent=p.title;show.title=p.title+" · "+fmt(new Date(p.start))+"–"+fmt(new Date(p.end))+" · Watch "+c.name;show.onclick=()=>watchChannel(c);row.append(show);j+=span;
    }
    table.append(row);
   });
   scroller.append(table);
-  if(!shown.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No stations match these filters.";scroller.append(empty)}
-  more.hidden=shown.length>=matches.length;more.textContent="Show more stations ("+(matches.length-shown.length)+" remaining)";
+  if(!shown.length){const empty=document.createElement("p");empty.className="muted";empty.textContent=fresh?"No verified programs are scheduled in this time window. Try Earlier or Later.":"No current program schedules have been verified yet. The guide will populate automatically when the source update succeeds.";scroller.append(empty)}
+  more.hidden=shown.length>=scheduled.length;more.textContent="Show more stations ("+(scheduled.length-shown.length)+" remaining)";
  }
  back.onclick=()=>{offset-=6;draw()};forward.onclick=()=>{offset+=6;draw()};now.onclick=()=>{offset=0;draw()};
  more.onclick=()=>{limit+=36;draw()};
