@@ -259,6 +259,12 @@ header .sullyQuickPanel p{margin:7px 0}
 .sullyCompactCards .rail,.sullyCompactCards .grid{gap:7px}.sullyCompactCards .card .art{height:70px}.sullyCompactCards .card .info{padding:7px}.sullyCompactCards .card .info h3{min-height:0;margin-bottom:3px}
 @supports(padding:max(0px)){body{padding-bottom:env(safe-area-inset-bottom)}header{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}}
 @media(display-mode:standalone){header{top:0}body{overscroll-behavior-y:contain}}
+
+/* Mobile quick bar: start at TV Guide, never center or clip the first button */
+header .sullyQuickBar{justify-content:flex-start!important;scroll-padding-inline:8px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+header .sullyQuickBar .headerGuide{scroll-snap-align:start}
+header .sullyQuickBar .headerGuide:first-child{margin-left:0!important}
+
 </style>
 </head>
 <body>
@@ -1523,6 +1529,8 @@ block:"center"
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
 init();
 loadDemand();
+/* Restore the quick bar to its first button on each fresh page load. */
+requestAnimationFrame(()=>{const bar=document.querySelector(".sullyQuickBar");if(bar)bar.scrollLeft=0;});
 /* Arrow keys, Enter and Escape for keyboards and TV remotes that send key events.
    Native focus and buttons remain functional for touch and screen readers. */
 (function(){
