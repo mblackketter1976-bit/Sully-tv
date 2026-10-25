@@ -755,7 +755,7 @@ if(q)sullyTitleSearch(q);else render();
 if(input)input.blur();
 jumpToCategory();
 }
-function sullyCategory(t){if(t!==tab||$("content").dataset.sullySearchActive)sullyRememberScreen();delete $("content").dataset.sullySearchActive;tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();try{render()}catch(e){console.error("Sully room error",e);const p=document.createElement("p");p.className="panel";p.textContent="Room loading error: "+e.message;$("content").append(p)}jumpToCategory();sullySavePlace()}
+function sullyCategory(t){if(t!==tab||$("content").dataset.sullySearchActive)sullyRememberScreen();delete $("content").dataset.sullySearchActive;tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
 function sullyMenu(){
  const m=$("sullyMenu");m.hidden=!m.hidden;
  if(m.hidden)return;
@@ -1275,7 +1275,7 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
-if(tab==="☰ More Channels"){$("filters").hidden=true;try{sullyDirectory()}catch(e){console.error("Directory error",e);const p=document.createElement("p");p.className="panel";p.textContent="Channel directory unavailable: "+e.message;root.append(p)}return;}
+if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
 
 if(tab==="🏠 Home"){
  $("filters").hidden=true;
@@ -1290,7 +1290,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();try{sullyFanLive()}catch(e){console.warn("Live channel list unavailable",e)}return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
@@ -1329,8 +1329,7 @@ if(tab==="🎬 Movies"||tab==="🇺🇸 USA"||tab==="🌎 Worldwide"||sullySubca
  sullyPlayableGenre(root,genre,tab==="🎬 Movies"?"movie":tab==="🇺🇸 USA"?"usa":tab==="🌎 Worldwide"?"all":"genre");
 }
 
-let list=[];
-try{list=filtered()}catch(e){console.error("Room filter error",tab,e);const warning=document.createElement("p");warning.className="panel";warning.textContent="Unable to filter this room: "+e.message;root.append(warning)}
+const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
 
 if(tab==="🏠 Home"){
@@ -2306,11 +2305,8 @@ if(!r.ok)throw Error("Unable to load "+file);
 return r.json();
 }
 
-if("scrollRestoration" in window.history)window.history.scrollRestoration="manual";
-
 async function init(){
-tab="🏠 Home";nav();
-window.scrollTo(0,0);
+nav();
 hideRecord();
 
 try{
@@ -2364,9 +2360,7 @@ if([...$("country").options].some(o=>o.value===savedCountry))$("country").value=
 $("category").add(new Option(c,c));
 });
 
-tab="🏠 Home";
-nav();render();
-requestAnimationFrame(()=>sullyGoHome());
+sullyRestorePlace();
 
 }catch(e){
 $("status").textContent="Unable to load live channels. Refresh to retry.";
