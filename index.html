@@ -355,6 +355,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyCatalogResults{margin:14px 0;padding:14px;border:1px solid #657d9c;border-radius:13px;background:#172a47}.sullyCatalogCard{display:flex;align-items:center;gap:12px;border-bottom:1px solid #3e526d;padding:9px 0}.sullyCatalogCard img{width:65px;height:88px;object-fit:cover;border-radius:6px}.sullyCatalogDetails{display:flex;flex-direction:column;gap:6px}.sullyCatalogDetails span{font-size:12px;color:#c8d5e7}.sullyCatalogDetails a{font-size:12px;color:#f3d38b}.sullyCatalogResults small{font-size:11px;color:#b5c5dc}
 .sullyInfoOverlay{position:fixed;inset:0;background:#000c;z-index:9999;display:flex;align-items:center;justify-content:center;padding:14px}.sullyInfoPanel{position:relative;background:#162c4c;color:white;border:2px solid #d5b777;border-radius:16px;padding:22px;max-width:530px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 15px 45px #000a}.sullyInfoClose{float:right;padding:9px;border-radius:8px}.sullyInfoLogo{display:block;max-width:160px;max-height:100px;object-fit:contain;margin:12px 0}.sullyInfoBtn{padding:9px 10px;border-radius:8px;border:1px solid #bdab80;background:#244a75;color:white;font-weight:700}
 .sullyProgramPoster{display:block;max-width:150px;max-height:210px;object-fit:contain;margin:10px 0}.sullyInfoPanel p{line-height:1.45}.sullyCatalogDetails button{align-self:flex-start}
+.sullySuggestHeading{padding:8px 12px;font-size:12px;font-weight:800;color:#f5d38e;background:#0c1d35}.sullyExternalSuggestions{border-top:1px solid #506480}.sullySuggestion span{flex:1;min-width:0}.sullySuggestion small{font-size:10px;font-weight:800;color:#f5d38e}
 </style>
 </head>
 <body>
@@ -545,32 +546,69 @@ function sullyGoBack(){
 
 /* Sully navigation suite */
 
-function sullyHideSuggestions(){const p=$("sullySuggestions");if(p)p.hidden=true}
+function sullyHideSuggestions(){clearTimeout(sullySuggestTimer);sullySuggestRequest++;const p=$("sullySuggestions");if(p)p.hidden=true}
+let sullySuggestTimer=null;
+let sullySuggestRequest=0;
+const sullySuggestCache=new Map();
 function sullySuggest(){
  const input=$("search"),panel=$("sullySuggestions");if(!input||!panel)return;
- const q=input.value.trim().toLowerCase();panel.replaceChildren();
+ const q=input.value.trim(),lower=q.toLowerCase(),request=++sullySuggestRequest;
+ clearTimeout(sullySuggestTimer);panel.replaceChildren();
  if(!q){panel.hidden=true;return}
  const starts=[],contains=[];
  for(const c of channels){
   if(!streams.has(c.id)||unavailable.has(c.id))continue;
   const name=c.name.toLowerCase();
-  if(name.startsWith(q))starts.push(c);else if(name.includes(q))contains.push(c);
-  if(starts.length>=8)break;
+  if(name.startsWith(lower))starts.push(c);else if(name.includes(lower))contains.push(c);
+  if(starts.length>=6)break;
  }
- const matches=starts.concat(contains).slice(0,8);
- if(!matches.length){panel.hidden=true;return}
- matches.forEach(c=>{
+ const matches=starts.concat(contains).slice(0,6);
+ function addHeading(label){const h=document.createElement("div");h.className="sullySuggestHeading";h.textContent=label;panel.append(h)}
+ function addShow(show){
   const b=document.createElement("button");b.type="button";b.className="sullySuggestion";
-  const img=logos.get(c.id);
-  if(img){const pic=document.createElement("img");pic.src=img;pic.alt="";pic.loading="lazy";b.append(pic)}
+  if(show.image&&show.image.medium){const img=document.createElement("img");img.src=show.image.medium;img.alt="";img.loading="lazy";b.append(img)}
+  const label=document.createElement("span");label.textContent=show.name;b.append(label);
+  const tag=document.createElement("small");tag.textContent="SHOW";b.append(tag);
+  b.onclick=()=>{input.value=show.name;sullyHideSuggestions();input.blur();sullyTitleSearch(show.name);jumpToCategory()};
+  panel.append(b)
+ }
+ if(matches.length){addHeading("🔴 Live channels");matches.forEach(c=>{
+  const b=document.createElement("button");b.type="button";b.className="sullySuggestion";
+  const img=logos.get(c.id);if(img){const pic=document.createElement("img");pic.src=img;pic.alt="";pic.loading="lazy";b.append(pic)}
   const label=document.createElement("span");label.textContent=c.name;b.append(label);
   const tag=document.createElement("small");tag.textContent="LIVE";b.append(tag);
-  b.addEventListener("click",()=>{input.value=c.name;sullyHideSuggestions();input.blur();watchChannel(c)});
-  panel.append(b)
- });
+  b.onclick=()=>{input.value=c.name;sullyHideSuggestions();input.blur();watchChannel(c)};panel.append(b)
+ })}
  panel.hidden=false;
+ if(q.length<2)return;
+ function displayShows(results){
+  if(request!==sullySuggestRequest||input.value.trim()!==q)return;
+  const old=panel.querySelector(".sullyExternalSuggestions");if(old)old.remove();
+  const wrapper=document.createElement("div");wrapper.className="sullyExternalSuggestions";
+  const items=(Array.isArray(results)?results:[]).map(x=>x.show).filter(x=>x&&x.name).slice(0,6);
+  if(items.length){
+   const heading=document.createElement("div");heading.className="sullySuggestHeading";heading.textContent="🎬 Shows beyond Sully TV";wrapper.append(heading);
+   items.forEach(show=>{
+    const b=document.createElement("button");b.type="button";b.className="sullySuggestion";
+    if(show.image&&show.image.medium){const img=document.createElement("img");img.src=show.image.medium;img.alt="";img.loading="lazy";b.append(img)}
+    const name=document.createElement("span");name.textContent=show.name;b.append(name);
+    const tag=document.createElement("small");tag.textContent="SHOW";b.append(tag);
+    b.onclick=()=>{input.value=show.name;sullyHideSuggestions();input.blur();sullyTitleSearch(show.name);jumpToCategory()};wrapper.append(b)
+   });
+  }
+  panel.append(wrapper);panel.hidden=!panel.querySelector(".sullySuggestion");
+ }
+ if(sullySuggestCache.has(lower)){displayShows(sullySuggestCache.get(lower));return}
+ sullySuggestTimer=setTimeout(async()=>{
+  try{
+   const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q));
+   if(!response.ok)return;
+   const data=await response.json();
+   sullySuggestCache.set(lower,data);if(sullySuggestCache.size>80)sullySuggestCache.delete(sullySuggestCache.keys().next().value);
+   displayShows(data)
+  }catch(e){}
+ },350);
 }
-
 
 
 let sullySearchGeneration=0;
