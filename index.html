@@ -1199,7 +1199,10 @@ return;
 $("filters").hidden=false;
 if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 else if(sullySubcategories[tab])root.append(sullySubBar());
-if(tab==="🎬 Movies"||sullySubcategories[tab])sullyPlayableGenre(root,tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"":sullyMovieGenre):((sullySubSelection[tab]||tab).replace(/^All /,"")));
+if(tab==="🎬 Movies"||tab==="🇺🇸 USA"||tab==="🌎 Worldwide"||sullySubcategories[tab]){
+ const genre=tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"":sullyMovieGenre):sullySubcategories[tab]?((sullySubSelection[tab]||tab).replace(/^All /,"")):"";
+ sullyPlayableGenre(root,genre,tab==="🎬 Movies"?"movie":tab==="🇺🇸 USA"?"usa":tab==="🌎 Worldwide"?"all":"genre");
+}
 
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
@@ -1639,7 +1642,7 @@ return box;
 
 let sullyPlayableCache=null;
 async function sullyGetPlayable(){if(!sullyPlayableCache)sullyPlayableCache=fetch("./data/legal-library.json").then(r=>{if(!r.ok)throw Error("Library unavailable");return r.json()}).then(d=>(d.items||[]).filter(x=>x.status==="verified"&&x.title&&x.playback?.url&&x.rights?.source&&x.rights?.basis)).catch(e=>{sullyPlayableCache=null;throw e});return sullyPlayableCache}
-function sullyPlayableGenre(root,term){
+function sullyPlayableGenre(root,term,scope="all"){
  const section=document.createElement("section");section.className="sullyLegalLibrary";root.append(section);
  const heading=document.createElement("h2");heading.textContent="▶ Playable "+(term||"programs");section.append(heading);
  const status=document.createElement("p");status.className="muted";status.textContent="Checking licensed library…";section.append(status);
@@ -1648,8 +1651,18 @@ function sullyPlayableGenre(root,term){
  sullyGetPlayable().then(items=>{
   if(!section.isConnected||view!==tab)return;
   const tokens=String(term||"").toLowerCase().split(/\\s+/).filter(x=>x.length>2);
-  const found=items.filter(item=>{if(!tokens.length)return true;const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();return tokens.some(t=>hay.includes(t))});
-  status.textContent=found.length?found.length+" playable title(s)":"No verified playable titles here yet.";
+  const found=items.filter(item=>{
+   const kind=String(item.kind||"").toLowerCase();
+   if(scope==="movie"&&kind!=="movie")return false;
+   if(scope==="usa"){
+    const countries=Array.isArray(item.countries)?item.countries:[item.country||item.originCountry||""];
+    if(!countries.some(c=>/^(US|USA|United States|United States of America)$/i.test(String(c))))return false;
+   }
+   if(!tokens.length)return true;
+   const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
+   return tokens.some(t=>hay.includes(t))
+  });
+  status.textContent=found.length?found.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
   found.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
    const name=document.createElement("strong");name.textContent=item.title;card.append(name);
