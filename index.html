@@ -2553,7 +2553,7 @@ function sullyRemoveThemeExit(){
 function sullyShowThemeExit(){
  sullyRemoveThemeExit();
  const exit=document.createElement("button");
- exit.id="sullyThemeExitFixed";exit.type="button";exit.textContent="✓ Done — Close Themes";
+ exit.id="sullyThemeExitFixed";exit.type="button";exit.textContent="Close";
  exit.setAttribute("aria-label","Close theme selection");
  exit.onclick=()=>closeSullyPanel();
  const panel=document.getElementById("sullyQuickPanel");
