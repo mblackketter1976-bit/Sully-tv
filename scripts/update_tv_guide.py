@@ -59,6 +59,12 @@ def main():
     # Prefer sources covering the most live stations, avoid a large global download.
     choices = sorted(by_url, key=lambda u: len(by_url[u]), reverse=True)[:12]
     print("DIAGNOSTIC: matching guide URLs =", len(by_url), "selected =", len(choices), flush=True)
+    if not by_url:
+        populated = [g for g in guides if g.get("sources")]
+        matching = [g for g in guides if g.get("channel") in live]
+        print("DIAGNOSTIC: guide records with sources =", len(populated), "guide records matching live channels =", len(matching), flush=True)
+        print("DIAGNOSTIC: first populated source =", repr(populated[0].get("sources"))[:500] if populated else "none", flush=True)
+        print("DIAGNOSTIC: first matched source =", repr(matching[0].get("sources"))[:500] if matching else "none", flush=True)
     if not by_url and guides:
         print("DIAGNOSTIC: first guide sources =", repr(guides[0].get("sources"))[:500], flush=True)
         print("DIAGNOSTIC: sample matched channel IDs =", repr([g.get("channel") for g in guides[:5]]), flush=True)
