@@ -1300,13 +1300,56 @@ function sullyFanHub(){
 }
 
 let sullyDirectoryCountry="",sullyDirectoryGenre="All",sullyDirectoryQuery="";
+function sullyMoreRoomButtons(root){
+ const panel=document.createElement("section");panel.className="sullyDirectoryControls";
+ const h=document.createElement("h2");h.textContent="Explore more rooms";panel.append(h);
+ const hint=document.createElement("p");hint.className="muted";hint.textContent="Quick access to news, local stations, weather, new channels and more.";panel.append(hint);
+ const grid=document.createElement("div");grid.style.cssText="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:12px 0";
+ const rooms=[
+ ["🆕 New Channels","🆕 Recently Added"],
+ ["📍 Local Stations","📍 Local News"],
+ ["🌦️ Weather","directory:Weather"],
+ ["📰 News","directory:News"],
+ ["📺 Live TV","🔴 Live TV"],
+ ["🎬 Movies","🎬 Movies"],
+ ["🏆 Sports","🏆 Sports"],
+ ["🎵 Music","directory:Music"],
+ ["😂 Comedy","directory:Comedy"],
+ ["🧒 Kids & Family","directory:Kids"],
+ ["🧠 Documentaries","🧠 Documentaries"],
+ ["⭐ Reality","⭐ Reality"],
+ ["🍥 Anime","🍥 Summy's Anime"],
+ ["👻 Horror","👻 Robinson's Horror Channel"],
+ ["🍿 On Demand","🍿 On Demand"],
+ ["📚 Library","📚 Library"],
+ ["🇺🇸 USA Channels","🇺🇸 USA"],
+ ["🌎 Worldwide","🌎 Worldwide"],
+ ["❤️ Favorites","❤️ Favorites"],
+ ["📋 TV Guide","📋 TV Guide"],
+ ["🔴 Recordings","🔴 My Recordings"]
+ ];
+ rooms.forEach(([name,destination])=>{
+  const button=document.createElement("button");button.type="button";button.className="tool";button.textContent=name;
+  button.style.cssText="min-height:66px;text-align:left;padding:12px";
+  button.onclick=()=>{
+   if(destination.startsWith("directory:")){
+    sullyDirectoryGenre=destination.slice(10);
+    sullyDirectoryQuery="";sullyDirectoryCountry="";
+    sullyCategory("☰ More Channels");
+   }else{sullyDirectoryGenre="All";sullyCategory(destination)}
+  };
+  grid.append(button);
+ });
+ panel.append(grid);root.append(panel);
+}
 function sullyDirectory(){
  const root=$("content");
+ sullyMoreRoomButtons(root);
  const panel=document.createElement("section");panel.className="sullyDirectoryControls";
  const intro=document.createElement("p");intro.textContent="Browse live channels by genre and country. Duplicate-looking listings are grouped here; their original streams remain available.";panel.append(intro);
  const controls=document.createElement("div");controls.className="sullyDirectoryFilters";
  const genre=document.createElement("select");genre.setAttribute("aria-label","Filter channels by genre");
- const genres=["All","News","Movies","Sports","Music","Comedy","Kids","Documentary","Entertainment","Lifestyle","Religious"];
+ const genres=["All","News","Weather","Movies","Sports","Music","Comedy","Kids","Documentary","Entertainment","Lifestyle","Religious"];
  genres.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v==="All"?"All genres":v;genre.append(o)});genre.value=sullyDirectoryGenre;
  const country=document.createElement("select");country.setAttribute("aria-label","Filter channels by country");
  const allCountries=[...new Set(channels.map(c=>c.country).filter(Boolean))].sort();
@@ -1325,7 +1368,7 @@ function sullyDirectory(){
    if(term&&!c.name.toLowerCase().includes(term))return false;
    if(sullyDirectoryGenre!=="All"){
     const hay=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
-    const tests={News:/news|weather|current.affairs/,Movies:/movie|film|cinema|western/,Sports:/sport|football|basketball|baseball|soccer|espn/,Music:/music|radio|concert|hits/,Comedy:/comedy|funny|sitcom/,Kids:/kids|children|cartoon|family|animation/,Documentary:/documentary|history|science|nature|wildlife/,Entertainment:/entertainment|variety|reality/,Lifestyle:/lifestyle|food|cooking|travel|fashion|home/,Religious:/religious|faith|christian|gospel|church/};
+    const tests={Weather:/weather|meteorolog|forecast|radar|storm/,News:/news|current.affairs/,Movies:/movie|film|cinema|western/,Sports:/sport|football|basketball|baseball|soccer|espn/,Music:/music|radio|concert|hits/,Comedy:/comedy|funny|sitcom/,Kids:/kids|children|cartoon|family|animation/,Documentary:/documentary|history|science|nature|wildlife/,Entertainment:/entertainment|variety|reality/,Lifestyle:/lifestyle|food|cooking|travel|fashion|home/,Religious:/religious|faith|christian|gospel|church/};
     if(!tests[sullyDirectoryGenre]?.test(hay))return false;
    }
    return true;
