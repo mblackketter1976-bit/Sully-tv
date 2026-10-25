@@ -295,6 +295,7 @@ header .top>div:first-of-type{padding-left:0!important}
 
 .sullyMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-content:start}.sullyMenuHeading{grid-column:1/-1;color:#f7d898;font-size:17px;font-weight:800;text-align:center;padding:4px}.sullyMenuGroup{grid-column:1/-1;color:#f3d18a;font-size:13px;font-weight:800;border-bottom:1px solid #806c51;padding:10px 3px 5px;margin-top:3px}.sullyMenu .sullyMenuChoice{font-size:12px;min-height:42px}.sullyMenu .selected{background:#9c2539!important;border-color:#ffd3a1!important}.sullyMenu .sullyMenuClose{grid-column:1/-1!important}
 .sullyMovieGenres{background:#102b50;border:1px solid #d6b376;border-radius:13px;padding:12px;margin:8px 0 15px;color:#ffe2a6}.sullyMovieGenres strong{display:block;margin-bottom:9px;font-size:16px}.sullyMovieGenreButtons{display:flex;flex-wrap:wrap;gap:6px}.sullyMovieGenreButtons button{border:1px solid #d8b477;border-radius:9px;background:#244974;color:#fff;padding:9px 13px;min-height:39px;font-weight:700}.sullyMovieGenreButtons button.selected{background:#ac2537;color:white;border-color:#ffc7b8}.sullyMovieGenres p{font-size:11px;color:#b9c9df;margin:9px 0 0}
+.sullyOfficialAnime{background:#0e2c4b;border:1px solid #d3b16c;border-radius:13px;padding:12px;margin:12px 0;color:#fff}.sullyOfficialAnime h3{margin:0 0 7px;color:#f8d88b}.sullyOfficialAnime p{font-size:12px;color:#d6dfef}.sullyOfficialLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.sullyOfficialLinks a{display:block;text-decoration:none;background:#234a78;border:1px solid #d9b676;border-radius:9px;color:#fff;padding:12px;font-size:12px;font-weight:700}
 </style>
 </head>
 <body>
@@ -537,6 +538,62 @@ $("nav").append(b);
 });
 }
 
+
+/* Categorize actual available stream/channel metadata, not just tab labels. */
+const sullyStreamTags=[
+ ["Anime",/anime|manga|otaku|crunchyroll|retrocrush|animax|aniplus|anime.?one|japanime/],
+ ["Horror",/horror|scary|thriller|slasher|fright|haunt|monster|terror/],
+ ["Action",/action|adventure|combat|martial|kung.fu/],
+ ["Comedy",/comedy|funny|humor|humour|sitcom/],
+ ["Romance",/romance|romantic|rom.com/],
+ ["Sci-Fi",/sci.fi|science.fiction|mecha|fantasy|space/],
+ ["Classics",/classic|vintage|retro|golden.age/],
+ ["Western",/western|cowboy|wild.west/],
+ ["Drama",/drama|dramatic/],
+ ["Family",/family|kids|children|cartoon|animation/],
+ ["Football",/football|nfl|gridiron/],
+ ["Basketball",/basketball|nba|wnba/],
+ ["Baseball",/baseball|mlb|softball/],
+ ["Soccer",/soccer|futbol|fútbol|fifa/],
+ ["Motorsports",/racing|nascar|formula|motorsport|motorcycle/],
+ ["Combat",/boxing|mma|wrestling|ufc|fight/],
+ ["Golf",/golf|pga/],
+ ["Tennis",/tennis|atp|wta/],
+ ["History",/history|historical|ancient|heritage/],
+ ["Science",/science|physics|technology|discovery/],
+ ["Nature",/nature|wildlife|animal|planet|earth|ocean/],
+ ["Space",/space|cosmos|astronomy|nasa|universe/],
+ ["Travel",/travel|explore|geograph/],
+ ["Crime",/crime|investigation|forensic|mystery/],
+ ["Competition",/competition|contest|talent|challenge|game.show/],
+ ["Cooking",/cook|food|chef|baking|kitchen/],
+ ["Weather",/weather|forecast|meteorolog/],
+ ["Business",/business|finance|market|econom/],
+ ["Music",/music|radio|concert/],
+ ["News",/news|current.affairs/]
+];
+function sullyTagChannel(c){
+ const t=(c.name+" "+(c.alt_names||[]).join(" ")+" "+(c.categories||[]).join(" ")).toLowerCase();
+ c.sullyTags=sullyStreamTags.filter(([name,regex])=>regex.test(t)).map(([name])=>name);
+ if((c.categories||[]).includes("animation")&&!c.sullyTags.includes("Animation"))c.sullyTags.push("Animation");
+ return c;
+}
+function sullyChannelText(c){return (c.name+" "+(c.alt_names||[]).join(" ")+" "+(c.categories||[]).join(" ")+" "+(c.sullyTags||[]).join(" ")).toLowerCase()}
+function sullyOfficialAnime(){
+ const wrap=document.createElement("section");wrap.className="sullyOfficialAnime";
+ const heading=document.createElement("h3");heading.textContent="🍥 More free anime — official channels";wrap.append(heading);
+ const note=document.createElement("p");note.textContent="These official services open their own licensed players. Availability and shows vary by region; they are not embedded streams.";wrap.append(note);
+ const links=[
+ ["Pluto TV Anime Live","https://pluto.tv/us/watch/live-tv/category/anime/"],
+ ["Pluto TV Anime Channel","https://pluto.tv/us/watch/live-tv/29221/"],
+ ["Tubi Anime","https://tubitv.com/category/anime"],
+ ["RetroCrush","https://www.retrocrush.tv/"]
+ ];
+ const grid=document.createElement("div");grid.className="sullyOfficialLinks";
+ links.forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="▶ "+name+" ↗";grid.append(a)});
+ wrap.append(grid);return wrap;
+}
+
 function categoryMatch(c){
 const text=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
 
@@ -562,7 +619,7 @@ if(tab.includes("Movies"))
 return /movie|film|cinema|classic|drama/.test(text);
 
 if(tab==="🍥 Anime")
-return /anime|animation|animated|manga|otaku|japanese.cartoon|crunchyroll|retrocrush/.test(text);
+return /anime|manga|otaku|japanese.cartoon|crunchyroll|retrocrush|animax|aniplus/.test(text)||(c.categories||[]).includes("animation");
 
 if(tab.includes("Reality"))
 return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
@@ -591,7 +648,7 @@ function sullyMovieGenreMatch(c){
  if(sullyMovieGenre==="All Movies")return true;
  const match=sullyMovieGenres.find(g=>g[0]===sullyMovieGenre);
  if(!match)return true;
- return match[1].test((c.name+" "+(c.categories||[]).join(" ")).toLowerCase());
+ return match[1].test(sullyChannelText(c));
 }
 function sullyMovieGenreBar(){
  const wrap=document.createElement("section");wrap.className="sullyMovieGenres";
@@ -626,7 +683,7 @@ const sullySubSelection={};
 function sullySubMatch(c){
  const opts=sullySubcategories[tab];if(!opts)return true;
  const chosen=sullySubSelection[tab]||opts[0][0],entry=opts.find(o=>o[0]===chosen);
- return !entry||!entry[1]||entry[1].test((c.name+" "+(c.categories||[]).join(" ")).toLowerCase());
+ return !entry||!entry[1]||entry[1].test(sullyChannelText(c));
 }
 function sullySubBar(){
  const options=sullySubcategories[tab];if(!options)return null;
@@ -765,6 +822,7 @@ return;
 $("filters").hidden=false;
 if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 else if(sullySubcategories[tab])root.append(sullySubBar());
+if(tab==="🍥 Anime")root.append(sullyOfficialAnime());
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
 
@@ -1622,7 +1680,7 @@ channels=cs.filter(c=>
 ...c,
 _recent:false,
 countryName:names.get(c.country)||c.country
-}));
+})).map(sullyTagChannel);
 
 try{
 const previous=JSON.parse(localStorage.getItem("sully-known-channels")||"null");
