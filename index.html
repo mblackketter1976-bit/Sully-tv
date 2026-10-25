@@ -689,6 +689,36 @@ body[data-sully-theme="space"]{--scene-depth:#02031318}
 body[data-sully-theme="rain"] #sullyAtmosphereCanvas,body[data-sully-theme="snow"] #sullyAtmosphereCanvas,body[data-sully-theme="ocean"] #sullyAtmosphereCanvas{opacity:.24}
 body[data-sully-theme="forest"] #sullyAtmosphereCanvas,body[data-sully-theme="sunshine"] #sullyAtmosphereCanvas,body[data-sully-theme="retro"] #sullyAtmosphereCanvas{opacity:.12}
 @media(max-width:750px){body[data-sully-theme]:not([data-sully-theme="classic"])::before{background-image:linear-gradient(180deg,#0000002b,var(--scene-depth)),var(--sully-photo)!important}}
+</style><style id="sullyNASARealSpacePhotography2026">
+/* Genuine NASA spacecraft photographs replace simulated celestial objects. */
+body[data-sully-theme="space"]{--sully-photo:url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2400&q=85")!important}
+body[data-sully-theme="space"] .sullySpaceMoon{
+ width:clamp(180px,24vw,350px)!important;aspect-ratio:1!important;left:3%!important;top:49%!important;
+ background-image:url("https://images-assets.nasa.gov/image/iss040e010643/iss040e010643~large.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1275&w=1920")!important;
+ background-repeat:no-repeat!important;background-size:600% auto!important;background-position:50% 50%!important;
+ border-radius:50%!important;box-shadow:none!important;filter:contrast(1.3) brightness(.85)!important;
+ mix-blend-mode:screen!important;transform:none!important
+}
+body[data-sully-theme="space"] .sullySpaceSaturn{
+ width:clamp(360px,46vw,800px)!important;height:auto!important;aspect-ratio:998/561!important;
+ right:0!important;top:44%!important;transform:none!important;
+ background-image:url("https://science.nasa.gov/wp-content/uploads/2023/05/pia05380-saturn-with-rings-16x9-1.jpg")!important;
+ background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important;
+ mix-blend-mode:screen!important;filter:brightness(1.08) contrast(1.1)!important
+}
+body[data-sully-theme="space"] .sullySaturnGlobe,
+body[data-sully-theme="space"] .sullySaturnBackRing,
+body[data-sully-theme="space"] .sullySaturnFrontRing{display:none!important}
+body[data-sully-theme="space"] .sullySpaceSun{
+ width:clamp(18px,3vw,46px)!important;right:9%!important;top:16%!important;
+ background:radial-gradient(circle,#fffef1 0%,#ffeec0 24%,#ffc86d 46%,#ffad4300 75%)!important;
+ box-shadow:0 0 36px 15px #ffb64745,0 0 100px 35px #ffae251a!important;opacity:.8
+}
+body[data-sully-theme="space"][data-sully-variant="2"] .sullySpaceSaturn{right:-8%!important;top:45%!important;transform:scale(.78)!important}
+body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceSaturn{right:-9%!important;top:52%!important;transform:scale(.65)!important}
+body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceMoon{left:3%!important;top:43%!important;transform:scale(.8)!important}
+@media(max-width:700px){body[data-sully-theme="space"] .sullySpaceMoon{left:-12%!important;top:58%!important;width:50vw!important}body[data-sully-theme="space"] .sullySpaceSaturn{right:-25%!important;top:52%!important;width:100vw!important}}
+@media(prefers-reduced-motion:no-preference){body[data-sully-theme="space"] .sullySpaceMoon,body[data-sully-theme="space"] .sullySpaceSaturn{animation:none!important}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
