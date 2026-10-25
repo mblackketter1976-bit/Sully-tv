@@ -609,6 +609,27 @@ let logos=new Map();
 let favorites=new Set();
 let history=[];
 let unavailable=new Set();
+const sullyFailureKey="sully-stream-failures-v1",sullyRetryMs=1800000;
+let sullyFailures={};
+try{sullyFailures=JSON.parse(localStorage.getItem(sullyFailureKey)||"{}")||{}}catch(e){}
+function sullyFailed(id){
+ const until=Number(sullyFailures[id]||0);
+ if(until>Date.now())return true;
+ if(until){delete sullyFailures[id];try{localStorage.setItem(sullyFailureKey,JSON.stringify(sullyFailures))}catch(e){}}
+ return false;
+}
+function sullyFailure(id){
+ if(!id)return;
+ sullyFailures[id]=Date.now()+sullyRetryMs;
+ try{localStorage.setItem(sullyFailureKey,JSON.stringify(sullyFailures))}catch(e){}
+}
+function sullySuccess(id){
+ if(!id)return;
+ delete sullyFailures[id];unavailable.delete(id);
+ try{localStorage.setItem(sullyFailureKey,JSON.stringify(sullyFailures))}catch(e){}
+}
+setInterval(()=>{if(Object.keys(sullyFailures).some(id=>Number(sullyFailures[id])<=Date.now()))render()},60000);
+
 let page=0;
 let hls=null;
 let current=null;
@@ -701,7 +722,7 @@ function sullySuggest(){
  if(!q){panel.hidden=true;return}
  const starts=[],contains=[];
  for(const c of channels){
-  if(!streams.has(c.id)||unavailable.has(c.id))continue;
+  if(!streams.has(c.id)||unavailable.has(c.id)||sullyFailed(c.id))continue;
   const name=c.name.toLowerCase();
   if(name.startsWith(lower))starts.push(c);else if(name.includes(lower))contains.push(c);
   if(starts.length>=6)break;
@@ -1264,7 +1285,7 @@ function filtered(){
 let list=channels.filter(c=>{
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
 if(tab.includes("Recently Added")&&!c._recent)return false;
-if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
+if((unavailable.has(c.id)||sullyFailed(c.id))&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
 if(!sullyLanguageMatches(c))return false;
@@ -2017,12 +2038,12 @@ playSource();
 }else{
 console.warn("[Sully TV] All stream sources failed",{channel:current?.name,id:current?.id,sourceCount:sourceList.length});
 $("now").textContent="Playback unavailable: "+(current?.name||"this channel")+".";
-// Keep this channel discoverable; the stream may recover later.
+sullyFailure(current?.id);render();
 setNotice("All "+sourceList.length+" listed source(s) failed for "+current.name+". The broadcaster may block embedded playback or the stream may be offline. Try another channel.");
 }
 };
 
-player.onplaying=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);$("now").textContent="🔴 Watching "+current.name;setNotice("");};
+player.onplaying=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);sullySuccess(current?.id);$("now").textContent="🔴 Watching "+current.name;setNotice("");};
 player.onloadeddata=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);};
 $("now").textContent="⏳ Connecting to "+current.name+" ("+(sourceIndex+1)+"/"+sourceList.length+")";
 if(sourceIndex===0)setNotice("Connecting to live TV… If this stream is slow, Sully TV will try another source automatically.");
