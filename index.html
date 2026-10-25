@@ -401,6 +401,7 @@ const tabs=[
 "🧠 Documentaries",
 "🎬 Movies",
 "🍥 Summy's Anime",
+"🎤 Stand-Up Comedy",
 "🎀 Hello Kitty",
 "🏰 Disney",
 "🦸 Marvel",
@@ -493,7 +494,7 @@ function sullyMenu(){
  const heading=document.createElement("div");heading.className="sullyMenuHeading";heading.textContent="Browse Sully TV";m.append(heading);
  const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
  const groups=[
- ["🎬 Watch by Genre",["🎬 Movies","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
+ ["🎬 Watch by Genre",["🎬 Movies","🎤 Stand-Up Comedy","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
  ["🏠 More",["🏠 Home","🍿 On Demand","📋 TV Guide"]]
@@ -798,6 +799,7 @@ return el;
 
 /* Free, provider-hosted discovery hubs: no scraping, unauthorized rebroadcasts or API keys. */
 const sullyFanHubs={
+ "🎤 Stand-Up Comedy":{name:"Stand-Up Comedy",color:"#f8c977",channel:"@ComedyCentral",topics:["Full Sets","Comedy Specials","Comedy Clips","Comedians","Clean Comedy","Roasts"],queries:["official stand up comedy full sets","official free stand up comedy specials","Comedy Central stand up official clips","stand up comedians official performances","official clean stand up comedy","Comedy Central official roasts"]},
  "🎀 Hello Kitty":{name:"Hello Kitty",color:"#ff7aaf",channel:"@HelloKittyandFriends",topics:["Episodes","Cartoons","Shorts","Music","Friends"],queries:["Hello Kitty and Friends official full episodes","Hello Kitty official cartoon","Hello Kitty official shorts","Hello Kitty Sanrio music official","Sanrio Hello Kitty friends official"]},
  "🏰 Disney":{name:"Disney",color:"#b3d8ff",channel:"@Disney",topics:["Clips","Trailers","Music","Animation","Behind the Scenes"],queries:["Disney official clips","Disney official trailers","Disney official songs","Disney animation official shorts","Disney official behind the scenes"]},
  "🦸 Marvel":{name:"Marvel",color:"#ff8585",channel:"@marvel",topics:["Trailers","Animation","Heroes","Behind the Scenes","Interviews"],queries:["Marvel Entertainment official trailers","Marvel official animation","Marvel official superheroes clips","Marvel Studios behind the scenes","Marvel Entertainment official interviews"]},
