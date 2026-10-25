@@ -2360,7 +2360,9 @@ if([...$("country").options].some(o=>o.value===savedCountry))$("country").value=
 $("category").add(new Option(c,c));
 });
 
-sullyRestorePlace();
+tab="🏠 Home";
+nav();render();
+window.scrollTo({top:0,behavior:"instant"});
 
 }catch(e){
 $("status").textContent="Unable to load live channels. Refresh to retry.";
