@@ -354,6 +354,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyServiceActions button{padding:11px 13px;border-radius:9px;background:#315d8c;color:#fff;border:1px solid #bdab80;font-weight:800}
 .sullyCatalogResults{margin:14px 0;padding:14px;border:1px solid #657d9c;border-radius:13px;background:#172a47}.sullyCatalogCard{display:flex;align-items:center;gap:12px;border-bottom:1px solid #3e526d;padding:9px 0}.sullyCatalogCard img{width:65px;height:88px;object-fit:cover;border-radius:6px}.sullyCatalogDetails{display:flex;flex-direction:column;gap:6px}.sullyCatalogDetails span{font-size:12px;color:#c8d5e7}.sullyCatalogDetails a{font-size:12px;color:#f3d38b}.sullyCatalogResults small{font-size:11px;color:#b5c5dc}
 .sullyInfoOverlay{position:fixed;inset:0;background:#000c;z-index:9999;display:flex;align-items:center;justify-content:center;padding:14px}.sullyInfoPanel{position:relative;background:#162c4c;color:white;border:2px solid #d5b777;border-radius:16px;padding:22px;max-width:530px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 15px 45px #000a}.sullyInfoClose{float:right;padding:9px;border-radius:8px}.sullyInfoLogo{display:block;max-width:160px;max-height:100px;object-fit:contain;margin:12px 0}.sullyInfoBtn{padding:9px 10px;border-radius:8px;border:1px solid #bdab80;background:#244a75;color:white;font-weight:700}
+.sullyProgramPoster{display:block;max-width:150px;max-height:210px;object-fit:contain;margin:10px 0}.sullyInfoPanel p{line-height:1.45}.sullyCatalogDetails button{align-self:flex-start}
 </style>
 </head>
 <body>
@@ -593,7 +594,7 @@ async function sullyCatalogLookup(q,slot,generation){
    const network=(show.network&&show.network.name)||(show.webChannel&&show.webChannel.name)||"Network not listed";
    const meta=document.createElement("span");meta.textContent=network+" · "+(show.status||"Status unknown");details.append(meta);
    const link=document.createElement("a");link.href=show.url||"https://www.tvmaze.com/";link.target="_blank";link.rel="noopener noreferrer";link.textContent="Show & schedule details ↗";details.append(link);
-   card.append(details);section.append(card)
+   const infoBtn=document.createElement("button");infoBtn.type="button";infoBtn.className="sullyInfoBtn";infoBtn.textContent="ⓘ Program Info";infoBtn.onclick=()=>sullyProgramInfo(show);details.append(infoBtn);card.append(details);section.append(card)
   });
   const credit=document.createElement("small");credit.textContent="TV information supplied by TVmaze (CC BY-SA).";section.append(credit)
  }catch(e){if(generation===sullySearchGeneration&&slot.isConnected)status.textContent="TV catalog is temporarily unavailable. Live channel and streaming searches still work."}
@@ -951,6 +952,30 @@ list.sort((a,b)=>score(b)-score(a));
 return list;
 }
 
+
+function sullyProgramInfo(show){
+ const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";overlay.setAttribute("role","dialog");overlay.setAttribute("aria-modal","true");
+ const panel=document.createElement("div");panel.className="sullyInfoPanel";
+ const close=document.createElement("button");close.className="sullyInfoClose";close.textContent="✕ Close";close.onclick=()=>overlay.remove();panel.append(close);
+ const h=document.createElement("h2");h.textContent=show.name||"Program information";panel.append(h);
+ if(show.image&&show.image.medium){const img=document.createElement("img");img.src=show.image.medium;img.className="sullyProgramPoster";img.alt="Program poster";panel.append(img)}
+ const network=(show.network&&show.network.name)||(show.webChannel&&show.webChannel.name)||"Network unavailable";
+ const facts=document.createElement("p");facts.textContent=[show.type,show.genres&&show.genres.join(" · "),show.premiered&&show.premiered.slice(0,4),show.averageRuntime&&show.averageRuntime+" minutes",show.status].filter(Boolean).join(" | ");panel.append(facts);
+ const provider=document.createElement("p");provider.textContent="Original network/platform: "+network;panel.append(provider);
+ const summary=document.createElement("p");summary.textContent=(show.summary||"No synopsis available.").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim();panel.append(summary);
+ const episode=document.createElement("div");episode.className="panel";episode.textContent="Loading episode details…";panel.append(episode);
+ if(show.id)fetch("https://api.tvmaze.com/shows/"+encodeURIComponent(show.id)+"/episodes",{signal:AbortSignal.timeout(8500)}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(items=>{
+  if(!episode.isConnected)return;const now=Date.now();const past=items.filter(e=>e.airstamp&&new Date(e.airstamp).getTime()<=now).pop();const next=items.find(e=>e.airstamp&&new Date(e.airstamp).getTime()>now);
+  episode.replaceChildren();
+  for(const [label,e] of [["Latest listed episode",past],["Next scheduled episode",next]]){const p=document.createElement("p");p.textContent=label+": "+(e?(e.name||"Untitled")+" · S"+(e.season??"?")+" E"+(e.number??"?")+" · "+(e.airdate||"Date unknown"):"Not listed");episode.append(p)}
+ }).catch(()=>{if(episode.isConnected)episode.textContent="Episode schedule unavailable."});
+ const actions=document.createElement("div");actions.className="sullyServiceActions";
+ if(show.url){const link=document.createElement("a");link.href=show.url;link.target="_blank";link.rel="noopener noreferrer";link.textContent="TVmaze details ↗";actions.append(link)}
+ const search=document.createElement("button");search.textContent="🔎 Find where to watch";search.onclick=()=>{overlay.remove();$("search").value=show.name;sullyTitleSearch(show.name);jumpToCategory()};actions.append(search);
+ panel.append(actions);
+ const note=document.createElement("small");note.textContent="TVmaze program data. Broadcast and episode dates do not establish that a show is currently airing on a Sully TV channel.";panel.append(note);
+ overlay.append(panel);overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};document.body.append(overlay);close.focus();
+}
 
 function sullyChannelInfo(c){
  const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";overlay.setAttribute("role","dialog");overlay.setAttribute("aria-modal","true");overlay.setAttribute("aria-label","Channel information");
