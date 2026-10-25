@@ -881,7 +881,25 @@ body.sullyKidsMode .sullyKidsArt{height:77%!important;object-fit:contain!importa
 body.sullyKidsMode .sullyKidsShow strong{z-index:2!important;background:#fffffff0;border-radius:10px;padding:3px 8px;max-width:100%}
 body.sullyKidsMode .sullyKidsPlay{z-index:2!important}
 @media(max-width:600px){body.sullyKidsMode .sullyKidsShow{min-height:250px!important}}
-</style><style id="sullyKidsLanguageLive2026">body.sullyKidsMode .sullyKidsLanguageSwitch{display:block;margin:0 auto 12px;padding:13px 28px;border-radius:30px;border:4px solid white;background:#ffe47b;color:#29446a;font-size:clamp(20px,3vw,26px);font-weight:900;cursor:pointer;box-shadow:0 5px 0 #d2a85b}body.sullyKidsMode .sullyKidsOfficialLive{min-height:180px!important}body.sullyKidsMode .sullyKidsOfficialLive .sullyKidsFallback{font-size:65px!important}</style></head>
+</style><style id="sullyKidsLanguageLive2026">body.sullyKidsMode .sullyKidsLanguageSwitch{display:block;margin:0 auto 12px;padding:13px 28px;border-radius:30px;border:4px solid white;background:#ffe47b;color:#29446a;font-size:clamp(20px,3vw,26px);font-weight:900;cursor:pointer;box-shadow:0 5px 0 #d2a85b}body.sullyKidsMode .sullyKidsOfficialLive{min-height:180px!important}body.sullyKidsMode .sullyKidsOfficialLive .sullyKidsFallback{font-size:65px!important}</style><style id="sullyKidsWorldIsolation2026">
+/* Kids TV is its own environment, regardless of the global holiday/photo theme. */
+html:has(body.sullyKidsMode){background:#b9edff!important}
+body.sullyKidsMode,body.sullyKidsMode[data-sully-theme],body.sullyKidsMode[data-sully-theme]:not([data-sully-theme="classic"]){
+ --at-bg:#d5f5ff;--at-panel:#ffffff;--at-text:#24426c;--at-accent:#ffbd54;
+ background-color:#b9edff!important;
+ background-image:radial-gradient(ellipse at 12% 18%,#fff9cc 0 9%,transparent 32%),radial-gradient(ellipse at 87% 28%,#ffd6ee 0 7%,transparent 32%),linear-gradient(160deg,#b4e9ff 0%,#e0f8ff 45%,#d3f7c7 100%)!important;
+ background-position:center!important;background-size:cover!important;background-attachment:fixed!important;
+ color:#243d64!important;
+}
+body.sullyKidsMode #sullyAtmosphereCanvas,body.sullyKidsMode #sullySpaceWorld{display:none!important}
+body.sullyKidsMode::before,body.sullyKidsMode::after{display:none!important;content:none!important}
+body.sullyKidsMode>header,body.sullyKidsMode>main,body.sullyKidsMode>footer{position:relative;z-index:1}
+body.sullyKidsMode .sullyRoomHeading{background:#fffef4f2!important;color:#253e69!important;border:3px solid #ffdb7e!important}
+body.sullyKidsMode .sullyKidsLiveHeading,body.sullyKidsMode .sullyKidsOutsideHeading{color:#24406c!important;text-shadow:0 1px 0 #fff9}
+body.sullyKidsMode .sullyKidsLiveStatus,body.sullyKidsMode .sullyKidsParentNote{color:#284567!important;background:#ffffffd9;border-radius:14px;padding:10px 14px}
+body.sullyKidsMode .sullyKidsShow{box-shadow:0 7px 0 #8bb3cc88,0 10px 18px #294f6a24!important}
+@media(prefers-reduced-motion:reduce){body.sullyKidsMode .sullyDino,body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{animation:none!important}}
+</style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
