@@ -765,6 +765,14 @@ body[data-sully-theme="mothersday"] .categoryTiles button::before{content:"💐"
 body[data-sully-theme="fathersday"] .categoryTiles button::before{content:"👔";position:absolute;top:-15px;right:12px}
 body[data-sully-theme="memorial"] .categoryTiles button::before,body[data-sully-theme="veterans"] .categoryTiles button::before{content:"🎖️";position:absolute;top:-15px;right:12px}
 body[data-sully-theme="labor"] .categoryTiles button::before{content:"🛠️";position:absolute;top:-15px;right:12px}
+</style><style id="sullySpaceRemoveBrokenPlanetPhotos2026">
+/* Hide photographic overlays with rectangular backgrounds and hard dark edges.
+   The genuine deep-space photograph remains as the uninterrupted scene. */
+body[data-sully-theme="space"] #sullySpaceWorld,
+body[data-sully-theme="space"] .sullySpaceMoon,
+body[data-sully-theme="space"] .sullySpaceSaturn,
+body[data-sully-theme="space"] .sullySpaceSun{display:none!important}
+body[data-sully-theme="space"] #sullyAtmosphereCanvas{display:none!important}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
