@@ -347,6 +347,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .rail .art{height:128px}.rail .art img{max-height:100px}
 .rail .card{box-shadow:0 3px 12px #0003}
 
+.sullySearchForm{display:flex;align-items:stretch;gap:7px;flex:1;min-width:0;max-width:540px}.sullySearchForm #search{width:auto;min-width:0;flex:1}.sullySearchForm button{background:linear-gradient(145deg,#3769a2,#183d6e);color:#fff;border:1px solid #d5b777;border-radius:12px;padding:10px 13px;min-height:45px;font-weight:800;white-space:nowrap}.sullySearchForm button:focus-visible{outline:3px solid #ffdb87;outline-offset:2px}@media(max-width:520px){.top{flex-wrap:wrap}.sullySearchForm{flex-basis:100%;max-width:none}.sullySearchForm button{padding:10px 15px}}
 </style>
 </head>
 <body>
@@ -362,7 +363,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 </section>
 <small>Your world. Your channels.</small>
 </div>
-<input id="search" placeholder="🔎 Search channels" aria-label="Search channels">
+<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button></form>
 </div>
 
 <div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
@@ -536,6 +537,13 @@ function sullyGoBack(){
 
 
 /* Sully navigation suite */
+function sullySubmitSearch(e){
+if(e)e.preventDefault();
+page=0;
+render();
+const input=$("search");if(input)input.blur();
+jumpToCategory();
+}
 function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
 function sullyMenu(){
  const m=$("sullyMenu");m.hidden=!m.hidden;
