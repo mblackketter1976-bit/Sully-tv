@@ -53,12 +53,15 @@ def main():
         if channel not in live:
             continue
         for source in g.get("sources") or []:
-            url = source.get("url", "")
-            if url.startswith("https://") and source.get("format", "XML").upper() in ("XML", "XMLTV"):
+            url = source.get("url", "") if isinstance(source, dict) else str(source)
+            if url.startswith("https://"):
                 by_url[url].add(channel)
     # Prefer sources covering the most live stations, avoid a large global download.
     choices = sorted(by_url, key=lambda u: len(by_url[u]), reverse=True)[:12]
     print("DIAGNOSTIC: matching guide URLs =", len(by_url), "selected =", len(choices), flush=True)
+    if not by_url and guides:
+        print("DIAGNOSTIC: first guide sources =", repr(guides[0].get("sources"))[:500], flush=True)
+        print("DIAGNOSTIC: sample matched channel IDs =", repr([g.get("channel") for g in guides[:5]]), flush=True)
     results = defaultdict(list)
     sources = {}
     for url in choices:
