@@ -372,6 +372,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyRoomHeading{padding:18px 20px;margin:0 0 18px;border:1px solid #d8b16b;border-radius:16px;background:linear-gradient(135deg,#173963,#0a1a33);box-shadow:0 6px 20px #0005}
 .sullyRoomHeading h1{margin:0 0 6px;color:#f3cf83;font-size:clamp(22px,3vw,32px)}
 .sullyRoomHeading p{margin:0;color:#c5d7e9}
+.sullyContinueDisclosure{margin:20px 0}.sullyContinueDisclosure>summary{cursor:pointer;color:#f3cc7c;font-size:clamp(20px,2.4vw,27px);font-weight:800;padding:14px 18px;border:1px solid #b68c48;border-radius:12px;background:#172d4a}.sullyContinueDisclosure[open]>summary{margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -1190,10 +1191,11 @@ if(tab==="🏠 Home"){
  $("filters").hidden=true;
  $("status").textContent="Choose a room to start watching";
  if(history.length){
-  const h=document.createElement("h2");h.textContent="▶ Continue Watching";root.append(h);
+  const details=document.createElement("details");details.className="sullyContinueDisclosure";
+  const summary=document.createElement("summary");summary.textContent="Continue Watching";details.append(summary);
   const rail=document.createElement("div");rail.className="rail";
   history.slice(0,12).forEach(item=>{const c=channels.find(x=>x.id===item.id);if(c)rail.append(card(c))});
-  root.append(rail);
+  details.append(rail);root.append(details);
  }
  return;
 }
