@@ -836,6 +836,9 @@ header #sullyQuickPanel #sullyThemeExitFixed{
  touch-action:manipulation!important;flex-shrink:0!important
 }
 header #sullyQuickPanel .sullyThemeFooter{position:relative!important;z-index:2147483646!important;isolation:isolate;pointer-events:auto!important}
+</style><style id="sullyThemeSingleClose2026">
+header #sullyQuickPanel #sullyThemeExitFixed{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;z-index:50!important;display:inline-flex!important;cursor:pointer!important;pointer-events:auto!important;align-items:center!important;justify-content:center!important;min-height:42px!important}
+header #sullyQuickPanel .sullyThemeFooter{display:flex!important;align-items:center!important;justify-content:space-between!important;position:relative!important;z-index:40!important}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2567,7 +2570,7 @@ function openSullyThemes(){
  const head=document.createElement("div");head.className="sullyThemeHeader";
  const title=document.createElement("strong");title.textContent="🎨 Choose Your Sully TV Look";
  const hint=document.createElement("small");hint.textContent="Choose a category, then a scene";
- const topClose=document.createElement("button");topClose.type="button";topClose.textContent="✕ Close";topClose.className="sullyThemeCloseTop";topClose.onclick=()=>closeSullyPanel();head.append(title,hint,topClose);
+ head.append(title,hint);
  const grid=document.createElement("div");grid.className="sullyThemeChooser";
  const variants=document.createElement("div");variants.className="sullyThemeVariantBar";
  const footer=document.createElement("div");footer.className="sullyThemeFooter";
@@ -2593,9 +2596,7 @@ function openSullyThemes(){
   b.addEventListener("click",e=>{e.preventDefault();sullyApplyTheme(id);grid.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));updateVariants()});
   grid.append(b);
  });
- const close=document.createElement("button");close.type="button";close.textContent="Done ✓";
- close.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();closeSullyPanel();});
- close.onclick=()=>closeSullyPanel();footer.append(status);p.append(head,grid,variants,footer);
+ footer.append(status);p.append(head,grid,variants,footer);
  const workingExit=document.getElementById("sullyThemeExitFixed");
  if(workingExit)footer.append(workingExit);
  updateVariants();
