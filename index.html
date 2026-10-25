@@ -768,11 +768,20 @@ body[data-sully-theme="labor"] .categoryTiles button::before{content:"🛠️";p
 </style><style id="sullySpaceRemoveBrokenPlanetPhotos2026">
 /* Hide photographic overlays with rectangular backgrounds and hard dark edges.
    The genuine deep-space photograph remains as the uninterrupted scene. */
-body[data-sully-theme="space"] #sullySpaceWorld,
-body[data-sully-theme="space"] .sullySpaceMoon,
-body[data-sully-theme="space"] .sullySpaceSaturn,
+/* Keep the real NASA planetary imagery visible, with soft photographic edges. */
+body[data-sully-theme="space"] #sullySpaceWorld{display:block!important;pointer-events:none!important}
+body[data-sully-theme="space"] .sullySpaceMoon{display:block!important;opacity:.95!important;mix-blend-mode:screen!important;mask-image:radial-gradient(circle at center,#000 37%,transparent 72%)!important;-webkit-mask-image:radial-gradient(circle at center,#000 37%,transparent 72%)!important;background-size:cover!important;background-position:center!important}
+body[data-sully-theme="space"] .sullySpaceSaturn{display:block!important;opacity:.96!important;mix-blend-mode:screen!important;mask-image:radial-gradient(ellipse at center,#000 36%,transparent 72%)!important;-webkit-mask-image:radial-gradient(ellipse at center,#000 36%,transparent 72%)!important}
 body[data-sully-theme="space"] .sullySpaceSun{display:none!important}
 body[data-sully-theme="space"] #sullyAtmosphereCanvas{display:none!important}
+/* Site-wide photographic presentation: preserve contrast and touch accessibility. */
+body[data-sully-theme]:not([data-sully-theme="classic"]) header,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .panel,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .card,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .hero{background-color:rgba(12,22,38,.66)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+body[data-sully-theme]:not([data-sully-theme="classic"]) nav button,
+body[data-sully-theme]:not([data-sully-theme="classic"]) .tool{background-color:rgba(24,41,66,.68)!important;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+@media(max-width:700px){body[data-sully-theme="space"] .sullySpaceMoon{width:42vw!important;left:-8%!important}body[data-sully-theme="space"] .sullySpaceSaturn{width:95vw!important;right:-24%!important}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
