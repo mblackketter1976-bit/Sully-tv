@@ -482,6 +482,9 @@ body[data-station="movies"] .sullyRoomHeading{background:#121b27!important;borde
 @media(max-width:760px){.sullyRoomChannelRail{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}.sullyRoomChannelRail .art{padding:4px!important}.sullyRoomChannelRail .info{padding:5px!important}.sullyRoomChannelRail .info h3{font-size:10px!important}.sullyRoomChannelRail .info small{font-size:9px!important}.sullyRoomChannelRail .actions{gap:2px!important;margin-top:5px!important}.sullyRoomChannelRail .actions button{font-size:9px!important;min-height:28px!important;padding:2px!important}.sullyRoomChannelRail .actions .sullyInfoBtn{display:none!important}}
 @media(max-width:430px){.sullyRoomChannelRail{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.sullyRoomChannelRail .art{padding:10px!important}.sullyRoomChannelRail .info{padding:9px!important}.sullyRoomChannelRail .info h3{font-size:13px!important}.sullyRoomChannelRail .info small{font-size:11px!important}.sullyRoomChannelRail .actions button{font-size:12px!important;min-height:36px!important;padding:6px!important}.sullyRoomChannelRail .actions .sullyInfoBtn{display:block!important}}
 </style>
+<style id="sullyStandupPremium">
+.sullyStandupWatch{margin:12px 0 24px}.sullyStandupWatch h2{color:#e6d3b2;font-size:clamp(19px,2.5vw,26px);margin-bottom:6px}.sullyStandupGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:15px}.sullyStandupCard{overflow:hidden;background:#171e27;border:1px solid #394452;border-radius:11px;box-shadow:0 4px 20px #0003}.sullyStandupCard>img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.sullyStandupCard>img[hidden]{display:none}.sullyStandupBody{display:flex;flex-direction:column;gap:8px;padding:13px}.sullyStandupBody strong{color:#f0ede7;font-size:15px}.sullyStandupBody small{color:#aeb8c5}.sullyStandupBody button{background:#373b3e;color:#f3e6ce;border:1px solid #ac9876;border-radius:6px;padding:10px;cursor:pointer;font-weight:650}.sullyStandupBody a{color:#c5cbd5;font-size:12px;text-decoration:underline}.sullyStandupPlayer{display:block;width:100%;aspect-ratio:16/9;border:0}
+</style>
 </head>
 <body>
 <header>
@@ -1211,7 +1214,7 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
     return (item.awards||[]).some(a=>a.name===name&&a.status===status);
    }
    if(!sullyLanguageMatches(item))return false;
-   const hay=[item.title,item.description,item.kind,...(item.genres||[])].join(" ").toLowerCase();
+   const hay=[item.title,item.kind,...(item.genres||[])].join(" ").toLowerCase();
    return !tokens.length||tokens.some(t=>hay.includes(t));
   });
   if(!found.length){status.remove();if(!grid.children.length){setTimeout(()=>{if(wrap.isConnected&&!grid.children.length)wrap.remove()},400)}return;}
@@ -1448,6 +1451,30 @@ function sullyProgramButtons(){
  });
  section.append(grid);root.append(section);
 }
+const sullyCuratedStandup=[
+ {id:"ush3SkA3sxs",title:"Drew Thomas — Full Stand-Up Special",source:"Dry Bar Comedy",type:"Full special"},
+ {id:"wBAHts8HFbg",title:"Jamie Kaler — Full Stand-Up Special",source:"Dry Bar Comedy",type:"Full special"},
+ {id:"kLUFit8815c",title:"Andy Woodhull — Full Stand-Up Special",source:"Dry Bar Comedy",type:"Full special"}
+];
+function sullyStandupWatch(){
+ const root=$("content"),section=document.createElement("section");section.className="sullyStandupWatch";
+ const heading=document.createElement("h2");heading.textContent="Stand-Up Comedy — Watch Now";section.append(heading);
+ const description=document.createElement("p");description.className="muted";description.textContent="Actual stand-up performances from official creator uploads. Select a special to play.";section.append(description);
+ const grid=document.createElement("div");grid.className="sullyStandupGrid";
+ sullyCuratedStandup.forEach(item=>{
+  const card=document.createElement("article");card.className="sullyStandupCard";
+  const thumb=document.createElement("img");thumb.loading="lazy";thumb.alt=item.title;thumb.src="https://i.ytimg.com/vi/"+item.id+"/hqdefault.jpg";
+  const body=document.createElement("div");body.className="sullyStandupBody";
+  const name=document.createElement("strong");name.textContent=item.title;
+  const meta=document.createElement("small");meta.textContent=item.source+" · "+item.type;
+  const play=document.createElement("button");play.textContent="▶ Watch Special";play.onclick=()=>{
+   let player=card.querySelector("iframe");if(player){player.remove();return;}
+   player=document.createElement("iframe");player.title=item.title;player.src="https://www.youtube-nocookie.com/embed/"+item.id+"?autoplay=1";player.allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture;web-share";player.allowFullscreen=true;player.loading="lazy";player.className="sullyStandupPlayer";card.insertBefore(player,body);thumb.hidden=true;
+  };
+  const fallback=document.createElement("a");fallback.href="https://www.youtube.com/watch?v="+item.id;fallback.target="_blank";fallback.rel="noopener noreferrer";fallback.textContent="Open video on YouTube";
+  body.append(name,meta,play,fallback);card.append(thumb,body);grid.append(card);
+ });section.append(grid);root.append(section);
+}
 function sullyFanLive(){
  const hub=sullyFanHubs[tab],root=$("content");
  const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
@@ -1653,7 +1680,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();sullyDirectTitleDiscovery(root,sullyFanHubs[tab].name||tab,"",false);sullyProgramButtons();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;if(tab==="🎤 Mike\'s Standup"){sullyStandupWatch();return;}sullyFanLive();sullyDirectTitleDiscovery(root,sullyFanHubs[tab].name||tab,"",false);sullyProgramButtons();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
@@ -2280,7 +2307,7 @@ function sullyPlayableGenre(root,term,scope="all"){
     if(!countries.some(c=>/^(US|USA|United States|United States of America)$/i.test(String(c))))return false;
    }
    if(!tokens.length)return true;
-   const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
+   const hay=[item.title,item.kind,...(item.genres||[])].join(" ").toLowerCase();
    return tokens.some(t=>hay.includes(t))
   });
   const visible=found.filter(i=>sullyLanguageMatches(i));
