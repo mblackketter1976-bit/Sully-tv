@@ -45,6 +45,40 @@
       "provider": "Paramount+",
       "access": "Subscription",
       "url": "https://www.paramountplus.com/shows/dutton-ranch/"
+    },
+    {
+      "id": "netflix-sweet-magnolias",
+      "title": "Sweet Magnolias",
+      "year": 2020,
+      "kind": "show",
+      "genres": [
+        "Drama",
+        "Romance",
+        "Family"
+      ],
+      "rooms": [
+        "Nicol's Station"
+      ],
+      "provider": "Netflix",
+      "access": "Subscription",
+      "url": "https://www.netflix.com/title/80239866"
+    },
+    {
+      "id": "steel-magnolias-1989",
+      "title": "Steel Magnolias",
+      "year": 1989,
+      "kind": "movie",
+      "genres": [
+        "Drama",
+        "Comedy",
+        "Romance"
+      ],
+      "rooms": [
+        "Nicol's Station"
+      ],
+      "provider": "External catalog",
+      "access": "Availability varies",
+      "url": "https://www.justwatch.com/us/search?q=Steel%20Magnolias"
     }
   ]
 }
