@@ -349,6 +349,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 
 .sullySearchForm{display:flex;align-items:stretch;gap:7px;flex:1;min-width:0;max-width:540px}.sullySearchForm #search{width:auto;min-width:0;flex:1}.sullySearchForm button{background:linear-gradient(145deg,#3769a2,#183d6e);color:#fff;border:1px solid #d5b777;border-radius:12px;padding:10px 13px;min-height:45px;font-weight:800;white-space:nowrap}.sullySearchForm button:focus-visible{outline:3px solid #ffdb87;outline-offset:2px}@media(max-width:520px){.top{flex-wrap:wrap}.sullySearchForm{flex-basis:100%;max-width:none}.sullySearchForm button{padding:10px 15px}}
 .sullySearchForm{position:relative}.sullySuggestions{position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:100;background:#142541;border:1px solid #d5b777;border-radius:12px;box-shadow:0 14px 28px #000a;max-height:360px;overflow-y:auto}.sullySuggestion{display:flex;align-items:center;gap:10px;width:100%;padding:12px;background:transparent;border-bottom:1px solid #344b6a;text-align:left;min-height:49px}.sullySuggestion:last-child{border-bottom:0}.sullySuggestion:focus-visible,.sullySuggestion:active{background:#355781}.sullySuggestion img{width:36px;height:30px;object-fit:contain}.sullySuggestion span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sullySuggestion small{font-size:10px;color:#f2ce78}
+.sullyTitleResults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 20px}.sullyTitleResults a{display:block;background:#244c78;color:#fff;text-decoration:none;border:1px solid #d5b777;border-radius:12px;padding:15px 12px;font-size:14px;font-weight:800}.sullyTitleResults a:focus-visible{outline:3px solid #f3d38a;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -565,12 +566,38 @@ function sullySuggest(){
  panel.hidden=false;
 }
 
+
+function sullyTitleSearch(q){
+ const root=$("content");root.replaceChildren();$("more").hidden=true;$("filters").hidden=true;
+ const h=document.createElement("h2");h.textContent="🔎 Search results for “"+q+"”";root.append(h);
+ const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&c.name.toLowerCase().includes(q.toLowerCase())).slice(0,30);
+ if(matches.length){
+  const label=document.createElement("h3");label.textContent="🔴 Matching live channels";root.append(label);
+  const rail=document.createElement("div");rail.className="rail";matches.forEach(c=>rail.append(card(c)));root.append(rail);
+ }
+ const h2=document.createElement("h3");h2.textContent="🎬 Find this movie or show";root.append(h2);
+ const note=document.createElement("p");note.className="muted";note.textContent="Search these services for the exact title. Availability, subscriptions, and playback depend on the provider. Results open in their own websites or apps.";root.append(note);
+ const options=[
+ ["Tubi · Free","https://tubitv.com/search/"+encodeURIComponent(q)],
+ ["Plex · Free","https://watch.plex.tv/search?query="+encodeURIComponent(q)],
+ ["Pluto TV · Free","https://pluto.tv/us/search/details/"+encodeURIComponent(q)],
+ ["Netflix · Subscription","https://www.netflix.com/search?q="+encodeURIComponent(q)],
+ ["YouTube · Videos","https://www.youtube.com/results?search_query="+encodeURIComponent(q+" official movie show")]
+ ];
+ const grid=document.createElement("div");grid.className="sullyTitleResults";
+ options.forEach(([label,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="🔎 "+label+" ↗";grid.append(a)});
+ root.append(grid);
+ const msg=document.createElement("p");msg.className="muted";msg.textContent="These are searches, not confirmed listings. Sully TV doesn't have a cross-service movie catalog yet.";root.append(msg);
+ $("status").textContent="Search: "+q;
+}
+
 function sullySubmitSearch(e){
 sullyHideSuggestions();
 if(e)e.preventDefault();
 page=0;
-render();
-const input=$("search");if(input)input.blur();
+const input=$("search");const q=input.value.trim();
+if(q)sullyTitleSearch(q);else render();
+if(input)input.blur();
 jumpToCategory();
 }
 function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
