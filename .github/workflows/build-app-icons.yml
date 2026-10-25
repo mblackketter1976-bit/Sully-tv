@@ -1,0 +1,36 @@
+name: Build Sully TV app icons
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'wide_cinematic_high_gloss_fantasy_luxury_logo_b.png'
+      - '.github/workflows/build-app-icons.yml'
+permissions:
+  contents: write
+jobs:
+  icons:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install image library
+        run: python -m pip install --quiet Pillow
+      - name: Generate standard Android and Apple PNG icons from approved Luna artwork
+        run: |
+          python - <<'PY'
+          from PIL import Image, ImageDraw
+          img=Image.open('wide_cinematic_high_gloss_fantasy_luxury_logo_b.png').convert('RGB')
+          w,h=img.size
+          side=min(h, int(w*.7))
+          x=(w-side)//2
+          y=(h-side)//2
+          crop=img.crop((x,y,x+side,y+side))
+          for size in (192,512,180):
+              icon=crop.resize((size,size),Image.Resampling.LANCZOS)
+              icon.save(f'sully-icon-{size}.png',optimize=True)
+          PY
+      - name: Commit generated icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sully-icon-192.png sully-icon-512.png sully-icon-180.png
+          if ! git diff --cached --quiet; then git commit -m "Generate Luna app icons for Android and iPhone"; git push; fi
