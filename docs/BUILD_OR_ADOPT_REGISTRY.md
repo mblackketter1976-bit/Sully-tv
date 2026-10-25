@@ -59,3 +59,9 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 - **Measured:** initial current-data fetch normalized 40 listings on CNN.us, MSNOW.us and BYUTV.us; 25 local Python tests passed. No guarantee of full-day coverage or exact stream programming. Run 40242497404 passed Python, isolated guide checks and full HTML startup/navigation at desktop and phone sizes using controlled channel metadata and the real candidate guide.
 - **UI improvement:** source/license visible; scheduled start/end times visible without hover; two short programmes sharing a half-hour cell are both shown.
 - **Next review:** browser CI and full-app preview, then actual stream/feed alignment; expand exact mappings conservatively. See TV_GUIDE_PROVIDER_003.md.
+
+
+### BA-001 update — complete zero-cost refresh path
+- Avoided publishing a one-time schedule snapshot as if it would stay current. Added direct browser refresh from the permitted CORS-enabled TVmaze API with a one-hour cache, bounded requests/retries/response sizes, and last-good preservation.
+- Current-data export includes refreshed listings, source attribution and licensing. No new account or paid backend.
+- Run 40243454864 passed Python, JS normalization/failure tests, isolated guide checks and full HTML desktop/phone checks including refresh/cache/failure/export. Real API fetch evidence remains in TV_GUIDE_PROVIDER_003.md; stream playback accuracy is not established.

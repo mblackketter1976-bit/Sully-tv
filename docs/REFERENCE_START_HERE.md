@@ -72,3 +72,6 @@ A prior video shared by the owner is a **safety switch** reminding us of the phi
 
 ## Document discipline
 This is the stable entry point. Keep it short enough to reread, update it when the owner revises the philosophy, and link deeper records rather than burying important decisions in chat. Never overwrite history without a commit. Back up the repository independently.
+
+## Current two-project handoff
+Read `ACTIVE_PROJECTS.md` for the current verified state and review links. Luna studio implementation/evidence lives on `luna-grounded-motion-benchmark`; Sully TV changes live on `sully-phase1-foundation-audit`. A passing contact fixture is not an approved Luna animation; a partial sourced guide is not a complete broadcast schedule.
