@@ -48,7 +48,7 @@ class TestSullyEPG(unittest.TestCase):
             mapping.write_text('{"a":"A"}', encoding="utf-8")
             source.write_text('<tv><programme channel="a" start="20261025180000 -0700" stop="20261025190000 -0700"><title>News</title></programme></tv>', encoding="utf-8")
             self.assertEqual(main(["engine", str(source), str(mapping), "fixture", str(target)]), 0)
-            self.assertEqual(json.loads(target.read_text(encoding="utf-8"))["programmes"], 1)
+            self.assertEqual(json.loads(target.read_text(encoding="utf-8"))["channels"]["A"][0]["title"], "News")
             original = target.read_bytes()
             source.write_text("<tv/>", encoding="utf-8")
             self.assertEqual(main(["engine", str(source), str(mapping), "fixture", str(target)]), 1)
@@ -64,6 +64,16 @@ class TestSullyEPG(unittest.TestCase):
     def test_invalid_stop_does_not_publish(self):
         xml = b'<tv><programme channel="a" start="20261025190000 +0000" stop="20261025180000 +0000"><title>Backwards</title></programme></tv>'
         self.assertEqual(normalize(xml, {"a": "A"}, "fixture")["programmes"], 0)
+
+    def test_export_contract_matches_sully_tv(self):
+        from datetime import datetime, timezone
+        from sully_epg_engine import to_sully_tv_guide
+        sample = {"channels": {"A": [{"title": "News", "start": "2026-10-26T01:00:00Z",
+                                      "stop": "2026-10-26T02:00:00Z", "source": "licensed"}]}}
+        output = to_sully_tv_guide(sample, datetime(2026, 10, 25, tzinfo=timezone.utc))
+        self.assertEqual(output["channels"]["A"][0]["end"], "2026-10-26T02:00:00Z")
+        self.assertEqual(output["sourceCounts"]["licensed"], 1)
+        self.assertEqual(output["updated"], "2026-10-25T00:00:00Z")
 
     def test_rejects_large_xml(self):
         with self.assertRaises(ValueError):
