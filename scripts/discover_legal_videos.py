@@ -20,7 +20,8 @@ def main():
     # Query file namespace for video files, rotating categories across runs.
     terms=["NASA","nature","animation","science","history","documentary"]
     offset=int(os.environ.get("GITHUB_RUN_NUMBER","0"))%len(terms)
-    query=terms[offset]+" filetype:video"\n    found=request({"action":"query","generator":"search","gsrsearch":query,"gsrnamespace":6,"gsrlimit":50,"prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiextmetadatafilter":"LicenseShortName|LicenseUrl|Artist|UsageTerms|Copyrighted","format":"json","formatversion":2})
+    query=terms[offset]+" filetype:video"
+    found=request({"action":"query","generator":"search","gsrsearch":query,"gsrnamespace":6,"gsrlimit":50,"prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiextmetadatafilter":"LicenseShortName|LicenseUrl|Artist|UsageTerms|Copyrighted","format":"json","formatversion":2})
     added=0
     for page in found.get("query",{}).get("pages",[]):
         infos=page.get("imageinfo") or []
