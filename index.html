@@ -962,6 +962,11 @@ function sullyMovieGenreMatch(c){
  if(!match)return true;
  return match[1].test(sullyChannelText(c));
 }
+let sullyProviderTitlesCache=null;
+function sullyGetProviderTitles(){
+ if(!sullyProviderTitlesCache)sullyProviderTitlesCache=fetch("./data/provider-titles.json").then(r=>r.ok?r.json():{items:[]}).then(d=>d.items||[]).catch(()=>{sullyProviderTitlesCache=null;return []});
+ return sullyProviderTitlesCache;
+}
 function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
  const wrap=document.createElement("section");wrap.className="sullyMovieDiscovery";
  const h=document.createElement("h2");h.textContent="🎞️ "+(subtitle||category)+" — titles to watch";wrap.append(h);
@@ -977,6 +982,21 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
  fallback.append(links);wrap.append(fallback);
  root.append(wrap);
  const roomKey=sullyActiveDiscoveryKey();
+ sullyGetProviderTitles().then(items=>{
+  if(!wrap.isConnected||roomKey!==sullyActiveDiscoveryKey())return;
+  const term=(subtitle&&!/^All /i.test(subtitle)?subtitle:category).toLowerCase();
+  const tokens=term.split(/[^a-z0-9]+/).filter(t=>t.length>3&&!["movies","movie","channel","station","featured","worldwide","demand","library"].includes(t));
+  const matches=items.filter(item=>(!moviesOnly||item.kind==="movie")&&(!tokens.length||tokens.some(t=>[item.title,...(item.genres||[]),item.kind].join(" ").toLowerCase().includes(t))));
+  if(!matches.length)return;
+  const label=document.createElement("p");label.className="muted";label.textContent=matches.length+" provider title(s) · Opens the film on its streaming service";wrap.insertBefore(label,grid);
+  matches.forEach(item=>{
+   const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+   const name=document.createElement("strong");name.textContent="▶ "+item.title+" ("+item.year+")";
+   const info=document.createElement("small");info.textContent=item.provider+" · "+item.access;
+   a.append(name,info);grid.append(a);
+  });
+ });
+
  sullyGetPlayable().then(items=>{
   if(!wrap.isConnected||roomKey!==sullyActiveDiscoveryKey())return;
   const filter=(subtitle&&!/^All /i.test(subtitle)?subtitle:category).toLowerCase().replace(/documentary films/g,"documentary");
