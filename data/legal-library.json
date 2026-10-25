@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "description": "Sully TV curated, legally playable media catalog. Add only rights-verified items. Never infer redistribution rights from free access.",
+  "items": [],
+  "itemSchema": {
+    "id": "unique stable ID",
+    "title": "Program title",
+    "kind": "movie|series|episode|documentary|cartoon|concert|educational|other",
+    "year": "release year if known",
+    "genres": [
+      "genre"
+    ],
+    "description": "short synopsis",
+    "poster": "licensed image URL or empty",
+    "playback": {
+      "type": "direct|authorized_embed",
+      "url": "verified playback URL"
+    },
+    "rights": {
+      "basis": "public_domain|cc0|cc_by|cc_by_sa|written_permission|owned",
+      "source": "source page URL",
+      "licenseUrl": "license or permission URL",
+      "attribution": "creator and license attribution",
+      "verifiedAt": "YYYY-MM-DD",
+      "notes": "specific version and territories"
+    },
+    "lastChecked": "YYYY-MM-DD",
+    "status": "verified|needs_recheck|unavailable"
+  }
+}
