@@ -357,6 +357,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyProgramPoster{display:block;max-width:150px;max-height:210px;object-fit:contain;margin:10px 0}.sullyInfoPanel p{line-height:1.45}.sullyCatalogDetails button{align-self:flex-start}
 .sullySuggestHeading{padding:8px 12px;font-size:12px;font-weight:800;color:#f5d38e;background:#0c1d35}.sullyExternalSuggestions{border-top:1px solid #506480}.sullySuggestion span{flex:1;min-width:0}.sullySuggestion small{font-size:10px;font-weight:800;color:#f5d38e}
 .sullyAvailabilityGuides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.sullyAvailabilityGuides a{padding:14px 10px;background:#244e79;color:#fff;text-decoration:none;font-weight:800;border:1px solid #e4c477;border-radius:11px;font-size:13px}@media(max-width:500px){.sullyAvailabilityGuides{grid-template-columns:1fr}}
+.sullyDiscovery{background:#172c4b;border:1px solid #617995;border-radius:14px;padding:16px;margin:18px 0}.sullyDiscovery h3{margin:0 0 8px}.sullyDiscovery p{margin:0 0 12px}.sullySearchExtras{border:1px solid #617995;border-radius:12px;margin:12px 0 28px;overflow:hidden}.sullySearchExtras>summary{cursor:pointer;padding:16px;background:#1a304f;color:#f5d38e;font-weight:750}.sullySearchExtrasBody{padding:14px}.sullySearchExtrasBody .sullyServiceCard{padding:10px}.sullyAvailabilityGuides a{text-align:center}@media(max-width:650px){.sullyAvailabilityGuides{grid-template-columns:1fr}.sullyServiceGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sullySearchExtrasBody{padding:10px}}@media(max-width:400px){.sullyServiceGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -668,16 +669,15 @@ function sullyTitleSearch(q){
  root.append(liveActions);
  const catalogSlot=document.createElement("div");root.append(catalogSlot);sullyCatalogLookup(q,catalogSlot,generation);
  const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
- const availabilityHeading=document.createElement("h3");availabilityHeading.textContent="🌎 Check actual streaming availability";root.append(availabilityHeading);
- const availabilityNote=document.createElement("p");availabilityNote.className="muted";availabilityNote.textContent="Free independent streaming guides can identify services carrying a title in your country. Open one guide instead of searching every platform separately. Results are on the guide's website and can change.";root.append(availabilityNote);
- const guides=document.createElement("div");guides.className="sullyAvailabilityGuides";
- const jw=document.createElement("a");jw.href="https://www.justwatch.com/us/search?q="+encodeURIComponent(q);jw.target="_blank";jw.rel="noopener noreferrer";jw.textContent="🎬 Check “"+q+"” on JustWatch ↗";guides.append(jw);
- const w2=document.createElement("a");w2.href="https://what2c.tv/search";w2.target="_blank";w2.rel="noopener noreferrer";w2.textContent="📺 Check on what2c.tv ↗";guides.append(w2);
- root.append(guides);
- const guideCaveat=document.createElement("p");guideCaveat.className="muted";guideCaveat.textContent="JustWatch opens a search for your title; what2c.tv opens its search page, where you can enter the title. Neither is integrated into Sully TV's own results yet.";root.append(guideCaveat);
- const h2=document.createElement("h3");h2.textContent="🎬 Find this movie or show";root.append(h2);
- const note=document.createElement("p");note.className="muted";note.textContent="Search these services for the exact title. Availability, subscriptions, and playback depend on the provider. Results open in their own websites or apps.";root.append(note);
-
+ const panel=document.createElement("section");panel.className="sullyDiscovery";root.append(panel);
+ const headingMain=document.createElement("h3");headingMain.textContent="🎬 Find “"+q+"”";panel.append(headingMain);
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Check where to stream, rent, or buy in the US. Availability opens on an independent guide.";panel.append(intro);
+ const guides=document.createElement("div");guides.className="sullyAvailabilityGuides";panel.append(guides);
+ const jw=document.createElement("a");jw.href="https://www.justwatch.com/us/search?q="+encodeURIComponent(q);jw.target="_blank";jw.rel="noopener noreferrer";jw.textContent="Find on JustWatch ↗";guides.append(jw);
+ const w2=document.createElement("a");w2.href="https://what2c.tv/search";w2.target="_blank";w2.rel="noopener noreferrer";w2.textContent="Search what2c.tv ↗";guides.append(w2);
+ const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
+ const summary=document.createElement("summary");summary.textContent="More options · My subscriptions and individual services";details.append(summary);
+ const extra=document.createElement("div");extra.className="sullySearchExtrasBody";details.append(extra);
  const services=[
  {name:"Tubi",free:true,search:q=>"https://tubitv.com/search/"+encodeURIComponent(q),home:"https://tubitv.com/"},
  {name:"Plex",free:true,search:q=>"https://watch.plex.tv/search?query="+encodeURIComponent(q),home:"https://watch.plex.tv/"},
@@ -696,17 +696,17 @@ function sullyTitleSearch(q){
  {name:"Crunchyroll",search:q=>"https://www.crunchyroll.com/search?q="+encodeURIComponent(q),home:"https://www.crunchyroll.com/"}
  ];
  let owned=[];try{owned=JSON.parse(localStorage.getItem("sullySubscribedServices")||"[]");if(!Array.isArray(owned))owned=[]}catch(e){owned=[]}
- const title=document.createElement("h3");title.textContent="Your streaming subscriptions";root.append(title);
- const hint=document.createElement("p");hint.className="muted";hint.textContent="Select services you already pay for. Your choices are saved on this device; Sully TV cannot verify account access.";root.append(hint);
+ const title=document.createElement("h3");title.textContent="My streaming subscriptions";extra.append(title);
+ const hint=document.createElement("p");hint.className="muted";hint.textContent="Select services you already pay for. Your choices are saved on this device; Sully TV cannot verify account access.";extra.append(hint);
  const prefs=document.createElement("div");prefs.className="sullyServicePrefs";
  services.filter(s=>!s.free).forEach(service=>{
   const label=document.createElement("label"),check=document.createElement("input");check.type="checkbox";check.checked=owned.includes(service.name);
   check.onchange=()=>{if(check.checked){if(!owned.includes(service.name))owned.push(service.name)}else owned=owned.filter(n=>n!==service.name);try{localStorage.setItem("sullySubscribedServices",JSON.stringify(owned))}catch(e){}paint()};
   label.append(check,document.createTextNode(" "+service.name));prefs.append(label)
- });root.append(prefs);
- const heading=document.createElement("h3");heading.textContent="Find “"+q+"” on streaming services";root.append(heading);
- const grid=document.createElement("div");grid.className="sullyServiceGrid";root.append(grid);
- const msg=document.createElement("p");msg.className="muted";msg.textContent="These links open each provider's search or home page. They do not confirm that this title is in its catalog. Some providers don't offer a direct title-search URL; use their search once opened.";root.append(msg);
+ });extra.append(prefs);
+ const heading=document.createElement("h3");heading.textContent="Search individual services";extra.append(heading);
+ const grid=document.createElement("div");grid.className="sullyServiceGrid";extra.append(grid);
+ const msg=document.createElement("p");msg.className="muted";msg.textContent="These links open each provider's search or home page. They do not confirm that this title is in its catalog. Some providers don't offer a direct title-search URL; use their search once opened.";extra.append(msg);
  function paint(){
   grid.replaceChildren();
   const sorted=[...services].sort((a,b)=>Number(b.free||owned.includes(b.name))-Number(a.free||owned.includes(a.name)));
@@ -715,8 +715,7 @@ function sullyTitleSearch(q){
    const name=document.createElement("strong");name.textContent=service.name;card.append(name);
    const status=document.createElement("span");status.className="sullyServiceStatus";status.textContent=service.free?"Free service":owned.includes(service.name)?"✓ Your subscription":"Subscription may be required";card.append(status);
    const actions=document.createElement("div");actions.className="sullyServiceActions";
-   const search=document.createElement("a");search.href=service.search(q);search.target="_blank";search.rel="noopener noreferrer";search.textContent="🔎 Find title";actions.append(search);
-   if(!service.free&&!owned.includes(service.name)){const join=document.createElement("a");join.href=service.home;join.target="_blank";join.rel="noopener noreferrer";join.textContent="Subscribe";actions.append(join)}
+   const search=document.createElement("a");search.href=service.search(q);search.target="_blank";search.rel="noopener noreferrer";search.textContent="Search ↗";actions.append(search);
    card.append(actions);grid.append(card)
   })
  }
