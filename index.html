@@ -1327,7 +1327,7 @@ root.append(panel);
 }
 
 const heading=document.createElement("h2");
-heading.textContent=tab;
+heading.textContent=tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"🎬 Movies — All Genres":"🎬 Movies — "+sullyMovieGenre):tab;
 root.append(heading);
 
 const rail=document.createElement("div");
