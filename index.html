@@ -504,7 +504,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 @media (hover:none){button:not(:disabled):hover{filter:none}}
 @media (prefers-reduced-motion:reduce){button,[role="button"]{transition:none!important;scroll-behavior:auto!important}}
 </style>
-</head>
+<style id="sullyYouTubeQuickStyle">.sullyQuickBar .sullyYouTubeQuick{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#b91c1c;color:#fff;border:1px solid #ed5757;border-radius:10px;padding:10px 15px;min-height:44px;font-weight:800;text-decoration:none;white-space:nowrap;transition:filter .16s ease,transform .16s ease}.sullyQuickBar .sullyYouTubeQuick:hover{filter:brightness(1.16)}.sullyQuickBar .sullyYouTubeQuick:active{transform:scale(.975)}</style></head>
 <body>
 <header>
 
@@ -553,6 +553,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 <button class="headerGuide quickGuide" onclick="openGuide()">📋 TV Guide</button>
 <button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
 <button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
+<a class="headerGuide sullyYouTubeQuick" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="Open YouTube in a new tab" title="Open YouTube">▶ YouTube</a>
 <button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
 <button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
 <button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
