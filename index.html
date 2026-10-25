@@ -315,6 +315,38 @@ body[data-station] .art{background:linear-gradient(140deg,var(--station-card),#1
 body[data-station] main h2,body[data-station] main h3{color:var(--station-accent)}
 body[data-station] .watch{background:var(--station-header);border:1px solid var(--station-border)}
 
+
+/* Hybrid TV-first responsive navigation: large visual home tiles, compact category browsing elsewhere */
+#nav.categoryTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;gap:10px;padding:12px 0 18px}
+#nav.categoryTiles button{white-space:normal;text-align:left;min-height:92px;border-radius:17px;padding:15px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:8px;font-size:15px;line-height:1.25;box-shadow:0 3px 12px #0003}
+#nav.categoryTiles button .tileIcon{font-size:29px;line-height:1}
+#nav.categoryTiles button .tileLabel{font-size:15px;font-weight:800}
+#nav.categoryTiles button:focus-visible{outline:3px solid #ffdf85;outline-offset:3px}
+#nav.categoryTiles button.tileFamily{min-height:75px}
+#nav.categoryTiles button.tileFamily .tileIcon{font-size:24px}
+#nav.categoryTiles button.tileFamily .tileLabel{font-size:13px}
+#nav.categoryTiles button.tileMain{min-height:110px}
+#nav.categoryTiles button.tileMain .tileIcon{font-size:34px}
+#nav.categoryTiles button.tileMain .tileLabel{font-size:18px}
+#nav.categoryTiles button.tileExtra{min-height:65px}
+#nav.categoryTiles button.tileExtra .tileIcon{font-size:21px}
+#nav.categoryTiles button.tileExtra .tileLabel{font-size:12px}
+#nav.categoryTiles .tileSection{grid-column:1/-1;color:#f4d38c;font-size:18px;font-weight:900;padding:12px 2px 1px}
+#nav.categoryTiles .tileIntro{grid-column:1/-1;color:#c6d4e8;font-size:13px;margin:0 0 2px}
+#nav.categoryTiles button.tileGold{background:linear-gradient(125deg,#c59736,#49341a);border-color:#f3d78b}
+#nav.categoryTiles button.tileMovies{background:linear-gradient(125deg,#875137,#31233b);border-color:#b18a75}
+#nav.categoryTiles button.tileSports{background:linear-gradient(125deg,#226a5e,#183b4d);border-color:#5a9b89}
+#nav.categoryTiles button.tileKids{background:linear-gradient(125deg,#9e4d83,#433b7c);border-color:#ca90b4}
+#nav.categoryTiles button.tileComedy{background:linear-gradient(125deg,#767b86,#22252e);border-color:#a9b1c1}
+#nav.categoryTiles button.tileMore{background:linear-gradient(125deg,#455078,#1d2c4e);border-color:#8791b7}
+#nav.categoryTiles button.tileLive{background:linear-gradient(125deg,#286c9d,#18395c);border-color:#77b6e1}
+#nav.categoryTiles button.tileMain .tileLabel{color:#fff}
+#nav.categoryTiles button.tileFamily.sullyYellow .tileLabel,#nav.categoryTiles button.tileFamily.sullyGold .tileLabel{color:#241b08}
+@media(min-width:650px){#nav.categoryTiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1000px){#nav.categoryTiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.rail .art{height:128px}.rail .art img{max-height:100px}
+.rail .card{box-shadow:0 3px 12px #0003}
+
 </style>
 </head>
 <body>
@@ -548,27 +580,36 @@ function sullyApplyStationTheme(){
  else delete document.body.dataset.station;
 }
 
+
+function sullyTile(t,kind){
+ const b=document.createElement("button");b.type="button";
+ const theme=t==="🏠 Home"?"sullyGold":t.includes("Luna on the Streets")?"sullyLunaPink":t.includes("Mike's Standup")?"sullySilverBlack":t.includes("Summy")?"sullyYellow":t.includes("Nicol")?"pink":t.includes("Michele")?"purple":"";
+ const palettes={"📺 Live TV":"tileLive","🎬 Movies":"tileMovies","🏆 Sports":"tileSports","🎤 Mike's Standup":"tileComedy","🎀 Hello Kitty":"tileKids","☰ More Channels":"tileMore"};
+ b.className=(t===tab?"active ":"")+theme+" "+(kind||"")+" "+(palettes[t]||"");
+ const icon=document.createElement("span");icon.className="tileIcon";icon.textContent=t.split(" ")[0];
+ const label=document.createElement("span");label.className="tileLabel";label.textContent=t.replace(/^[^\p{L}]+/u,"").trim();
+ b.append(icon,label);
+ b.setAttribute("aria-label",t);
+ b.onclick=()=>{if(t==="📺 Live TV"){sullyCategory("🇺🇸 USA");return}if(t==="☰ More Channels"){sullyCategory("⭐ Featured");return}sullyCategory(t)};
+ return b;
+}
 function nav(){
-sullyApplyStationTheme();
-$("nav").innerHTML="";
-tabs.forEach(t=>{
-const b=document.createElement("button");
-b.textContent=t;
-b.className=(t===tab?"active ":"")+
-(t==="🏠 Home"?"sullyGold":t.includes("Luna on the Streets")?"sullyLunaPink":t.includes("Mike\'s Standup")?"sullySilverBlack":t.includes("Summy")?"sullyYellow":t.includes("Nicol")?"pink":t.includes("Michele")?"purple":"");
-b.onclick=()=>{
-if(t!==tab)sullyRememberScreen();
-tab=t;
-if(tab==="🎬 Movies")sullyMovieGenre="All Movies";
-page=0;
-$("search").value="";
-nav();
-render();
-jumpToCategory();
-sullySavePlace();
-};
-$("nav").append(b);
-});
+ sullyApplyStationTheme();
+ const n=$("nav");n.replaceChildren();
+ const section=(title,desc)=>{const h=document.createElement("div");h.className="tileSection";h.textContent=title;n.append(h);if(desc){const p=document.createElement("p");p.className="tileIntro";p.textContent=desc;n.append(p)}};
+ if(tab==="🏠 Home"){
+  section("What do you want to watch?","Tap a picture to start browsing live channels.");
+  ["📺 Live TV","🎬 Movies","🏆 Sports","🎤 Mike's Standup","🎀 Hello Kitty","☰ More Channels"].forEach(t=>n.append(sullyTile(t,"tileMain")));
+  section("Our Channels","Pick your favorite station.");
+  ["🐾 Luna on the Streets","💖 Nicol's Station","🎤 Mike's Standup","🔎 Michele's Murder Mystery Channel","🍥 Summy's Anime"].forEach(t=>n.append(sullyTile(t,"tileFamily")));
+  section("Quick Access");
+  ["❤️ Favorites","▶ Continue Watching","🔴 My Recordings","📋 TV Guide","🍿 On Demand"].forEach(t=>n.append(sullyTile(t,"tileExtra")));
+ }else{
+  n.append(sullyTile("🏠 Home","tileExtra"));
+  section("Browse channels");
+  const shortcuts=["🇺🇸 USA","🎬 Movies","🏆 Sports","🧠 Documentaries","⭐ Reality","🍥 Summy's Anime","🎤 Mike's Standup","💖 Nicol's Station","🐾 Luna on the Streets","🔎 Michele's Murder Mystery Channel","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🌎 Worldwide","🍿 On Demand","❤️ Favorites","📋 TV Guide","🔴 My Recordings"];
+  shortcuts.filter(t=>t!==tab).forEach(t=>n.append(sullyTile(t,"tileExtra")));
+ }
 }
 
 
