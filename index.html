@@ -2261,8 +2261,8 @@ function surpriseMe(){
  sullySurpriseSession={region,activeId:null,attempted:new Set(),candidates:[first,...candidates]};
  sullySurpriseTryNext();
 }
-function closeSullyPanel(){const p=$("sullyQuickPanel");p.hidden=true;p.innerHTML="";}
-function showSullyPanel(html){const p=$("sullyQuickPanel");if(!p.hidden&&p.dataset.panel===html.slice(0,20)){closeSullyPanel();return}p.dataset.panel=html.slice(0,20);p.innerHTML=html;p.hidden=false;}
+function closeSullyPanel(){const p=$("sullyQuickPanel");p.hidden=true;p.style.setProperty("display","none","important");p.replaceChildren();p.dataset.panel="";}
+function showSullyPanel(html){const p=$("sullyQuickPanel");if(!p.hidden&&p.dataset.panel===html.slice(0,20)){closeSullyPanel();return}p.dataset.panel=html.slice(0,20);p.innerHTML=html;p.style.removeProperty("display");p.hidden=false;}
 function openSleepTimer(){
  const remaining=sullySleepTimeout?Math.max(1,Math.ceil((sullySleepEndsAt-Date.now())/60000)):0;
  showSullyPanel('<strong>🌙 Sleep Timer</strong><p>'+(remaining?'Playback stops in about '+remaining+' minute(s).':'Automatically stop video playback after:')+'</p><button onclick="setSullySleep(15)">15 min</button><button onclick="setSullySleep(30)">30 min</button><button onclick="setSullySleep(60)">60 min</button><button onclick="setSullySleep(90)">90 min</button><button onclick="setSullySleep(0)">Cancel</button>');
@@ -2446,7 +2446,7 @@ const sullyThemePreviews={
  retro:"linear-gradient(130deg,#1b153b,#6e358c 60%,#f26aa1)"
 };
 function openSullyThemes(){
- const p=$("sullyQuickPanel");p.hidden=false;p.dataset.panel="sullyThemes";p.replaceChildren();
+ const p=$("sullyQuickPanel");p.style.removeProperty("display");p.hidden=false;p.dataset.panel="sullyThemes";p.replaceChildren();
  const head=document.createElement("div");head.className="sullyThemeHeader";
  const title=document.createElement("strong");title.textContent="🎨 Choose Your Sully TV Look";
  const hint=document.createElement("small");hint.textContent="Choose a category, then a scene";
@@ -2477,7 +2477,7 @@ function openSullyThemes(){
   grid.append(b);
  });
  const close=document.createElement("button");close.type="button";close.textContent="Done ✓";
- close.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();p.hidden=true;p.replaceChildren();p.dataset.panel="";});
+ close.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();closeSullyPanel();});
  footer.append(status,close);p.append(head,grid,variants,footer);updateVariants();
 }
 try{sullyApplyTheme(localStorage.getItem("sully-appearance-theme")||"classic")}catch(e){sullyApplyTheme("classic")}
