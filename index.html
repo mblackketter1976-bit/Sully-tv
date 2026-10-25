@@ -849,6 +849,14 @@ body.sullyKidsMode .sullyKidsDinoParade .sullyDino:nth-child(5){animation-delay:
 body.sullyKidsMode .sullyDinoEgg,body.sullyKidsMode .sullyDinoPlant{font-size:clamp(26px,4vw,45px)}
 @keyframes sullyDinoBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
 @media(prefers-reduced-motion:reduce){body.sullyKidsMode .sullyKidsDinoParade .sullyDino{animation:none}}
+</style><style id="sullyKidsFavoritesDecor2026">
+body.sullyKidsMode .sullyKidsFavoriteDecor{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:9px;margin:2px auto 17px;max-width:800px}
+body.sullyKidsMode .sullyKidsFavoriteBadge{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:100px;background:#fffdf5ed;border:2px solid #ffffff;box-shadow:0 3px 8px #47638925;color:#435078;font-weight:800;transform:rotate(-2deg)}
+body.sullyKidsMode .sullyKidsFavoriteBadge:nth-child(2n){transform:rotate(2deg);background:#fff0f6}
+body.sullyKidsMode .sullyKidsFavoriteBadge:nth-child(3n){background:#e8fff1}
+body.sullyKidsMode .sullyKidsFavoriteBadge>span{font-size:22px;line-height:1}
+body.sullyKidsMode .sullyKidsFavoriteBadge small{font-size:12px}
+@media(max-width:600px){body.sullyKidsMode .sullyKidsFavoriteDecor{gap:6px}body.sullyKidsMode .sullyKidsFavoriteBadge{padding:5px 8px}body.sullyKidsMode .sullyKidsFavoriteBadge small{font-size:11px}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2200,7 +2208,13 @@ function sullyKidsRoom(){
  });
  const dinos=document.createElement("div");dinos.className="sullyKidsDinoParade";dinos.setAttribute("aria-hidden","true");
  dinos.innerHTML='<span class="sullyDino">🦕</span><span class="sullyDinoEgg">🥚</span><span class="sullyDino">🦖</span><span class="sullyDinoPlant">🌿</span><span class="sullyDino">🦕</span>';
- hero.append(heading,dinos,agebar);root.append(hero,liveHeading,liveStatus,liveGrid,outsideHeading,grid);
+ const favorites=document.createElement("div");favorites.className="sullyKidsFavoriteDecor";favorites.setAttribute("aria-label","Decorations inspired by favorite kids shows");
+ [["🐶","Bluey"],["🎵","Ms. Rachel"],["🐾","PAW Patrol"],["🐷","Peppa Pig"],["🍉","CoComelon"],["🧸","Sesame Street"]].forEach(([emoji,name])=>{
+  const item=document.createElement("span");item.className="sullyKidsFavoriteBadge";
+  const symbol=document.createElement("span");symbol.textContent=emoji;symbol.setAttribute("aria-hidden","true");
+  const label=document.createElement("small");label.textContent=name;item.append(symbol,label);favorites.append(item);
+ });
+ hero.append(heading,dinos,favorites,agebar);root.append(hero,liveHeading,liveStatus,liveGrid,outsideHeading,grid);
  sullyKidsLoadLive(liveGrid,liveStatus);
  const note=document.createElement("p");note.className="sullyKidsParentNote";note.textContent="For grown-ups: Live channels appear only after a browser playback test succeeds. External show links open another website; availability and recommendations are controlled by that website. Adult supervision recommended.";root.append(note);
  paint();
