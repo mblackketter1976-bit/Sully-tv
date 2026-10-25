@@ -28,7 +28,7 @@ SEARCHES = [
 ]
 ALLOWED = {"cc0", "public-domain", "pd", "cc-by-4.0", "cc-by-3.0", "cc-by-sa-4.0", "cc-by-sa-3.0"}
 VIDEO_EXT = (".webm", ".ogv", ".ogg", ".mp4")
-LIMIT_PER_RUN = 100
+LIMIT_PER_RUN = 60
 
 def request(params):
     url = API + "?" + urllib.parse.urlencode(params)
@@ -50,6 +50,13 @@ def classify(title, description):
     if re.search(r"episode|television series|tv show", text):
         return "show"
     return "other"
+
+def worthwhile(title, description, kind):
+    text=(title+" "+description).lower()
+    junk=r"test footage|logo|sample clip|animation test|loop animation|render test|tutorial demo|test animation|screensaver|stock footage"
+    if re.search(junk,text):return False
+    if kind in ("movie","show","short","documentary"):return True
+    return bool(re.search(r"nasa|astronomy|wildlife|nature documentary|space mission|history of|science documentary|educational film|animated short",text))
 
 def discover():
     data = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -97,7 +104,10 @@ def discover():
             clean_title = re.sub(r"\\.(webm|ogv|ogg|mp4)$","",title,flags=re.I).replace("_"," ").strip()
             if not clean_title:
                 continue
-            item = {"id":key,"title":clean_title,"kind":classify(clean_title,description),
+            kind=classify(clean_title,description)
+            if not worthwhile(clean_title,description,kind):
+                continue
+            item = {"id":key,"title":clean_title,"kind":kind,
                     "year":"","genres":genres_for(clean_title,description),"description":description[:450] or "Freely licensed video on Wikimedia Commons",
                     "poster":"","playback":{"type":"direct","url":url},
                     "rights":{"basis":license_code,"source":source,"licenseUrl":license_url,
