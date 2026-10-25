@@ -1,5 +1,7 @@
 # TV Guide reliability handoff — 2026-10-25
 
+Earlier snapshot: subsequent provider work and current coverage are documented in `TV_GUIDE_PROVIDER_003.md`. The empty-registry limitation below describes the state before that adapter was added.
+
 ## Built
 - Replaced the obsolete `guides.json` URL guessing path with an explicit provider registry (`data/guide-sources.json`) and the existing Sully XMLTV engine.
 - Registry order selects provider priority. Reject overlapping duplicate listings, expired programmes, unreviewed reuse rights, insecure URLs, oversized downloads and oversized gzip expansion.

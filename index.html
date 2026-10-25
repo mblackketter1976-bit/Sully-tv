@@ -2841,6 +2841,7 @@ function renderGuide(){
  const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only sourced, current program data is shown.";root.append(intro);
  const guideStatus=document.createElement("p");guideStatus.className="muted";guideStatus.setAttribute("role","status");root.append(guideStatus);
+ const attribution=document.createElement("p");attribution.className="muted";root.append(attribution);
  const toolbar=document.createElement("div");toolbar.className="sullyGuideToolbar";
  const search=document.createElement("input");search.type="search";search.placeholder="Find a station…";search.setAttribute("aria-label","Search stations");
  const genre=document.createElement("select");genre.setAttribute("aria-label","Channel genre");
@@ -2898,9 +2899,16 @@ function renderGuide(){
   const validPrograms=c=>fresh&&Array.isArray(sullyGuideData?.channels?.[c.id])?sullyGuideData.channels[c.id].filter(p=>p&&typeof p.title==="string"&&p.title.trim()&&typeof p.source==="string"&&p.source&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)):[];
   const scheduled=matches.filter(c=>validPrograms(c).some(p=>Date.parse(p.start)<endTime.getTime()&&Date.parse(p.end)>base.getTime()));
   const ordered=scheduled.concat(matches.filter(c=>!scheduled.includes(c)));
-  const shown=ordered.slice(0,limit);count.textContent=shown.length+" / "+ordered.length+" channels · "+scheduled.length+" with verified schedules";
+  const shown=ordered.slice(0,limit);count.textContent=shown.length+" / "+ordered.length+" channels · "+scheduled.length+" with sourced schedules";
 
-  guideStatus.textContent=fresh&&hasListings?"Verified listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":hasListings?"Stale schedule · Program details hidden until listings refresh. Channels remain available to watch.":"Live channel directory · Program details unavailable until a verified guide source is connected";
+  guideStatus.textContent=fresh&&hasListings?"Sourced listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":hasListings?"Stale schedule · Program details hidden until listings refresh. Channels remain available to watch.":"Live channel directory · Program details unavailable until a verified guide source is connected";
+  attribution.replaceChildren();
+  if(sullyGuideData?.sources?.["tvmaze-us"]){
+   attribution.append("Partial episode listings from ");
+   const credit=document.createElement("a");credit.href="https://www.tvmaze.com/";credit.textContent="TVmaze";credit.target="_blank";credit.rel="noopener noreferrer";attribution.append(credit," · ");
+   const license=document.createElement("a");license.href="https://creativecommons.org/licenses/by-sa/4.0/";license.textContent="CC BY-SA 4.0";license.target="_blank";license.rel="noopener noreferrer";attribution.append(license,". Adapted to Sully TV; unlisted programming remains blank. Stream feeds may differ. ");
+   const data=document.createElement("a");data.href="./data/tv-guide.json";data.textContent="Schedule data";attribution.append(data);
+  }
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
   const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
@@ -2912,11 +2920,23 @@ function renderGuide(){
    const name=document.createElement("span");name.textContent=c.name;name.className="sullyRetroGuideName";station.append(number,name);row.append(station);
    // Display schedules only when actual start/end timestamps are provided.
    const verified=validPrograms(c);
+   const inSlot=j=>verified.filter(p=>Date.parse(p.start)<slots[j].getTime()+1800000&&Date.parse(p.end)>slots[j].getTime());
+   function programButton(p){
+    const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";
+    const name=document.createElement("span");name.textContent=p.title;
+    const times=document.createElement("small");times.textContent=fmt(new Date(p.start))+"–"+fmt(new Date(p.end));
+    show.style.flexDirection="column";show.style.alignItems="flex-start";show.append(name,times);
+    show.title=p.title+" · "+times.textContent+" · Watch "+c.name;show.onclick=()=>watchChannel(c);return show;
+   }
    for(let j=0;j<slots.length;){
-    const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<t+1800000&&Date.parse(p.end)>t);
-    if(!p){const empty=document.createElement("div");empty.className="sullyRetroGuideCell sullyRetroGuideUnknown";empty.textContent=j===0?"LIVE · Schedule unavailable":"—";empty.title="No verified program information for this time";row.append(empty);j++;continue;}
-    let span=1;while(j+span<slots.length&&Date.parse(p.end)>slots[j+span].getTime()&&Date.parse(p.start)<=slots[j+span].getTime())span++;
-    const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";show.style.gridColumn="span "+span;show.textContent=p.title;show.title=p.title+" · "+fmt(new Date(p.start))+"–"+fmt(new Date(p.end))+" · Watch "+c.name;show.onclick=()=>watchChannel(c);row.append(show);j+=span;
+    const entries=inSlot(j),p=entries[0];
+    if(!p){const empty=document.createElement("div");empty.className="sullyRetroGuideCell sullyRetroGuideUnknown";empty.textContent=j===0?"Schedule unavailable":"—";empty.title="No sourced program information for this time";row.append(empty);j++;continue;}
+    if(entries.length>1){
+     const stack=document.createElement("div");stack.style.display="flex";stack.style.flexDirection="column";stack.style.minWidth="0";
+     entries.forEach(entry=>stack.append(programButton(entry)));row.append(stack);j++;continue;
+    }
+    let span=1;while(j+span<slots.length&&inSlot(j+span).length===1&&inSlot(j+span)[0]===p)span++;
+    const show=programButton(p);show.style.gridColumn="span "+span;row.append(show);j+=span;
    }
    table.append(row);
   });

@@ -44,6 +44,16 @@ const {chromium}=require('playwright');
   assert.equal(await page.locator('.sullyRetroGuideProgram').count(),0);
   await page.getByRole('button',{name:'NOW',exact:true}).click();
   assert.equal(await page.locator('.sullyRetroGuideProgram').count(),1);
+  await page.evaluate(()=>{
+   const p=fixture.channels.news[0];
+   fixture.sources={"tvmaze-us":{name:"TVmaze"}};
+   fixture.channels.news.push({...p,title:"Second short programme",start:new Date(Date.parse(p.end)+60000).toISOString(),end:new Date(Date.parse(p.end)+240000).toISOString()});
+   setGuide(fixture);
+  });
+  await page.waitForTimeout(50);
+  assert.equal(await page.locator('.sullyRetroGuideProgram').count(),2);
+  assert.equal(await page.getByRole('link',{name:'TVmaze',exact:true}).count(),1);
+  assert.equal(await page.getByRole('link',{name:'CC BY-SA 4.0',exact:true}).count(),1);
   await page.screenshot({path:'guide-'+width+'.png',fullPage:true});
   await page.evaluate(()=>{fixture.updated=new Date(Date.now()-48*3600000).toISOString();setGuide(fixture)});
   await page.waitForTimeout(50);

@@ -15,3 +15,6 @@ No external packages or paid services are used by this core. `benchmark()` retur
 Limitations: straight walk only; no validated anatomy, joint limits, centre-of-mass/balance simulation, paw orientation/roll, turns, expression, dialogue, skin weights, mesh deformation or renderer adapter. The timing is synthetic and has not been fitted to Luna's real gait. Exact world contacts alone cannot establish natural or attractive animation.
 
 Next acceptance gate: apply the contact targets to an approved character rig, evaluate the deformed mesh/feet in world coordinates, render representative poses, inspect continuity and likeness against the approved art, and only then render the short walk. Preserve source artwork and do not overwrite prior builds.
+
+
+Blender integration: `blender_contacts.py` applies poses to an explicitly mapped compatible armature. `verify_blender_contacts.py` builds a diagnostic skinned fixture, checks evaluated contacts and baked half-frame playback, renders representative poses and saves a `.blend`. Run using the command in that script's header. CI evidence and measured limits are in `docs/LUNA_MOTION_VERIFICATION_001.md`.

@@ -31,3 +31,15 @@ Observed Blender IK documentation: https://docs.blender.org/manual/en/5.0/animat
 Working decision: HYBRID / provisional. Keep established renderer/rig tools replaceable and use a small independently testable contact contract. This does not justify replacing Blender's general IK solver or selecting the final 2D/3D production pipeline. No third-party code copied into this prototype.
 
 Next: inventory approved layered art and actual rig files, adapt verified contact targets to the selected rig, then inspect a short rendered walk. Full 15-second benchmark must eventually include turn, expression and dialogue. The 45–60-second pilot remains gated on visual approval.
+
+
+## Blender integration verified — 2026-10-25
+Run https://github.com/mblackketter1976-bit/Sully-tv/actions/runs/40242575280 passed on Blender 4.0.2. The test built an actual armature, continuous skinned limb meshes and sole vertices, applied the contact targets, baked a 15-second action, and measured the evaluated geometry at 361 frame samples and 360 half-frame samples. It rendered a four-pose diagnostic image and saved the reproducible `.blend` fixture. A prior render failure caused by an unavailable default denoiser was fixed by explicitly disabling denoising for this diagnostic CPU render.
+
+Measured maximum bone endpoint error: 8.40e-7 metres. Maximum evaluated sole target error: 7.71e-7 metres. Maximum sampled stance drift: 7.77e-7 metres. Minimum sampled mesh height: -4.53e-7 metres (floating-point tolerance). Baked half-frame stance error: 0.000733 metres, below the declared 1 mm diagnostic tolerance. This small interpolation error is recorded, not represented as zero.
+
+The earlier four-pose diagnostic render was inspected visually. It is blue/orange test geometry, not approved Luna artwork. No likeness, natural gait, full-character deformation, turns, dialogue or final film quality has been established. Actual Windows workstation performance is still untested.
+
+`blender_contacts.py` requires explicit bone mapping, matching segment lengths, identity object transforms and unconstrained mapped bones; it rejects unsupported configurations. Do not apply it blindly to a different rig.
+
+Next required input: the current editable character rig/project. Prior image references and source drafts are available, but no approved rigged character file has been confirmed accessible. The user's Windows project folders are not directly connected to this session. Inspect the actual `.blend` or Cartoon Animator project before selecting an integration path. Do not regenerate the approved art or call this fixture a Luna animation.
