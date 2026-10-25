@@ -1480,8 +1480,19 @@ root.append(heading);
 const rail=document.createElement("div");
 rail.className="rail";
 
-list.slice(0,(page+1)*60).forEach(c=>rail.append(card(c)));
+// Keep the first two rows visible; tuck remaining live feeds into a disclosure.
+const liveColumns=window.innerWidth<480?2:window.innerWidth<760?3:4;
+const initialLiveCount=Math.min(list.length,liveColumns*2);
+list.slice(0,initialLiveCount).forEach(c=>rail.append(card(c)));
 root.append(rail);
+if(list.length>initialLiveCount){
+ const moreLive=document.createElement("details");moreLive.className="sullyRoomLiveDisclosure";
+ const summary=document.createElement("summary");summary.textContent="📡 More live channels ("+(list.length-initialLiveCount)+") ▾";
+ moreLive.append(summary);
+ const rest=document.createElement("div");rest.className="rail";
+ list.slice(initialLiveCount).forEach(c=>rest.append(card(c)));
+ moreLive.append(rest);root.append(moreLive);
+}
 
 if(tab==="🎬 Movies")root.append(sullyMovieOnDemandBrowse());
 else sullyRoomOnDemandBrowse();
