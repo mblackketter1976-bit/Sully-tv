@@ -299,6 +299,22 @@ header .top>div:first-of-type{padding-left:0!important}
 .sullyFanHub{padding:18px;border:1px solid #d5b778;border-radius:14px;background:#102b50;color:white}.sullyFanHub h2{color:#ffd8e7}.sullyFanHub p{color:#dce6f4;font-size:13px}.sullyFanHub h3{margin-top:20px}.sullyFanTopics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sullyFanLink{display:block;background:#244c7d;color:#fff!important;text-decoration:none;border:1px solid #dfbb76;border-radius:9px;padding:12px;margin:6px 0;font-weight:700;font-size:13px}.sullyFanSearch{display:flex;gap:8px;margin-top:16px}.sullyFanSearch input{flex:1;min-width:0;padding:10px;border-radius:8px}.sullyFanSearch button{border-radius:8px;padding:10px;background:#ad2e50;color:white}
 .sullyGold{background:linear-gradient(145deg,#f7dc82,#ac7519)!important;color:#211600!important;border:1px solid #ffeb9e!important;font-weight:900!important}.sullyGold.active{background:linear-gradient(145deg,#fff0b0,#d99c2d)!important;color:#1b1200!important}.sullySilverBlack{background:linear-gradient(145deg,#c5c9d1,#25272e 58%,#090a0d)!important;color:#fff!important;border:1px solid #c9d0dc!important;font-weight:800!important}.sullySilverBlack.active{background:linear-gradient(145deg,#f1f2f5,#565b67 48%,#111217)!important;color:#fff!important}.sullyYellow{background:linear-gradient(145deg,#fff6a5,#e9bd1d)!important;color:#292100!important;border:1px solid #ffe977!important;font-weight:800!important}.sullyYellow.active{background:linear-gradient(145deg,#fffbd0,#f6d447)!important;color:#221a00!important}
 .sullyLunaPink{background:linear-gradient(145deg,#ffb8d8,#e95a9c 55%,#ac2873)!important;color:#301020!important;border:1px solid #ffd3e7!important;font-weight:900!important}.sullyLunaPink.active{background:linear-gradient(145deg,#ffe0ed,#f47eb5 55%,#c83c89)!important;color:#2b0b1d!important}
+
+/* Section-wide backgrounds for the five personalized stations and Home. */
+body{--station-bg:#080f20;--station-header:#101c32;--station-card:#17263f;--station-border:#344d70;--station-accent:#69b9ff;background:var(--station-bg);transition:background .22s ease}
+body[data-station="home"]{--station-bg:linear-gradient(145deg,#30240e 0%,#171b28 48%,#0d1322 100%);--station-header:#30250f;--station-card:#302719;--station-border:#b58b3e;--station-accent:#f3cc72}
+body[data-station="luna"]{--station-bg:linear-gradient(145deg,#572341 0%,#2d1834 48%,#171024 100%);--station-header:#4d1d3d;--station-card:#46223d;--station-border:#d875a5;--station-accent:#ffb5d4}
+body[data-station="nicol"]{--station-bg:linear-gradient(145deg,#4d2246 0%,#251a38 55%,#130f24 100%);--station-header:#4b2447;--station-card:#3c2348;--station-border:#c67cb3;--station-accent:#ffc0e7}
+body[data-station="mike"]{--station-bg:linear-gradient(145deg,#353942 0%,#191c23 48%,#090b0f 100%);--station-header:#282b32;--station-card:#292d35;--station-border:#aeb6c2;--station-accent:#e6eaf1}
+body[data-station="michele"]{--station-bg:linear-gradient(145deg,#45215e 0%,#231637 50%,#130e23 100%);--station-header:#3c2053;--station-card:#322043;--station-border:#a379c9;--station-accent:#dfb8ff}
+body[data-station="summy"]{--station-bg:linear-gradient(145deg,#66511b 0%,#32291b 45%,#151923 100%);--station-header:#58451a;--station-card:#3e341f;--station-border:#e6bf47;--station-accent:#ffeb93}
+body[data-station] header{background:var(--station-header);border-bottom-color:var(--station-border)}
+body[data-station] .hero{background:linear-gradient(125deg,var(--station-card),#101728);border-color:var(--station-border)}
+body[data-station] .card,body[data-station] .panel,body[data-station] .lunaHub,body[data-station] .sullyFanHub,body[data-station] .sullyMovieGenres,body[data-station] .sullyOfficialAnime{background:var(--station-card);border-color:var(--station-border)}
+body[data-station] .art{background:linear-gradient(140deg,var(--station-card),#131a2c)}
+body[data-station] main h2,body[data-station] main h3{color:var(--station-accent)}
+body[data-station] .watch{background:var(--station-header);border:1px solid var(--station-border)}
+
 </style>
 </head>
 <body>
@@ -524,7 +540,16 @@ function jumpToCategory(){
  window.scrollTo({top:Math.max(0,y),behavior:"instant"});
 }
 
+
+function sullyApplyStationTheme(){
+ const themes={"🏠 Home":"home","🐾 Luna on the Streets":"luna","💖 Nicol's Station":"nicol","🎤 Mike's Standup":"mike","🔎 Michele's Murder Mystery Channel":"michele","🍥 Summy's Anime":"summy"};
+ const theme=themes[tab];
+ if(theme)document.body.dataset.station=theme;
+ else delete document.body.dataset.station;
+}
+
 function nav(){
+sullyApplyStationTheme();
 $("nav").innerHTML="";
 tabs.forEach(t=>{
 const b=document.createElement("button");
