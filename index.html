@@ -839,7 +839,7 @@ header #sullyQuickPanel .sullyThemeFooter{position:relative!important;z-index:21
 </style><style id="sullyThemeSingleClose2026">
 header #sullyQuickPanel #sullyThemeExitFixed{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;z-index:50!important;display:inline-flex!important;cursor:pointer!important;pointer-events:auto!important;align-items:center!important;justify-content:center!important;min-height:42px!important}
 header #sullyQuickPanel .sullyThemeFooter{display:flex!important;align-items:center!important;justify-content:space-between!important;position:relative!important;z-index:40!important}
-</style></head>
+</style><style id="sullyKidsLiveFirst2026">body.sullyKidsMode .sullyKidsLiveHeading,body.sullyKidsMode .sullyKidsOutsideHeading{color:#364b8e;font-size:clamp(23px,3vw,32px);margin:22px 0 8px}body.sullyKidsMode .sullyKidsLiveStatus{background:#ffffffc9;border-radius:14px;color:#334b70;padding:12px;font-weight:700}body.sullyKidsMode button.sullyKidsLiveCard{font:inherit;cursor:pointer!important}body.sullyKidsMode .sullyKidsLiveCard{background:linear-gradient(145deg,#bbffd3,#b8eaff)!important}</style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
@@ -2103,12 +2103,71 @@ async function sullyKidsArt(name,img){
   if(url&&img.isConnected){img.src=url;img.hidden=false}
  }catch(e){}
 }
+const sullyKidsLivePattern=/\\b(kids?|children|junior|cartoon|toons?|baby|preschool|nick jr|pbs kids|boomerang|ducktv|pocoyo|babyfirst|kidoodle|happy kids|kidstv)\\b/i;
+const sullyKidsPlaybackCache=new Map();
+async function sullyKidsTestPlayback(source){
+ const video=document.createElement("video");
+ video.muted=true;video.playsInline=true;video.autoplay=true;video.preload="auto";
+ video.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";
+ document.body.append(video);
+ let h=null,done=false;
+ return new Promise(resolve=>{
+  const finish=ok=>{if(done)return;done=true;clearTimeout(timer);try{video.pause();video.removeAttribute("src");video.load();h?.destroy();video.remove()}catch(e){}resolve(ok)};
+  const timer=setTimeout(()=>finish(false),11000);
+  video.onplaying=()=>{if(video.readyState>=2)finish(true)};
+  video.ontimeupdate=()=>{if(video.currentTime>0)finish(true)};
+  video.onerror=()=>finish(false);
+  try{
+   if(/\\.m3u8(?:[?#]|$)/i.test(source.url)&&window.Hls&&Hls.isSupported()){
+    h=new Hls({maxBufferLength:5});
+    h.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal)finish(false)});
+    h.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>finish(false)));
+    h.loadSource(source.url);h.attachMedia(video);
+   }else{video.src=source.url;video.play().catch(()=>finish(false))}
+  }catch(e){finish(false)}
+ });
+}
+async function sullyKidsLoadLive(grid,status){
+ const matches=channels.filter(c=>sullyKidsLivePattern.test(c.name+" "+(c.categories||[]).join(" "))&&!sullyFailed(c.id)&&!unavailable.has(c.id)&&streams.has(c.id)).slice(0,18);
+ if(!matches.length){status.textContent="No kids' live channels are available to test right now. Try the official shows below.";return}
+ let cursor=0,found=0;
+ async function worker(){
+  while(cursor<matches.length&&grid.isConnected){
+   const ch=matches[cursor++],sources=(streams.get(ch.id)||[]).slice(0,2);
+   let working=null;
+   for(const source of sources){
+    const cache=sullyKidsPlaybackCache.get(source.url);
+    const ok=cache&&Date.now()-cache.at<180000?cache.ok:await sullyKidsTestPlayback(source);
+    sullyKidsPlaybackCache.set(source.url,{ok,at:Date.now()});
+    if(ok){working=source;break}
+   }
+   if(working&&grid.isConnected){
+    found++;
+    const button=document.createElement("button");button.type="button";button.className="sullyKidsShow sullyKidsLiveCard";
+    const art=document.createElement("span");art.className="sullyKidsFallback";art.textContent="📺";
+    if(logos.has(ch.id)){const image=document.createElement("img");image.className="sullyKidsArt";image.src=logos.get(ch.id);image.alt="";image.onerror=()=>image.remove();button.append(image)}
+    const title=document.createElement("strong");title.textContent=ch.name;
+    const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="▶ Watch here";
+    button.append(art,title,play);
+    button.onclick=()=>{const original=streams.get(ch.id)||[];streams.set(ch.id,[working,...original.filter(s=>s.url!==working.url)]);watchChannel(ch)};
+    grid.append(button);
+    status.textContent=found+" working kids' live channel"+(found===1?"":"s")+" found";
+   }
+  }
+ }
+ await Promise.all([worker(),worker()]);
+ if(grid.isConnected)status.textContent=found?found+" kids' channels passed a playback test. Tap to watch here.":"No live kids' streams passed the playback test right now. More official shows are below.";
+}
 function sullyKidsRoom(){
  const root=$("content");$("filters").hidden=true;
  $("status").textContent="Kids TV · Pick a show";
  const hero=document.createElement("div");hero.className="sullyKidsHero";
  const heading=document.createElement("h2");heading.textContent="🌈 What do you want to watch?";
  const agebar=document.createElement("div");agebar.className="sullyKidsAges";
+ const liveHeading=document.createElement("h2");liveHeading.className="sullyKidsLiveHeading";liveHeading.textContent="📺 Watch right here";
+ const liveStatus=document.createElement("p");liveStatus.className="sullyKidsLiveStatus";liveStatus.textContent="Checking kids' live channels for working video…";
+ const liveGrid=document.createElement("div");liveGrid.className="sullyKidsGrid";
+ const outsideHeading=document.createElement("h2");outsideHeading.className="sullyKidsOutsideHeading";outsideHeading.textContent="🌟 More favorite shows";
  const grid=document.createElement("div");grid.className="sullyKidsGrid";
  const groups=[["🌟 All shows",0],["🧸 Ages 2–4",4],["🎒 Ages 5–8",8]];
  let selected=0;
@@ -2120,7 +2179,7 @@ function sullyKidsRoom(){
    const img=document.createElement("img");img.className="sullyKidsArt";img.alt="";img.hidden=true;img.loading="lazy";
    const fallback=document.createElement("span");fallback.className="sullyKidsFallback";fallback.textContent=({"Bluey":"🐶","PAW Patrol":"🐕","SpongeBob SquarePants":"🧽","Peppa Pig":"🐷","Gabby's Dollhouse":"🐱","Sesame Street":"🧸","Ms. Rachel":"🎵","CoComelon":"🍉","Numberblocks":"🔢","Super Simple Songs":"🎶","Daniel Tiger's Neighborhood":"🐯","Wild Kratts":"🦁"})[name]||"🌟";
    const title=document.createElement("strong");title.textContent=name;
-   const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="▶ Watch";
+   const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="↗ Official videos";
    a.append(img,fallback,title,play);grid.append(a);sullyKidsArt(name,img);
   });
  }
@@ -2129,8 +2188,9 @@ function sullyKidsRoom(){
   btn.onclick=()=>{selected=value;agebar.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));paint()};
   agebar.append(btn);
  });
- hero.append(heading,agebar);root.append(hero,grid);
- const note=document.createElement("p");note.className="sullyKidsParentNote";note.textContent="For grown-ups: These open official creator pages or official-video searches. Free full-episode availability varies, and external sites may show other recommendations. Adult supervision recommended.";root.append(note);
+ hero.append(heading,agebar);root.append(hero,liveHeading,liveStatus,liveGrid,outsideHeading,grid);
+ sullyKidsLoadLive(liveGrid,liveStatus);
+ const note=document.createElement("p");note.className="sullyKidsParentNote";note.textContent="For grown-ups: Live channels appear only after a browser playback test succeeds. External show links open another website; availability and recommendations are controlled by that website. Adult supervision recommended.";root.append(note);
  paint();
 }
 function render(){
