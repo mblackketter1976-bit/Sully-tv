@@ -2918,13 +2918,14 @@ function renderGuide(){
   const ordered=scheduled.concat(matches.filter(c=>!scheduled.includes(c)));
   const shown=ordered.slice(0,limit);count.textContent=shown.length+" / "+ordered.length+" channels · "+scheduled.length+" with sourced schedules";
 
-  guideStatus.textContent=fresh&&hasListings?"Sourced listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":hasListings?"Stale schedule · Program details hidden until listings refresh. Channels remain available to watch.":"Live channel directory · Program details unavailable until a verified guide source is connected";
+  guideStatus.textContent=fresh&&hasListings?"Listings fetched "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":hasListings?"Stale schedule · Program details hidden until listings refresh. Channels remain available to watch.":"Live channel directory · Program details unavailable until a verified guide source is connected";
   attribution.replaceChildren();
   if(sullyGuideData?.sources?.["tvmaze-us"]){
    attribution.append("Partial episode listings from ");
    const credit=document.createElement("a");credit.href="https://www.tvmaze.com/";credit.textContent="TVmaze";credit.target="_blank";credit.rel="noopener noreferrer";attribution.append(credit," · ");
    const license=document.createElement("a");license.href="https://creativecommons.org/licenses/by-sa/4.0/";license.textContent="CC BY-SA 4.0";license.target="_blank";license.rel="noopener noreferrer";attribution.append(license,". Adapted to Sully TV; unlisted programming remains blank. Stream feeds may differ. ");
-   const data=document.createElement("a");data.href="./data/tv-guide.json";data.textContent="Schedule data";attribution.append(data);
+   const data=document.createElement("a");data.href="#";data.textContent="Download current listings";
+   data.onclick=event=>{event.preventDefault();const url=URL.createObjectURL(new Blob([JSON.stringify(sullyGuideData,null,2)],{type:"application/json"}));const link=document.createElement("a");link.href=url;link.download="Sully_TV_Schedule.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};attribution.append(data);
   }
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
