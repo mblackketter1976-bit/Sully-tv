@@ -396,6 +396,14 @@ header .top{flex-wrap:wrap}
 .sullyFanHub{margin:16px 0}
 @media(max-width:560px){.sullyCompactRoomRail{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sullyCompactRoomRail .card{font-size:.88rem}}
 </style>
+<style id="sullyProgramButtonsStyle">
+.sullyProgramBrowse{margin:14px 0 22px}
+.sullyProgramBrowse h2{margin:0 0 8px}
+.sullyProgramButtonGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:12px}
+.sullyProgramButton{display:flex;flex-direction:column;gap:7px;justify-content:center;min-height:105px;padding:15px;border:1px solid #ad966d;border-radius:13px;background:linear-gradient(145deg,#224777,#172b49);color:#fff;text-decoration:none}
+.sullyProgramButton span{font-size:1.5rem}.sullyProgramButton strong{font-size:1.03rem}.sullyProgramButton small{color:#c8d8f2}
+@media(max-width:560px){.sullyProgramButtonGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sullyProgramButton{min-height:95px;padding:12px}}
+</style>
 </head>
 <body>
 <header>
@@ -1148,6 +1156,26 @@ const sullyFanHubs={
  "⚡ DC":{name:"DC",color:"#a7d0ff",channel:"@dcofficial",topics:["Trailers","Animation","Batman","Superman","Behind the Scenes"],queries:["DC official trailers","DC official animated clips","DC official Batman videos","DC official Superman videos","DC official behind the scenes"]}
 };
 
+function sullyProgramButtons(){
+ const root=$("content"),hub=sullyFanHubs[tab];
+ const section=document.createElement("section");section.className="sullyProgramBrowse";
+ const h=document.createElement("h2");h.textContent="▶ Browse "+hub.name+" programs";section.append(h);
+ const info=document.createElement("p");info.className="muted";info.textContent="Choose a program category to browse available videos. Video results open in YouTube.";section.append(info);
+ const grid=document.createElement("div");grid.className="sullyProgramButtonGrid";
+ const language=sullyEnglishOnly?"English":({en:"English",es:"Spanish",fr:"French",de:"German",pt:"Portuguese",it:"Italian",ja:"Japanese",ko:"Korean",zh:"Chinese",hi:"Hindi",ar:"Arabic",ru:"Russian"}[sullySelectedLanguage]||"");
+ const topics=hub.topics||[];
+ topics.forEach((topic,i)=>{
+  const a=document.createElement("a");a.className="sullyProgramButton";
+  const query=[hub.name,topic,language,"official full videos"].filter(Boolean).join(" ");
+  a.href="https://www.youtube.com/results?search_query="+encodeURIComponent(query);
+  a.target="_blank";a.rel="noopener noreferrer";
+  const emoji=document.createElement("span");emoji.textContent=["🎬","▶️","📺","🎤","⭐","🍿"][i%6];
+  const name=document.createElement("strong");name.textContent=topic;
+  const sub=document.createElement("small");sub.textContent=language?language+" videos":"Browse videos";
+  a.append(emoji,name,sub);grid.append(a);
+ });
+ section.append(grid);root.append(section);
+}
 function sullyFanLive(){
  const hub=sullyFanHubs[tab],root=$("content");
  const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
@@ -1279,7 +1307,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanLive();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyProgramButtons();sullyFanLive();const extras=document.createElement("details");extras.className="sullyRoomLiveDisclosure";const summary=document.createElement("summary");summary.textContent="More places to find "+sullyFanHubs[tab].name;extras.append(summary);root.append(extras);const startCount=root.children.length;if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();while(root.children.length>startCount)extras.append(root.children[startCount]);return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
