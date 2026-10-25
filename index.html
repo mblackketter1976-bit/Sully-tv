@@ -380,6 +380,7 @@ header .top{flex-wrap:wrap}
 .sullyDirectoryControls{padding:16px;border:1px solid #bd9858;border-radius:14px;background:#142943;margin:12px 0}.sullyDirectoryFilters{display:flex;flex-wrap:wrap;gap:10px}.sullyDirectoryFilters>*{flex:1 1 170px;min-width:0;padding:12px;border-radius:9px;background:#0b1930;color:white;border:1px solid #b8965a}
 .sullyInventoryCounter{font-size:clamp(17px,2vw,23px);font-weight:800;color:#f5d18c;background:#162c4a;border:1px solid #c49d5d;border-radius:12px;padding:15px 18px;margin:14px 0}
 .sullyInventoryTotal{font-size:clamp(19px,2.5vw,28px);padding-bottom:12px;border-bottom:1px solid #6c7890}.sullyInventoryBreakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}.sullyInventoryStat{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;background:#0d203b;font-size:14px;color:#dce8f8}.sullyInventoryStat strong{font-size:26px;color:#f5d18c}
+.sullyLibraryEntry{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.sullyLibraryPoster{width:140px;max-width:34%;aspect-ratio:16/9;flex-shrink:0;border-radius:9px;overflow:hidden;background:#0c1a30;display:grid;place-items:center}.sullyLibraryPoster img{width:100%;height:100%;object-fit:cover}.sullyLibraryPoster.sullyNoThumbnail:after{content:"🎬";font-size:34px}.sullyLibraryEntryInfo{flex:1 1 145px;min-width:0}@media(max-width:460px){.sullyLibraryPoster{width:100px}}
 </style>
 </head>
 <body>
@@ -1792,6 +1793,25 @@ function sullyLibraryLetter(title){
  return /^[A-Z]$/.test(c)?c:"#";
 }
 let sullyLibraryActiveLetter="All";
+const sullyThumbCache=new Map();
+async function sullyLibraryThumbnail(item,img){
+ const source=String(item.rights?.source||"");
+ if(!source.includes("commons.wikimedia.org/wiki/File:"))return;
+ const file="File:"+decodeURIComponent(source.split("/wiki/File:")[1].split("?")[0]).replace(/_/g," ");
+ let url=sullyThumbCache.get(file);
+ if(!url){
+  try{
+   const api="https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url&iiurlwidth=480&titles="+encodeURIComponent(file);
+   const response=await fetch(api);if(!response.ok)return;
+   const data=await response.json();
+   const page=Object.values(data.query?.pages||{})[0];
+   url=page?.imageinfo?.[0]?.thumburl||"";
+   if(!url)return;
+   sullyThumbCache.set(file,url);
+  }catch(e){return}
+ }
+ if(img.isConnected)img.src=url;
+}
 async function renderLibrary(){
  const root=$("content");
  const heading=document.createElement("h2");heading.textContent="📚 Sully TV Library";root.append(heading);
@@ -1844,6 +1864,12 @@ async function renderLibrary(){
     const info=document.createElement("div");info.className="sullyLibraryEntryInfo";
     const name=document.createElement("strong");name.textContent=item.title;info.append(name);
     const license=document.createElement("small");license.textContent="License: "+(item.rights?.basis||"See source")+" · "+sullyLanguageLabel(item);info.append(license);
+    const poster=document.createElement("div");poster.className="sullyLibraryPoster";
+    const image=document.createElement("img");image.alt="Preview thumbnail for "+item.title;image.loading="lazy";
+    image.onerror=()=>{image.hidden=true;poster.classList.add("sullyNoThumbnail")};
+    poster.append(image);card.append(poster);
+    if(item.poster&&String(item.poster).startsWith("https://"))image.src=item.poster;
+    else sullyLibraryThumbnail(item,image);
     card.append(info);
     const watch=document.createElement("button");watch.type="button";watch.textContent="▶ Watch";watch.onclick=()=>{
       const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";
