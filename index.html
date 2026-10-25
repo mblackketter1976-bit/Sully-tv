@@ -306,7 +306,7 @@ header .sullyQuickBar .headerGuide{width:100%!important;min-width:0!important;ma
 <small>● FREE LIVE TV & ON DEMAND</small>
 <h1>Welcome to Sully TV</h1>
 <p>Watch live television, discover free movies and shows, save favorites, and record compatible streams.</p>
-<button class="watch" onclick="document.getElementById('content').scrollIntoView()">Explore Channels ↓</button>
+<button class="watch" onclick="jumpToCategory()">Explore Channels ↓</button>
 </div>
 <div>
 <video id="player" controls playsinline preload="none"></video>
@@ -424,6 +424,17 @@ function setNotice(text){
 $("notice").textContent=text||"";
 }
 
+
+/* Jump directly to the selected category, below the sticky header. */
+function jumpToCategory(){
+ const target=$("content");
+ if(!target)return;
+ const header=document.querySelector("header");
+ const offset=header&&getComputedStyle(header).position==="sticky"?header.getBoundingClientRect().height+8:8;
+ const y=window.scrollY+target.getBoundingClientRect().top-offset;
+ window.scrollTo({top:Math.max(0,y),behavior:"instant"});
+}
+
 function nav(){
 $("nav").innerHTML="";
 tabs.forEach(t=>{
@@ -437,7 +448,7 @@ page=0;
 $("search").value="";
 nav();
 render();
-$("content").scrollIntoView({behavior:"smooth",block:"start"});
+jumpToCategory();
 };
 $("nav").append(b);
 });
@@ -670,7 +681,7 @@ setNotice(favorites.has(current.id)?"Added to Favorites.":"Removed from Favorite
 /* Quick-access controls: no external services or paid dependencies */
 let sullySleepTimeout=null;
 let sullySleepEndsAt=0;
-function quickFavorites(){tab="❤️ Favorites";page=0;nav();render();$("content").scrollIntoView({behavior:"smooth",block:"start"});}
+function quickFavorites(){tab="❤️ Favorites";page=0;nav();render();jumpToCategory();}
 function surpriseMe(){
  const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&(!current||c.id!==current.id));
  if(!playable.length)return setNotice("No other playable channels are loaded yet.");
@@ -704,7 +715,7 @@ document.body.classList.toggle("sullyCompactCards",localStorage.getItem("sully-c
 
 function openGuide(){
 tab="📋 TV Guide";nav();render();
-$("content").scrollIntoView({behavior:"smooth",block:"start"});
+jumpToCategory();
 }
 function renderGuide(){
 const root=$("content");
