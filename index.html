@@ -651,9 +651,29 @@ body[data-sully-theme="forest"][data-sully-variant="2"]{--sully-photo:url("https
 body[data-sully-theme="forest"][data-sully-variant="3"]{--sully-photo:url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=85")}
 body[data-sully-theme="retro"][data-sully-variant="2"]{--sully-photo:linear-gradient(130deg,#081735,#43177a,#c13886)}
 body[data-sully-theme="retro"][data-sully-variant="3"]{--sully-photo:linear-gradient(130deg,#25102e,#a24856,#eb9e63)}
+</style><style id="sullyPhotorealSpaceWorld2026">
+/* Depth-layered planets with planetary surface maps, dimensional light and perspective rings. */
+#sullySpaceWorld{display:none;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:1100px}
+body[data-sully-theme="space"] #sullySpaceWorld{display:block}
+body[data-sully-theme="space"] #sullyAtmosphereCanvas{display:none!important}
+.sullySpaceMoon,.sullySpaceSaturn,.sullySpaceSun{position:absolute;pointer-events:none}
+.sullySpaceMoon{width:clamp(140px,19vw,320px);aspect-ratio:1;left:6%;top:49%;border-radius:50%;background-image:radial-gradient(circle at 78% 64%,#030713e8,transparent 68%),radial-gradient(circle at 30% 27%,#ffffff30,transparent 40%),url("https://www.solarsystemscope.com/textures/download/2k_moon.jpg");background-size:cover,cover,200% 100%;background-position:center,center,48% center;box-shadow:inset -28px -12px 48px #000e,inset 10px 8px 24px #ffffff28,0 0 34px #d6e9ff1f;transform:rotate(-12deg) rotateY(-13deg);filter:contrast(1.15) saturate(.75)}
+.sullySpaceSaturn{width:clamp(260px,39vw,620px);height:clamp(200px,28vw,450px);right:3%;top:36%;transform:rotate(-17deg) rotateX(14deg);transform-style:preserve-3d}
+.sullySaturnGlobe{position:absolute;left:30%;top:20%;width:45%;aspect-ratio:1;border-radius:50%;z-index:2;background-image:radial-gradient(circle at 82% 72%,#080b18ef,transparent 66%),radial-gradient(circle at 24% 25%,#fff4d75a,transparent 58%),url("https://www.solarsystemscope.com/textures/download/2k_saturn.jpg");background-size:cover,cover,230% 100%;background-position:center,center,50% center;box-shadow:inset -30px -16px 45px #02040cda,inset 9px 5px 16px #fff4c54a,0 0 22px #f7d8a92b}
+.sullySaturnBackRing,.sullySaturnFrontRing{position:absolute;left:5%;top:26%;width:95%;height:47%;border-radius:50%;transform:rotate(-11deg) rotateX(64deg);border:clamp(17px,3.8vw,53px) solid transparent;box-sizing:border-box;filter:drop-shadow(0 0 8px #b9a28c45)}
+.sullySaturnBackRing{z-index:1;border-color:#b7a28c88 #dbccb0a0 #887e6eaa #b9ac9ca0;box-shadow:0 0 0 5px #d4c2a04d,inset 0 0 0 7px #262329aa}
+.sullySaturnFrontRing{z-index:3;border-color:transparent transparent #d8c5a2a8 transparent;box-shadow:none;filter:none}
+.sullySpaceSun{width:clamp(90px,12vw,210px);aspect-ratio:1;right:6%;top:7%;border-radius:50%;background:radial-gradient(circle at 37% 36%,#fffce3,#ffdc84 30%,#ffad45 62%,#d96620 92%);box-shadow:0 0 35px 17px #ffc35a77,0 0 110px 55px #ffae3338,0 0 220px 90px #ff8a1524}
+body[data-sully-theme="space"][data-sully-variant="2"] .sullySpaceSaturn{right:-9%;top:43%;transform:scale(.7) rotate(-17deg) rotateX(14deg)}
+body[data-sully-theme="space"][data-sully-variant="2"] .sullySpaceMoon{left:12%;top:54%;transform:scale(1.15)}
+body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceSaturn{right:0%;top:51%;transform:scale(.67) rotate(-17deg) rotateX(14deg)}
+body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceMoon{left:7%;top:38%;transform:scale(.76)}
+@media(max-width:700px){.sullySpaceMoon{left:-12%;top:57%;width:43vw}.sullySpaceSaturn{right:-32%;top:42%;width:85vw;height:55vw}.sullySpaceSun{right:3%;top:15%;width:15vw}}
+@media(prefers-reduced-motion:no-preference){.sullySpaceMoon{animation:sullyMoonFloat 45s ease-in-out infinite alternate}.sullySpaceSaturn{animation:sullySaturnFloat 60s ease-in-out infinite alternate}@keyframes sullyMoonFloat{to{translate:10px -18px}}@keyframes sullySaturnFloat{to{translate:-12px 15px}}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
+<div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
 <header>
 
 <div class="top">
