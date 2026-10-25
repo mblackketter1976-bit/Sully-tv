@@ -56,6 +56,9 @@ def main():
             url = source.get("url", "") if isinstance(source, dict) else str(source)
             if url.startswith("https://"):
                 by_url[url].add(channel)
+    if not by_url:
+        print("No published XMLTV source URLs in guide metadata; cannot generate sourced schedules.", flush=True)
+        raise RuntimeError("No usable XMLTV sources; upstream metadata lacks source URLs")
     # Prefer sources covering the most live stations, avoid a large global download.
     choices = sorted(by_url, key=lambda u: len(by_url[u]), reverse=True)[:12]
     print("DIAGNOSTIC: matching guide URLs =", len(by_url), "selected =", len(choices), flush=True)
