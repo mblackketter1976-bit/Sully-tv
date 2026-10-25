@@ -953,7 +953,13 @@ const sullyMovieGenres=[
  ["Western",/western|cowboy|wild.west/],
  ["Drama",/drama|dramatic/],
  ["Family",/family.movie|family.film|kids.movie|animation.movie|animated.film/],
- ["Documentary Films",/documentary.film|documentary.movie|documentary.cinema/]
+ ["Documentary Films",/documentary.film|documentary.movie|documentary.cinema/],
+ ["🏆 Oscar Winners",/a^/],
+ ["🎖️ Oscar Nominees",/a^/],
+ ["🏆 Emmy Winners",/a^/],
+ ["🎖️ Emmy Nominees",/a^/],
+ ["🏆 Golden Globe Winners",/a^/],
+ ["🎖️ Golden Globe Nominees",/a^/]
 ];
 let sullyMovieGenre="All Movies";
 function sullyMovieGenreMatch(c){
@@ -986,7 +992,14 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
   if(!wrap.isConnected||roomKey!==sullyActiveDiscoveryKey())return;
   const term=(subtitle&&!/^All /i.test(subtitle)?subtitle:category).toLowerCase();
   const tokens=term.split(/[^a-z0-9]+/).filter(t=>t.length>3&&!["movies","movie","channel","station","featured","worldwide","demand","library"].includes(t));
-  const matches=items.filter(item=>(!moviesOnly||item.kind==="movie")&&(!tokens.length||tokens.some(t=>[item.title,...(item.genres||[]),item.kind].join(" ").toLowerCase().includes(t))));
+  const awardChoice=/Oscar Winners|Oscar Nominees|Emmy Winners|Emmy Nominees|Golden Globe Winners|Golden Globe Nominees/.test(subtitle||"");
+  const awardName=(subtitle||"").includes("Oscar")?"Oscar":(subtitle||"").includes("Emmy")?"Emmy":"Golden Globe";
+  const awardStatus=(subtitle||"").includes("Winners")?"winner":"nominee";
+  const matches=items.filter(item=>{
+   if(moviesOnly&&item.kind!=="movie"&&!awardChoice)return false;
+   if(awardChoice)return (item.awards||[]).some(a=>a.name===awardName&&a.status===awardStatus);
+   return !tokens.length||tokens.some(t=>[item.title,...(item.genres||[]),item.kind].join(" ").toLowerCase().includes(t));
+  });
   if(!matches.length)return;
   const label=document.createElement("p");label.className="muted";label.textContent=matches.length+" provider title(s) · Opens the film on its streaming service";wrap.insertBefore(label,grid);
   matches.forEach(item=>{
@@ -1004,6 +1017,11 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
   const found=items.filter(item=>{
    const kind=String(item.kind||"").toLowerCase();
    if(moviesOnly&&!["movie","short","documentary"].includes(kind))return false;
+   if(/Oscar Winners|Oscar Nominees|Emmy Winners|Emmy Nominees|Golden Globe Winners|Golden Globe Nominees/.test(subtitle||"")){
+    const name=subtitle.includes("Oscar")?"Oscar":subtitle.includes("Emmy")?"Emmy":"Golden Globe";
+    const status=subtitle.includes("Winners")?"winner":"nominee";
+    return (item.awards||[]).some(a=>a.name===name&&a.status===status);
+   }
    if(!sullyLanguageMatches(item))return false;
    const hay=[item.title,item.description,item.kind,...(item.genres||[])].join(" ").toLowerCase();
    return !tokens.length||tokens.some(t=>hay.includes(t));
