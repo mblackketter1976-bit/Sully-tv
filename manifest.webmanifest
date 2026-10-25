@@ -1,0 +1,19 @@
+{
+  "name": "Sully TV — Blackketter Entertainment",
+  "short_name": "Sully TV",
+  "description": "Watch free live channels and discover Luna on the Streets.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071733",
+  "theme_color": "#071733",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./sully-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
