@@ -40,7 +40,9 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.58.2
           npx playwright install --with-deps chromium
       - name: Check guide rendering with synthetic data at desktop and phone sizes
-        run: node tests/guide-browser.cjs
+        run: |
+          node tests/guide-browser.cjs
+          node tests/guide-full-app.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
