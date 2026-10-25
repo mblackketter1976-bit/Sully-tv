@@ -352,6 +352,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyTitleResults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 20px}.sullyTitleResults a{display:block;background:#244c78;color:#fff;text-decoration:none;border:1px solid #d5b777;border-radius:12px;padding:15px 12px;font-size:14px;font-weight:800}.sullyTitleResults a:focus-visible{outline:3px solid #f3d38a;outline-offset:2px}
 .sullyServicePrefs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}.sullyServicePrefs label{display:flex;align-items:center;gap:4px;background:#263d5e;color:white;border:1px solid #647c9a;padding:9px;border-radius:10px;font-size:13px}.sullyServicePrefs input{width:17px;height:17px;accent-color:#f0c76b}.sullyServiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyServiceCard{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #657d9c;border-radius:12px;background:#1a304f;color:white}.sullyServiceStatus{font-size:11px;color:#e9d29c}.sullyServiceActions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}.sullyServiceActions a{padding:9px;border-radius:8px;background:#315d8c;border:1px solid #bdab80;color:white;text-decoration:none;font-size:12px;font-weight:700}.sullyServiceActions a:last-child:not(:first-child){background:#664622}@media(min-width:750px){.sullyServiceGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .sullyServiceActions button{padding:11px 13px;border-radius:9px;background:#315d8c;color:#fff;border:1px solid #bdab80;font-weight:800}
+.sullyCatalogResults{margin:14px 0;padding:14px;border:1px solid #657d9c;border-radius:13px;background:#172a47}.sullyCatalogCard{display:flex;align-items:center;gap:12px;border-bottom:1px solid #3e526d;padding:9px 0}.sullyCatalogCard img{width:65px;height:88px;object-fit:cover;border-radius:6px}.sullyCatalogDetails{display:flex;flex-direction:column;gap:6px}.sullyCatalogDetails span{font-size:12px;color:#c8d5e7}.sullyCatalogDetails a{font-size:12px;color:#f3d38b}.sullyCatalogResults small{font-size:11px;color:#b5c5dc}
 </style>
 </head>
 <body>
@@ -569,7 +570,36 @@ function sullySuggest(){
 }
 
 
+
+let sullySearchGeneration=0;
+async function sullyCatalogLookup(q,slot,generation){
+ const section=document.createElement("section");section.className="sullyCatalogResults";
+ const title=document.createElement("h3");title.textContent="📺 TV shows & broadcast information";section.append(title);
+ const status=document.createElement("p");status.className="muted";status.textContent="Checking the free TVmaze show and broadcast catalog…";section.append(status);
+ slot.append(section);
+ try{
+  const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q),{signal:AbortSignal.timeout(8500)});
+  if(!response.ok)throw Error("Catalog unavailable");
+  const results=await response.json();
+  if(generation!==sullySearchGeneration||!slot.isConnected)return;
+  status.textContent=results.length?"Matching shows and original broadcast networks. This does not confirm live playback or subscription availability.":"No matching series in this catalog. Try the streaming service searches below.";
+  results.slice(0,6).forEach(item=>{
+   const show=item.show;if(!show)return;
+   const card=document.createElement("div");card.className="sullyCatalogCard";
+   if(show.image&&show.image.medium){const img=document.createElement("img");img.src=show.image.medium;img.alt="";img.loading="lazy";card.append(img)}
+   const details=document.createElement("div");details.className="sullyCatalogDetails";
+   const name=document.createElement("strong");name.textContent=show.name;details.append(name);
+   const network=(show.network&&show.network.name)||(show.webChannel&&show.webChannel.name)||"Network not listed";
+   const meta=document.createElement("span");meta.textContent=network+" · "+(show.status||"Status unknown");details.append(meta);
+   const link=document.createElement("a");link.href=show.url||"https://www.tvmaze.com/";link.target="_blank";link.rel="noopener noreferrer";link.textContent="Show & schedule details ↗";details.append(link);
+   card.append(details);section.append(card)
+  });
+  const credit=document.createElement("small");credit.textContent="TV information supplied by TVmaze (CC BY-SA).";section.append(credit)
+ }catch(e){if(generation===sullySearchGeneration&&slot.isConnected)status.textContent="TV catalog is temporarily unavailable. Live channel and streaming searches still work."}
+}
+
 function sullyTitleSearch(q){
+ const generation=++sullySearchGeneration;
  const root=$("content");root.replaceChildren();$("more").hidden=true;$("filters").hidden=true;
  const h=document.createElement("h2");h.textContent="🔎 Search results for “"+q+"”";root.append(h);
  const liveTitle=document.createElement("h2");liveTitle.textContent="🔴 LIVE TV — FIRST";root.append(liveTitle);
@@ -585,6 +615,7 @@ function sullyTitleSearch(q){
  const liveActions=document.createElement("div");liveActions.className="sullyServiceActions";
  [["📺 Browse Live TV","🇺🇸 USA"],["📋 TV Guide","📋 TV Guide"],["🎬 Movie Channels","🎬 Movies"]].forEach(([label,target])=>{const btn=document.createElement("button");btn.type="button";btn.textContent=label;btn.onclick=()=>sullyCategory(target);liveActions.append(btn)});
  root.append(liveActions);
+ const catalogSlot=document.createElement("div");root.append(catalogSlot);sullyCatalogLookup(q,catalogSlot,generation);
  const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
  const h2=document.createElement("h3");h2.textContent="🎬 Find this movie or show";root.append(h2);
  const note=document.createElement("p");note.className="muted";note.textContent="Search these services for the exact title. Availability, subscriptions, and playback depend on the provider. Results open in their own websites or apps.";root.append(note);
