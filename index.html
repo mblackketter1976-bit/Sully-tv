@@ -719,6 +719,18 @@ body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceSaturn{right:-
 body[data-sully-theme="space"][data-sully-variant="3"] .sullySpaceMoon{left:3%!important;top:43%!important;transform:scale(.8)!important}
 @media(max-width:700px){body[data-sully-theme="space"] .sullySpaceMoon{left:-12%!important;top:58%!important;width:50vw!important}body[data-sully-theme="space"] .sullySpaceSaturn{right:-25%!important;top:52%!important;width:100vw!important}}
 @media(prefers-reduced-motion:no-preference){body[data-sully-theme="space"] .sullySpaceMoon,body[data-sully-theme="space"] .sullySpaceSaturn{animation:none!important}}
+</style><style id="sullyNewThemeCategories2026">
+body[data-sully-theme="campfire"],body[data-sully-theme="waterfall"],body[data-sully-theme="kitty"],body[data-sully-theme="anime"],body[data-sully-theme="southpark"],body[data-sully-theme="familyguy"],body[data-sully-theme="dutton"],body[data-sully-theme="1883"],body[data-sully-theme="1923"],body[data-sully-theme="luna"]{--at-bg:#101b29;--at-panel:#152d41;--at-text:#f8f9ff;--at-accent:#ffce8d;background-image:linear-gradient(#09162550,#09162545),var(--sully-photo)!important;background-size:cover!important;background-position:center!important;background-attachment:fixed!important}
+body[data-sully-theme="kitty"]{--at-accent:#ffb9df;--sully-glass-button:#a7508880;--sully-glass:#4c284480}
+body[data-sully-theme="anime"]{--at-accent:#f9b9ff;--sully-glass-button:#6950a580}
+body[data-sully-theme="southpark"]{--at-accent:#e7f8ff;--sully-glass-button:#49779a80}
+body[data-sully-theme="familyguy"]{--at-accent:#f3d58c;--sully-glass-button:#537e9c80}
+body[data-sully-theme="dutton"],body[data-sully-theme="1883"],body[data-sully-theme="1923"]{--at-accent:#e6c38d;--sully-glass-button:#73533880}
+body[data-sully-theme="luna"]{--at-accent:#91d8ff;--sully-glass-button:#346a9b80}
+body[data-sully-theme="campfire"]{--at-accent:#ffae63;--sully-glass-button:#88492780}
+body[data-sully-theme="waterfall"]{--at-accent:#94e7e7;--sully-glass-button:#297c8380}
+body[data-sully-theme="kitty"] .sullyQuickPanel,body[data-sully-theme="anime"] .sullyQuickPanel{backdrop-filter:blur(12px)}
+header #sullyQuickPanel:has(.sullyThemeChooser){max-height:75vh;overflow-y:auto}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2168,7 +2180,7 @@ function shareSullyTV(){
 }
 function showSullyShareLink(url){showSullyPanel('<strong>📤 Share Sully TV</strong><p>Copy this link and send it to friends:</p><input readonly aria-label="Sully TV website link" value="'+url+'" onclick="this.select()" style="width:100%;max-width:440px"><p>Sharing sends the website link; it does not cast to a television.</p><button onclick="closeSullyPanel()">Close</button>');}
 const sullyThemeOptions=[
- ["classic","📺 Original","Classic Sully TV"],["space","🚀 Space","Stars & galaxies"],["rain","🌧️ Rainy Night","Stormy blue"],["snow","❄️ Snowfall","Winter sky"],["sunshine","☀️ Sunshine","Golden sunset"],["ocean","🌊 Ocean","Deep sea"],["forest","🌲 Forest","Evergreen"],["retro","🕹️ Retro","Vintage arcade"]
+ ["classic","📺 Original","Classic Sully TV"],["space","🚀 Space","Stars & galaxies"],["rain","🌧️ Rainy Night","Stormy blue"],["snow","❄️ Snowfall","Winter sky"],["sunshine","☀️ Sunshine","Golden sunset"],["ocean","🌊 Ocean","Deep sea"],["forest","🌲 Forest","Evergreen"],["retro","🕹️ Retro","Vintage arcade"],["campfire","🔥 Campfire","Fireside nights"],["waterfall","💦 Waterfall","Cascading nature"],["kitty","🎀 Hello Kitty","Pink & playful"],["anime","🌸 Anime","Animated worlds"],["southpark","🏔️ South Park","Snowy cartoon town"],["familyguy","🏡 Family Guy","Suburban sitcom"],["dutton","🐎 Dutton Ranch","Western landscapes"],["1883","🌾 1883","Frontier journey"],["1923","🤠 1923","Western heritage"],["luna","🐶 Luna","Luna on the Streets"]
 ];
 const sullySceneCanvas=document.getElementById("sullyAtmosphereCanvas");
 const sullySceneContext=sullySceneCanvas.getContext("2d",{alpha:false});
@@ -2259,13 +2271,15 @@ const sullyThemeVariants={
  sunshine:["Golden Sunset","Open Landscape","Desert Sun"],
  ocean:["Underwater","Ocean Waves","Open Sea"],
  forest:["Misty Woods","Deep Forest","Sunlit Forest"],
- retro:["Neon Arcade","Synthwave","Retro Sunset"]
+ retro:["Neon Arcade","Synthwave","Retro Sunset"],"1883":["Open Prairie","Frontier Sunset","Wagon Trail"],"1923":["Old West","Mountain Homestead","Golden Plains"],"campfire":["Forest Firelight","Cozy Cabin","Embers"],"waterfall":["Mountain Falls","Rainforest Falls","River Cascade"],"kitty":["Pink Bows","Sweet Pastels","Kawaii Garden"],"anime":["Cherry Blossoms","Neon City","Fantasy Sky"],"southpark":["Snowy Town","Mountain Night","Winter Hills"],"familyguy":["Suburban Street","Sunny Neighborhood","Living Room"],"dutton":["Montana Valley","Horse Country","Mountain Ranch"],"luna":["Blue-Eyed Frenchie","Old Sacramento","Cozy Christmas"]
 };
+const sullyAdditionalThemePhotos={"1883":["1500534314209-a25ddb2bd429","1470252649378-9c29740c9fa8","1500534623283-312aade485b7"],"1923":["1473448912268-2022ce9509d8","1464822759023-fed622ff2c3b","1500534314209-a25ddb2bd429"],"campfire":["1478131143081-80f7f84ca84d","1500530855697-b586d89ba3ee","1473448912268-2022ce9509d8"],"waterfall":["1432405972618-c60b0225b8f9","1470770841072-f978cf4d019e","1441974231531-c6227db76b6e"],"kitty":["1490750967868-88aa4486c946","1519608487953-e999c86e7455","1490730141103-6cac27aaab94"],"anime":["1490750967868-88aa4486c946","1519608487953-e999c86e7455","1470252649378-9c29740c9fa8"],"southpark":["1483664852095-d6cc6870702d","1517299321609-52687d1bc55a","1455156218388-5e61b526818b"],"familyguy":["1472224371017-08207f84aaae","1449844908441-8829872d2607","1497366811353-6870744d04b2"],"dutton":["1500534623283-312aade485b7","1464822759023-fed622ff2c3b","1470252649378-9c29740c9fa8"],"luna":["1473448912268-2022ce9509d8","1500534623283-312aade485b7","1483664852095-d6cc6870702d"]};
 function sullyApplyVariant(index){
  const theme=document.body.dataset.sullyTheme||"classic";
  const count=(sullyThemeVariants[theme]||["Original"]).length;
  const n=Math.max(1,Math.min(count,Number(index)||1));
  document.body.dataset.sullyVariant=String(n);
+ const pic=sullyAdditionalThemePhotos[theme]?.[n-1];if(pic)document.body.style.setProperty("--sully-photo",`url("https://images.unsplash.com/photo-${pic}?auto=format&fit=crop&w=2400&q=85")`,"important");else document.body.style.removeProperty("--sully-photo");
  try{localStorage.setItem("sully-theme-variant-"+theme,String(n))}catch(e){}
 }
 function sullyApplyTheme(id){
@@ -2277,6 +2291,16 @@ function sullyApplyTheme(id){
  try{localStorage.setItem("sully-appearance-theme",selected)}catch(e){}
 }
 const sullyThemePreviews={
+"1883":"url(\'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=450&q=65\')",
+"1923":"url(\'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=450&q=65\')",
+"campfire":"url(\'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=450&q=65\')",
+"waterfall":"url(\'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=450&q=65\')",
+"kitty":"url(\'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=450&q=65\')",
+"anime":"url(\'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=450&q=65\')",
+"southpark":"url(\'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=450&q=65\')",
+"familyguy":"url(\'https://images.unsplash.com/photo-1472224371017-08207f84aaae?auto=format&fit=crop&w=450&q=65\')",
+"dutton":"url(\'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=450&q=65\')",
+"luna":"url(\'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=450&q=65\')",
  classic:"linear-gradient(140deg,#102849,#294d73)",
  space:"url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=450&q=65')",
  rain:"url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=450&q=65')",
