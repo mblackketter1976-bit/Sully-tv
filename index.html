@@ -745,10 +745,54 @@ function sullyTitleSearch(q){
   root.insertBefore(section,panel);
  });
 
+ const world=document.createElement("section");world.className="sullyDiscovery";root.insertBefore(world,panel);
+ const worldTitle=document.createElement("h3");worldTitle.textContent="🌍 Automatic worldwide title discovery";world.append(worldTitle);
+ const worldStatus=document.createElement("p");worldStatus.className="muted";worldStatus.textContent="Checking public film and television databases…";world.append(worldStatus);
+ const worldResults=document.createElement("div");worldResults.className="sullyLibraryResults";world.append(worldResults);
+ (async()=>{
+  const found=new Map();
+  const normalize=t=>String(t||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const query=normalize(q);
+  const add=(name,type,year,source,url)=>{
+   if(!name||!url)return;
+   const key=normalize(name);
+   if(!key||!(key.includes(query)||query.includes(key)))return;
+   if(found.has(key))return;
+   found.set(key,{name,type,year,source,url});
+  };
+  const jobs=[
+   (async()=>{
+    const endpoint="https://www.wikidata.org/w/api.php?action=wbsearchentities&search="+encodeURIComponent(q)+"&language=en&limit=20&format=json&origin=*";
+    const response=await fetch(endpoint);if(!response.ok)throw Error("Wikidata unavailable");
+    const data=await response.json();
+    (data.search||[]).forEach(x=>{
+     const description=String(x.description||"");
+     if(!/film|movie|television|tv series|documentary|animated series|sitcom|show|anime/i.test(description))return;
+     add(x.label,description,"","Wikidata",x.concepturi||"https://www.wikidata.org/wiki/"+encodeURIComponent(x.id));
+    });
+   })(),
+   (async()=>{
+    const endpoint="https://archive.org/advancedsearch.php?q="+encodeURIComponent('mediatype:movies AND title:('+q+')')+"&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=year&rows=15&page=1&output=json";
+    const response=await fetch(endpoint);if(!response.ok)throw Error("Archive unavailable");
+    const data=await response.json();
+    (data.response?.docs||[]).forEach(x=>add(x.title,"Archive video",x.year||"","Internet Archive","https://archive.org/details/"+encodeURIComponent(x.identifier)));
+   })()
+  ];
+  await Promise.allSettled(jobs);
+  if(generation!==sullySearchGeneration||!world.isConnected)return;
+  if(!found.size){worldStatus.textContent="No additional public-database matches returned. External databases may block browser requests; this is not proof a title doesn't exist.";return;}
+  worldStatus.textContent=found.size+" matching public-database title(s) · These are discovery results, not verified streaming availability.";
+  [...found.values()].forEach(item=>{
+   const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+   const name=document.createElement("strong");name.textContent="🎬 "+item.name+(item.year?" ("+item.year+")":"");
+   const detail=document.createElement("small");detail.textContent=item.source+" · "+item.type+" · Check availability and rights at source";
+   a.append(name,detail);worldResults.append(a);
+  });
+ })();
  const headingMain=document.createElement("h3");headingMain.textContent="🎬 No verified playable match for “"+q+"”";panel.append(headingMain);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Sully TV hasn't verified a playable source for this title yet. That doesn't mean it's unavailable everywhere. We're expanding our legal catalog; meanwhile, see related recommendations below.";panel.append(intro);
- const details=document.createElement("details");details.className="sullySearchExtras";details.open=true;root.append(details);
- const summary=document.createElement("summary");summary.textContent="🌍 Search more streaming platforms worldwide (free and subscription)";details.append(summary);
+ const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
+ const summary=document.createElement("summary");summary.textContent="🌍 Additional streaming-platform searches (availability not verified)";details.append(summary);
  const extra=document.createElement("div");extra.className="sullySearchExtrasBody";details.append(extra);
  const services=[
  {name:"Tubi",free:true,search:q=>"https://tubitv.com/search/"+encodeURIComponent(q),home:"https://tubitv.com/"},
