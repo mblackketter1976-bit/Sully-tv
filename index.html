@@ -1824,10 +1824,38 @@ setNotice(favorites.has(current.id)?"Added to Favorites.":"Removed from Favorite
 let sullySleepTimeout=null;
 let sullySleepEndsAt=0;
 function quickFavorites(){if(tab!=="❤️ Favorites")sullyRememberScreen();tab="❤️ Favorites";page=0;nav();render();jumpToCategory();}
+function sullyViewerRegion(){
+ // Region preference is local to the viewer; never send precise location anywhere.
+ const chosen=String(document.getElementById("country")?.value||"").trim().toUpperCase();
+ if(/^[A-Z]{2}$/.test(chosen))return {country:chosen,source:"country filter"};
+ const locale=(navigator.languages&&navigator.languages[0])||navigator.language||"";
+ try{
+  const region=new Intl.Locale(locale).region;
+  if(region&&/^[A-Z]{2}$/.test(region))return {country:region,source:"device language/region"};
+ }catch(e){}
+ const match=locale.match(/[-_]([A-Za-z]{2})(?:$|[-_])/);
+ if(match)return {country:match[1].toUpperCase(),source:"device language/region"};
+ return {country:null,source:"unknown"};
+}
 function surpriseMe(){
- const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&(!current||c.id!==current.id));
+ const region=sullyViewerRegion();
+ const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&!sullyFailed(c.id)&&(!current||c.id!==current.id));
  if(!playable.length)return setNotice("No other playable channels are loaded yet.");
- watchChannel(playable[Math.floor(Math.random()*playable.length)]);
+ let regional=region.country?playable.filter(c=>String(c.country||"").toUpperCase()===region.country):[];
+ // Honor English Only or another chosen language when the metadata allows it.
+ const localized=regional.filter(c=>sullyLanguageMatches(c));
+ if(localized.length)regional=localized;
+ else if(sullyEnglishOnly||sullySelectedLanguage!=="all")regional=[];
+ let pool=regional;
+ if(!pool.length){
+  pool=playable.filter(c=>sullyLanguageMatches(c));
+  if(!pool.length)pool=playable;
+ }
+ const chosen=pool[Math.floor(Math.random()*pool.length)];
+ watchChannel(chosen);
+ const regionLabel=region.country||"your region";
+ const reason=regional.length?"Selected from "+regionLabel+" channels ("+region.source+").":"No matching available stations for "+regionLabel+"; selected another available channel.";
+ setNotice("🎲 Surprise Me · "+reason+" Region is based on your device settings or country filter, not GPS. Channel availability and audio can vary.");
 }
 function closeSullyPanel(){const p=$("sullyQuickPanel");p.hidden=true;p.innerHTML="";}
 function showSullyPanel(html){const p=$("sullyQuickPanel");if(!p.hidden&&p.dataset.panel===html.slice(0,20)){closeSullyPanel();return}p.dataset.panel=html.slice(0,20);p.innerHTML=html;p.hidden=false;}
