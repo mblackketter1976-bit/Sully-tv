@@ -515,6 +515,15 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 .sullyPlatformOpen{margin-top:auto;color:#f3d18b;font-weight:700;font-size:12px}
 @media(max-width:500px){.sullyPlatformsGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyPlatformTile{padding:15px 11px;min-height:177px}.sullyPlatformTile strong{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.sullyPlatformTile{transition:none}}
+</style><style id="sullyPlatformRealBrandStyles">
+.sullyPlatformsGrid .sullyPlatformTile{background:var(--platform-bg,#17232f);border:1px solid rgba(255,255,255,.19);align-items:center;text-align:center;justify-content:flex-start;box-shadow:0 3px 14px #0004}
+.sullyPlatformsGrid .sullyPlatformTile:hover,.sullyPlatformsGrid .sullyPlatformTile:focus-visible{border-color:#e7c989;box-shadow:0 10px 26px #0008;transform:translateY(-3px)}
+.sullyPlatformBrand{display:flex;align-items:center;justify-content:center;width:100%;height:74px;min-height:74px}
+.sullyPlatformLogo{display:block;max-width:110px;max-height:66px;width:auto;height:auto;object-fit:contain}
+.sullyPlatformLogo.sullyPlatformFavicon{width:58px;height:58px;object-fit:contain}
+.sullyPlatformsGrid .sullyPlatformTile strong{font-size:16px;color:#fff}
+.sullyPlatformsGrid .sullyPlatformTile small{color:#e4e7ed;opacity:.9}
+.sullyPlatformsGrid .sullyPlatformOpen{color:#f1d59c}
 </style></head>
 <body>
 <header>
@@ -1666,24 +1675,24 @@ async function sullyCheckNewCatalog(){
 }
 setInterval(sullyCheckNewCatalog,60000);
 const sullyStreamingPlatforms=[
- {name:"YouTube",url:"https://www.youtube.com/",mark:"▶",color:"#ff0033",type:"Free videos; optional Premium"},
- {name:"YouTube TV",url:"https://tv.youtube.com/",mark:"▶",color:"#e5262f",type:"Live TV subscription"},
- {name:"Peacock",url:"https://www.peacocktv.com/",mark:"●",color:"#b998f0",type:"Streaming subscription"},
- {name:"Paramount+",url:"https://www.paramountplus.com/",mark:"✦",color:"#2474e6",type:"Streaming subscription"},
- {name:"Disney+",url:"https://www.disneyplus.com/",mark:"✧",color:"#6b9dff",type:"Streaming subscription"},
- {name:"Netflix",url:"https://www.netflix.com/",mark:"N",color:"#e50914",type:"Streaming subscription"},
- {name:"Hulu",url:"https://www.hulu.com/",mark:"h",color:"#1ce783",type:"Streaming subscription"},
- {name:"Prime Video",url:"https://www.primevideo.com/",mark:"▶",color:"#49a8e8",type:"Streaming subscription"},
- {name:"Max",url:"https://www.hbomax.com/",mark:"M",color:"#b2a2ff",type:"Streaming subscription"},
- {name:"Apple TV",url:"https://tv.apple.com/",mark:"◉",color:"#eeeeee",type:"Streaming subscription"},
- {name:"Tubi",url:"https://tubitv.com/",mark:"t",color:"#ffda33",type:"Free with ads"},
- {name:"Pluto TV",url:"https://pluto.tv/",mark:"●",color:"#f5e8cf",type:"Free live TV and on-demand"},
- {name:"The Roku Channel",url:"https://therokuchannel.roku.com/",mark:"R",color:"#b99aff",type:"Free and premium content"},
- {name:"Plex",url:"https://watch.plex.tv/",mark:"▶",color:"#f4b33e",type:"Free and premium content"},
- {name:"PBS",url:"https://www.pbs.org/video/",mark:"PBS",color:"#8ac4f0",type:"Free shows; some member-only"},
- {name:"Crunchyroll",url:"https://www.crunchyroll.com/",mark:"◉",color:"#ff8c28",type:"Anime; free and paid options"},
- {name:"Discovery+",url:"https://www.discoveryplus.com/",mark:"d+",color:"#8cbeff",type:"Streaming subscription"},
- {name:"Sling TV",url:"https://www.sling.com/",mark:"S",color:"#6fd4f7",type:"Live TV subscription"}
+ {name:"YouTube",url:"https://www.youtube.com/",logo:"youtube",logoColor:"#ffffff",brandBg:"#171717",type:"Free videos; optional Premium"},
+ {name:"YouTube TV",url:"https://tv.youtube.com/",logo:"youtubetv",logoColor:"#ffffff",brandBg:"#171717",type:"Live TV subscription"},
+ {name:"Peacock",url:"https://www.peacocktv.com/",logo:"peacocktv",logoColor:"#ffffff",brandBg:"#171717",type:"Streaming subscription"},
+ {name:"Paramount+",url:"https://www.paramountplus.com/",logo:"paramountplus",logoColor:"#ffffff",brandBg:"#171717",type:"Streaming subscription"},
+ {name:"Disney+",url:"https://www.disneyplus.com/",logo:"disneyplus",logoColor:"#ffffff",brandBg:"#101d4b",type:"Streaming subscription"},
+ {name:"Netflix",url:"https://www.netflix.com/",logo:"netflix",logoColor:"#E50914",brandBg:"#171717",type:"Streaming subscription"},
+ {name:"Hulu",url:"https://www.hulu.com/",logo:"hulu",logoColor:"#1CE783",brandBg:"#14201b",type:"Streaming subscription"},
+ {name:"Prime Video",url:"https://www.primevideo.com/",logo:"primevideo",logoColor:"#00A8E1",brandBg:"#142332",type:"Streaming subscription"},
+ {name:"Max",url:"https://www.hbomax.com/",logo:"max",logoColor:"#ffffff",brandBg:"#30135d",type:"Streaming subscription"},
+ {name:"Apple TV",url:"https://tv.apple.com/",logo:"appletv",logoColor:"#ffffff",brandBg:"#191919",type:"Streaming subscription"},
+ {name:"Tubi",url:"https://tubitv.com/",logo:"tubi",logoColor:"#ffffff",brandBg:"#211b25",type:"Free with ads"},
+ {name:"Pluto TV",url:"https://pluto.tv/",logo:"plutotv",logoColor:"#ffffff",brandBg:"#171717",type:"Free live TV and on-demand"},
+ {name:"The Roku Channel",url:"https://therokuchannel.roku.com/",logo:"roku",logoColor:"#ffffff",brandBg:"#53229d",type:"Free and premium content"},
+ {name:"Plex",url:"https://watch.plex.tv/",logo:"plex",logoColor:"#E5A00D",brandBg:"#191919",type:"Free and premium content"},
+ {name:"PBS",url:"https://www.pbs.org/video/",logo:"pbs",logoColor:"#ffffff",brandBg:"#192c40",type:"Free shows; some member-only"},
+ {name:"Crunchyroll",url:"https://www.crunchyroll.com/",logo:"crunchyroll",logoColor:"#F47521",brandBg:"#1e1e1e",type:"Anime; free and paid options"},
+ {name:"Discovery+",url:"https://www.discoveryplus.com/",logo:"discoveryplus",logoColor:"#ffffff",brandBg:"#1d264a",type:"Streaming subscription"},
+ {name:"Sling TV",url:"https://www.sling.com/",logo:"sling",logoColor:"#ffffff",brandBg:"#133d58",type:"Live TV subscription"}
 ];
 function sullyStreamingRoom(){
  const root=$("content");$("status").textContent="Official streaming platforms · Select a service";
@@ -1696,11 +1705,16 @@ function sullyStreamingRoom(){
   const matches=sullyStreamingPlatforms.filter(p=>(p.name+" "+p.type).toLowerCase().includes(q));
   matches.forEach(p=>{
    const a=document.createElement("a");a.className="sullyPlatformTile";a.href=p.url;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label","Open "+p.name+" official website");a.title="Open "+p.name+" (official site)";
-   const mark=document.createElement("span");mark.className="sullyPlatformMark";mark.textContent=p.mark;mark.style.color=p.color;
+   a.style.setProperty("--platform-bg",p.brandBg);
+   const brand=document.createElement("span");brand.className="sullyPlatformBrand";
+   const logo=document.createElement("img");logo.className="sullyPlatformLogo";logo.alt=p.name+" logo";logo.loading="lazy";logo.decoding="async";
+   logo.src="https://cdn.simpleicons.org/"+encodeURIComponent(p.logo)+"/"+p.logoColor.replace("#","");
+   logo.onerror=()=>{if(logo.dataset.fallback)return;logo.dataset.fallback="1";logo.src="https://www.google.com/s2/favicons?domain="+encodeURIComponent(new URL(p.url).hostname)+"&sz=128";logo.classList.add("sullyPlatformFavicon")};
+   brand.append(logo);
    const name=document.createElement("strong");name.textContent=p.name;
    const type=document.createElement("small");type.textContent=p.type;
    const open=document.createElement("span");open.className="sullyPlatformOpen";open.textContent="Open service ↗";
-   a.append(mark,name,type,open);grid.append(a);
+   a.append(brand,name,type,open);grid.append(a);
   });
   count.textContent=matches.length+" platforms"+(q?" matching your search":"");
  }
