@@ -358,6 +358,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullySuggestHeading{padding:8px 12px;font-size:12px;font-weight:800;color:#f5d38e;background:#0c1d35}.sullyExternalSuggestions{border-top:1px solid #506480}.sullySuggestion span{flex:1;min-width:0}.sullySuggestion small{font-size:10px;font-weight:800;color:#f5d38e}
 .sullyAvailabilityGuides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.sullyAvailabilityGuides a{padding:14px 10px;background:#244e79;color:#fff;text-decoration:none;font-weight:800;border:1px solid #e4c477;border-radius:11px;font-size:13px}@media(max-width:500px){.sullyAvailabilityGuides{grid-template-columns:1fr}}
 .sullyDiscovery{background:#172c4b;border:1px solid #617995;border-radius:14px;padding:16px;margin:18px 0}.sullyDiscovery h3{margin:0 0 8px}.sullyDiscovery p{margin:0 0 12px}.sullySearchExtras{border:1px solid #617995;border-radius:12px;margin:12px 0 28px;overflow:hidden}.sullySearchExtras>summary{cursor:pointer;padding:16px;background:#1a304f;color:#f5d38e;font-weight:750}.sullySearchExtrasBody{padding:14px}.sullySearchExtrasBody .sullyServiceCard{padding:10px}.sullyAvailabilityGuides a{text-align:center}@media(max-width:650px){.sullyAvailabilityGuides{grid-template-columns:1fr}.sullyServiceGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sullySearchExtrasBody{padding:10px}}@media(max-width:400px){.sullyServiceGrid{grid-template-columns:1fr}}
+.sullyRecommendations{margin:18px 0;padding:15px;border:1px solid #526c8a;border-radius:13px;background:#142743}.sullyRecommendations h3{margin:0 0 6px}.sullyRecommendations p{margin:0 0 12px}.sullyRecGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyRecButton{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#24476d;color:white;border:1px solid #8ca2bb;border-radius:10px;padding:12px;cursor:pointer}.sullyRecButton small{color:#c9d7e9}@media(max-width:440px){.sullyRecGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -675,6 +676,14 @@ function sullyTitleSearch(q){
  const guides=document.createElement("div");guides.className="sullyAvailabilityGuides";panel.append(guides);
  const jw=document.createElement("a");jw.href="https://www.justwatch.com/us/search?q="+encodeURIComponent(q);jw.target="_blank";jw.rel="noopener noreferrer";jw.textContent="Find on JustWatch ↗";guides.append(jw);
  const w2=document.createElement("a");w2.href="https://what2c.tv/search";w2.target="_blank";w2.rel="noopener noreferrer";w2.textContent="Search what2c.tv ↗";guides.append(w2);
+ const recommendation=document.createElement("section");recommendation.className="sullyRecommendations";root.append(recommendation);
+ const recHeading=document.createElement("h3");recHeading.textContent="🍿 If you can't find it, try these";recommendation.append(recHeading);
+ const recText=document.createElement("p");recText.className="muted";recText.textContent="Availability for “"+q+"” is not verified. These are suggestions, not confirmed streams.";recommendation.append(recText);
+ const recGrid=document.createElement("div");recGrid.className="sullyRecGrid";recommendation.append(recGrid);
+ const western=/tombstone|wyatt earp|western|gunfight|cowboy|deadwood|ok corral|true grit|unforgiven|young guns/i.test(q);
+ const suggestions=western?[["Wyatt Earp","1994 · Western"],["Young Guns","1988 · Western"],["3:10 to Yuma","2007 · Western"],["True Grit","2010 · Western"]]:[];
+ if(!suggestions.length){const p=document.createElement("p");p.className="muted";p.textContent="Try a different title or explore live channels. More personalized recommendations are coming.";recGrid.append(p)}
+ suggestions.forEach(([name,description])=>{const btn=document.createElement("button");btn.type="button";btn.className="sullyRecButton";const label=document.createElement("strong");label.textContent=name;const meta=document.createElement("small");meta.textContent=description;btn.append(label,meta);btn.onclick=()=>{const input=$("search");input.value=name;sullyTitleSearch(name);window.scrollTo({top:0,behavior:"smooth"})};recGrid.append(btn)});
  const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
  const summary=document.createElement("summary");summary.textContent="More options · My subscriptions and individual services";details.append(summary);
  const extra=document.createElement("div");extra.className="sullySearchExtrasBody";details.append(extra);
