@@ -857,6 +857,24 @@ body.sullyKidsMode .sullyKidsFavoriteBadge:nth-child(3n){background:#e8fff1}
 body.sullyKidsMode .sullyKidsFavoriteBadge>span{font-size:22px;line-height:1}
 body.sullyKidsMode .sullyKidsFavoriteBadge small{font-size:12px}
 @media(max-width:600px){body.sullyKidsMode .sullyKidsFavoriteDecor{gap:6px}body.sullyKidsMode .sullyKidsFavoriteBadge{padding:5px 8px}body.sullyKidsMode .sullyKidsFavoriteBadge small{font-size:11px}}
+</style><style id="sullyKidsPlayful2026">
+body.sullyKidsMode .sullyKidsHero{box-shadow:0 8px 0 #a6d9c3,0 15px 25px #5089a02b!important}
+body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{content:"⭐";position:absolute;top:12px;font-size:35px;pointer-events:none;animation:sullyKidsTwinkle 3.5s ease-in-out infinite}
+body.sullyKidsMode .sullyKidsHero::before{left:3%}
+body.sullyKidsMode .sullyKidsHero::after{content:"🌈";right:3%;animation-delay:1.3s}
+body.sullyKidsMode .sullyKidsShow:nth-child(5n+1){border-color:#fff3ad!important}
+body.sullyKidsMode .sullyKidsShow:nth-child(5n+2){border-color:#ffd1e8!important}
+body.sullyKidsMode .sullyKidsShow:nth-child(5n+3){border-color:#c4f5c8!important}
+body.sullyKidsMode .sullyKidsShow:nth-child(5n+4){border-color:#c9d8ff!important}
+body.sullyKidsMode .sullyKidsShow:hover .sullyKidsPlay,body.sullyKidsMode .sullyKidsShow:focus-visible .sullyKidsPlay{background:#ffb84c;transform:scale(1.05)}
+body.sullyKidsMode .sullyKidsPlay{transition:transform .16s,background .16s}
+body.sullyKidsMode .sullyKidsAgeButton:hover{transform:translateY(-3px)}
+body.sullyKidsMode .sullyKidsAgeButton{transition:transform .15s}
+body.sullyKidsMode .sullyKidsLiveHeading::after{content:" ✨";font-size:.8em}
+body.sullyKidsMode .sullyKidsOutsideHeading::after{content:" 🎈";font-size:.8em}
+@keyframes sullyKidsTwinkle{0%,100%{transform:rotate(-10deg) scale(.85)}50%{transform:rotate(10deg) scale(1.13)}}
+@media(prefers-reduced-motion:reduce){body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{animation:none}}
+@media(max-width:600px){body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{font-size:23px;top:6px}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
