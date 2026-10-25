@@ -1119,7 +1119,7 @@ const title=document.createElement("h3");
 title.textContent=c.name;
 
 const sub=document.createElement("small");
-sub.textContent=c.countryName||c.country||"Live TV";
+sub.textContent=(c.countryName||c.country||"Live TV")+" · "+sullyLanguageDisplay(c);
 
 const actions=document.createElement("div");
 actions.className="actions";
@@ -1815,15 +1815,44 @@ function sullyItemLanguages(item){
  const raw=[item.languages,item.language,item.audioLanguage,item.broadcastLanguage].flat().filter(Boolean);
  return raw.map(sullyLangCode).filter(Boolean);
 }
+const sullyLanguageNames={en:"English",es:"Spanish",fr:"French",de:"German",pt:"Portuguese",it:"Italian",ja:"Japanese",ko:"Korean",zh:"Chinese",hi:"Hindi",ar:"Arabic",ru:"Russian"};
+const sullyCountryLanguageHints={en:["US","GB","AU","NZ","IE","CA"],es:["ES","MX","AR","CO","CL","PE"],fr:["FR","BE"],de:["DE","AT"],pt:["PT","BR"],it:["IT"],ja:["JP"],ko:["KR"],zh:["CN","TW","HK"],hi:["IN"],ar:["SA","AE","EG"],ru:["RU"]};
+function sullyDetectLanguage(item){
+ const declared=[...new Set(sullyItemLanguages(item))];
+ if(declared.length)return {codes:declared,confidence:"confirmed",reason:"Provider language metadata"};
+ const text=String([item.name,item.title,item.description].filter(Boolean).join(" ")).toLowerCase();
+ const hints=[
+ ["en",/\\b(english|eng dub|english dubbed|english audio)\\b/],
+ ["es",/\\b(spanish|español|castellano|latino dub)\\b/],
+ ["fr",/\\b(french|français|francais)\\b/],
+ ["de",/\\b(german|deutsch)\\b/],
+ ["pt",/\\b(portuguese|português|portugues)\\b/],
+ ["it",/\\b(italian|italiano)\\b/],
+ ["ja",/\\b(japanese|日本語)\\b/],
+ ["ko",/\\b(korean|한국어)\\b/],
+ ["zh",/\\b(chinese|mandarin|cantonese|中文)\\b/],
+ ["hi",/\\b(hindi|हिन्दी)\\b/],
+ ["ar",/\\b(arabic|العربية)\\b/],
+ ["ru",/\\b(russian|русский)\\b/]
+ ];
+ const titleHits=hints.filter(([code,re])=>re.test(text)).map(([code])=>code);
+ if(titleHits.length)return {codes:titleHits,confidence:"likely",reason:"Program or channel description"};
+ const country=String(item.country||"").toUpperCase();
+ const guesses=Object.entries(sullyCountryLanguageHints).filter(([code,countries])=>countries.includes(country)).map(([code])=>code);
+ if(guesses.length===1)return {codes:guesses,confidence:"likely",reason:"Country-based estimate; audio not verified"};
+ return {codes:[],confidence:"unknown",reason:"No reliable language information"};
+}
 function sullyLanguageMatches(item){
  const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;
- if(chosen==="all")return true;
- const declared=sullyItemLanguages(item);
- if(declared.length)return declared.includes(chosen);
- // Feed metadata can be incomplete. Use country as a browsing hint, never as a confirmed audio-language claim.
- const probable={en:["US","GB","AU","NZ","IE"],es:["ES","MX","AR","CO","CL","PE"],fr:["FR"],de:["DE","AT"],pt:["PT","BR"],it:["IT"],ja:["JP"],ko:["KR"],zh:["CN","TW"],hi:["IN"],ar:["SA","AE","EG"],ru:["RU"]};
- return (probable[chosen]||[]).includes(String(item.country||"").toUpperCase());
+ return chosen==="all"||sullyDetectLanguage(item).codes.includes(chosen);
 }
+function sullyLanguageDisplay(item){
+ const found=sullyDetectLanguage(item);
+ if(!found.codes.length)return "🌐 Language unknown";
+ const names=found.codes.map(c=>sullyLanguageNames[c]||c.toUpperCase()).join(" / ");
+ return "🌐 "+names+(found.confidence==="confirmed"?" · Listed":" · Likely");
+}
+
 function sullyRoomLanguageControls(root){
  const bar=document.createElement("div");bar.className="sullyRoomLanguages";
  bar.style.cssText="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 20px;padding:12px;border:1px solid #526582;border-radius:12px;background:#13233b";
@@ -1836,7 +1865,7 @@ function sullyRoomLanguageControls(root){
  select.value=sullyEnglishOnly?"en":sullySelectedLanguage;
  select.onchange=()=>{sullySelectedLanguage=select.value;sullyEnglishOnly=select.value==="en";render()};
  label.append(select);bar.append(english,label);
- const note=document.createElement("small");note.textContent="Uses broadcast-language metadata where available; otherwise country is an approximate language hint.";bar.append(note);
+ const note=document.createElement("small");note.textContent="Language labels show listed, likely, or unknown. Country-only estimates are not verified audio.";bar.append(note);
  root.append(bar);
 }
 
