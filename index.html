@@ -1195,6 +1195,8 @@ hideRecord();
 function clearPlayer(){
 playbackToken++;
 clearTimeout(playbackTimer);
+player.onplaying=null;
+player.onloadeddata=null;
 
 if(recorder&&recorder.state==="recording")stopRecording();
 hideRecord();
@@ -1260,17 +1262,22 @@ clearTimeout(playbackTimer);
 sourceIndex++;
 
 if(sourceIndex<sourceList.length){
+setNotice("This stream is slow. Trying another source ("+(sourceIndex+1)+" of "+sourceList.length+")…");
 playSource();
 }else{
 $("now").textContent="Playback unavailable for this channel.";
 if(current&&current.id){unavailable.add(current.id);saveState()}
-setNotice("The available streams could not be played on this device. Try another channel or refresh to retry.");
+setNotice("This channel isn\'t responding. Choose another channel below, or tap Retry to try again.");
 }
 };
 
+player.onplaying=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);$("now").textContent="🔴 Watching "+current.name;setNotice("");};
+player.onloadeddata=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);};
+$("now").textContent="⏳ Connecting to "+current.name+" ("+(sourceIndex+1)+"/"+sourceList.length+")";
+if(sourceIndex===0)setNotice("Connecting to live TV… If this stream is slow, Sully TV will try another source automatically.");
 playbackTimer=setTimeout(()=>{
 if(token===playbackToken&&player.readyState<3)fallback();
-},18000);
+},8500);
 
 if(/\.m3u8(\?|$)/i.test(s.url)&&window.Hls&&Hls.isSupported()){
 hls=new Hls();
@@ -1288,7 +1295,6 @@ player.onerror=fallback;
 player.play().catch(()=>{});
 }
 
-$("now").textContent="▶ "+current.name;
 }
 
 function togglePlay(){
