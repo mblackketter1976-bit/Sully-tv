@@ -832,6 +832,17 @@ const sullyFanHubs={
  "🦸 Marvel":{name:"Marvel",color:"#ff8585",channel:"@marvel",topics:["Trailers","Animation","Heroes","Behind the Scenes","Interviews"],queries:["Marvel Entertainment official trailers","Marvel official animation","Marvel official superheroes clips","Marvel Studios behind the scenes","Marvel Entertainment official interviews"]},
  "⚡ DC":{name:"DC",color:"#a7d0ff",channel:"@dcofficial",topics:["Trailers","Animation","Batman","Superman","Behind the Scenes"],queries:["DC official trailers","DC official animated clips","DC official Batman videos","DC official Superman videos","DC official behind the scenes"]}
 };
+
+function sullyFanLive(){
+ const hub=sullyFanHubs[tab],root=$("content");
+ const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
+ const re=rules[tab];
+ const matches=channels.filter(c=>!unavailable.has(c.id)&&streams.has(c.id)&&re.test(sullyChannelText(c)));
+ const h=document.createElement("h2");h.textContent="🔴 Live "+hub.name+" TV";root.append(h);
+ const p=document.createElement("p");p.className="muted";p.textContent=matches.length?matches.length+" matching live channels available from the public TV directory. Tap Watch to play.":"No matching live channels are currently listed in the public TV directory. Official video searches are below.";root.append(p);
+ if(matches.length){const rail=document.createElement("div");rail.className="rail";matches.slice(0,60).forEach(c=>rail.append(card(c)));root.append(rail)}
+}
+
 function sullyFanHub(){
  const hub=sullyFanHubs[tab],root=$("content");
  $("status").textContent=hub.name+" official video discovery";
@@ -856,7 +867,7 @@ const root=$("content");
 root.innerHTML="";
 $("more").hidden=true;
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();sullyFanHub();return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
@@ -885,7 +896,7 @@ return;
 $("filters").hidden=false;
 if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 else if(sullySubcategories[tab])root.append(sullySubBar());
-if(tab==="🍥 Summy's Anime")root.append(sullyOfficialAnime());
+
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
 
@@ -907,14 +918,7 @@ root.append(rail);
 }
 }
 
-if(tab==="💖 Nicol's Station"){
- const panel=document.createElement("div");panel.className="panel";
- const h=document.createElement("h3");h.textContent="💖 Nicol's favorites";panel.append(h);
- const p=document.createElement("p");p.textContent="Reality competitions, ranch dramas, romantic movies and Lifetime-style stories. Live channel filters appear above; find specific shows using the official services below.";panel.append(p);
- const links=document.createElement("div");links.className="sullyOfficialLinks";
- [["Search Yellowstone / Dutton Ranch","https://www.youtube.com/results?search_query=Yellowstone+Dutton+Ranch+official+clips"],["Search Steel Magnolias","https://www.youtube.com/results?search_query=Steel+Magnolias+official+trailer"],["Lifetime Official","https://www.youtube.com/@Lifetime"],["Reality Shows","https://www.youtube.com/results?search_query=official+reality+competition+shows"]].forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a)});
- panel.append(links);root.append(panel);
-}
+
 if(tab.includes("Michele")){
 const panel=document.createElement("div");
 panel.className="panel";
@@ -935,11 +939,24 @@ list.slice(0,(page+1)*60).forEach(c=>rail.append(card(c)));
 root.append(rail);
 
 if(!list.length){
-const p=document.createElement("div");
-p.className="panel";
-p.textContent="No matching channels found. Try another country or clear the filters.";
-root.append(p);
+ const p=document.createElement("div");p.className="panel";
+ p.textContent="No live channels match this selection right now. Here are other live channels you can watch instead.";root.append(p);
+ const alternatives=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&categoryMatch(c)&&(!$("country").value||c.country===$("country").value)).slice(0,24);
+ if(alternatives.length){const h=document.createElement("h2");h.textContent="🔴 Other live channels";root.append(h);const rail=document.createElement("div");rail.className="rail";alternatives.forEach(c=>rail.append(card(c)));root.append(rail)}
 }
+
+if(tab==="💖 Nicol's Station"){
+ const label=document.createElement("h2");label.textContent="More ways to find Nicol's favorites";root.append(label);
+ if(tab==="💖 Nicol's Station"){
+ const panel=document.createElement("div");panel.className="panel";
+ const h=document.createElement("h3");h.textContent="💖 Nicol's favorites";panel.append(h);
+ const p=document.createElement("p");p.textContent="Reality competitions, ranch dramas, romantic movies and Lifetime-style stories. Live channel filters appear above; find specific shows using the official services below.";panel.append(p);
+ const links=document.createElement("div");links.className="sullyOfficialLinks";
+ [["Search Yellowstone / Dutton Ranch","https://www.youtube.com/results?search_query=Yellowstone+Dutton+Ranch+official+clips"],["Search Steel Magnolias","https://www.youtube.com/results?search_query=Steel+Magnolias+official+trailer"],["Lifetime Official","https://www.youtube.com/@Lifetime"],["Reality Shows","https://www.youtube.com/results?search_query=official+reality+competition+shows"]].forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a)});
+ panel.append(links);root.append(panel);
+}
+}
+if(tab==="🍥 Summy's Anime")root.append(sullyOfficialAnime());
 
 if(list.length>(page+1)*60){
 $("more").hidden=false;
