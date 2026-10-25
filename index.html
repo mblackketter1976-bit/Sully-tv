@@ -350,6 +350,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullySearchForm{display:flex;align-items:stretch;gap:7px;flex:1;min-width:0;max-width:540px}.sullySearchForm #search{width:auto;min-width:0;flex:1}.sullySearchForm button{background:linear-gradient(145deg,#3769a2,#183d6e);color:#fff;border:1px solid #d5b777;border-radius:12px;padding:10px 13px;min-height:45px;font-weight:800;white-space:nowrap}.sullySearchForm button:focus-visible{outline:3px solid #ffdb87;outline-offset:2px}@media(max-width:520px){.top{flex-wrap:wrap}.sullySearchForm{flex-basis:100%;max-width:none}.sullySearchForm button{padding:10px 15px}}
 .sullySearchForm{position:relative}.sullySuggestions{position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:100;background:#142541;border:1px solid #d5b777;border-radius:12px;box-shadow:0 14px 28px #000a;max-height:360px;overflow-y:auto}.sullySuggestion{display:flex;align-items:center;gap:10px;width:100%;padding:12px;background:transparent;border-bottom:1px solid #344b6a;text-align:left;min-height:49px}.sullySuggestion:last-child{border-bottom:0}.sullySuggestion:focus-visible,.sullySuggestion:active{background:#355781}.sullySuggestion img{width:36px;height:30px;object-fit:contain}.sullySuggestion span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sullySuggestion small{font-size:10px;color:#f2ce78}
 .sullyTitleResults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 20px}.sullyTitleResults a{display:block;background:#244c78;color:#fff;text-decoration:none;border:1px solid #d5b777;border-radius:12px;padding:15px 12px;font-size:14px;font-weight:800}.sullyTitleResults a:focus-visible{outline:3px solid #f3d38a;outline-offset:2px}
+.sullyServicePrefs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}.sullyServicePrefs label{display:flex;align-items:center;gap:4px;background:#263d5e;color:white;border:1px solid #647c9a;padding:9px;border-radius:10px;font-size:13px}.sullyServicePrefs input{width:17px;height:17px;accent-color:#f0c76b}.sullyServiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyServiceCard{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #657d9c;border-radius:12px;background:#1a304f;color:white}.sullyServiceStatus{font-size:11px;color:#e9d29c}.sullyServiceActions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}.sullyServiceActions a{padding:9px;border-radius:8px;background:#315d8c;border:1px solid #bdab80;color:white;text-decoration:none;font-size:12px;font-weight:700}.sullyServiceActions a:last-child:not(:first-child){background:#664622}@media(min-width:750px){.sullyServiceGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -577,17 +578,51 @@ function sullyTitleSearch(q){
  }
  const h2=document.createElement("h3");h2.textContent="🎬 Find this movie or show";root.append(h2);
  const note=document.createElement("p");note.className="muted";note.textContent="Search these services for the exact title. Availability, subscriptions, and playback depend on the provider. Results open in their own websites or apps.";root.append(note);
- const options=[
- ["Tubi · Free","https://tubitv.com/search/"+encodeURIComponent(q)],
- ["Plex · Free","https://watch.plex.tv/search?query="+encodeURIComponent(q)],
- ["Pluto TV · Free","https://pluto.tv/us/search/details/"+encodeURIComponent(q)],
- ["Netflix · Subscription","https://www.netflix.com/search?q="+encodeURIComponent(q)],
- ["YouTube · Videos","https://www.youtube.com/results?search_query="+encodeURIComponent(q+" official movie show")]
+
+ const services=[
+ {name:"Tubi",free:true,search:q=>"https://tubitv.com/search/"+encodeURIComponent(q),home:"https://tubitv.com/"},
+ {name:"Plex",free:true,search:q=>"https://watch.plex.tv/search?query="+encodeURIComponent(q),home:"https://watch.plex.tv/"},
+ {name:"Pluto TV",free:true,search:q=>"https://pluto.tv/",home:"https://pluto.tv/"},
+ {name:"YouTube",free:true,search:q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q),home:"https://www.youtube.com/"},
+ {name:"Netflix",search:q=>"https://www.netflix.com/search?q="+encodeURIComponent(q),home:"https://www.netflix.com/signup"},
+ {name:"Disney+",search:q=>"https://www.disneyplus.com/search",home:"https://www.disneyplus.com/"},
+ {name:"Hulu",search:q=>"https://www.hulu.com/search",home:"https://www.hulu.com/"},
+ {name:"Max",search:q=>"https://www.hbomax.com/",home:"https://www.hbomax.com/"},
+ {name:"Prime Video",search:q=>"https://www.amazon.com/s?k="+encodeURIComponent(q)+"&i=instant-video",home:"https://www.amazon.com/gp/video/storefront"},
+ {name:"Apple TV",search:q=>"https://tv.apple.com/search?term="+encodeURIComponent(q),home:"https://tv.apple.com/"},
+ {name:"Paramount+",search:q=>"https://www.paramountplus.com/",home:"https://www.paramountplus.com/"},
+ {name:"Peacock",search:q=>"https://www.peacocktv.com/",home:"https://www.peacocktv.com/"},
+ {name:"STARZ",search:q=>"https://www.starz.com/",home:"https://www.starz.com/"},
+ {name:"AMC+",search:q=>"https://www.amcplus.com/",home:"https://www.amcplus.com/"},
+ {name:"Crunchyroll",search:q=>"https://www.crunchyroll.com/search?q="+encodeURIComponent(q),home:"https://www.crunchyroll.com/"}
  ];
- const grid=document.createElement("div");grid.className="sullyTitleResults";
- options.forEach(([label,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="🔎 "+label+" ↗";grid.append(a)});
- root.append(grid);
- const msg=document.createElement("p");msg.className="muted";msg.textContent="These are searches, not confirmed listings. Sully TV doesn't have a cross-service movie catalog yet.";root.append(msg);
+ let owned=[];try{owned=JSON.parse(localStorage.getItem("sullySubscribedServices")||"[]");if(!Array.isArray(owned))owned=[]}catch(e){owned=[]}
+ const title=document.createElement("h3");title.textContent="Your streaming subscriptions";root.append(title);
+ const hint=document.createElement("p");hint.className="muted";hint.textContent="Select services you already pay for. Your choices are saved on this device; Sully TV cannot verify account access.";root.append(hint);
+ const prefs=document.createElement("div");prefs.className="sullyServicePrefs";
+ services.filter(s=>!s.free).forEach(service=>{
+  const label=document.createElement("label"),check=document.createElement("input");check.type="checkbox";check.checked=owned.includes(service.name);
+  check.onchange=()=>{if(check.checked){if(!owned.includes(service.name))owned.push(service.name)}else owned=owned.filter(n=>n!==service.name);try{localStorage.setItem("sullySubscribedServices",JSON.stringify(owned))}catch(e){}paint()};
+  label.append(check,document.createTextNode(" "+service.name));prefs.append(label)
+ });root.append(prefs);
+ const heading=document.createElement("h3");heading.textContent="Find “"+q+"” on streaming services";root.append(heading);
+ const grid=document.createElement("div");grid.className="sullyServiceGrid";root.append(grid);
+ const msg=document.createElement("p");msg.className="muted";msg.textContent="These links open each provider's search or home page. They do not confirm that this title is in its catalog. Some providers don't offer a direct title-search URL; use their search once opened.";root.append(msg);
+ function paint(){
+  grid.replaceChildren();
+  const sorted=[...services].sort((a,b)=>Number(b.free||owned.includes(b.name))-Number(a.free||owned.includes(a.name)));
+  sorted.forEach(service=>{
+   const card=document.createElement("div");card.className="sullyServiceCard";
+   const name=document.createElement("strong");name.textContent=service.name;card.append(name);
+   const status=document.createElement("span");status.className="sullyServiceStatus";status.textContent=service.free?"Free service":owned.includes(service.name)?"✓ Your subscription":"Subscription may be required";card.append(status);
+   const actions=document.createElement("div");actions.className="sullyServiceActions";
+   const search=document.createElement("a");search.href=service.search(q);search.target="_blank";search.rel="noopener noreferrer";search.textContent="🔎 Find title";actions.append(search);
+   if(!service.free&&!owned.includes(service.name)){const join=document.createElement("a");join.href=service.home;join.target="_blank";join.rel="noopener noreferrer";join.textContent="Subscribe";actions.append(join)}
+   card.append(actions);grid.append(card)
+  })
+ }
+ paint();
+
  $("status").textContent="Search: "+q;
 }
 
