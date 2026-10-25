@@ -1845,10 +1845,14 @@ tab="📋 TV Guide";nav();render();
 jumpToCategory();
 sullySavePlace();
 }
+let sullyGuideData=null;
+let sullyGuideLoading=null;
+function sullyLoadGuideData(){if(!sullyGuideLoading)sullyGuideLoading=fetch("./data/tv-guide.json?hour="+Math.floor(Date.now()/3600000)).then(r=>r.ok?r.json():null).then(d=>{sullyGuideData=d&&d.channels?d:null;return sullyGuideData}).catch(()=>null).finally(()=>{sullyGuideLoading=null});return sullyGuideLoading;}
 function renderGuide(){
  const root=$("content");$("status").textContent="TV Guide · Live channel lineup";
  const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
- const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only verified program data is shown; blank schedules are never guessed.";root.append(intro);
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only sourced, current program data is shown.";root.append(intro);
+ const guideStatus=document.createElement("p");guideStatus.className="muted";root.append(guideStatus);
  const toolbar=document.createElement("div");toolbar.className="sullyGuideToolbar";
  const search=document.createElement("input");search.type="search";search.placeholder="Find a station…";search.setAttribute("aria-label","Search stations");
  const genre=document.createElement("select");genre.setAttribute("aria-label","Channel genre");
@@ -1896,6 +1900,9 @@ function renderGuide(){
    return language.value==="all"||lang.codes.includes(language.value);
   }).sort((a,b)=>group(a).localeCompare(group(b))||a.name.localeCompare(b.name));
   const shown=matches.slice(0,limit);count.textContent=shown.length+" / "+matches.length+" channels";
+  const updated=sullyGuideData?.updated?new Date(sullyGuideData.updated):null;
+  const age=updated&&Number.isFinite(updated.getTime())?Date.now()-updated.getTime():Infinity;
+  guideStatus.textContent=age<36*3600000?"Program listings updated "+updated.toLocaleString()+" · Sourced schedules only": "Program listings currently unavailable or outdated · Live stations still work";
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
   const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
@@ -1906,8 +1913,8 @@ function renderGuide(){
    const number=document.createElement("span");number.className="sullyRetroGuideNumber";number.textContent=String(i+1).padStart(2,"0");
    const name=document.createElement("span");name.textContent=c.name;name.className="sullyRetroGuideName";station.append(number,name);row.append(station);
    // Display schedules only when actual start/end timestamps are provided.
-   const programs=Array.isArray(c.programs)?c.programs:Array.isArray(c.schedule)?c.schedule:[];
-   const verified=programs.filter(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start));
+   const programs=sullyGuideData?.channels?.[c.id]||[];
+   const verified=programs.filter(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&Date.parse(p.end)>Date.now()-3600000);
    let any=false;
    for(let j=0;j<slots.length;){
     const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<=t&&Date.parse(p.end)>t);
@@ -1925,6 +1932,7 @@ function renderGuide(){
  more.onclick=()=>{limit+=36;draw()};
  [search,genre,country,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=36;draw()}));
  draw();
+ sullyLoadGuideData().then(()=>{if(scroller.isConnected&&tab==="📋 TV Guide")draw()});
 }
 
 function remember(c){
