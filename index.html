@@ -274,6 +274,7 @@ header .sullyQuickPanel p{margin:7px 0}
 <button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
 <button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
 <button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
+<button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
 <button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
 </div>
 <div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
@@ -668,6 +669,13 @@ function setSullySleep(minutes){
  if(minutes){sullySleepEndsAt=Date.now()+minutes*60000;sullySleepTimeout=setTimeout(()=>{sullySleepTimeout=null;sullySleepEndsAt=0;player.pause();if(typeof hls!=="undefined"&&hls){hls.destroy();hls=null}player.removeAttribute("src");player.load();setNotice("🌙 Sleep timer finished. Playback stopped.");closeSullyPanel()},minutes*60000)}
  showSullyPanel('<strong>🌙 Sleep Timer</strong><p>'+(minutes?'Set for '+minutes+' minutes. Keep Sully TV open for the timer to work.':'Timer canceled.')+'</p><button onclick="closeSullyPanel()">Close</button>');
 }
+function shareSullyTV(){
+ const url="https://mblackketter1976-bit.github.io/Sully-tv/";
+ if(navigator.share){navigator.share({title:"Sully TV",text:"Watch free channels on Sully TV!",url}).catch(()=>{});return;}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(()=>setNotice("Sully TV link copied! Share it with friends.")).catch(()=>showSullyShareLink(url));return;}
+ showSullyShareLink(url);
+}
+function showSullyShareLink(url){showSullyPanel('<strong>📤 Share Sully TV</strong><p>Copy this link and send it to friends:</p><input readonly aria-label="Sully TV website link" value="'+url+'" onclick="this.select()" style="width:100%;max-width:440px"><p>Sharing sends the website link; it does not cast to a television.</p><button onclick="closeSullyPanel()">Close</button>');}
 function openSullySettings(){
  const saved=localStorage.getItem("sully-compact-cards")==="yes";
  showSullyPanel('<strong>⚙️ Sully TV Settings</strong><p>Display preferences are saved on this device.</p><button onclick="setSullyCompact('+(!saved)+')">'+(saved?'Turn off compact cards':'Use compact channel cards')+'</button><button onclick="closeSullyPanel()">Close</button>');
