@@ -1840,7 +1840,9 @@ return box;
 }
 
 let sullyPlayableCache=null;
-async function sullyGetPlayable(){if(!sullyPlayableCache)sullyPlayableCache=fetch("./data/legal-library.json").then(r=>{if(!r.ok)throw Error("Library unavailable");return r.json()}).then(d=>(d.items||[]).filter(x=>x.status==="verified"&&x.title&&x.playback?.url&&x.rights?.source&&x.rights?.basis)).catch(e=>{sullyPlayableCache=null;throw e});return sullyPlayableCache}
+let sullyCatalogCache=null;
+function sullyGetCatalog(){if(!sullyCatalogCache)sullyCatalogCache=fetch("./data/legal-library.json?cache="+Math.floor(Date.now()/3600000)).then(r=>{if(!r.ok)throw Error("Catalog unavailable");return r.json()}).catch(e=>{sullyCatalogCache=null;throw e});return sullyCatalogCache}
+async function sullyGetPlayable(){if(!sullyPlayableCache)sullyPlayableCache=sullyGetCatalog().then(d=>(d.items||[]).filter(x=>x.status==="verified"&&x.title&&x.playback?.url&&x.rights?.source&&x.rights?.basis)).catch(e=>{sullyPlayableCache=null;throw e});return sullyPlayableCache}
 function sullyLanguageLabel(item){
  const lang=String(item.language||item.audioLanguage||"").trim();
  if(!lang)return "Language unknown";
@@ -2007,9 +2009,7 @@ async function renderLibrary(){
  const results=document.createElement("div");results.className="sullyLibraryResults";root.append(results);
  count.textContent="Loading library...";
  try{
-  const response=await fetch("./data/legal-library.json?cache="+Math.floor(Date.now()/3600000));
-  if(!response.ok)throw Error("Catalog unavailable");
-  const data=await response.json();
+  const data=await sullyGetCatalog();
   if(tab!=="📚 Library")return;
   const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
   const typeCounts={movies:0,shows:0,documentaries:0,shorts:0,other:0};
@@ -2090,7 +2090,7 @@ const library=document.createElement("section");library.className="sullyLegalLib
 const lh=document.createElement("h2");lh.textContent="▶ Sully TV Playable Library";library.append(lh);
 const lp=document.createElement("p");lp.className="muted";lp.textContent="Discovering reusable videos automatically. Each listing includes its source and license. Videos play from the original authorized host.";library.append(lp);
 const listing=document.createElement("div");listing.className="sullyLegalGrid";library.append(listing);
-fetch("./data/legal-library.json?cache="+Math.floor(Date.now()/3600000)).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{
+sullyGetCatalog().then(data=>{
  const items=(data.items||[]).filter(i=>i.status==="verified"&&i.playback?.url);
  if(!items.length){listing.textContent="The automatic library is starting up. New verified listings will appear after discovery runs.";return}
  const count=document.createElement("p");count.className="muted";count.textContent=items.length+" playable catalog entries";library.insertBefore(count,listing);
