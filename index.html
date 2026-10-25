@@ -391,6 +391,24 @@ header .top{flex-wrap:wrap}
 .sullyCompactGuideCard strong{font-size:12px;line-height:1.3;overflow-wrap:anywhere}
 .sullyCompactGuideCard small{font-size:10px;color:#a9d6fc}
 @media(max-width:600px){.sullyCompactGuideGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.sullyCompactGuideCard{min-height:88px;padding:7px 4px}.sullyCompactGuideCard img{height:32px}.sullyCompactGuideCard strong{font-size:11px}}
+
+/* Consistent room grids, high-visibility browse controls, reduced scrolling */
+.sullyRoomChannelRail{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;padding-bottom:4px!important}
+@media(min-width:1150px){.sullyRoomChannelRail{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+.sullyRoomChannelRail .card{min-width:0!important;width:100%!important}
+.sullyRoomChannelRail .card .actions{flex-wrap:wrap}
+.sullyRoomChannelRail .card .actions button{min-width:0}
+.sullyRoomLiveDisclosure{margin:5px 0 12px!important;padding:7px!important}
+.sullyRoomLiveDisclosure>summary{display:block;list-style:none!important;cursor:pointer;text-align:center;font-size:clamp(13px,2.8vw,18px)!important;font-weight:800!important;letter-spacing:.2px;padding:14px 9px!important;background:#245b90;border:2px solid #f4d080;border-radius:12px;color:#fff2c6;box-shadow:0 3px 10px #0007}
+.sullyRoomLiveDisclosure>summary::-webkit-details-marker{display:none}
+.sullyRoomLiveDisclosure[open]>summary{background:#3478aa;margin-bottom:9px}
+.sullyMovieGenres{position:relative}
+.sullyMovieGenres>strong{display:block;font-size:17px;color:#ffe0a1;margin-bottom:8px}
+.sullyMovieGenreButtons{display:flex!important;overflow-x:auto!important;flex-wrap:nowrap!important;gap:7px!important;padding:5px 2px 12px!important;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.sullyMovieGenreButtons button{flex:0 0 auto!important;white-space:nowrap!important;scroll-snap-align:start;border:1px solid #c3a36a!important;padding:9px 12px!important}
+.sullyMovieGenreButtons button.selected{outline:2px solid #f6d381;outline-offset:1px}
+.sullyMovieGenres>p{font-size:12px;margin:2px 0 5px}
+@media(max-width:760px){.sullyRoomChannelRail .card .art{height:62px!important;padding:5px!important}.sullyRoomChannelRail .card .art img{max-height:52px!important}.sullyRoomChannelRail .card .info{padding:5px!important}.sullyRoomChannelRail .card .info h3{font-size:11px!important;min-height:0!important}.sullyRoomChannelRail .card .info small{font-size:10px!important;min-height:0!important}.sullyRoomChannelRail .card .actions{gap:3px!important}.sullyRoomChannelRail .card .actions button{font-size:10px!important;padding:5px 2px!important;min-height:30px!important}.sullyRoomChannelRail .card{border-radius:9px!important}}
 </style>
 <style id="sullyRoomPolish">
 .sullyRoomHeading{margin:10px 0 12px;padding:18px 22px}
@@ -1626,18 +1644,19 @@ heading.textContent=tab==="🎬 Movies"?(sullyMovieGenre==="All Movies"?"📡 Li
 root.append(heading);
 
 const rail=document.createElement("div");
-rail.className="rail";
+rail.className="rail sullyRoomChannelRail";
 
 // Keep the first two rows visible; tuck remaining live feeds into a disclosure.
-const liveColumns=window.innerWidth<480?2:window.innerWidth<760?3:4;
+// Use the same four-column mobile grid as the visible room layout.
+const liveColumns=window.innerWidth<760?4:window.innerWidth<1150?4:5;
 const initialLiveCount=Math.min(list.length,liveColumns*2);
 list.slice(0,initialLiveCount).forEach(c=>rail.append(card(c)));
 root.append(rail);
 if(list.length>initialLiveCount){
  const moreLive=document.createElement("details");moreLive.className="sullyRoomLiveDisclosure";
- const summary=document.createElement("summary");summary.textContent="📡 More live channels ("+(list.length-initialLiveCount)+") ▾";
+ const summary=document.createElement("summary");summary.textContent="📺 SHOW MORE LIVE CHANNELS — "+(list.length-initialLiveCount).toLocaleString()+" MORE  ▼";
  moreLive.append(summary);
- const rest=document.createElement("div");rest.className="rail";
+ const rest=document.createElement("div");rest.className="rail sullyRoomChannelRail";
  list.slice(initialLiveCount).forEach(c=>rest.append(card(c)));
  moreLive.append(rest);root.append(moreLive);
 }
