@@ -2181,65 +2181,89 @@ function sullyKidsExternalLive(root){
 const sullyKidsLivePattern=/\\b(kids?|children|junior|cartoon|toons?|baby|preschool|nick jr|pbs kids|boomerang|ducktv|pocoyo|babyfirst|kidoodle|happy kids|kidstv)\\b/i;
 const sullyKidsPlaybackCache=new Map();
 async function sullyKidsTestPlayback(source){
+ const url=source?.url||"";
+ if(!/^https:\/\//i.test(url))return {state:"unsupported",reason:"Requires insecure or unsupported transport"};
+ if(source.referrer||source.user_agent)return {state:"unsupported",reason:"Requires custom request headers"};
  const video=document.createElement("video");
- video.muted=true;video.playsInline=true;video.autoplay=true;video.preload="auto";
- video.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";
+ video.muted=true;video.defaultMuted=true;video.setAttribute("muted","");video.playsInline=true;video.setAttribute("playsinline","");video.preload="auto";
+ video.style.cssText="position:fixed;left:-9999px;top:0;width:160px;height:90px;pointer-events:none";
  document.body.append(video);
- let h=null,done=false;
+ let h=null,done=false,started=false;
  return new Promise(resolve=>{
-  const finish=ok=>{if(done)return;done=true;clearTimeout(timer);try{video.pause();video.removeAttribute("src");video.load();h?.destroy();video.remove()}catch(e){}resolve(ok)};
-  const timer=setTimeout(()=>finish(false),11000);
-  video.onplaying=()=>{if(video.readyState>=2)finish(true)};
-  video.ontimeupdate=()=>{if(video.currentTime>0)finish(true)};
-  video.onerror=()=>finish(false);
+  const finish=(state,reason)=>{if(done)return;done=true;clearTimeout(timer);try{video.pause();h?.destroy();video.removeAttribute("src");video.remove()}catch(e){}resolve({state,reason})};
+  const timer=setTimeout(()=>finish("unknown","Timed out waiting for a decoded video frame"),14000);
+  const checkFrame=()=>{
+   if(video.videoWidth>0&&video.videoHeight>0&&video.readyState>=2&&(!video.paused||video.currentTime>0))finish("verified","Decoded video");
+  };
+  video.onloadeddata=checkFrame;
+  video.onplaying=checkFrame;
+  video.ontimeupdate=checkFrame;
+  video.onerror=()=>finish("failed","Media playback error");
+  const start=()=>{
+   if(started||done)return;started=true;
+   Promise.resolve(video.play()).then(checkFrame).catch(err=>finish(err?.name==="NotAllowedError"?"unknown":"failed",err?.name||"Playback failed"));
+  };
   try{
-   if(/\\.m3u8(?:[?#]|$)/i.test(source.url)&&window.Hls&&Hls.isSupported()){
-    h=new Hls({maxBufferLength:5});
-    h.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal)finish(false)});
-    h.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>finish(false)));
-    h.loadSource(source.url);h.attachMedia(video);
-   }else{video.src=source.url;video.play().catch(()=>finish(false))}
-  }catch(e){finish(false)}
+   if(/\.m3u8(?:[?#]|$)/i.test(url)&&window.Hls&&Hls.isSupported()){
+    h=new Hls({maxBufferLength:5,lowLatencyMode:false});
+    h.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal)finish(d.type===Hls.ErrorTypes.NETWORK_ERROR?"unknown":"failed",d.details||"HLS error")});
+    h.on(Hls.Events.MANIFEST_PARSED,start);
+    h.loadSource(url);h.attachMedia(video);
+   }else if(video.canPlayType("application/vnd.apple.mpegurl")||!/\.m3u8(?:[?#]|$)/i.test(url)){
+    video.src=url;start();
+   }else finish("unsupported","HLS playback not supported in this browser");
+  }catch(e){finish("unknown",String(e))}
  });
 }
+function sullyKidsChannelLanguage(ch){
+ const langs=(Array.isArray(ch.languages)?ch.languages:[ch.language]).filter(Boolean).map(x=>String(x).toLowerCase());
+ const name=String(ch.name||"");
+ const spanish=/espa[nñ]ol|infantil|niños|castellano|latino|española/i.test(name);
+ const english=/english/i.test(name);
+ if(sullyKidsLanguage==="es")return langs.some(x=>x==="spa"||x==="es"||x.startsWith("es-"))||(!langs.length&&spanish);
+ return langs.some(x=>x==="eng"||x==="en"||x.startsWith("en-"))||(!langs.length&&english);
+}
 async function sullyKidsLoadLive(grid,status){
- const matches=channels.filter(c=>{
-  const language=String(c.languages?.[0]||c.language||"").toLowerCase();
-  const region=String(c.country||"").toLowerCase();
-  const name=String(c.name||"");
-  const likelySpanish=/espa[nñ]ol|infantil|niños|castellano|latino|española/i.test(name);
-  const likelyEnglish=/english/i.test(name);
-  const correctLanguage=sullyKidsLanguage==="es"?(language==="spa"||language==="es"||likelySpanish):(language==="eng"||language==="en"||likelyEnglish||(!language&&!likelySpanish&&region!=="mx"));
-  return sullyKidsLivePattern.test(name+" "+(c.categories||[]).join(" "))&&correctLanguage&&!sullyFailed(c.id)&&!unavailable.has(c.id)&&streams.has(c.id);
- }).slice(0,75);
- if(!matches.length){status.textContent="No kids' live channels are available to test right now. Try the official shows below.";return}
- let cursor=0,found=0;
+ const matches=channels.filter(ch=>sullyKidsLivePattern.test(ch.name+" "+(ch.categories||[]).join(" "))&&sullyKidsChannelLanguage(ch)&&streams.has(ch.id)&&!ch.is_nsfw)
+ .sort((a,b)=>{
+  const rank=ch=>((ch.categories||[]).includes("kids")?10:0)+(/kids|junior|baby|cartoon|preschool/i.test(ch.name)?4:0);
+  return rank(b)-rank(a);
+ }).slice(0,55);
+ if(!matches.length){status.textContent="No matching children's live streams in the current directory. Free official TV options are below.";return}
+ let cursor=0,found=0,checked=0,unknown=0;
+ const addCard=(ch,source)=>{
+  const button=document.createElement("button");button.type="button";button.className="sullyKidsShow sullyKidsLiveCard";
+  const art=document.createElement("span");art.className="sullyKidsFallback";art.textContent="📺";
+  if(logos.has(ch.id)){const image=document.createElement("img");image.className="sullyKidsArt";image.src=logos.get(ch.id);image.alt="";image.onerror=()=>image.remove();button.append(image)}
+  const title=document.createElement("strong");title.textContent=ch.name;
+  const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="▶ Watch here";
+  button.append(art,title,play);
+  button.onclick=()=>{const original=streams.get(ch.id)||[];streams.set(ch.id,[source,...original.filter(s=>s.url!==source.url)]);watchChannel(ch)};
+  grid.append(button);
+ };
  async function worker(){
   while(cursor<matches.length&&grid.isConnected){
-   const ch=matches[cursor++],sources=(streams.get(ch.id)||[]).slice(0,2);
-   let working=null;
+   const ch=matches[cursor++],sources=(streams.get(ch.id)||[]).filter(s=>s.url).slice(0,3);
+   let working=null,uncertain=false;
    for(const source of sources){
+    let result;
     const cache=sullyKidsPlaybackCache.get(source.url);
-    const ok=cache&&Date.now()-cache.at<180000?cache.ok:await sullyKidsTestPlayback(source);
-    sullyKidsPlaybackCache.set(source.url,{ok,at:Date.now()});
-    if(ok){working=source;break}
+    if(cache&&Date.now()-cache.at<180000)result=cache.result;
+    else{
+     result=await sullyKidsTestPlayback(source);
+     sullyKidsPlaybackCache.set(source.url,{result,at:Date.now()});
+    }
+    if(result.state==="verified"){working=source;break}
+    if(result.state==="unknown")uncertain=true;
    }
-   if(working&&grid.isConnected){
-    found++;
-    const button=document.createElement("button");button.type="button";button.className="sullyKidsShow sullyKidsLiveCard";
-    const art=document.createElement("span");art.className="sullyKidsFallback";art.textContent="📺";
-    if(logos.has(ch.id)){const image=document.createElement("img");image.className="sullyKidsArt";image.src=logos.get(ch.id);image.alt="";image.onerror=()=>image.remove();button.append(image)}
-    const title=document.createElement("strong");title.textContent=ch.name;
-    const play=document.createElement("span");play.className="sullyKidsPlay";play.textContent="▶ Watch here";
-    button.append(art,title,play);
-    button.onclick=()=>{const original=streams.get(ch.id)||[];streams.set(ch.id,[working,...original.filter(s=>s.url!==working.url)]);watchChannel(ch)};
-    grid.append(button);
-    status.textContent=found+" working kids' live channel"+(found===1?"":"s")+" found";
-   }
+   checked++;
+   if(working&&grid.isConnected){found++;addCard(ch,working)}
+   else if(uncertain)unknown++;
+   if(grid.isConnected)status.textContent="Checking live TV: "+checked+"/"+matches.length+" channels · "+found+" video-verified"+(unknown?" · "+unknown+" inconclusive":"");
   }
  }
- await Promise.all([worker(),worker()]);
- if(grid.isConnected)status.textContent=found?found+" kids' channels passed a playback test. Tap to watch here.":"No live kids' streams passed the playback test right now. More official shows are below.";
+ await Promise.all(Array.from({length:4},()=>worker()));
+ if(grid.isConnected)status.textContent=found?found+" live channels played actual video during testing. Tap to watch.":("No streams played a verified video frame in this browser ("+checked+" checked"+(unknown?", "+unknown+" inconclusive":"")+"). Official free TV options are below.");
 }
 function sullyKidsRoom(){
  const root=$("content");$("filters").hidden=true;
