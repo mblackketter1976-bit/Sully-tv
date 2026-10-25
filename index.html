@@ -994,6 +994,7 @@ if(tab.includes("Recently Added")&&!c._recent)return false;
 if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
+if(!sullyLanguageMatches(c))return false;
 if(!categoryMatch(c))return false;
 if(!sullySubMatch(c))return false;
 if(tab==="🎬 Movies"&&!sullyMovieGenreMatch(c))return false;
@@ -1137,7 +1138,7 @@ function sullyFanLive(){
  const hub=sullyFanHubs[tab],root=$("content");
  const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
  const re=rules[tab];
- const matches=channels.filter(c=>!unavailable.has(c.id)&&streams.has(c.id)&&re.test(sullyChannelText(c)));
+ const matches=channels.filter(c=>!unavailable.has(c.id)&&streams.has(c.id)&&sullyLanguageMatches(c)&&re.test(sullyChannelText(c)));
  const h=document.createElement("h2");h.textContent="🔴 Live "+hub.name+" TV";root.append(h);
  const p=document.createElement("p");p.className="muted";p.textContent=matches.length?matches.length+" matching live channels available from the public TV directory. Tap Watch to play.":"No matching live channels are currently listed in the public TV directory. Official video searches are below.";root.append(p);
  if(matches.length){const rail=document.createElement("div");rail.className="rail";matches.slice(0,60).forEach(c=>rail.append(card(c)));root.append(rail)}
@@ -1205,7 +1206,7 @@ function sullyDirectory(){
  function draw(){
   const term=sullyDirectoryQuery.toLowerCase().trim();
   const selected=channels.filter(c=>{
-   if(!streams.has(c.id)||unavailable.has(c.id))return false;
+   if(!streams.has(c.id)||unavailable.has(c.id)||!sullyLanguageMatches(c))return false;
    if(sullyDirectoryCountry&&c.country!==sullyDirectoryCountry)return false;
    if(term&&!c.name.toLowerCase().includes(term))return false;
    if(sullyDirectoryGenre!=="All"){
@@ -1235,6 +1236,7 @@ if(tab!=="🏠 Home"){
  const heading=document.createElement("h1");heading.textContent=tab;room.append(heading);
  const desc=document.createElement("p");desc.textContent="Your "+tab.replace(/^[^\\p{L}]+/u,"").trim()+" room · Browse and watch available programs below.";room.append(desc);
  root.append(room);
+ sullyRoomLanguageControls(root);
 }
 
 $("more").hidden=true;
@@ -1742,10 +1744,53 @@ function sullyLanguageLabel(item){
  return "Language: "+lang;
 }
 let sullyEnglishOnly=false;
+let sullySelectedLanguage="all";
+function sullyLangCode(raw){
+ const v=String(raw||"").trim().toLowerCase();
+ if(!v)return "";
+ if(/^(en|eng|english)(-|$)/.test(v))return "en";
+ if(/^(es|spa|spanish|español)(-|$)/.test(v))return "es";
+ if(/^(fr|fra|fre|french)(-|$)/.test(v))return "fr";
+ if(/^(de|ger|deu|german)(-|$)/.test(v))return "de";
+ if(/^(pt|por|portuguese)(-|$)/.test(v))return "pt";
+ if(/^(it|ita|italian)(-|$)/.test(v))return "it";
+ if(/^(ja|jpn|japanese)(-|$)/.test(v))return "ja";
+ if(/^(ko|kor|korean)(-|$)/.test(v))return "ko";
+ if(/^(zh|zho|chi|chinese)(-|$)/.test(v))return "zh";
+ if(/^(hi|hin|hindi)(-|$)/.test(v))return "hi";
+ if(/^(ar|ara|arabic)(-|$)/.test(v))return "ar";
+ if(/^(ru|rus|russian)(-|$)/.test(v))return "ru";
+ return v.split(/[-_]/)[0];
+}
+function sullyItemLanguages(item){
+ const raw=[item.languages,item.language,item.audioLanguage,item.broadcastLanguage].flat().filter(Boolean);
+ return raw.map(sullyLangCode).filter(Boolean);
+}
+function sullyLanguageMatches(item){
+ const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;
+ if(chosen==="all")return true;
+ return sullyItemLanguages(item).includes(chosen);
+}
+function sullyRoomLanguageControls(root){
+ const bar=document.createElement("div");bar.className="sullyRoomLanguages";
+ bar.style.cssText="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 20px;padding:12px;border:1px solid #526582;border-radius:12px;background:#13233b";
+ const english=document.createElement("button");english.type="button";english.textContent="🇺🇸 English Only"+(sullyEnglishOnly?" ✓":"");
+ english.setAttribute("aria-pressed",String(sullyEnglishOnly));
+ english.onclick=()=>{sullyEnglishOnly=!sullyEnglishOnly;if(sullyEnglishOnly)sullySelectedLanguage="en";else sullySelectedLanguage="all";render()};
+ const label=document.createElement("label");label.textContent="🌐 Language: ";label.style.cssText="display:flex;align-items:center;gap:8px";
+ const select=document.createElement("select");select.setAttribute("aria-label","Choose content language");
+ [["all","All languages"],["en","English"],["es","Spanish"],["fr","French"],["de","German"],["pt","Portuguese"],["it","Italian"],["ja","Japanese"],["ko","Korean"],["zh","Chinese"],["hi","Hindi"],["ar","Arabic"],["ru","Russian"]].forEach(([v,t])=>{const o=document.createElement("option");o.value=v;o.textContent=t;select.append(o)});
+ select.value=sullyEnglishOnly?"en":sullySelectedLanguage;
+ select.onchange=()=>{sullySelectedLanguage=select.value;sullyEnglishOnly=select.value==="en";render()};
+ label.append(select);bar.append(english,label);
+ const note=document.createElement("small");note.textContent="Filters by available language metadata; unknown languages are excluded when filtering.";bar.append(note);
+ root.append(bar);
+}
+
 function sullyLanguageFilter(root,rerender){
  const label=document.createElement("label");label.style.cssText="display:flex;gap:8px;align-items:center;margin:12px 0";
  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=sullyEnglishOnly;
- checkbox.onchange=()=>{sullyEnglishOnly=checkbox.checked;rerender()};
+ checkbox.onchange=()=>{sullyEnglishOnly=checkbox.checked;sullySelectedLanguage=checkbox.checked?"en":"all";render()};
  label.append(checkbox,document.createTextNode("English-language only (confirmed)"));root.append(label);
 }
 function sullyPlayableGenre(root,term,scope="all"){
@@ -1769,7 +1814,7 @@ function sullyPlayableGenre(root,term,scope="all"){
    const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
    return tokens.some(t=>hay.includes(t))
   });
-  const visible=found.filter(i=>!sullyEnglishOnly||sullyLanguageLabel(i)==="English");
+  const visible=found.filter(i=>sullyLanguageMatches(i));
   status.textContent=visible.length?visible.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
   visible.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
