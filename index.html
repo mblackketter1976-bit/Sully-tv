@@ -2015,9 +2015,10 @@ if(sourceIndex<sourceList.length){
 setNotice("This stream is slow. Trying another source ("+(sourceIndex+1)+" of "+sourceList.length+")…");
 playSource();
 }else{
-$("now").textContent="Playback unavailable for this channel.";
+console.warn("[Sully TV] All stream sources failed",{channel:current?.name,id:current?.id,sourceCount:sourceList.length});
+$("now").textContent="Playback unavailable: "+(current?.name||"this channel")+".";
 // Keep this channel discoverable; the stream may recover later.
-setNotice("This channel isn\'t responding. This source may block outside playback. Try another channel, or use its official provider website.");
+setNotice("All "+sourceList.length+" listed source(s) failed for "+current.name+". The broadcaster may block embedded playback or the stream may be offline. Try another channel.");
 }
 };
 
