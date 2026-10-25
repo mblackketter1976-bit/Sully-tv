@@ -1102,14 +1102,6 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
  const h=document.createElement("h2");h.textContent="🎞️ "+(subtitle||category)+" — titles to watch";wrap.append(h);
  const status=document.createElement("p");status.className="muted";status.textContent="Looking for directly accessible titles…";wrap.append(status);
  const grid=document.createElement("div");grid.className="sullyLibraryResults";wrap.append(grid);
- const fallback=document.createElement("details");
- const summary=document.createElement("summary");summary.textContent="Other free streaming services (browse their catalogs)";fallback.append(summary);
- const links=document.createElement("div");links.className="sullyProgramButtonGrid";
- const topic=[subtitle&& !/^All /i.test(subtitle)?subtitle:category,"full movie or episode"].filter(Boolean).join(" ");
- [["Tubi","https://tubitv.com/"],["Pluto TV","https://pluto.tv/"],["Plex","https://watch.plex.tv/"],["YouTube","https://www.youtube.com/results?search_query="+encodeURIComponent(topic)],["Internet Archive","https://archive.org/details/movies"]].forEach(([name,url])=>{
-  const a=document.createElement("a");a.className="sullyProgramButton";a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a);
- });
- fallback.append(links);wrap.append(fallback);
  root.append(wrap);
  const roomKey=sullyActiveDiscoveryKey();
  sullyGetProviderTitles().then(items=>{
@@ -1126,7 +1118,7 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
    return !tokens.length||tokens.some(t=>[item.title,...(item.genres||[]),item.kind].join(" ").toLowerCase().includes(t));
   });
   if(!matches.length)return;
-  const label=document.createElement("p");label.className="muted";label.textContent=matches.length+" provider title(s) · Opens the film on its streaming service";wrap.insertBefore(label,grid);
+  const label=document.createElement("p");label.className="muted";label.textContent=matches.length+" available title link(s)";wrap.insertBefore(label,grid);
   matches.forEach(item=>{
    const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
    const name=document.createElement("strong");name.textContent="▶ "+item.title+" ("+item.year+")";
@@ -1151,7 +1143,8 @@ function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
    const hay=[item.title,item.description,item.kind,...(item.genres||[])].join(" ").toLowerCase();
    return !tokens.length||tokens.some(t=>hay.includes(t));
   });
-  status.textContent=found.length?found.length+" available title(s) — tap one to watch directly":"No verified individual titles for this category yet. Automatic discovery will add them when available.";
+  if(!found.length){status.remove();if(!grid.children.length){setTimeout(()=>{if(wrap.isConnected&&!grid.children.length)wrap.remove()},400)}return;}
+  status.textContent=found.length+" available title(s) — tap one to watch directly";
   found.slice(0,80).forEach(item=>{
    const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.playback.url;a.target="_blank";a.rel="noopener noreferrer";
    const title=document.createElement("strong");title.textContent="▶ "+item.title;
@@ -1695,17 +1688,6 @@ if(!list.length&&tab!=="🎬 Movies"){
  if(alternatives.length){const h=document.createElement("h2");h.textContent="🔴 Other live channels";root.append(h);const rail=document.createElement("div");rail.className="rail";alternatives.forEach(c=>rail.append(card(c)));root.append(rail)}
 }
 
-if(tab==="💖 Nicol's Station"){
- const label=document.createElement("h2");label.textContent="More ways to find Nicol's favorites";root.append(label);
- if(tab==="💖 Nicol's Station"){
- const panel=document.createElement("div");panel.className="panel";
- const h=document.createElement("h3");h.textContent="💖 Nicol's favorites";panel.append(h);
- const p=document.createElement("p");p.textContent="Reality competitions, ranch dramas, romantic movies and Lifetime-style stories. Live channel filters appear above; find specific shows using the official services below.";panel.append(p);
- const links=document.createElement("div");links.className="sullyOfficialLinks";
- [["Search Yellowstone / Dutton Ranch","https://www.youtube.com/results?search_query=Yellowstone+Dutton+Ranch+official+clips"],["Search Steel Magnolias","https://www.youtube.com/results?search_query=Steel+Magnolias+official+trailer"],["Lifetime Official","https://www.youtube.com/@Lifetime"],["Reality Shows","https://www.youtube.com/results?search_query=official+reality+competition+shows"]].forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a)});
- panel.append(links);root.append(panel);
-}
-}
 if(tab==="🍥 Summy's Anime")root.append(sullyOfficialAnime());
 
 if(list.length>(page+1)*60){
@@ -2230,7 +2212,7 @@ function sullyPlayableGenre(root,term,scope="all"){
    return tokens.some(t=>hay.includes(t))
   });
   const visible=found.filter(i=>sullyLanguageMatches(i));
-  if(scope==="movie"&&!visible.length){section.remove();return;}
+  if(!visible.length){section.remove();return;}
   status.textContent=visible.length?visible.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
   visible.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
