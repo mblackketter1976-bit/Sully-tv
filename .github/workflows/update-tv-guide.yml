@@ -1,0 +1,35 @@
+name: Update sourced TV Guide
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/update_tv_guide.py'
+      - '.github/workflows/update-tv-guide.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sully-epg-update
+  cancel-in-progress: false
+jobs:
+  guide:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch and validate public XMLTV guide sources
+        run: python scripts/update_tv_guide.py
+      - name: Publish schedule updates
+        run: |
+          if ! git diff --quiet -- data/tv-guide.json; then
+            git config user.name "sully-guide-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/tv-guide.json
+            git commit -m "Refresh sourced TV Guide program listings"
+            git push
+          fi
