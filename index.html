@@ -215,6 +215,16 @@ header .guideCompact{background:rgba(2,12,33,.72);border-radius:12px;padding:6px
 header .installCompact{background:rgba(3,15,43,.78);border-color:#d8a94d}
 @media(max-width:600px){header{background-size:auto 100%;background-position:center center}header .top{background:rgba(2,12,36,.76)}}
 
+
+/* Keep the entire cinematic logo unobstructed, with controls below the artwork */
+header{position:relative;background:#071733!important;padding:0 0 12px!important}
+header::before{content:"";display:block;width:100%;aspect-ratio:2048 / 768;background:#061739 url("./wide_cinematic_high_gloss_fantasy_luxury_logo_b.png") center center / contain no-repeat;border-bottom:2px solid #d9a54a}
+header .top{margin:10px 12px 0!important;background:linear-gradient(120deg,#102448,#0a1b37)!important;border:1px solid #a9864d80;border-radius:13px;padding:10px;backdrop-filter:none!important}
+header .top .sesBrand{display:none!important}
+header .guideCompact{margin:9px 12px 0!important;background:transparent}
+header .top>div:first-child{width:100%}
+@media(max-width:600px){header{background:#071733!important}header::before{background-size:contain;aspect-ratio:2048 / 768}header .top{margin:8px 8px 0!important}header .guideCompact{margin:8px 8px 0!important}}
+
 </style>
 </head>
 <body>
