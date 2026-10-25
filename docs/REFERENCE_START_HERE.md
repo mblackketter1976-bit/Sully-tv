@@ -35,6 +35,22 @@ Expanded rules:
 ## Owner's intent and expectations
 The owner will improve the hardware/workshop over time and wants the assistant to research what equipment will help most, find reasonable prices, and avoid unnecessary purchases. The assistant should take concrete action where tools permit, write code and run tests, explain limitations accurately, and not replace action with repeated roadmaps.
 
+## Mandatory build-or-adopt registry (owner directive, 2026-10-25)
+**Default question for every component, feature, service, pipeline, and tool:** "Can we build it, and can we build it better?" Begin with **yes as the ambition**, then investigate **how** and prove the result; never claim an untested improvement is already better.
+
+**Before deciding to adopt an existing system or write our own, SEE the existing system.** Inspect its actual user interface, workflows, output, source code/architecture where accessible, documentation, and real behavior. Use demos, screenshots, repository review, or hands-on tests as available; record what was actually observed versus inferred. Do not make the build-versus-adopt decision from a marketing description or guess.
+
+For each significant candidate, add a row/entry in `docs/BUILD_OR_ADOPT_REGISTRY.md` recording:
+1. The capability we need and quality target.
+2. The existing system(s), links, and whether we actually inspected the interface, source, demos, or live behavior.
+3. What works well, what fails, and why users struggle.
+4. Legal rights, license, commercial use, cost, privacy, dependencies and lock-in.
+5. Whether we can build it better, and **how** (specific design and measurable acceptance tests).
+6. Decision: USE THEIRS / EXTEND THEIRS / BUILD OUR OWN / HYBRID / RESEARCH PENDING, with rationale.
+7. Prototype, test evidence, performance/quality comparisons, and next review date or trigger.
+
+**Decision gate:** inspect -> compare -> decide -> prototype -> test -> adopt or build. Prefer the simplest reliable, legal, zero-cost solution that achieves superior user experience and long-term independence. Revisit decisions when new evidence emerges. Preserve working systems during comparisons.
+
 ## Known projects
 - **Sully TV:** existing GitHub Pages streaming project in repository mblackketter1976-bit/Sully-tv. Preserve channels, Michele's Murder Mystery Channel (one 'l'), Luna's YouTube content, language controls, themes, and cross-device experience. Browser-local DVR does NOT continue after browser closure; true background recording requires a legitimate persistent recording service and suitable rights. Preserve working features while improving.
 - **Luna Animation / Sully Creative Engine:** professional full-featured 2D/3D modeling, rigging, simulation, rendering, audio/video and editing platform ambition. Luna is a female French bulldog with vivid blue eyes, bright pure-white base coat, light and dark grey merle patches, erect ears, compact build and a not-overly-jowly face. Approved character artwork exists in prior project context but may not be locally available; don't claim access without verification. A convincing articulated walk cycle with planted/lifted paws, weight transfer and consistent appearance is a first quality gate. Previous camera pan, still-image swelling and crude sketch filters were rejected.
