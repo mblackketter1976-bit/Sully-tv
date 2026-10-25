@@ -1675,8 +1675,15 @@ for(const opt of $("country").options)country.add(new Option(opt.text,opt.value)
 country.value=$("country").value;
 const category=document.createElement("select");category.setAttribute("aria-label","Guide category");
 ["All Categories","News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"].forEach(x=>category.add(new Option(x,x)));
+const language=document.createElement("select");language.setAttribute("aria-label","Guide language");
+[["all","All Languages"],["en","English"],["es","Spanish"],["fr","French"],["de","German"],["pt","Portuguese"],["it","Italian"],["ja","Japanese"],["ko","Korean"],["zh","Chinese"],["hi","Hindi"],["ar","Arabic"],["ru","Russian"],["unknown","Unknown / unverified"]].forEach(([v,n])=>language.add(new Option(n,v)));
+language.value=sullyEnglishOnly?"en":sullySelectedLanguage;
+const countries=[...new Set(channels.map(c=>String(c.country||"").trim().toUpperCase()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+country.replaceChildren(new Option("All Countries",""));
+countries.forEach(code=>country.add(new Option(code,code)));
+country.value="";
 const count=document.createElement("span");count.className="muted";
-controls.append(search,country,category,count);root.append(controls);
+controls.append(search,category,country,language,count);root.append(controls);
 const grid=document.createElement("div");grid.className="sullyCompactGuide";root.append(grid);
 const more=document.createElement("button");more.className="watch";more.textContent="Show more channels";root.append(more);
 let limit=48;
@@ -1695,7 +1702,16 @@ function group(c){
 function draw(){
  grid.replaceChildren();
  const q=search.value.trim().toLowerCase();
- const matches=channels.filter(c=>!unavailable.has(c.id)&&(!country.value||c.country===country.value)&&(!q||c.name.toLowerCase().includes(q))&&(category.value==="All Categories"||group(c)===category.value));
+ const matches=channels.filter(c=>{
+ if(unavailable.has(c.id))return false;
+ if(country.value&&String(c.country||"").toUpperCase()!==country.value)return false;
+ if(q&&!c.name.toLowerCase().includes(q))return false;
+ if(category.value!=="All Categories"&&group(c)!==category.value)return false;
+ const detected=sullyDetectLanguage(c);
+ if(language.value==="unknown")return detected.confidence==="unknown";
+ if(language.value!=="all"&&!detected.codes.includes(language.value))return false;
+ return true;
+}).sort((a,b)=>group(a).localeCompare(group(b))||String(a.country||"").localeCompare(String(b.country||""))||a.name.localeCompare(b.name));
  const visible=matches.slice(0,limit);
  count.textContent=matches.length.toLocaleString()+" channels · showing "+visible.length;
  const sections=category.value==="All Categories"?["News","Sports","Movies","Entertainment","Kids","Music","Documentaries","Comedy","Other"]:[category.value];
@@ -1710,13 +1726,13 @@ function draw(){
    const logo=c.logo||c.tvgLogo||c.image||"";
    if(logo&&/^https?:\/\//.test(logo)){img.src=logo;img.onerror=()=>img.remove();card.append(img);}
    const name=document.createElement("strong");name.textContent=c.name;
-   const badge=document.createElement("small");badge.textContent="▶ Live";card.append(name,badge);shelf.append(card);
+   const badge=document.createElement("small");badge.textContent="▶ Live · "+(c.country||"??")+" · "+(sullyDetectLanguage(c).codes.map(x=>sullyLanguageNames[x]||x).join("/")||"Language ?");card.append(name,badge);shelf.append(card);
   });
  });
  more.hidden=limit>=matches.length;more.textContent="Show more channels ("+(matches.length-visible.length)+" remaining)";
 }
 more.onclick=()=>{limit+=48;draw();};
-[search,country,category].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=48;draw();}));
+[search,country,category,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=48;draw();}));
 draw();
 }
 
