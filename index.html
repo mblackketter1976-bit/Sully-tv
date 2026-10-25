@@ -575,6 +575,22 @@ body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyRoomHeading,
 body[data-sully-theme]:not([data-sully-theme="classic"]) .panel{backdrop-filter:blur(9px);box-shadow:0 6px 25px #0007}
 body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyPlatformTile{backdrop-filter:none}
 @media(max-width:750px){body[data-sully-theme]:not([data-sully-theme="classic"]){background-attachment:scroll!important;background-size:cover!important}body[data-sully-theme]:not([data-sully-theme="classic"])::before{content:"";position:fixed;inset:0;background-image:linear-gradient(180deg,#0207136b,#02071391),var(--sully-photo);background-size:cover;background-position:center;pointer-events:none;z-index:0}}
+</style><style id="sullyThemePickerCompact2026">
+/* Compact theme picker: use the existing panel efficiently without moving site content. */
+header #sullyQuickPanel:has(.sullyThemeChooser){max-width:960px;width:min(96%,960px);padding:14px 16px 12px;margin:8px auto 5px;text-align:left}
+#sullyQuickPanel .sullyThemeHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+#sullyQuickPanel .sullyThemeHeader strong{font-size:17px}
+#sullyQuickPanel .sullyThemeHeader small{opacity:.8;font-size:12px}
+#sullyQuickPanel .sullyThemeChooser{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
+header #sullyQuickPanel .sullyThemeChooser button{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:2px;min-height:108px;padding:12px!important;margin:0!important;overflow:hidden;border:1px solid #ffffff70!important;border-radius:13px!important;text-shadow:0 1px 5px #000,0 1px 10px #000;box-shadow:inset 0 -55px 45px #0009,0 3px 12px #0005;background-image:linear-gradient(0deg,#0008,#0001),var(--sully-theme-preview)!important;background-position:center!important;background-size:cover!important;background-color:#24394d!important;color:white!important;transition:transform .18s,filter .18s}
+header #sullyQuickPanel .sullyThemeChooser button:hover{transform:translateY(-2px);filter:brightness(1.14)}
+header #sullyQuickPanel .sullyThemeChooser button[aria-pressed=true]{outline:3px solid #ffcf77!important;outline-offset:1px}
+#sullyQuickPanel .sullyThemeChooser button strong{font-size:16px;line-height:1.2}
+#sullyQuickPanel .sullyThemeChooser button small{font-size:11px;opacity:.95}
+#sullyQuickPanel .sullyThemeFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap}
+#sullyQuickPanel .sullyThemeFooter span{font-size:12px;opacity:.85}
+header #sullyQuickPanel .sullyThemeFooter button{margin:0!important;min-height:36px}
+@media(max-width:680px){#sullyQuickPanel .sullyThemeChooser{grid-template-columns:repeat(2,minmax(0,1fr))}header #sullyQuickPanel .sullyThemeChooser button{min-height:92px}#sullyQuickPanel .sullyThemeHeader strong{font-size:15px}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2112,21 +2128,37 @@ function sullyApplyTheme(id){
  sullyRefreshScene();
  try{localStorage.setItem("sully-appearance-theme",selected)}catch(e){}
 }
+const sullyThemePreviews={
+ classic:"linear-gradient(140deg,#102849,#294d73)",
+ space:"url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=450&q=65')",
+ rain:"url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=450&q=65')",
+ snow:"url('https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=450&q=65')",
+ sunshine:"url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=450&q=65')",
+ ocean:"url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=450&q=65')",
+ forest:"url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=450&q=65')",
+ retro:"linear-gradient(130deg,#1b153b,#6e358c 60%,#f26aa1)"
+};
 function openSullyThemes(){
- const p=$("sullyQuickPanel");
- p.hidden=false;p.dataset.panel="sullyThemes";p.replaceChildren();
+ const p=$("sullyQuickPanel");p.hidden=false;p.dataset.panel="sullyThemes";p.replaceChildren();
+ const head=document.createElement("div");head.className="sullyThemeHeader";
  const title=document.createElement("strong");title.textContent="🎨 Choose Your Sully TV Look";
- const desc=document.createElement("p");desc.textContent="Change colors, buttons and backgrounds without moving any controls or banners. Saved on this device.";
+ const hint=document.createElement("small");hint.textContent="Preview a scene • Click to apply instantly";
+ head.append(title,hint);
  const grid=document.createElement("div");grid.className="sullyThemeChooser";
+ const footer=document.createElement("div");footer.className="sullyThemeFooter";
+ const status=document.createElement("span");status.setAttribute("aria-live","polite");
+ const selected=sullyThemeOptions.find(x=>x[0]===document.body.dataset.sullyTheme);
+ status.textContent="Current: "+(selected?selected[1]:"Original")+" · Saved on this device";
  sullyThemeOptions.forEach(([id,name,detail])=>{
   const b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",String(document.body.dataset.sullyTheme===id));
+  b.style.setProperty("--sully-theme-preview",sullyThemePreviews[id]);
   const label=document.createElement("strong");label.textContent=name;
   const sub=document.createElement("small");sub.textContent=detail;b.append(label,sub);
-  b.onclick=()=>{sullyApplyTheme(id);grid.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))};
+  b.onclick=()=>{sullyApplyTheme(id);grid.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));status.textContent="Current: "+name+" · Saved on this device"};
   grid.append(b);
  });
- const close=document.createElement("button");close.type="button";close.textContent="Close";close.onclick=closeSullyPanel;
- p.append(title,desc,grid,close);
+ const close=document.createElement("button");close.type="button";close.textContent="Done ✓";close.onclick=closeSullyPanel;
+ footer.append(status,close);p.append(head,grid,footer);
 }
 try{sullyApplyTheme(localStorage.getItem("sully-appearance-theme")||"classic")}catch(e){sullyApplyTheme("classic")}
 function openSullySettings(){
