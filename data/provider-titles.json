@@ -1,0 +1,33 @@
+{
+  "updated": "2026-10-24",
+  "description": "Verified provider title pages; availability varies by region and subscription. Links open providers, not hosted video.",
+  "items": [
+    {
+      "id": "netflix-murder-mystery-2019",
+      "title": "Murder Mystery",
+      "year": 2019,
+      "kind": "movie",
+      "genres": [
+        "Comedy",
+        "Mystery",
+        "Action"
+      ],
+      "provider": "Netflix",
+      "access": "Subscription",
+      "url": "https://www.netflix.com/title/80242619"
+    },
+    {
+      "id": "netflix-the-wrong-missy-2020",
+      "title": "The Wrong Missy",
+      "year": 2020,
+      "kind": "movie",
+      "genres": [
+        "Comedy",
+        "Romance"
+      ],
+      "provider": "Netflix",
+      "access": "Subscription",
+      "url": "https://www.netflix.com/title/81033865"
+    }
+  ]
+}
