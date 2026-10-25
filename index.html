@@ -353,6 +353,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyServicePrefs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}.sullyServicePrefs label{display:flex;align-items:center;gap:4px;background:#263d5e;color:white;border:1px solid #647c9a;padding:9px;border-radius:10px;font-size:13px}.sullyServicePrefs input{width:17px;height:17px;accent-color:#f0c76b}.sullyServiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyServiceCard{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #657d9c;border-radius:12px;background:#1a304f;color:white}.sullyServiceStatus{font-size:11px;color:#e9d29c}.sullyServiceActions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}.sullyServiceActions a{padding:9px;border-radius:8px;background:#315d8c;border:1px solid #bdab80;color:white;text-decoration:none;font-size:12px;font-weight:700}.sullyServiceActions a:last-child:not(:first-child){background:#664622}@media(min-width:750px){.sullyServiceGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .sullyServiceActions button{padding:11px 13px;border-radius:9px;background:#315d8c;color:#fff;border:1px solid #bdab80;font-weight:800}
 .sullyCatalogResults{margin:14px 0;padding:14px;border:1px solid #657d9c;border-radius:13px;background:#172a47}.sullyCatalogCard{display:flex;align-items:center;gap:12px;border-bottom:1px solid #3e526d;padding:9px 0}.sullyCatalogCard img{width:65px;height:88px;object-fit:cover;border-radius:6px}.sullyCatalogDetails{display:flex;flex-direction:column;gap:6px}.sullyCatalogDetails span{font-size:12px;color:#c8d5e7}.sullyCatalogDetails a{font-size:12px;color:#f3d38b}.sullyCatalogResults small{font-size:11px;color:#b5c5dc}
+.sullyInfoOverlay{position:fixed;inset:0;background:#000c;z-index:9999;display:flex;align-items:center;justify-content:center;padding:14px}.sullyInfoPanel{position:relative;background:#162c4c;color:white;border:2px solid #d5b777;border-radius:16px;padding:22px;max-width:530px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 15px 45px #000a}.sullyInfoClose{float:right;padding:9px;border-radius:8px}.sullyInfoLogo{display:block;max-width:160px;max-height:100px;object-fit:contain;margin:12px 0}.sullyInfoBtn{padding:9px 10px;border-radius:8px;border:1px solid #bdab80;background:#244a75;color:white;font-weight:700}
 </style>
 </head>
 <body>
@@ -950,6 +951,24 @@ list.sort((a,b)=>score(b)-score(a));
 return list;
 }
 
+
+function sullyChannelInfo(c){
+ const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";overlay.setAttribute("role","dialog");overlay.setAttribute("aria-modal","true");overlay.setAttribute("aria-label","Channel information");
+ const panel=document.createElement("div");panel.className="sullyInfoPanel";
+ const close=document.createElement("button");close.className="sullyInfoClose";close.textContent="✕ Close";close.onclick=()=>overlay.remove();panel.append(close);
+ const h=document.createElement("h2");h.textContent="ⓘ "+c.name;panel.append(h);
+ const logo=logos.get(c.id);if(logo){const img=document.createElement("img");img.className="sullyInfoLogo";img.src=logo;img.alt="Channel logo";img.onerror=()=>img.remove();panel.append(img)}
+ const meta=document.createElement("p");meta.textContent="🔴 Live TV · "+(c.countryName||c.country||"Worldwide");panel.append(meta);
+ const genres=document.createElement("p");genres.textContent="Categories: "+((c.categories||[]).join(", ")||"Not specified");panel.append(genres);
+ const schedule=document.createElement("div");schedule.className="panel";schedule.textContent="Now playing: Program details aren't available for this channel yet. Sully TV won't guess the show or episode.";panel.append(schedule);
+ const controls=document.createElement("div");controls.className="sullyServiceActions";
+ const watch=document.createElement("button");watch.textContent="▶ Watch Channel";watch.onclick=()=>{overlay.remove();watchChannel(c)};controls.append(watch);
+ const search=document.createElement("button");search.textContent="🔎 Search Channel";search.onclick=()=>{overlay.remove();$("search").value=c.name;sullyTitleSearch(c.name);jumpToCategory()};controls.append(search);
+ panel.append(controls);overlay.append(panel);
+ overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
+ document.body.append(overlay);close.focus();
+}
+
 function card(c){
 const el=document.createElement("div");
 el.className="card";
@@ -998,7 +1017,8 @@ saveState();
 render();
 };
 
-actions.append(play,save);
+const about=document.createElement("button");about.className="sullyInfoBtn";about.textContent="ⓘ Info";about.setAttribute("aria-label","Information about "+c.name);about.onclick=()=>sullyChannelInfo(c);
+actions.append(play,about,save);
 info.append(title,sub,actions);
 el.append(art,info);
 return el;
