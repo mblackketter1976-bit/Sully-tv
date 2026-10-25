@@ -782,7 +782,21 @@ body[data-sully-theme]:not([data-sully-theme="classic"]) .hero{background-color:
 body[data-sully-theme]:not([data-sully-theme="classic"]) nav button,
 body[data-sully-theme]:not([data-sully-theme="classic"]) .tool{background-color:rgba(24,41,66,.68)!important;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
 @media(max-width:700px){body[data-sully-theme="space"] .sullySpaceMoon{width:42vw!important;left:-8%!important}body[data-sully-theme="space"] .sullySpaceSaturn{width:95vw!important;right:-24%!important}}
-</style></head>
+<style id="sullyMoonNoVoid2026">/* Moon image: crop to the actual lunar disk; no black photographic rectangle or halo. */
+body[data-sully-theme="space"] .sullySpaceMoon{
+ background-image:radial-gradient(circle at 74% 64%,rgba(0,0,0,.38),transparent 62%),url("https://www.solarsystemscope.com/textures/download/2k_moon.jpg")!important;
+ background-size:cover,200% 100%!important;
+ background-position:center,48% center!important;
+ background-repeat:no-repeat!important;
+ border-radius:50%!important;
+ mask-image:circle(49.5% at 50% 50%)!important;
+ -webkit-mask-image:circle(49.5% at 50% 50%)!important;
+ mix-blend-mode:normal!important;
+ filter:brightness(1.08) contrast(1.08)!important;
+ box-shadow:none!important;
+ opacity:1!important;
+}
+</style></style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
 <div id="sullySpaceWorld" aria-hidden="true"><div class="sullySpaceSun"></div><div class="sullySpaceMoon"></div><div class="sullySpaceSaturn"><div class="sullySaturnBackRing"></div><div class="sullySaturnGlobe"></div><div class="sullySaturnFrontRing"></div></div></div>
