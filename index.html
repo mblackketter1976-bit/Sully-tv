@@ -1290,7 +1290,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanHub();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();try{sullyFanLive()}catch(e){console.warn("Live channel list unavailable",e)}return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
