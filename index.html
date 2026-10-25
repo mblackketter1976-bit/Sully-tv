@@ -631,7 +631,7 @@ function categoryMatch(c){
 const text=(c.name+" "+(c.categories||[]).join(" ")).toLowerCase();
 
 if(tab.includes("Nicol"))
-return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|family|romance|drama|music|entertainment|lifestyle|reality|talent|home|classic/.test(text);
+return /shopping|jewel|fashion|beauty|qvc|hsn|country|western|ranch|cowboy|rodeo|family|romance|romantic|drama|lifetime|music|entertainment|lifestyle|reality|talent|competition|dating|survivor|housewives|home|classic|movie|film/.test(text);
 
 if(tab.includes("Horror"))
 return /horror|ghost|paranormal|thriller|mystery|scary|suspense|monster/.test(text);
@@ -707,7 +707,7 @@ const sullySubcategories={
  "📍 Local News":[["All News",null],["Local",/local|regional|city|county/],["Weather",/weather|forecast|meteorolog/],["Politics",/politic|government|capitol|congress/],["Business",/business|finance|market|econom/],["World",/world|global|international/]],
  "👻 Robinson's Horror Channel":[["All Horror",null],["Paranormal",/paranormal|ghost|haunt|spirit/],["Monsters",/monster|creature|vampire|zombie/],["Thrillers",/thriller|suspense|mystery/],["Classic Horror",/classic|vintage|retro|old.horror/]],
  "🔎 Michele's Murder Mystery Channel":[["All Mysteries",null],["Unsolved",/unsolved|cold.case|missing/],["Police",/police|cops|sheriff|bodycam|body.cam/],["Investigations",/investigat|detective|forensic|evidence/],["Courtroom",/court|trial|justice|law/],["Serial Killers",/serial.killer|murder|homicide/]],
- "💖 Nicol's Station":[["All Nicol's",null],["Shopping",/shopping|qvc|hsn|retail/],["Fashion & Beauty",/fashion|beauty|jewel|style/],["Romance",/romance|romantic|love|drama/],["Country",/country|western|ranch/],["Home & Lifestyle",/home|lifestyle|family|garden/],["Music",/music|concert|talent|sing/]],
+ "💖 Nicol's Station":[["All Nicol's",null],["Reality Shows",/reality|competition|talent|survivor|housewives|dating|unscripted|game.show/],["Ranch & Western",/ranch|western|cowboy|country|yellowstone|dutton|rodeo/],["Lifetime-Style Movies",/lifetime|romance|romantic|drama|family.movie|women|heartwarming|love.stor/],["Romantic Dramas",/romance|romantic|drama|love.stor/],["Competition Shows",/competition|contest|talent|voice|survivor|game.show/],["Shopping",/shopping|qvc|hsn|retail/],["Fashion & Beauty",/fashion|beauty|jewel|style/],["Home & Lifestyle",/home|lifestyle|family|garden/],["Music",/music|concert|talent|sing/]],
  "🌎 Worldwide":[["All Worldwide",null],["News",/news|world|international/],["Music",/music|radio|concert/],["Sports",/sport|football|soccer|basketball/],["Movies",/movie|film|cinema/],["Culture",/culture|travel|heritage|history/]],
  "🇺🇸 USA":[["All USA",null],["News",/news|weather/],["Sports",/sport|football|baseball|basketball/],["Movies",/movie|film|cinema/],["Music",/music|concert|radio/],["Kids",/kids|children|cartoon|family/]],
  "⭐ Featured":[["All Featured",null],["Movies",/movie|film|cinema/],["Sports",/sport|football|basketball/],["News",/news|weather/],["Entertainment",/entertainment|music|reality|comedy/]]
@@ -907,6 +907,14 @@ root.append(rail);
 }
 }
 
+if(tab==="💖 Nicol's Station"){
+ const panel=document.createElement("div");panel.className="panel";
+ const h=document.createElement("h3");h.textContent="💖 Nicol's favorites";panel.append(h);
+ const p=document.createElement("p");p.textContent="Reality competitions, ranch dramas, romantic movies and Lifetime-style stories. Live channel filters appear above; find specific shows using the official services below.";panel.append(p);
+ const links=document.createElement("div");links.className="sullyOfficialLinks";
+ [["Search Yellowstone / Dutton Ranch","https://www.youtube.com/results?search_query=Yellowstone+Dutton+Ranch+official+clips"],["Search Steel Magnolias","https://www.youtube.com/results?search_query=Steel+Magnolias+official+trailer"],["Lifetime Official","https://www.youtube.com/@Lifetime"],["Reality Shows","https://www.youtube.com/results?search_query=official+reality+competition+shows"]].forEach(([name,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=name+" ↗";links.append(a)});
+ panel.append(links);root.append(panel);
+}
 if(tab.includes("Michele")){
 const panel=document.createElement("div");
 panel.className="panel";
