@@ -6,6 +6,7 @@ on:
       - 'scripts/sully_epg_engine.py'
       - 'tests/**'
       - 'scripts/update_tv_guide.py'
+      - 'scripts/tvmaze_guide.py'
       - 'index.html'
       - 'data/guide-sources.json'
       - '.github/workflows/sully-epg-tests.yml'

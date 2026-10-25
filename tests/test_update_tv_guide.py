@@ -86,3 +86,11 @@ class TestUpdate(unittest.TestCase):
                                     Path(folder) / 'guide.json', fetcher, NOW)
             self.assertEqual(report['status'], 'updated')
             self.assertEqual(report['programmes'], 1)
+
+    def test_rate_limit_retries_are_bounded(self):
+        import urllib.error
+        error = urllib.error.HTTPError('https://example.invalid',429,'rate limit',{},None)
+        with patch.object(updater.urllib.request,'urlopen',side_effect=error) as request, patch.object(updater.time,'sleep') as sleep:
+            with self.assertRaises(urllib.error.HTTPError): updater.fetch('https://example.invalid')
+            self.assertEqual(request.call_count,3)
+            self.assertEqual([call.args[0] for call in sleep.call_args_list],[1,2])

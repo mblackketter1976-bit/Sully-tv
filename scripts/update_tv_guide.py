@@ -8,9 +8,12 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import time
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from urllib.parse import urlsplit
+from tvmaze_guide import collect as collect_tvmaze
 from sully_epg_engine import MAX_XML_BYTES, normalize, to_sully_tv_guide
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,10 +24,18 @@ def fetch(url):
     if urlsplit(url).scheme != 'https':
         raise ValueError('HTTPS required')
     request = urllib.request.Request(url, headers={'User-Agent': 'SullyTV-Guide/2.0'})
-    with urllib.request.urlopen(request, timeout=24) as response:
-        if urlsplit(response.geturl()).scheme != 'https':
-            raise ValueError('HTTPS redirect required')
-        raw = response.read(MAX_DOWNLOAD + 1)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=24) as response:
+                if urlsplit(response.geturl()).scheme != 'https':
+                    raise ValueError('HTTPS redirect required')
+                raw = response.read(MAX_DOWNLOAD + 1)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {429,500,502,503,504} or attempt == 2:
+                raise
+            exc.close()
+            time.sleep(2**attempt)
     if len(raw) > MAX_DOWNLOAD:
         raise ValueError('Compressed guide exceeds byte limit')
     if raw.startswith(b'\x1f\x8b'):
@@ -73,7 +84,8 @@ def update(registry, destination, fetcher=fetch, now=None):
             reports.append({'source': source, 'status': 'rights-unverified'})
             continue
         try:
-            normalized = normalize(fetcher(provider['url']), provider['channelMap'], source)
+            normalized = (collect_tvmaze(provider, fetcher, now) if provider.get('type') == 'tvmaze'
+                          else normalize(fetcher(provider['url']), provider['channelMap'], source))
             accepted = 0
             for channel, programmes in normalized['channels'].items():
                 for programme in programmes:
@@ -91,7 +103,9 @@ def update(registry, destination, fetcher=fetch, now=None):
             if accepted:
                 attribution[source] = {'name': provider.get('name', source),
                                        'url': rights['evidenceUrl'],
-                                       'attribution': rights.get('attribution', '')}
+                                       'attribution': rights.get('attribution', ''),
+                                       'license': rights.get('license', ''),
+                                       'coverage': provider.get('coverage', '')}
             reports.append({'source': source, 'status': 'accepted' if accepted else 'no-current-listings',
                             'programmes': accepted})
         except (OSError, ValueError, KeyError, EOFError, ET.ParseError) as exc:

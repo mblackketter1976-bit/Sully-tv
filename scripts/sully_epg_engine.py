@@ -105,6 +105,8 @@ def to_sully_tv_guide(normalized: dict, generated_at: datetime | None = None) ->
                 continue
             valid.append({"title": programme["title"], "start": programme["start"],
                           "end": programme["stop"], "source": programme["source"]})
+            if isinstance(programme.get("url"), str):
+                valid[-1]["url"] = programme["url"]
         if valid:
             channels[channel_id] = valid
     sources = {}

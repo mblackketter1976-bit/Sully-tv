@@ -9,6 +9,7 @@ on:
       - 'scripts/update_tv_guide.py'
       - '.github/workflows/update-tv-guide.yml'
       - 'scripts/sully_epg_engine.py'
+      - 'scripts/tvmaze_guide.py'
       - 'data/guide-sources.json'
 permissions:
   contents: read
