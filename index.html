@@ -378,6 +378,7 @@ header #viewer{flex-basis:100%;width:100%;order:1;margin:12px 0;box-sizing:borde
 header .sullySearchForm{order:2}
 header .top{flex-wrap:wrap}
 .sullyDirectoryControls{padding:16px;border:1px solid #bd9858;border-radius:14px;background:#142943;margin:12px 0}.sullyDirectoryFilters{display:flex;flex-wrap:wrap;gap:10px}.sullyDirectoryFilters>*{flex:1 1 170px;min-width:0;padding:12px;border-radius:9px;background:#0b1930;color:white;border:1px solid #b8965a}
+.sullyInventoryCounter{font-size:clamp(17px,2vw,23px);font-weight:800;color:#f5d18c;background:#162c4a;border:1px solid #c49d5d;border-radius:12px;padding:15px 18px;margin:14px 0}
 </style>
 </head>
 <body>
@@ -1794,6 +1795,7 @@ async function renderLibrary(){
  const root=$("content");
  const heading=document.createElement("h2");heading.textContent="📚 Sully TV Library";root.append(heading);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Browse the playable collection alphabetically. Titles beginning with A or The are filed under the next word (The Adventures → A).";root.append(intro);
+ const inventory=document.createElement("div");inventory.className="sullyInventoryCounter";inventory.setAttribute("aria-live","polite");inventory.textContent="Checking current inventory…";root.append(inventory);
  const alphabet=document.createElement("div");alphabet.className="sullyAlphabet";root.append(alphabet);
  const count=document.createElement("p");count.className="muted";root.append(count);
  const results=document.createElement("div");results.className="sullyLibraryResults";root.append(results);
@@ -1804,6 +1806,8 @@ async function renderLibrary(){
   const data=await response.json();
   if(tab!=="📚 Library")return;
   const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
+  const movies=items.filter(x=>String(x.kind||"").toLowerCase()==="movie").length;
+  inventory.textContent="📚 "+items.length.toLocaleString()+" playable titles  •  🎬 "+movies.toLocaleString()+" classified movies";
   const letters=["All",..."ABCDEFGHIJKLMNOPQRSTUVWXYZ","#"];
   function paint(){
    alphabet.replaceChildren();results.replaceChildren();
