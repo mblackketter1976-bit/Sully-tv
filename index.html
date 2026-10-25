@@ -1837,25 +1837,49 @@ function sullyViewerRegion(){
  if(match)return {country:match[1].toUpperCase(),source:"device language/region"};
  return {country:null,source:"unknown"};
 }
+let sullySurpriseSession=null;
+function sullySurpriseCandidates(region,original){
+ if(!region.country)return [];
+ const target=original||null;
+ const category=target?new Set(target.categories||[]):new Set();
+ const name=String(target?.name||"").toLowerCase();
+ const words=name.split(/[^a-z0-9]+/).filter(w=>w.length>3&&!["channel","television","network","live"].includes(w));
+ return channels.filter(c=>String(c.country||"").toUpperCase()===region.country&&streams.has(c.id)&&!unavailable.has(c.id)&&!sullyFailed(c.id)&&(!target||c.id!==target.id)&&sullyLanguageMatches(c)).map(c=>{
+  const shared=(c.categories||[]).filter(x=>category.has(x)).length;
+  const overlap=words.filter(w=>String(c.name||"").toLowerCase().includes(w)).length;
+  return {c,score:shared*4+overlap*2+(favorites.has(c.id)?1:0)};
+ }).sort((a,b)=>b.score-a.score).map(x=>x.c);
+}
+function sullySurpriseTryNext(){
+ const session=sullySurpriseSession;
+ if(!session)return;
+ const next=session.candidates.shift();
+ if(!next){
+  sullySurpriseSession=null;
+  $("now").textContent="No working regional stream found";
+  setNotice("🎲 Surprise Me tried the available "+session.region.country+" stations, including related alternatives, but none played. No out-of-region programs were substituted. Try again later.");
+  return;
+ }
+ session.attempted.add(next.id);
+ session.activeId=next.id;
+ watchChannel(next);
+ setNotice("🎲 Surprise Me · Trying "+next.name+" from "+session.region.country+". If unavailable, Sully TV will try another related regional channel.");
+}
 function surpriseMe(){
  const region=sullyViewerRegion();
- const playable=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&!sullyFailed(c.id)&&(!current||c.id!==current.id));
- if(!playable.length)return setNotice("No other playable channels are loaded yet.");
- let regional=region.country?playable.filter(c=>String(c.country||"").toUpperCase()===region.country):[];
- // Honor English Only or another chosen language when the metadata allows it.
- const localized=regional.filter(c=>sullyLanguageMatches(c));
- if(localized.length)regional=localized;
- else if(sullyEnglishOnly||sullySelectedLanguage!=="all")regional=[];
- let pool=regional;
- if(!pool.length){
-  pool=playable.filter(c=>sullyLanguageMatches(c));
-  if(!pool.length)pool=playable;
+ if(!region.country){
+  sullySurpriseSession=null;
+  return setNotice("🎲 Select your country in the country filter, or set a country in your device language/region settings, to use regional Surprise Me.");
  }
- const chosen=pool[Math.floor(Math.random()*pool.length)];
- watchChannel(chosen);
- const regionLabel=region.country||"your region";
- const reason=regional.length?"Selected from "+regionLabel+" channels ("+region.source+").":"No matching available stations for "+regionLabel+"; selected another available channel.";
- setNotice("🎲 Surprise Me · "+reason+" Region is based on your device settings or country filter, not GPS. Channel availability and audio can vary.");
+ const candidates=sullySurpriseCandidates(region,null).filter(c=>!current||c.id!==current.id);
+ if(!candidates.length){
+  sullySurpriseSession=null;
+  return setNotice("🎲 No available "+region.country+" channels match your language preference. Surprise Me will not switch to another region.");
+ }
+ // Randomize initial choice; replacements are scored by matching categories and name.
+ const first=candidates.splice(Math.floor(Math.random()*candidates.length),1)[0];
+ sullySurpriseSession={region,activeId:null,attempted:new Set(),candidates:[first,...candidates]};
+ sullySurpriseTryNext();
 }
 function closeSullyPanel(){const p=$("sullyQuickPanel");p.hidden=true;p.innerHTML="";}
 function showSullyPanel(html){const p=$("sullyQuickPanel");if(!p.hidden&&p.dataset.panel===html.slice(0,20)){closeSullyPanel();return}p.dataset.panel=html.slice(0,20);p.innerHTML=html;p.hidden=false;}
@@ -2117,12 +2141,20 @@ playSource();
 }else{
 console.warn("[Sully TV] All stream sources failed",{channel:current?.name,id:current?.id,sourceCount:sourceList.length});
 $("now").textContent="Playback unavailable: "+(current?.name||"this channel")+".";
-sullyFailure(current?.id);render();
+const failedChannel=current;
+sullyFailure(failedChannel?.id);render();
+if(sullySurpriseSession&&sullySurpriseSession.activeId===failedChannel?.id){
+ const session=sullySurpriseSession;
+ const related=sullySurpriseCandidates(session.region,failedChannel).filter(c=>!session.attempted.has(c.id)&&!session.candidates.some(x=>x.id===c.id));
+ session.candidates=[...related,...session.candidates.filter(c=>!session.attempted.has(c.id))];
+ sullySurpriseTryNext();
+ return;
+}
 setNotice("All "+sourceList.length+" listed source(s) failed for "+current.name+". The broadcaster may block embedded playback or the stream may be offline. Try another channel.");
 }
 };
 
-player.onplaying=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);sullySuccess(current?.id);$("now").textContent="🔴 Watching "+current.name;setNotice("");};
+player.onplaying=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);if(sullySurpriseSession&&sullySurpriseSession.activeId===current?.id)sullySurpriseSession=null;sullySuccess(current?.id);$("now").textContent="🔴 Watching "+current.name;setNotice("");};
 player.onloadeddata=()=>{if(token!==playbackToken)return;clearTimeout(playbackTimer);};
 $("now").textContent="⏳ Connecting to "+current.name+" ("+(sourceIndex+1)+"/"+sourceList.length+")";
 if(sourceIndex===0)setNotice("Connecting to live TV… If this stream is slow, Sully TV will try another source automatically.");
@@ -2174,6 +2206,7 @@ player.webkitEnterFullscreen();
 }
 
 function stopVideo(){
+sullySurpriseSession=null;
 clearPlayer();
 current=null;
 $("viewer").hidden=true;
