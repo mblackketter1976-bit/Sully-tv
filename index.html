@@ -381,7 +381,6 @@ header .top{flex-wrap:wrap}
 .sullyInventoryCounter{font-size:clamp(17px,2vw,23px);font-weight:800;color:#f5d18c;background:#162c4a;border:1px solid #c49d5d;border-radius:12px;padding:15px 18px;margin:14px 0}
 .sullyInventoryTotal{font-size:clamp(19px,2.5vw,28px);padding-bottom:12px;border-bottom:1px solid #6c7890}.sullyInventoryBreakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}.sullyInventoryStat{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;background:#0d203b;font-size:14px;color:#dce8f8}.sullyInventoryStat strong{font-size:26px;color:#f5d18c}
 .sullyLibraryEntry{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.sullyLibraryPoster{width:140px;max-width:34%;aspect-ratio:16/9;flex-shrink:0;border-radius:9px;overflow:hidden;background:#0c1a30;display:grid;place-items:center}.sullyLibraryPoster img{width:100%;height:100%;object-fit:cover}.sullyLibraryPoster.sullyNoThumbnail:after{content:"🎬";font-size:34px}.sullyLibraryEntryInfo{flex:1 1 145px;min-width:0}@media(max-width:460px){.sullyLibraryPoster{width:100px}}
-.sullyLanguageBar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:#112642;border:1px solid #a98c59;border-radius:12px;margin:12px 0;color:#f5e3bd}.sullyLanguageBar button,.sullyLanguageBar select{background:#21446b;color:white;border:1px solid #c49d5d;border-radius:9px;padding:10px 12px;font-weight:700}.sullyLanguageBar button.selected{background:#dcb66b;color:#12243b}.sullyLanguageBar select{max-width:220px;min-width:140px}
 </style>
 </head>
 <body>
@@ -988,40 +987,8 @@ function sullySubBar(){
  return wrap;
 }
 
-let sullySelectedLanguage="";
-const sullyLanguageNames={eng:"English",spa:"Spanish",fra:"French",fre:"French",deu:"German",ger:"German",ita:"Italian",por:"Portuguese",jpn:"Japanese",kor:"Korean",zho:"Chinese",chi:"Chinese",hin:"Hindi",ara:"Arabic",rus:"Russian",tur:"Turkish",nld:"Dutch",dut:"Dutch",pol:"Polish",swe:"Swedish",dan:"Danish",nor:"Norwegian",fin:"Finnish",ukr:"Ukrainian",vie:"Vietnamese",tha:"Thai",ind:"Indonesian",tam:"Tamil",tel:"Telugu",ben:"Bengali",urd:"Urdu"};
-function sullyLanguageCodes(item){
- const raw=item.languages||item.language||item.audioLanguage||[];
- return (Array.isArray(raw)?raw:[raw]).map(v=>String(v).trim().toLowerCase().split("-")[0]).filter(Boolean);
-}
-function sullyLanguageMatch(item){
- if(!sullySelectedLanguage)return true;
- const codes=sullyLanguageCodes(item);
- if(sullySelectedLanguage==="eng")return codes.some(c=>["eng","en","english"].includes(c));
- return codes.includes(sullySelectedLanguage);
-}
-function sullyLanguageSetup(){
- const select=$("sullyLanguageSelect"),button=$("sullyEnglishButton");
- const codes=[...new Set(channels.flatMap(sullyLanguageCodes))].sort((a,b)=>(sullyLanguageNames[a]||a).localeCompare(sullyLanguageNames[b]||b));
- select.replaceChildren();
- const all=document.createElement("option");all.value="";all.textContent="All languages";select.append(all);
- codes.forEach(code=>{const opt=document.createElement("option");opt.value=code;opt.textContent=sullyLanguageNames[code]||code.toUpperCase();select.append(opt)});
- if(sullySelectedLanguage&&!codes.includes(sullySelectedLanguage)&&sullySelectedLanguage!=="eng")sullySelectedLanguage="";
- select.value=sullySelectedLanguage;
- button.classList.toggle("selected",sullySelectedLanguage==="eng");
- button.setAttribute("aria-pressed",String(sullySelectedLanguage==="eng"));
-}
-function sullySetLanguage(code){
- sullySelectedLanguage=code;
- try{localStorage.setItem("sully-language",code)}catch(e){}
- sullyLanguageSetup();page=0;render();
-}
-try{sullySelectedLanguage=localStorage.getItem("sully-language")||""}catch(e){}
-$("sullyEnglishButton").onclick=()=>sullySetLanguage(sullySelectedLanguage==="eng"?"":"eng");
-$("sullyLanguageSelect").onchange=e=>sullySetLanguage(e.target.value);
 function filtered(){
 let list=channels.filter(c=>{
-if(!sullyLanguageMatch(c))return false;
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
 if(tab.includes("Recently Added")&&!c._recent)return false;
 if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Watching"))return false;
@@ -1170,7 +1137,7 @@ function sullyFanLive(){
  const hub=sullyFanHubs[tab],root=$("content");
  const rules={"🎀 Hello Kitty":/hello.kitty|sanrio|kitty.and.friends/,"🏰 Disney":/disney|pixar|mickey|donald.duck/,"🦸 Marvel":/marvel|avengers|spider.man|x.men/,"⚡ DC":/dc.comics|batman|superman|justice.league|wonder.woman/,"🎤 Mike's Standup":/stand.?up|standup|comedy|comedian|laugh|funny|roast/};
  const re=rules[tab];
- const matches=channels.filter(c=>sullyLanguageMatch(c)&&!unavailable.has(c.id)&&streams.has(c.id)&&re.test(sullyChannelText(c)));
+ const matches=channels.filter(c=>!unavailable.has(c.id)&&streams.has(c.id)&&re.test(sullyChannelText(c)));
  const h=document.createElement("h2");h.textContent="🔴 Live "+hub.name+" TV";root.append(h);
  const p=document.createElement("p");p.className="muted";p.textContent=matches.length?matches.length+" matching live channels available from the public TV directory. Tap Watch to play.":"No matching live channels are currently listed in the public TV directory. Official video searches are below.";root.append(p);
  if(matches.length){const rail=document.createElement("div");rail.className="rail";matches.slice(0,60).forEach(c=>rail.append(card(c)));root.append(rail)}
@@ -1238,7 +1205,6 @@ function sullyDirectory(){
  function draw(){
   const term=sullyDirectoryQuery.toLowerCase().trim();
   const selected=channels.filter(c=>{
-   if(!sullyLanguageMatch(c))return false;
    if(!streams.has(c.id)||unavailable.has(c.id))return false;
    if(sullyDirectoryCountry&&c.country!==sullyDirectoryCountry)return false;
    if(term&&!c.name.toLowerCase().includes(term))return false;
@@ -1793,7 +1759,6 @@ function sullyPlayableGenre(root,term,scope="all"){
   if(!section.isConnected||view!==tab)return;
   const tokens=String(term||"").toLowerCase().split(/\\s+/).filter(x=>x.length>2);
   const found=items.filter(item=>{
-   if(!sullyLanguageMatch(item))return false;
    const kind=String(item.kind||"").toLowerCase();
    if(scope==="movie"&&kind!=="movie")return false;
    if(scope==="usa"){
@@ -1862,7 +1827,7 @@ async function renderLibrary(){
   if(!response.ok)throw Error("Catalog unavailable");
   const data=await response.json();
   if(tab!=="📚 Library")return;
-  const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).filter(sullyLanguageMatch).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
+  const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
   const typeCounts={movies:0,shows:0,documentaries:0,shorts:0,other:0};
   items.forEach(item=>{
    const kind=String(item.kind||"").toLowerCase().trim();
@@ -2338,7 +2303,6 @@ channels=cs.filter(c=>
 _recent:false,
 countryName:names.get(c.country)||c.country
 })).map(sullyTagChannel);
-sullyLanguageSetup();
 
 try{
 const previous=JSON.parse(localStorage.getItem("sully-known-channels")||"null");
