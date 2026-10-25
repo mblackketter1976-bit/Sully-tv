@@ -2306,12 +2306,6 @@ if(!r.ok)throw Error("Unable to load "+file);
 return r.json();
 }
 
-function sullyStartupHomeScroll(){
- const move=()=>{if(tab!=="🏠 Home")return;const target=$("nav");if(!target)return;const y=window.scrollY+target.getBoundingClientRect().top-8;window.scrollTo({top:Math.max(0,y),behavior:"instant"})};
- requestAnimationFrame(()=>requestAnimationFrame(move));
- window.addEventListener("load",move,{once:true});
- window.addEventListener("pageshow",()=>requestAnimationFrame(move),{once:true});
-}
 if("scrollRestoration" in window.history)window.history.scrollRestoration="manual";
 
 async function init(){
@@ -2372,7 +2366,7 @@ $("category").add(new Option(c,c));
 
 tab="🏠 Home";
 nav();render();
-sullyStartupHomeScroll();
+requestAnimationFrame(()=>sullyGoHome());
 
 }catch(e){
 $("status").textContent="Unable to load live channels. Refresh to retry.";
