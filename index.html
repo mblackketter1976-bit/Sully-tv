@@ -2840,7 +2840,7 @@ function renderGuide(){
  const root=$("content");$("status").textContent="TV Guide · Live channel lineup";
  const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only sourced, current program data is shown.";root.append(intro);
- const guideStatus=document.createElement("p");guideStatus.className="muted";root.append(guideStatus);
+ const guideStatus=document.createElement("p");guideStatus.className="muted";guideStatus.setAttribute("role","status");root.append(guideStatus);
  const toolbar=document.createElement("div");toolbar.className="sullyGuideToolbar";
  const search=document.createElement("input");search.type="search";search.placeholder="Find a station…";search.setAttribute("aria-label","Search stations");
  const genre=document.createElement("select");genre.setAttribute("aria-label","Channel genre");
@@ -2892,12 +2892,15 @@ function renderGuide(){
    return language.value==="all"||lang.codes.includes(language.value);
   }).sort((a,b)=>group(a).localeCompare(group(b))||a.name.localeCompare(b.name));
   const updated=sullyGuideData?.updated?new Date(sullyGuideData.updated):null;
-  const fresh=updated&&Number.isFinite(updated.getTime())&&Date.now()-updated.getTime()<36*3600000;
-  const scheduled=matches.filter(c=>fresh&&(sullyGuideData.channels[c.id]||[]).some(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&slots.some(d=>Date.parse(p.start)<=d.getTime()&&Date.parse(p.end)>d.getTime())));
+  const age=updated?Date.now()-updated.getTime():Infinity;
+  const fresh=Number.isFinite(age)&&age>=-300000&&age<36*3600000;
+  const hasListings=Object.values(sullyGuideData?.channels||{}).some(p=>Array.isArray(p)&&p.length);
+  const validPrograms=c=>fresh&&Array.isArray(sullyGuideData?.channels?.[c.id])?sullyGuideData.channels[c.id].filter(p=>p&&typeof p.title==="string"&&p.title.trim()&&typeof p.source==="string"&&p.source&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)):[];
+  const scheduled=matches.filter(c=>validPrograms(c).some(p=>Date.parse(p.start)<endTime.getTime()&&Date.parse(p.end)>base.getTime()));
   const ordered=scheduled.concat(matches.filter(c=>!scheduled.includes(c)));
   const shown=ordered.slice(0,limit);count.textContent=shown.length+" / "+ordered.length+" channels · "+scheduled.length+" with verified schedules";
 
-  guideStatus.textContent=fresh?"Verified listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":"Live channel directory · Program details unavailable until a verified guide source is connected";
+  guideStatus.textContent=fresh&&hasListings?"Verified listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":hasListings?"Stale schedule · Program details hidden until listings refresh. Channels remain available to watch.":"Live channel directory · Program details unavailable until a verified guide source is connected";
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
   const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
@@ -2908,10 +2911,9 @@ function renderGuide(){
    const number=document.createElement("span");number.className="sullyRetroGuideNumber";number.textContent=String(i+1).padStart(2,"0");
    const name=document.createElement("span");name.textContent=c.name;name.className="sullyRetroGuideName";station.append(number,name);row.append(station);
    // Display schedules only when actual start/end timestamps are provided.
-   const programs=sullyGuideData?.channels?.[c.id]||[];
-   const verified=programs.filter(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&Date.parse(p.end)>Date.now()-3600000);
+   const verified=validPrograms(c);
    for(let j=0;j<slots.length;){
-    const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<=t&&Date.parse(p.end)>t);
+    const t=slots[j].getTime(),p=verified.find(p=>Date.parse(p.start)<t+1800000&&Date.parse(p.end)>t);
     if(!p){const empty=document.createElement("div");empty.className="sullyRetroGuideCell sullyRetroGuideUnknown";empty.textContent=j===0?"LIVE · Schedule unavailable":"—";empty.title="No verified program information for this time";row.append(empty);j++;continue;}
     let span=1;while(j+span<slots.length&&Date.parse(p.end)>slots[j+span].getTime()&&Date.parse(p.start)<=slots[j+span].getTime())span++;
     const show=document.createElement("button");show.className="sullyRetroGuideCell sullyRetroGuideProgram";show.style.gridColumn="span "+span;show.textContent=p.title;show.title=p.title+" · "+fmt(new Date(p.start))+"–"+fmt(new Date(p.end))+" · Watch "+c.name;show.onclick=()=>watchChannel(c);row.append(show);j+=span;

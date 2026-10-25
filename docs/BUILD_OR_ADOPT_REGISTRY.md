@@ -45,3 +45,10 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 - **Not yet observed:** structured Netflix/Roku feature walkthrough and quantified comparison.
 - **Decision:** RESEARCH PENDING. Capture actual UI and user journeys before adopting design patterns or rewriting major components.
 - **Next review:** before next major navigation or architecture redesign.
+
+### BA-001 update — 2026-10-25 reliability integration
+- **Observed:** reviewed current repository engine, updater, guide UI and workflows. Existing updater still used the failed metadata assumption; gzip magic detection was escaped incorrectly and publication was not atomic.
+- **Decision:** extend the existing stdlib engine and guide interface; replace only obsolete discovery with explicit reviewed-provider configuration. No new production dependency.
+- **Built:** bounded gzip fetch, provider rights gate, priority/overlap handling, source attribution, last-good preservation, atomic candidate writes, stale UI suppression and mid-slot visibility fix.
+- **Test evidence:** 19 local Python tests passed; inline JS syntax passed. Browser test workflow added; execution and actual feed rights/coverage remain unverified. See TV_GUIDE_VERIFICATION_002.md.
+- **Next review:** CI browser results and first provider with verified public/commercial reuse rights. No claim of superior schedule coverage or production readiness.
