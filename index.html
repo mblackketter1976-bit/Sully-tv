@@ -379,6 +379,7 @@ header .sullySearchForm{order:2}
 header .top{flex-wrap:wrap}
 .sullyDirectoryControls{padding:16px;border:1px solid #bd9858;border-radius:14px;background:#142943;margin:12px 0}.sullyDirectoryFilters{display:flex;flex-wrap:wrap;gap:10px}.sullyDirectoryFilters>*{flex:1 1 170px;min-width:0;padding:12px;border-radius:9px;background:#0b1930;color:white;border:1px solid #b8965a}
 .sullyInventoryCounter{font-size:clamp(17px,2vw,23px);font-weight:800;color:#f5d18c;background:#162c4a;border:1px solid #c49d5d;border-radius:12px;padding:15px 18px;margin:14px 0}
+.sullyInventoryTotal{font-size:clamp(19px,2.5vw,28px);padding-bottom:12px;border-bottom:1px solid #6c7890}.sullyInventoryBreakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}.sullyInventoryStat{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;background:#0d203b;font-size:14px;color:#dce8f8}.sullyInventoryStat strong{font-size:26px;color:#f5d18c}
 </style>
 </head>
 <body>
@@ -1806,8 +1807,26 @@ async function renderLibrary(){
   const data=await response.json();
   if(tab!=="📚 Library")return;
   const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
-  const movies=items.filter(x=>String(x.kind||"").toLowerCase()==="movie").length;
-  inventory.textContent="📚 "+items.length.toLocaleString()+" playable titles  •  🎬 "+movies.toLocaleString()+" classified movies";
+  const typeCounts={movies:0,shows:0,documentaries:0,shorts:0,other:0};
+  items.forEach(item=>{
+   const kind=String(item.kind||"").toLowerCase().trim();
+   if(["movie","film","feature film","feature"].includes(kind))typeCounts.movies++;
+   else if(["show","tv show","series","episode","television","tv"].includes(kind))typeCounts.shows++;
+   else if(["documentary","documentaries"].includes(kind))typeCounts.documentaries++;
+   else if(["short","short film","shorts","clip","animation","music video"].includes(kind))typeCounts.shorts++;
+   else typeCounts.other++;
+  });
+  inventory.replaceChildren();
+  const total=document.createElement("div");total.className="sullyInventoryTotal";
+  total.textContent="📚 Total Library: "+items.length.toLocaleString()+" playable titles";inventory.append(total);
+  const breakdown=document.createElement("div");breakdown.className="sullyInventoryBreakdown";
+  [["🎬 Movies",typeCounts.movies],["📺 Shows",typeCounts.shows],["🎥 Documentaries",typeCounts.documentaries],["🎞️ Shorts & Clips",typeCounts.shorts],["📁 Other / Unclassified",typeCounts.other]].forEach(([label,value])=>{
+   const stat=document.createElement("div");stat.className="sullyInventoryStat";
+   const name=document.createElement("span");name.textContent=label;
+   const number=document.createElement("strong");number.textContent=value.toLocaleString();
+   stat.append(name,number);breakdown.append(stat);
+  });
+  inventory.append(breakdown);
   const letters=["All",..."ABCDEFGHIJKLMNOPQRSTUVWXYZ","#"];
   function paint(){
    alphabet.replaceChildren();results.replaceChildren();
