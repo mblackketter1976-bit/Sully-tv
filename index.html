@@ -732,7 +732,7 @@ function sullyTitleSearch(q){
  const liveTitle=document.createElement("h2");liveTitle.textContent="🔴 LIVE TV — FIRST";root.append(liveTitle);
  const liveInfo=document.createElement("p");liveInfo.className="muted";liveInfo.textContent="Sully TV checks live channels before streaming services. Individual program schedules aren't indexed yet.";root.append(liveInfo);
  const needle=q.toLowerCase();
- const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&c.name.toLowerCase().includes(needle)).sort((a,b)=>Number(b.name.toLowerCase()===needle)-Number(a.name.toLowerCase()===needle)||Number(b.name.toLowerCase().startsWith(needle))-Number(a.name.toLowerCase().startsWith(needle))).slice(0,30);
+ const matches=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&sullySearchScore(c.name,q)>=55).sort((a,b)=>sullySearchScore(b.name,q)-sullySearchScore(a.name,q)).slice(0,30);
  if(matches.length){
   const label=document.createElement("h3");label.textContent="▶ Matching live channels ("+matches.length+")";root.append(label);
   const rail=document.createElement("div");rail.className="rail";matches.forEach(c=>rail.append(card(c)));root.append(rail);
@@ -748,10 +748,10 @@ function sullyTitleSearch(q){
   if(generation!==sullySearchGeneration||!root.isConnected)return;
   const normalized=t=>String(t||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
   const query=normalized(q);
-  const matches=items.filter(item=>[item.title,...(item.aliases||[])].some(t=>normalized(t).includes(query)||query.includes(normalized(t)))).slice(0,15);
+  const matches=items.map(item=>({...item,_score:Math.max(...[item.title,...(item.aliases||[])].map(t=>sullySearchScore(t,q)))})).filter(item=>item._score>=45).sort((a,b)=>b._score-a._score).slice(0,15);
   if(!matches.length)return;
   const section=document.createElement("section");section.className="sullyDiscovery";
-  const title=document.createElement("h3");title.textContent="🎬 Found titles — official viewing links";section.append(title);
+  const title=document.createElement("h3");title.textContent="🎬 Matches and suggested titles — official viewing links";section.append(title);
   matches.forEach(item=>{
    const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
    const name=document.createElement("strong");name.textContent="▶ "+item.title+(item.year?" ("+item.year+")":"");
@@ -774,7 +774,7 @@ function sullyTitleSearch(q){
   const add=(name,type,year,source,url)=>{
    if(!name||!url)return;
    const key=normalize(name);
-   if(!key||!(key.includes(query)||query.includes(key)))return;
+   if(!key||sullySearchScore(name,q)<45)return;
    if(found.has(key))return;
    found.set(key,{name,type,year,source,url});
   };
@@ -1072,6 +1072,25 @@ function sullyMovieGenreMatch(c){
  const match=sullyMovieGenres.find(g=>g[0]===sullyMovieGenre);
  if(!match)return true;
  return match[1].test(sullyChannelText(c));
+}
+function sullySearchNormalize(v){return String(v||"").toLowerCase().normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\\b(the|a|an)\\b/g,"").replace(/\\s+/g," ").trim()}
+function sullyEditDistance(a,b){
+ if(Math.abs(a.length-b.length)>Math.max(4,Math.ceil(Math.max(a.length,b.length)*.4)))return 999;
+ const prev=Array.from({length:b.length+1},(_,i)=>i);
+ for(let i=1;i<=a.length;i++){let left=i,diag=i-1;for(let j=1;j<=b.length;j++){const old=prev[j];prev[j]=Math.min(prev[j]+1,left+1,diag+(a[i-1]===b[j-1]?0:1));diag=old;left=prev[j]}}
+ return prev[b.length];
+}
+function sullySearchScore(title,query){
+ const a=sullySearchNormalize(title),b=sullySearchNormalize(query);
+ if(!a||!b)return 0;
+ if(a===b)return 100;
+ if(a.includes(b))return 88;
+ if(b.includes(a)&&a.length>3)return 78;
+ const dist=sullyEditDistance(a,b),ratio=1-dist/Math.max(a.length,b.length);
+ if(ratio>=.58&&dist<=Math.max(2,Math.ceil(b.length*.38)))return Math.round(ratio*80);
+ const words=a.split(" "),qwords=b.split(" ");
+ const hits=qwords.filter(w=>words.some(t=>t===w||(w.length>3&&sullyEditDistance(t,w)<=Math.max(1,Math.floor(w.length*.3))))).length;
+ return hits&&hits/qwords.length>=.65?Math.round(48+hits/qwords.length*20):0;
 }
 let sullyProviderTitlesCache=null;
 function sullyGetProviderTitles(){
