@@ -1642,11 +1642,26 @@ return box;
 
 let sullyPlayableCache=null;
 async function sullyGetPlayable(){if(!sullyPlayableCache)sullyPlayableCache=fetch("./data/legal-library.json").then(r=>{if(!r.ok)throw Error("Library unavailable");return r.json()}).then(d=>(d.items||[]).filter(x=>x.status==="verified"&&x.title&&x.playback?.url&&x.rights?.source&&x.rights?.basis)).catch(e=>{sullyPlayableCache=null;throw e});return sullyPlayableCache}
+function sullyLanguageLabel(item){
+ const lang=String(item.language||item.audioLanguage||"").trim();
+ if(!lang)return "Language unknown";
+ if(/^(en|eng|english)(-|$)/i.test(lang))return "English";
+ if(/^(none|no dialogue|silent)$/i.test(lang))return "No dialogue";
+ return "Language: "+lang;
+}
+let sullyEnglishOnly=false;
+function sullyLanguageFilter(root,rerender){
+ const label=document.createElement("label");label.style.cssText="display:flex;gap:8px;align-items:center;margin:12px 0";
+ const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=sullyEnglishOnly;
+ checkbox.onchange=()=>{sullyEnglishOnly=checkbox.checked;rerender()};
+ label.append(checkbox,document.createTextNode("English-language only (confirmed)"));root.append(label);
+}
 function sullyPlayableGenre(root,term,scope="all"){
  const section=document.createElement("section");section.className="sullyLegalLibrary";root.append(section);
  const heading=document.createElement("h2");heading.textContent="▶ Playable "+(term||"programs");section.append(heading);
  const status=document.createElement("p");status.className="muted";status.textContent="Checking licensed library…";section.append(status);
  const list=document.createElement("div");list.className="sullyLibraryResults";section.append(list);
+ sullyLanguageFilter(section,()=>{if(section.isConnected){section.remove();sullyPlayableGenre(root,term,scope)}});
  const view=tab;
  sullyGetPlayable().then(items=>{
   if(!section.isConnected||view!==tab)return;
@@ -1662,17 +1677,19 @@ function sullyPlayableGenre(root,term,scope="all"){
    const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
    return tokens.some(t=>hay.includes(t))
   });
-  status.textContent=found.length?found.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
-  found.slice(0,72).forEach(item=>{
+  const visible=found.filter(i=>!sullyEnglishOnly||sullyLanguageLabel(i)==="English");
+  status.textContent=visible.length?visible.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
+  visible.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
    const name=document.createElement("strong");name.textContent=item.title;card.append(name);
+   const lang=document.createElement("small");lang.textContent=sullyLanguageLabel(item);card.append(lang);
    const watch=document.createElement("button");watch.textContent="▶ Watch";watch.onclick=()=>{
     const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";const panel=document.createElement("div");panel.className="sullyInfoPanel";
     const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyInfoClose";
     const video=document.createElement("video");video.controls=true;video.playsInline=true;video.preload="metadata";video.src=item.playback.url;video.style.cssText="width:100%;max-height:55vh";
     const source=document.createElement("a");source.href=item.rights.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent="Source and license ↗";
     const dismiss=()=>{video.pause();overlay.remove()};close.onclick=dismiss;overlay.onclick=e=>{if(e.target===overlay)dismiss()};
-    panel.append(close,video,source);overlay.append(panel);document.body.append(overlay)
+    const language=document.createElement("p");language.textContent=sullyLanguageLabel(item);panel.append(close,language,video,source);overlay.append(panel);document.body.append(overlay)
    };card.append(watch);list.append(card)
   })
  }).catch(()=>{if(section.isConnected)status.textContent="Library temporarily unavailable."})
@@ -1715,7 +1732,7 @@ async function renderLibrary(){
     const card=document.createElement("article");card.className="sullyLibraryEntry";
     const info=document.createElement("div");info.className="sullyLibraryEntryInfo";
     const name=document.createElement("strong");name.textContent=item.title;info.append(name);
-    const license=document.createElement("small");license.textContent="License: "+(item.rights?.basis||"See source");info.append(license);
+    const license=document.createElement("small");license.textContent="License: "+(item.rights?.basis||"See source")+" · "+sullyLanguageLabel(item);info.append(license);
     card.append(info);
     const watch=document.createElement("button");watch.type="button";watch.textContent="▶ Watch";watch.onclick=()=>{
       const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";
