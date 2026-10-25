@@ -524,7 +524,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 .sullyPlatformsGrid .sullyPlatformTile strong{font-size:16px;color:#fff}
 .sullyPlatformsGrid .sullyPlatformTile small{color:#e4e7ed;opacity:.9}
 .sullyPlatformsGrid .sullyPlatformOpen{color:#f1d59c}
-</style></head>
+</style><style id="sullyStreamingShortcutStyle">#sullyStreamingShortcut{min-height:44px;white-space:nowrap;border-radius:9px;font-weight:750;cursor:pointer}#sullyStreamingShortcut:focus-visible{outline:3px solid #e4c480;outline-offset:2px}@media(max-width:520px){#sullyStreamingShortcut{font-size:12px;padding:8px 10px}}</style></head>
 <body>
 <header>
 
@@ -566,7 +566,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 <div id="notice"></div><div id="sullySwipe" class="sullySwipe"><button onclick="changeChannel(-1)">◀ Previous</button><span>Swipe to change channel</span><button onclick="changeChannel(1)">Next ▶</button></div>
 </div>
 </section>
-<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><button type="button" id="sullyLibraryShortcut" onclick="sullyCategory('📚 Library')" aria-label="Open playable library" title="Library">📚 Library</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
+<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><button type="button" id="sullyLibraryShortcut" onclick="sullyCategory('📚 Library')" aria-label="Open playable library" title="Library">📚 Library</button><button type="button" id="sullyStreamingShortcut" onclick="sullyCategory('📱 Streaming Platforms')" aria-label="Open streaming platforms" title="Streaming Platforms">📱 Streaming</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
 </div>
 
 <div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
