@@ -294,6 +294,7 @@ header .top>div:first-of-type{padding-left:0!important}
 @media(max-width:500px){.sullyFloat{bottom:60px;right:7px}.sullyFloat button{padding:8px;font-size:11px}}
 
 .sullyMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-content:start}.sullyMenuHeading{grid-column:1/-1;color:#f7d898;font-size:17px;font-weight:800;text-align:center;padding:4px}.sullyMenuGroup{grid-column:1/-1;color:#f3d18a;font-size:13px;font-weight:800;border-bottom:1px solid #806c51;padding:10px 3px 5px;margin-top:3px}.sullyMenu .sullyMenuChoice{font-size:12px;min-height:42px}.sullyMenu .selected{background:#9c2539!important;border-color:#ffd3a1!important}.sullyMenu .sullyMenuClose{grid-column:1/-1!important}
+.sullyMovieGenres{background:#102b50;border:1px solid #d6b376;border-radius:13px;padding:12px;margin:8px 0 15px;color:#ffe2a6}.sullyMovieGenres strong{display:block;margin-bottom:9px;font-size:16px}.sullyMovieGenreButtons{display:flex;flex-wrap:wrap;gap:6px}.sullyMovieGenreButtons button{border:1px solid #d8b477;border-radius:9px;background:#244974;color:#fff;padding:9px 13px;min-height:39px;font-weight:700}.sullyMovieGenreButtons button.selected{background:#ac2537;color:white;border-color:#ffc7b8}.sullyMovieGenres p{font-size:11px;color:#b9c9df;margin:9px 0 0}
 </style>
 </head>
 <body>
@@ -477,7 +478,7 @@ function sullyGoBack(){
 
 
 /* Sully navigation suite */
-function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
+function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;if(tab==="🎬 Movies")sullyMovieGenre="All Movies";page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
 function sullyMenu(){
  const m=$("sullyMenu");m.hidden=!m.hidden;
  if(m.hidden)return;
@@ -523,6 +524,7 @@ b.className=(t===tab?"active ":"")+
 b.onclick=()=>{
 if(t!==tab)sullyRememberScreen();
 tab=t;
+if(tab==="🎬 Movies")sullyMovieGenre="All Movies";
 page=0;
 $("search").value="";
 nav();
@@ -564,6 +566,43 @@ return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
 return true;
 }
 
+
+/* Movie-channel genre subcategories. Labels describe channels, not individual scheduled films. */
+const sullyMovieGenres=[
+ ["All Movies",null],
+ ["Horror",/horror|scary|fright|terror|monster|thriller|scream|haunt|creep|slasher|fear/],
+ ["Action",/action|adventure|martial|combat|fight|war|explosion|kung.fu/],
+ ["Comedy",/comedy|funny|laugh|humor|humour|sitcom/],
+ ["Sports",/sports?.{0,12}(movie|film|cinema)|(?:movie|film|cinema).{0,12}sports?|boxing.movie|sports?.films?/],
+ ["Romance",/romance|romantic|love.stor|rom.com/],
+ ["Sci-Fi",/sci.fi|science.fiction|fantasy|space.movie|alien.movie/],
+ ["Classics",/classic|vintage|retro|oldies|golden.age|silent.film/],
+ ["Western",/western|cowboy|wild.west/],
+ ["Drama",/drama|dramatic/],
+ ["Family",/family.movie|family.film|kids.movie|animation.movie|animated.film/],
+ ["Documentary Films",/documentary.film|documentary.movie|documentary.cinema/]
+];
+let sullyMovieGenre="All Movies";
+function sullyMovieGenreMatch(c){
+ if(sullyMovieGenre==="All Movies")return true;
+ const match=sullyMovieGenres.find(g=>g[0]===sullyMovieGenre);
+ if(!match)return true;
+ return match[1].test((c.name+" "+(c.categories||[]).join(" ")).toLowerCase());
+}
+function sullyMovieGenreBar(){
+ const wrap=document.createElement("section");wrap.className="sullyMovieGenres";
+ const title=document.createElement("strong");title.textContent="🎬 Choose a movie genre";wrap.append(title);
+ const buttons=document.createElement("div");buttons.className="sullyMovieGenreButtons";
+ sullyMovieGenres.forEach(([name])=>{
+  const btn=document.createElement("button");btn.textContent=name;btn.className=name===sullyMovieGenre?"selected":"";
+  btn.onclick=()=>{sullyMovieGenre=name;page=0;render();jumpToCategory();};
+  buttons.append(btn);
+ });
+ wrap.append(buttons);
+ const note=document.createElement("p");note.textContent="Genres filter channel names and descriptions. They do not identify every movie currently airing.";wrap.append(note);
+ return wrap;
+}
+
 function filtered(){
 let list=channels.filter(c=>{
 if(tab.includes("Favorites")&&!favorites.has(c.id))return false;
@@ -572,6 +611,7 @@ if(unavailable.has(c.id)&&!tab.includes("Favorites")&&!tab.includes("Continue Wa
 if(tab.includes("USA")&&c.country!=="US")return false;
 if(tab.includes("Continue Watching")&&!history.some(h=>h.id===c.id))return false;
 if(!categoryMatch(c))return false;
+if(tab==="🎬 Movies"&&!sullyMovieGenreMatch(c))return false;
 if($("country").value&&c.country!==$("country").value)return false;
 if($("category").value&&!(c.categories||[]).includes($("category").value))return false;
 if($("search").value&&!c.name.toLowerCase().includes($("search").value.toLowerCase()))return false;
@@ -685,6 +725,7 @@ return;
 }
 
 $("filters").hidden=false;
+if(tab==="🎬 Movies")root.append(sullyMovieGenreBar());
 const list=filtered();
 $("status").textContent=list.length.toLocaleString()+" channels";
 
