@@ -26,6 +26,11 @@ Four requests for UTC date offsets -1 through +2, with country US, yielded 40 fu
 Each entry uses TVmaze's explicit timezone-bearing airstamp and episode runtime. Missing timezones/runtimes are skipped. No inferred reruns or gap filling. The dataset includes source episode URLs, attribution and license metadata. The UI calls these sourced/partial episode listings and warns that actual stream feeds may differ.
 
 ## Validation and limits
-Local Python suite: 25 tests passed (original guide 19, 5 TVmaze tests and bounded-retry test). Inline JavaScript syntax passed. Browser verification for this revision remains pending until Actions completes; new assertions cover two short shows sharing a half-hour cell and visible TVmaze/license links.
+Local Python suite: 25 tests passed (original guide 19, 5 TVmaze tests and bounded-retry test). Inline JavaScript syntax passed. Browser verification subsequently passed (see confirmed results below); assertions cover two short shows sharing a half-hour cell and visible TVmaze/license links.
 
 The updater writes a candidate locally and Actions retains it for review. It does not publish data to the live branch or deploy the website. Full-app playback and actual device tests remain outstanding.
+
+## Confirmed integration results
+GitHub Actions run https://github.com/mblackketter1976-bit/Sully-tv/actions/runs/40242497404 passed Python, isolated guide checks and complete HTML startup/navigation at 1280px and 390px. The full-page test uses controlled channel metadata and the real fetched guide candidate; it does not decode streams. Screenshots were inspected: source/license links and explicit episode times are visible, with horizontal scrolling contained within the grid. Existing floating navigation can overlap portions of the viewport; no platform-wide navigation redesign was attempted in this change.
+
+Generated the three previously missing app PNG icons from the existing approved banner, using the repository's existing icon workflow crop. Static integrity now passes with zero errors; the existing external CDN dependency remains a warning. This is not an actual Android/iOS installation test.

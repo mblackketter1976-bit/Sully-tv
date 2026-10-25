@@ -56,6 +56,6 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 ### BA-001 update — first licensed partial schedule candidate
 - **Observed:** official TVmaze API/licensing docs and linked CC BY-SA 4.0 deed; real schedule JSON; network IDs/names/country; existing Sully channel IDs and stream metadata.
 - **Decision:** EXTEND the provider adapter with TVmaze's partial episode schedules, explicit reviewed mapping, attribution/license links, dataset ShareAlike notice and bounded requests/retries.
-- **Measured:** initial current-data fetch normalized 40 listings on CNN.us, MSNOW.us and BYUTV.us; 25 local Python tests passed. No guarantee of full-day coverage or exact stream programming. Browser CI for this revision pending.
+- **Measured:** initial current-data fetch normalized 40 listings on CNN.us, MSNOW.us and BYUTV.us; 25 local Python tests passed. No guarantee of full-day coverage or exact stream programming. Run 40242497404 passed Python, isolated guide checks and full HTML startup/navigation at desktop and phone sizes using controlled channel metadata and the real candidate guide.
 - **UI improvement:** source/license visible; scheduled start/end times visible without hover; two short programmes sharing a half-hour cell are both shown.
 - **Next review:** browser CI and full-app preview, then actual stream/feed alignment; expand exact mappings conservatively. See TV_GUIDE_PROVIDER_003.md.
