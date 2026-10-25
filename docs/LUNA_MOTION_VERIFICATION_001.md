@@ -43,3 +43,7 @@ The earlier four-pose diagnostic render was inspected visually. It is blue/orang
 `blender_contacts.py` requires explicit bone mapping, matching segment lengths, identity object transforms and unconstrained mapped bones; it rejects unsupported configurations. Do not apply it blindly to a different rig.
 
 Next required input: the current editable character rig/project. Prior image references and source drafts are available, but no approved rigged character file has been confirmed accessible. The user's Windows project folders are not directly connected to this session. Inspect the actual `.blend` or Cartoon Animator project before selecting an integration path. Do not regenerate the approved art or call this fixture a Luna animation.
+
+
+## Subsequent project-backed work
+The editable V41 project was supplied and inspected after this early fixture. See `LUNA_V41_AUDIT_002.md` for the actual mesh-pose workflow and stop correction, and `LUNA_V41_TURN_003.md` for the separate movement-only turn/weight-shift/blink study. The owner accepted the stop-test movement and deferred aesthetics. Do not ask for the same V41 file again or assume that a bone skeleton is necessary before improving its existing motion.
