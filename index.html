@@ -964,7 +964,7 @@ function sullyMovieGenreMatch(c){
 }
 let sullyProviderTitlesCache=null;
 function sullyGetProviderTitles(){
- if(!sullyProviderTitlesCache)sullyProviderTitlesCache=fetch("./data/provider-titles.json").then(r=>r.ok?r.json():{items:[]}).then(d=>d.items||[]).catch(()=>{sullyProviderTitlesCache=null;return []});
+ if(!sullyProviderTitlesCache)sullyProviderTitlesCache=Promise.all(["./data/provider-titles.json","./data/archive-titles.json"].map(url=>fetch(url).then(r=>r.ok?r.json():{items:[]}).then(d=>d.items||[]).catch(()=>[]))).then(groups=>groups.flat()).catch(()=>{sullyProviderTitlesCache=null;return []});
  return sullyProviderTitlesCache;
 }
 function sullyDirectTitleDiscovery(root,category,subtitle,moviesOnly){
