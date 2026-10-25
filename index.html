@@ -546,8 +546,8 @@ function sullyUpdateBack(){
  if(btn)btn.disabled=!sullyScreenHistory.length&&!$("content").dataset.sullySearchActive;
 }
 function sullyGoHome(){
- delete $("content").dataset.sullySearchActive;
  if(tab!=="🏠 Home"||!$("viewer").hidden||$("content").dataset.sullySearchActive)sullyRememberScreen();
+ delete $("content").dataset.sullySearchActive;
  tab="🏠 Home";page=0;
  $("search").value="";sullyHideSuggestions();
  const menu=$("sullyMenu");if(menu)menu.hidden=true;
