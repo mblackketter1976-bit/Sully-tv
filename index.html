@@ -1547,7 +1547,7 @@ if([...$("country").options].some(o=>o.value===savedCountry))$("country").value=
 $("category").add(new Option(c,c));
 });
 
-render();
+sullyRestorePlace();
 
 }catch(e){
 $("status").textContent="Unable to load live channels. Refresh to retry.";
