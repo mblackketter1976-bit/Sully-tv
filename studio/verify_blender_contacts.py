@@ -113,6 +113,7 @@ def main(output):
             'maxEvaluatedStanceDrift':drift,'minimumEvaluatedMeshHeight':minimum_z,
             'approvedCharacterUsed':False}
     (output/'blender-contact-report.json').write_text(json.dumps(report,indent=2))
+    print('CONTACT_MEASUREMENTS',json.dumps(report),flush=True)
     assert joint_error<1e-5, report
     assert sole_error<1e-5, report
     assert drift<1e-5, report
@@ -121,7 +122,9 @@ def main(output):
     rig.hide_render=True
     bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.005))
     bpy.context.object.name='Diagnostic floor'
-    scene.render.engine='CYCLES'; scene.cycles.device='CPU'; scene.cycles.samples=12
+    scene.render.engine='CYCLES'; scene.cycles.device='CPU'; scene.cycles.samples=12; scene.cycles.use_denoising=False
+    for layer in scene.view_layers:
+        layer.cycles.use_denoising=False
     scene.render.resolution_x=900;scene.render.resolution_y=650;scene.render.resolution_percentage=100
     scene.world.color=(.25,.25,.25)
     bpy.ops.object.light_add(type='AREA',location=(1,-2,6));bpy.context.object.data.energy=800;bpy.context.object.data.size=5
