@@ -617,6 +617,7 @@ function sullySuggest(){
    const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q));
    if(!response.ok)return;
    const data=await response.json();
+   sullyLibraryRemember(data.map(item=>item.show));
    sullySuggestCache.set(lower,data);if(sullySuggestCache.size>80)sullySuggestCache.delete(sullySuggestCache.keys().next().value);
    displayShows(data)
   }catch(e){}
@@ -624,6 +625,20 @@ function sullySuggest(){
 }
 
 
+// Device-local discovery cache. Shared, automated harvesting requires a permitted backend.
+const sullyLibraryKey="sullyCatalogV1";
+function sullyLibraryRead(){try{const data=JSON.parse(localStorage.getItem(sullyLibraryKey)||"[]");return Array.isArray(data)?data:[]}catch(e){return []}}
+function sullyLibraryRemember(shows){
+ try{
+  const records=sullyLibraryRead(),ids=new Set(records.map(x=>x.id));
+  for(const show of shows){
+   if(!show||!show.id||ids.has(show.id))continue;
+   records.push({id:show.id,name:show.name||"",premiered:show.premiered||"",genres:show.genres||[],image:show.image?.medium||"",url:show.url||"",kind:"tv",source:"TVmaze"});
+   ids.add(show.id)
+  }
+  localStorage.setItem(sullyLibraryKey,JSON.stringify(records.slice(-350)))
+ }catch(e){}
+}
 let sullySearchGeneration=0;
 async function sullyCatalogLookup(q,slot,generation){
  const section=document.createElement("section");section.className="sullyCatalogResults";
@@ -634,6 +649,7 @@ async function sullyCatalogLookup(q,slot,generation){
   const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q),{signal:AbortSignal.timeout(8500)});
   if(!response.ok)throw Error("Catalog unavailable");
   const results=await response.json();
+  sullyLibraryRemember(results.map(item=>item.show));
   if(generation!==sullySearchGeneration||!slot.isConnected)return;
   status.textContent=results.length?"Matching shows and original broadcast networks. This does not confirm live playback or subscription availability.":"No matching series in this catalog. Try the streaming service searches below.";
   results.slice(0,6).forEach(item=>{
