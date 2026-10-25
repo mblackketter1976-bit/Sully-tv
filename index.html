@@ -1390,8 +1390,8 @@ root.append(rail);
 
 if(!list.length){
  const p=document.createElement("div");p.className="panel";
- p.textContent="No live channels match this selection right now. Here are other live channels you can watch instead.";root.append(p);
- const alternatives=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&categoryMatch(c)&&(!$("country").value||c.country===$("country").value)).slice(0,24);
+ p.textContent="No channels matched all selected filters. Here are other channels in this room matching your language preference.";root.append(p);
+ const alternatives=channels.filter(c=>streams.has(c.id)&&!unavailable.has(c.id)&&sullyLanguageMatches(c)&&categoryMatch(c)&&(!$("country").value||c.country===$("country").value)).slice(0,24);
  if(alternatives.length){const h=document.createElement("h2");h.textContent="🔴 Other live channels";root.append(h);const rail=document.createElement("div");rail.className="rail";alternatives.forEach(c=>rail.append(card(c)));root.append(rail)}
 }
 
@@ -1818,7 +1818,11 @@ function sullyItemLanguages(item){
 function sullyLanguageMatches(item){
  const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;
  if(chosen==="all")return true;
- return sullyItemLanguages(item).includes(chosen);
+ const declared=sullyItemLanguages(item);
+ if(declared.length)return declared.includes(chosen);
+ // Feed metadata can be incomplete. Use country as a browsing hint, never as a confirmed audio-language claim.
+ const probable={en:["US","GB","AU","NZ","IE"],es:["ES","MX","AR","CO","CL","PE"],fr:["FR"],de:["DE","AT"],pt:["PT","BR"],it:["IT"],ja:["JP"],ko:["KR"],zh:["CN","TW"],hi:["IN"],ar:["SA","AE","EG"],ru:["RU"]};
+ return (probable[chosen]||[]).includes(String(item.country||"").toUpperCase());
 }
 function sullyRoomLanguageControls(root){
  const bar=document.createElement("div");bar.className="sullyRoomLanguages";
@@ -1832,7 +1836,7 @@ function sullyRoomLanguageControls(root){
  select.value=sullyEnglishOnly?"en":sullySelectedLanguage;
  select.onchange=()=>{sullySelectedLanguage=select.value;sullyEnglishOnly=select.value==="en";render()};
  label.append(select);bar.append(english,label);
- const note=document.createElement("small");note.textContent="Filters by available language metadata; unknown languages are excluded when filtering.";bar.append(note);
+ const note=document.createElement("small");note.textContent="Uses broadcast-language metadata where available; otherwise country is an approximate language hint.";bar.append(note);
  root.append(bar);
 }
 
@@ -1863,7 +1867,7 @@ function sullyPlayableGenre(root,term,scope="all"){
    const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
    return tokens.some(t=>hay.includes(t))
   });
-  const visible=found.filter(i=>sullyLanguageMatches(i));
+  const visible=found.filter(i=>{const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;return chosen==="all"||sullyItemLanguages(i).includes(chosen)});
   status.textContent=visible.length?visible.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
   visible.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
@@ -2369,14 +2373,17 @@ nav();
 hideRecord();
 
 try{
-const [cs,ss,countries,ls]=await Promise.all([
+const [cs,ss,countries,ls,feeds]=await Promise.all([
 getJSON("channels.json"),
 getJSON("streams.json"),
 getJSON("countries.json"),
-getJSON("logos.json")
+getJSON("logos.json"),
+getJSON("feeds.json").catch(()=>[])
 ]);
 
 const names=new Map(countries.map(c=>[c.code,c.name]));
+const feedLanguages=new Map();
+feeds.forEach(f=>{if(!f.channel)return;const current=feedLanguages.get(f.channel)||new Set();(f.languages||[]).forEach(lang=>current.add(lang));feedLanguages.set(f.channel,current)});
 
 ss.forEach(s=>{
 if(!s.channel||!s.url||!/^https?:\/\//i.test(s.url))return;
@@ -2395,7 +2402,9 @@ channels=cs.filter(c=>
 ).map(c=>({
 ...c,
 _recent:false,
-countryName:names.get(c.country)||c.country
+countryName:names.get(c.country)||c.country,
+languages:[...(feedLanguages.get(c.id)||[])],
+_languageFromFeed:!!feedLanguages.get(c.id)?.size
 })).map(sullyTagChannel);
 
 try{
