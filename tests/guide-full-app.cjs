@@ -24,6 +24,7 @@ const {chromium}=require('playwright');
   for(const width of [1280,390]){
    const page=await browser.newPage({viewport:{width,height:1000},serviceWorkers:'block'});
    await page.clock.setFixedTime(new Date(start+5*60000));
+   let sourceCalls=0,failSource=false;
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    const names={'CNN.us':'CNN','MSNOW.us':'MS NOW','BYUTV.us':'BYU TV'};
    await page.route('**/*',async route=>{
@@ -37,11 +38,17 @@ const {chromium}=require('playwright');
      if(file==='feeds.json')data=channelIds.map(channel=>({channel,languages:['eng']}));
      await route.fulfill({json:data});return;
     }
+    if(url.hostname==='api.tvmaze.com'){
+     sourceCalls++;
+     if(failSource){await route.abort();return}
+     await route.fulfill({json:[{name:'Episode',runtime:60,airstamp:new Date(start).toISOString(),show:{name:'Browser refresh fixture',network:{id:40,name:'CNN',country:{code:'US'}}}}]});return;
+    }
     if(url.hostname==='fixture.invalid'){
      await route.fulfill({contentType:'application/vnd.apple.mpegurl',body:'#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:6\n#EXTINF:6,\nfixture.ts\n'});return;
     }
     await route.abort();
    });
+   await page.addInitScript(data=>localStorage.setItem('sully-guide-cache-v1',JSON.stringify(data)),{...guide,updated:new Date(start+5*60000).toISOString()});
    await page.goto(origin,{waitUntil:'domcontentloaded'});
    await page.waitForFunction(()=>typeof channels!=='undefined'&&channels.length===3);
    await page.locator('.quickGuide').click();
@@ -55,6 +62,16 @@ const {chromium}=require('playwright');
    assert.equal(await page.getByRole('link',{name:'CC BY-SA 4.0',exact:true}).count(),1);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Document should not overflow horizontally');
    await page.screenshot({path:'guide-full-app-'+width+'.png',fullPage:true});
+   await page.evaluate(async()=>{sullyGuideData.updated=new Date(Date.now()-2*3600000).toISOString();await sullyRefreshGuideData()});
+   assert.equal(sourceCalls,4,'Refresh should make exactly four bounded schedule requests');
+   await page.locator('.quickGuide').click();
+   await page.getByRole('button',{name:/Browser refresh fixture/}).first().waitFor();
+   const callsBefore=sourceCalls;
+   await page.evaluate(()=>sullyRefreshGuideData());
+   assert.equal(sourceCalls,callsBefore,'Fresh cache should avoid more requests');
+   failSource=true;
+   const preserved=await page.evaluate(async()=>{const before=JSON.stringify(sullyGuideData.channels);sullyGuideData.updated=new Date(Date.now()-2*3600000).toISOString();await sullyRefreshGuideData();return JSON.stringify(sullyGuideData.channels)===before});
+   assert.equal(preserved,true,'Network failure should preserve last usable channel data');
    assert.deepEqual(errors,[],'Full application raised JavaScript errors');
    console.log('PASS full-app guide startup/navigation/source credit/search at '+width+'px (controlled channel metadata; real candidate data)');
    await page.close();

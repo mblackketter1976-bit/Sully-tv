@@ -1,0 +1,21 @@
+const assert=require('assert/strict');
+const {normalize,fresh,refresh,request}=require('../guide-source.js');
+const now=Date.parse('2026-10-25T22:00:00Z');
+const episode={name:'Episode',runtime:60,airstamp:'2026-10-25T18:00:00-04:00',url:'https://www.tvmaze.com/episodes/123/fixture',show:{name:'Fixture Show',network:{id:40,name:'CNN',country:{code:'US'}}}};
+(async()=>{
+ const data=normalize([episode,episode],now);
+ assert.equal(data.channels['CNN.us'].length,1);
+ assert.equal(data.channels['CNN.us'][0].start,'2026-10-25T22:00:00Z');
+ assert.equal(data.channels['CNN.us'][0].end,'2026-10-25T23:00:00Z');
+ assert.equal(fresh(data,now+3599999),true);assert.equal(fresh(data,now+3600000),false);
+ assert.equal(fresh({...data,updated:'2026-10-26T22:00:00Z'},now),false);
+ for(const e of [{...episode,runtime:null},{...episode,airstamp:'2026-10-25T18:00:00'},{...episode,show:{...episode.show,network:{id:40,name:'CNN International',country:{code:'US'}}}}])assert.equal(Object.keys(normalize([e],now).channels).length,0);
+ const urls=[];
+ const result=await refresh({now,fetcher:async url=>{urls.push(url);return {ok:true,text:async()=>JSON.stringify([episode])}}});
+ assert.equal(urls.length,4);assert.equal(result.sourceCounts['tvmaze-us'],1);
+ let calls=0,delays=[];
+ await assert.rejects(request('https://fixture.invalid',async()=>{calls++;return {ok:false,status:429}},async ms=>delays.push(ms)));
+ assert.equal(calls,3);assert.deepEqual(delays,[1000,2000]);
+ await assert.rejects(refresh({now,fetcher:async()=>({ok:true,text:async()=>'[]'})}));
+ console.log('PASS browser source normalization, expiry, reviewed identity, bounded requests, rate-limit retry and empty-data rejection');
+})().catch(e=>{console.error(e);process.exit(1)});
