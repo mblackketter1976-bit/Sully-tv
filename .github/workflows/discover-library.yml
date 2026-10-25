@@ -1,7 +1,7 @@
 name: Discover free licensed videos
 on:
   schedule:
-    - cron: '17 7 * * *'
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 permissions:
   contents: write
