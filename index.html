@@ -875,6 +875,12 @@ body.sullyKidsMode .sullyKidsOutsideHeading::after{content:" 🎈";font-size:.8e
 @keyframes sullyKidsTwinkle{0%,100%{transform:rotate(-10deg) scale(.85)}50%{transform:rotate(10deg) scale(1.13)}}
 @media(prefers-reduced-motion:reduce){body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{animation:none}}
 @media(max-width:600px){body.sullyKidsMode .sullyKidsHero::before,body.sullyKidsMode .sullyKidsHero::after{font-size:23px;top:6px}}
+</style><style id="sullyKidsRecognizableArt2026">
+body.sullyKidsMode .sullyKidsShow{min-height:300px!important;justify-content:flex-end!important}
+body.sullyKidsMode .sullyKidsArt{height:77%!important;object-fit:contain!important;object-position:center center!important;padding:5px!important;box-sizing:border-box!important}
+body.sullyKidsMode .sullyKidsShow strong{z-index:2!important;background:#fffffff0;border-radius:10px;padding:3px 8px;max-width:100%}
+body.sullyKidsMode .sullyKidsPlay{z-index:2!important}
+@media(max-width:600px){body.sullyKidsMode .sullyKidsShow{min-height:250px!important}}
 </style></head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2126,17 +2132,28 @@ const sullyKidsShows=[
 ];
 const sullyKidsArtCache=new Map();
 async function sullyKidsArt(name,img){
- const titles={"Ms. Rachel":"Ms. Rachel (YouTuber)","CoComelon":"Cocomelon","Super Simple Songs":"Super Simple Songs","PAW Patrol":"PAW Patrol","Gabby's Dollhouse":"Gabby's Dollhouse","Bluey":"Bluey (2018 TV series)","Peppa Pig":"Peppa Pig","Sesame Street":"Sesame Street","Numberblocks":"Numberblocks","SpongeBob SquarePants":"SpongeBob SquarePants","Daniel Tiger's Neighborhood":"Daniel Tiger's Neighborhood","Wild Kratts":"Wild Kratts"};
+ const wikiTitles={"Ms. Rachel":"Ms. Rachel (YouTuber)","CoComelon":"Cocomelon","Super Simple Songs":"Super Simple Songs","Bluey":"Bluey (2018 TV series)","Peppa Pig":"Peppa Pig","Sesame Street":"Sesame Street","Numberblocks":"Numberblocks"};
+ const tvmazeNames={"Bluey":"Bluey","PAW Patrol":"PAW Patrol","SpongeBob SquarePants":"SpongeBob SquarePants","Peppa Pig":"Peppa Pig","Gabby's Dollhouse":"Gabby's Dollhouse","Sesame Street":"Sesame Street","CoComelon":"CoComelon","Numberblocks":"Numberblocks","Daniel Tiger's Neighborhood":"Daniel Tiger's Neighborhood","Wild Kratts":"Wild Kratts"};
+ const matchesTitle=(candidate)=>candidate.toLowerCase().replace(/[^a-z0-9]/g,"")===name.toLowerCase().replace(/[^a-z0-9]/g,"");
+ let url=sullyKidsArtCache.get(name)||"";
  try{
-  let url=sullyKidsArtCache.get(name);
-  if(!url){
-   const api="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=640&titles="+encodeURIComponent(titles[name]||name);
-   const response=await fetch(api,{signal:AbortSignal.timeout(6500)});
-   const data=await response.json();
-   url=Object.values(data.query?.pages||{})[0]?.thumbnail?.source||"";
-   if(url)sullyKidsArtCache.set(name,url);
+  if(!url&&tvmazeNames[name]){
+   const response=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(tvmazeNames[name]),{signal:AbortSignal.timeout(6500)});
+   if(response.ok){
+    const shows=await response.json();
+    const found=shows.find(x=>matchesTitle(x.show?.name||"")&&x.show?.image?.original);
+    url=found?.show?.image?.original||"";
+   }
   }
-  if(url&&img.isConnected){img.src=url;img.hidden=false}
+  if(!url){
+   const api="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=900&titles="+encodeURIComponent(wikiTitles[name]||name);
+   const response=await fetch(api,{signal:AbortSignal.timeout(6500)});
+   if(response.ok){const data=await response.json();url=Object.values(data.query?.pages||{})[0]?.thumbnail?.source||""}
+  }
+  if(url){
+   sullyKidsArtCache.set(name,url);
+   if(img.isConnected){img.onload=()=>{img.hidden=false};img.onerror=()=>{img.hidden=true};img.src=url}
+  }
  }catch(e){}
 }
 const sullyKidsLivePattern=/\\b(kids?|children|junior|cartoon|toons?|baby|preschool|nick jr|pbs kids|boomerang|ducktv|pocoyo|babyfirst|kidoodle|happy kids|kidstv)\\b/i;
