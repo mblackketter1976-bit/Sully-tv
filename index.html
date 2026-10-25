@@ -373,10 +373,15 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyRoomHeading h1{margin:0 0 6px;color:#f3cf83;font-size:clamp(22px,3vw,32px)}
 .sullyRoomHeading p{margin:0;color:#c5d7e9}
 .sullyContinueDisclosure{margin:20px 0}.sullyContinueDisclosure>summary{cursor:pointer;color:#f3cc7c;font-size:clamp(20px,2.4vw,27px);font-weight:800;padding:14px 18px;border:1px solid #b68c48;border-radius:12px;background:#172d4a}.sullyContinueDisclosure[open]>summary{margin-bottom:16px}
+
+header #viewer{flex-basis:100%;width:100%;order:1;margin:12px 0;box-sizing:border-box}
+header .sullySearchForm{order:2}
+header .top{flex-wrap:wrap}
 </style>
 </head>
 <body>
 <header>
+
 <div class="top">
 <button id="sullyBack" class="sullyBack" onclick="sullyGoBack()" aria-label="Go back to previous screen" title="Back" disabled>← Back</button>
 <button id="sullyHome" class="sullyBack" onclick="sullyGoHome()" aria-label="Go to Sully TV home" title="Home">⌂ Home</button>
@@ -389,23 +394,6 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 </section>
 <small>Your world. Your channels.</small>
 </div>
-<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><button type="button" id="sullyLibraryShortcut" onclick="sullyCategory('📚 Library')" aria-label="Open playable library" title="Library">📚 Library</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
-</div>
-
-<div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
-<button class="headerGuide quickGuide" onclick="openGuide()">📋 TV Guide</button>
-<button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
-<button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
-<button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
-<button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
-<button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
-</div>
-<div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
-</header>
-
-<div class="sullyFloat"><button onclick="sullyMenu()">☰ Categories</button><button onclick="sullySearch()">🔎 Search</button></div><div id="sullyMenu" class="sullyMenu" hidden></div>
-<main>
-<nav id="nav" class="categoryTiles" aria-label="Sully TV categories"></nav>
 <section class="hero" id="viewer" hidden>
 <div class="welcome">
 <small>● FREE LIVE TV & ON DEMAND</small>
@@ -432,6 +420,24 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 <div id="notice"></div><div id="sullySwipe" class="sullySwipe"><button onclick="changeChannel(-1)">◀ Previous</button><span>Swipe to change channel</span><button onclick="changeChannel(1)">Next ▶</button></div>
 </div>
 </section>
+<form id="sullySearchForm" class="sullySearchForm" role="search" onsubmit="sullySubmitSearch(event)"><input id="search" type="search" enterkeyhint="search" placeholder="🔎 Search channels" aria-label="Search channels"><button type="submit" id="sullySearchGo" aria-label="Show matching channels">🔎 Search</button><button type="button" id="sullyLibraryShortcut" onclick="sullyCategory('📚 Library')" aria-label="Open playable library" title="Library">📚 Library</button><div id="sullySuggestions" class="sullySuggestions" role="listbox" aria-label="Suggested channels" hidden></div></form>
+</div>
+
+<div class="guideCompact sullyQuickBar" role="toolbar" aria-label="Sully TV quick controls">
+<button class="headerGuide quickGuide" onclick="openGuide()">📋 TV Guide</button>
+<button class="headerGuide" onclick="quickFavorites()">❤️ Favorites</button>
+<button class="headerGuide" onclick="surpriseMe()">🎲 Surprise Me</button>
+<button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
+<button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
+<button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
+</div>
+<div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
+</header>
+
+<div class="sullyFloat"><button onclick="sullyMenu()">☰ Categories</button><button onclick="sullySearch()">🔎 Search</button></div><div id="sullyMenu" class="sullyMenu" hidden></div>
+<main>
+<nav id="nav" class="categoryTiles" aria-label="Sully TV categories"></nav>
+
 
 <section class="sponsorSpot" aria-label="Sully TV sponsor"><div class="sponsorLabel">✦ SULLY TV ORIGINAL SPONSOR ✦</div><h2>🐾 Meet Luna &amp; Old Sac Shirts &amp; Gifts</h2><p>Discover Luna on the Streets, her children's books, and the Sacramento souvenir shop behind her adventures. Watch our Good Day Sacramento television feature!</p><div class="sponsorActions"><a href="https://www.cbsnews.com/gooddaysacramento/video/shopping-at-old-sacramento-shirts-gifts/" target="_blank" rel="noopener noreferrer">📺 Good Day Sacramento feature</a><a href="https://www.youtube.com/@mblackketter" target="_blank" rel="noopener noreferrer">🐾 Luna's YouTube</a><button class="watch" style="flex:0 1 auto" onclick="tab='🐾 Luna on the Streets';page=0;nav();render();document.getElementById('content').scrollIntoView({behavior:'smooth'})">▶ Luna's Channel</button></div><p style="font-size:12px;margin-bottom:0">The TV feature opens on CBS's website. Animated commercials and future TV appearances coming soon.</p></section>
 
