@@ -524,7 +524,26 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 .sullyPlatformsGrid .sullyPlatformTile strong{font-size:16px;color:#fff}
 .sullyPlatformsGrid .sullyPlatformTile small{color:#e4e7ed;opacity:.9}
 .sullyPlatformsGrid .sullyPlatformOpen{color:#f1d59c}
-</style><style id="sullyStreamingShortcutStyle">#sullyStreamingShortcut{min-height:44px;white-space:nowrap;border-radius:9px;font-weight:750;cursor:pointer}#sullyStreamingShortcut:focus-visible{outline:3px solid #e4c480;outline-offset:2px}@media(max-width:520px){#sullyStreamingShortcut{font-size:12px;padding:8px 10px}}</style></head>
+</style><style id="sullyStreamingShortcutStyle">#sullyStreamingShortcut{min-height:44px;white-space:nowrap;border-radius:9px;font-weight:750;cursor:pointer}#sullyStreamingShortcut:focus-visible{outline:3px solid #e4c480;outline-offset:2px}@media(max-width:520px){#sullyStreamingShortcut{font-size:12px;padding:8px 10px}}</style><style id="sullyAtmosphereThemes">
+/* Appearance only: no display, positioning, width or layout changes. */
+body[data-sully-theme]{--at-bg:#101923;--at-panel:#1a2a39;--at-btn:#263d53;--at-accent:#f0ce86;--at-text:#f8f9ff;--at-pattern:none;--at-round:12px;background-color:var(--at-bg)!important;background-image:var(--at-pattern)!important;background-attachment:fixed!important;color:var(--at-text)}
+body[data-sully-theme="space"]{--at-bg:#08091c;--at-panel:#171637;--at-btn:#342b68;--at-accent:#b7a5ff;--at-pattern:radial-gradient(circle at 15% 18%,#ffffffaa 0 1px,transparent 2px),radial-gradient(circle at 78% 42%,#ffffff88 0 1px,transparent 2px),radial-gradient(ellipse at 80% 12%,#442c8eaa,transparent 53%),radial-gradient(ellipse at 15% 85%,#142d6baa,transparent 55%);--at-round:17px;background-size:137px 157px,219px 233px,auto,auto}
+body[data-sully-theme="rain"]{--at-bg:#0b1825;--at-panel:#183149;--at-btn:#285477;--at-accent:#8bd6f7;--at-pattern:repeating-linear-gradient(110deg,transparent 0 23px,#a1d8fa15 24px 25px,transparent 26px 49px),linear-gradient(160deg,#0a1626,#1a3546)}
+body[data-sully-theme="snow"]{--at-bg:#1a3041;--at-panel:#294c63;--at-btn:#396b89;--at-accent:#d6f4ff;--at-pattern:radial-gradient(circle at 20% 30%,#ffffff8c 0 2px,transparent 3px),radial-gradient(circle at 73% 61%,#ffffff66 0 2px,transparent 3px),linear-gradient(160deg,#182a43,#2c5a6c);background-size:133px 149px,187px 211px,auto}
+body[data-sully-theme="sunshine"]{--at-bg:#43301b;--at-panel:#624526;--at-btn:#99602c;--at-accent:#ffe29b;--at-pattern:radial-gradient(circle at 87% 12%,#f9bb5277,transparent 35%),linear-gradient(160deg,#754627,#322d36);--at-round:18px}
+body[data-sully-theme="ocean"]{--at-bg:#05232b;--at-panel:#103c49;--at-btn:#116476;--at-accent:#7ce9df;--at-pattern:radial-gradient(ellipse at 12% 70%,#0e728655,transparent 48%),repeating-linear-gradient(170deg,transparent 0 44px,#59c3d20b 45px 47px,transparent 48px 88px)}
+body[data-sully-theme="forest"]{--at-bg:#122218;--at-panel:#1e3b2b;--at-btn:#315f3c;--at-accent:#c4ed9c;--at-pattern:radial-gradient(ellipse at 12% 22%,#3c805034,transparent 52%),linear-gradient(150deg,#132e22,#0c1b16)}
+body[data-sully-theme="retro"]{--at-bg:#251b2e;--at-panel:#402e50;--at-btn:#714a87;--at-accent:#ffcf7e;--at-pattern:linear-gradient(135deg,#42264d,#1c223d);--at-round:5px}
+body[data-sully-theme]:not([data-sully-theme="classic"]) header,body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyQuickPanel,body[data-sully-theme]:not([data-sully-theme="classic"]) .panel,body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyRoomHeading,body[data-sully-theme]:not([data-sully-theme="classic"]) .sponsorSpot{background-color:var(--at-panel)!important;color:var(--at-text)}
+body[data-sully-theme]:not([data-sully-theme="classic"]) button:not(.sullyPlatformTile),body[data-sully-theme]:not([data-sully-theme="classic"]) .headerGuide,body[data-sully-theme]:not([data-sully-theme="classic"]) .categoryTiles button{background-color:var(--at-btn)!important;background-image:linear-gradient(155deg,#ffffff1b,transparent)!important;border-color:var(--at-accent)!important;border-radius:var(--at-round)!important;color:var(--at-text)!important}
+body[data-sully-theme]:not([data-sully-theme="classic"]) button:focus-visible{outline:3px solid var(--at-accent)!important;outline-offset:2px}
+body[data-sully-theme]:not([data-sully-theme="classic"]) button:hover{filter:brightness(1.15)}
+body[data-sully-theme]:not([data-sully-theme="classic"]) .tileSection,body[data-sully-theme]:not([data-sully-theme="classic"]) .sullyRoomHeading h1{color:var(--at-accent)!important}
+.sullyThemeChooser{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:9px;margin:12px 0}
+.sullyThemeChooser button{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;padding:12px!important;min-height:85px;cursor:pointer}
+.sullyThemeChooser button[aria-pressed="true"]{outline:3px solid var(--at-accent,#f0ce86);outline-offset:1px}
+.sullyThemeChooser small{font-size:11px;opacity:.85}
+</style></head>
 <body>
 <header>
 
@@ -576,6 +595,7 @@ header button,.controls button,.headerGuide,.sullyGuideToolbar button,.sullyRetr
 
 <button class="headerGuide" onclick="openSleepTimer()">🌙 Sleep Timer</button>
 <button class="headerGuide" onclick="shareSullyTV()">📤 Share</button>
+<button class="headerGuide" onclick="openSullyThemes()" aria-label="Choose an interface theme">🎨 Themes</button>
 <button class="headerGuide" onclick="openSullySettings()">⚙️ Settings</button>
 </div>
 <div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
@@ -1969,6 +1989,31 @@ function shareSullyTV(){
  showSullyShareLink(url);
 }
 function showSullyShareLink(url){showSullyPanel('<strong>📤 Share Sully TV</strong><p>Copy this link and send it to friends:</p><input readonly aria-label="Sully TV website link" value="'+url+'" onclick="this.select()" style="width:100%;max-width:440px"><p>Sharing sends the website link; it does not cast to a television.</p><button onclick="closeSullyPanel()">Close</button>');}
+const sullyThemeOptions=[
+ ["classic","📺 Original","Classic Sully TV"],["space","🚀 Space","Stars & galaxies"],["rain","🌧️ Rainy Night","Stormy blue"],["snow","❄️ Snowfall","Winter sky"],["sunshine","☀️ Sunshine","Golden sunset"],["ocean","🌊 Ocean","Deep sea"],["forest","🌲 Forest","Evergreen"],["retro","🕹️ Retro","Vintage arcade"]
+];
+function sullyApplyTheme(id){
+ const selected=sullyThemeOptions.some(x=>x[0]===id)?id:"classic";
+ document.body.dataset.sullyTheme=selected;
+ try{localStorage.setItem("sully-appearance-theme",selected)}catch(e){}
+}
+function openSullyThemes(){
+ const p=$("sullyQuickPanel");
+ p.hidden=false;p.dataset.panel="sullyThemes";p.replaceChildren();
+ const title=document.createElement("strong");title.textContent="🎨 Choose Your Sully TV Look";
+ const desc=document.createElement("p");desc.textContent="Change colors, buttons and backgrounds without moving any controls or banners. Saved on this device.";
+ const grid=document.createElement("div");grid.className="sullyThemeChooser";
+ sullyThemeOptions.forEach(([id,name,detail])=>{
+  const b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",String(document.body.dataset.sullyTheme===id));
+  const label=document.createElement("strong");label.textContent=name;
+  const sub=document.createElement("small");sub.textContent=detail;b.append(label,sub);
+  b.onclick=()=>{sullyApplyTheme(id);grid.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))};
+  grid.append(b);
+ });
+ const close=document.createElement("button");close.type="button";close.textContent="Close";close.onclick=closeSullyPanel;
+ p.append(title,desc,grid,close);
+}
+try{sullyApplyTheme(localStorage.getItem("sully-appearance-theme")||"classic")}catch(e){sullyApplyTheme("classic")}
 function openSullySettings(){
  const saved=localStorage.getItem("sully-compact-cards")==="yes";
  showSullyPanel('<strong>⚙️ Sully TV Settings</strong><p>Display preferences are saved on this device.</p><button onclick="setSullyCompact('+(!saved)+')">'+(saved?'Turn off compact cards':'Use compact channel cards')+'</button><button onclick="closeSullyPanel()">Close</button>');
