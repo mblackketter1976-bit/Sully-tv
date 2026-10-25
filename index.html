@@ -2894,9 +2894,10 @@ function renderGuide(){
   const updated=sullyGuideData?.updated?new Date(sullyGuideData.updated):null;
   const fresh=updated&&Number.isFinite(updated.getTime())&&Date.now()-updated.getTime()<36*3600000;
   const scheduled=matches.filter(c=>fresh&&(sullyGuideData.channels[c.id]||[]).some(p=>p&&p.title&&Number.isFinite(Date.parse(p.start))&&Number.isFinite(Date.parse(p.end))&&Date.parse(p.end)>Date.parse(p.start)&&slots.some(d=>Date.parse(p.start)<=d.getTime()&&Date.parse(p.end)>d.getTime())));
-  const shown=scheduled.slice(0,limit);count.textContent=shown.length+" / "+scheduled.length+" scheduled channels";
+  const ordered=scheduled.concat(matches.filter(c=>!scheduled.includes(c)));
+  const shown=ordered.slice(0,limit);count.textContent=shown.length+" / "+ordered.length+" channels · "+scheduled.length+" with verified schedules";
 
-  guideStatus.textContent=fresh?"Verified program listings updated "+updated.toLocaleString()+" · Only channels with actual scheduled shows appear":"Waiting for fresh verified program listings · No unscheduled channels shown";
+  guideStatus.textContent=fresh?"Verified listings updated "+updated.toLocaleString()+" · Channels without verified listings remain available to watch":"Live channel directory · Program details unavailable until a verified guide source is connected";
   const table=document.createElement("div");table.className="sullyRetroGuideTable";table.setAttribute("role","table");table.setAttribute("aria-label","Live television time grid");
   const header=document.createElement("div");header.className="sullyRetroGuideRow sullyRetroGuideHead";header.setAttribute("role","row");
   const stationHead=document.createElement("div");stationHead.className="sullyRetroGuideStation";stationHead.textContent="CH · STATION";header.append(stationHead);
@@ -2918,8 +2919,8 @@ function renderGuide(){
    table.append(row);
   });
   scroller.append(table);
-  if(!shown.length){const empty=document.createElement("p");empty.className="muted";empty.textContent=fresh?"No verified programs are scheduled in this time window. Try Earlier or Later.":"No current program schedules have been verified yet. The guide will populate automatically when the source update succeeds.";scroller.append(empty)}
-  more.hidden=shown.length>=scheduled.length;more.textContent="Show more stations ("+(scheduled.length-shown.length)+" remaining)";
+  if(!shown.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No channels match these filters. Try another language or category.";scroller.append(empty)}
+  more.hidden=shown.length>=ordered.length;more.textContent="Show more stations ("+(ordered.length-shown.length)+" remaining)";
  }
  back.onclick=()=>{offset-=6;draw()};forward.onclick=()=>{offset+=6;draw()};now.onclick=()=>{offset=0;draw()};
  more.onclick=()=>{limit+=36;draw()};
