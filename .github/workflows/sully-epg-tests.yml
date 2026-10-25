@@ -1,10 +1,11 @@
 name: Sully Guide Engine offline tests
 on:
   push:
-    branches: [sully-phase1-foundation-audit]
+    branches: [sully-phase1-foundation-audit, luna-grounded-motion-benchmark]
     paths:
       - 'scripts/sully_epg_engine.py'
       - 'tests/**'
+      - 'studio/**'
       - 'scripts/update_tv_guide.py'
       - 'index.html'
       - 'data/guide-sources.json'

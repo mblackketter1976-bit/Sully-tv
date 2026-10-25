@@ -52,3 +52,12 @@ No blind adoption; no reflexive rewrite. Do not call our product better without 
 - **Built:** bounded gzip fetch, provider rights gate, priority/overlap handling, source attribution, last-good preservation, atomic candidate writes, stale UI suppression and mid-slot visibility fix.
 - **Test evidence:** 19 local Python tests passed; inline JS syntax passed. GitHub Actions run 40241221857 passed Python and isolated guide-browser checks at 1280px and 390px; actual feed rights/coverage remain unverified. See TV_GUIDE_VERIFICATION_002.md.
 - **Next review:** CI browser results and first provider with verified public/commercial reuse rights. No claim of superior schedule coverage or production readiness.
+
+### BA-003 — Luna foot-contact motion core — 2026-10-25
+- **Need:** connected limbs and stable planted feet before another long render.
+- **Observed:** saved V42 vector proof source; V53 Blender walking section; full V54 static-study source; poster pixels. Blender's official IK constraint documentation reviewed (linked in LUNA_MOTION_VERIFICATION_001.md); runtime/UI comparison remains pending.
+- **Strengths/weaknesses:** existing builds preserve reusable scenes and character-study work, but sine-driven paws are not world-contact constraints. Blender supplies general chain IK; the missing piece in our prototype is explicit contact timing/targets and independent verification.
+- **Rights/cost/dependencies:** original stdlib-only Python; no third-party code or paid API. Blender/software and individual asset rights remain separate audit items. No production tool replacement chosen.
+- **Decision:** provisional HYBRID — test a portable target contract while preserving prior artwork and established rig/renderer tools.
+- **Built/tested:** six local motion tests passed; default 361-pose benchmark has zero sampled stance drift and segment error below 1e-12 metres. Not tested on a deformed mesh or rendered character. No superiority claim over Blender or Cartoon Animator.
+- **Next review:** rendered, approved character-rig integration; compare visual quality, correction effort and workstation performance before adopting the full pipeline.
