@@ -398,6 +398,7 @@ const tabs=[
 "🏆 Sports",
 "🧠 Documentaries",
 "🎬 Movies",
+"🍥 Anime",
 "⭐ Reality",
 "🌎 Worldwide",
 "❤️ Favorites",
@@ -486,7 +487,7 @@ function sullyMenu(){
  const heading=document.createElement("div");heading.className="sullyMenuHeading";heading.textContent="Browse Sully TV";m.append(heading);
  const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);
  const groups=[
- ["🎬 Watch by Genre",["🎬 Movies","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
+ ["🎬 Watch by Genre",["🎬 Movies","🍥 Anime","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
  ["🏠 More",["🏠 Home","🍿 On Demand","📋 TV Guide"]]
@@ -560,6 +561,9 @@ return /documentary|history|science|nature|space|education|travel/.test(text);
 if(tab.includes("Movies"))
 return /movie|film|cinema|classic|drama/.test(text);
 
+if(tab==="🍥 Anime")
+return /anime|animation|animated|manga|otaku|japanese.cartoon|crunchyroll|retrocrush/.test(text);
+
 if(tab.includes("Reality"))
 return /reality|lifestyle|shopping|talent|competition|entertainment/.test(text);
 
@@ -606,6 +610,7 @@ function sullyMovieGenreBar(){
 
 /* Contextual subcategory buttons for channel sections */
 const sullySubcategories={
+ "🍥 Anime":[["All Anime",null],["Action",/action|battle|fight|shonen|shounen/],["Fantasy",/fantasy|magic|isekai|adventure/],["Sci-Fi",/sci.fi|science.fiction|mecha|robot|space/],["Comedy",/comedy|funny|humor|slice.of.life/],["Romance",/romance|romantic|shojo|shoujo/],["Classics",/classic|retro|vintage|old.school/],["Family",/family|kids|children|cartoon/]],
  "🏆 Sports":[["All Sports",null],["Football",/football|nfl|gridiron/],["Basketball",/basketball|nba|wnba/],["Baseball",/baseball|mlb|softball/],["Soccer",/soccer|football.club|futbol|fútbol|fifa/],["Motorsports",/racing|nascar|formula|motorsport|motorcycle|f1\b/],["Combat",/boxing|mma|wrestling|ufc|fight/],["Golf",/golf|pga/],["Tennis",/tennis|atp|wta/]],
  "🧠 Documentaries":[["All Documentaries",null],["History",/history|historical|ancient|war|heritage/],["Science",/science|physics|technology|discovery|experiment/],["Nature",/nature|wildlife|animal|planet|earth|ocean/],["Space",/space|cosmos|astronomy|nasa|universe/],["Travel",/travel|explore|adventure|geograph/],["Crime",/crime|investigation|forensic|mystery/]],
  "⭐ Reality":[["All Reality",null],["Competition",/competition|contest|talent|challenge|game.show|survivor/],["Cooking",/cook|food|chef|baking|kitchen/],["Home & DIY",/home|house|renovation|diy|garden|property/],["Lifestyle",/lifestyle|fashion|beauty|wellness/],["Dating",/dating|romance|love|relationship/],["Adventure",/adventure|survival|outdoor|expedition/]],
