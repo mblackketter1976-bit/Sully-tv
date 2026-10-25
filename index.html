@@ -747,8 +747,8 @@ function sullyTitleSearch(q){
 
  const headingMain=document.createElement("h3");headingMain.textContent="🎬 No verified playable match for “"+q+"”";panel.append(headingMain);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Sully TV hasn't verified a playable source for this title yet. That doesn't mean it's unavailable everywhere. We're expanding our legal catalog; meanwhile, see related recommendations below.";panel.append(intro);
- const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
- const summary=document.createElement("summary");summary.textContent="Optional: search external services manually";details.append(summary);
+ const details=document.createElement("details");details.className="sullySearchExtras";details.open=true;root.append(details);
+ const summary=document.createElement("summary");summary.textContent="🌍 Search more streaming platforms worldwide (free and subscription)";details.append(summary);
  const extra=document.createElement("div");extra.className="sullySearchExtrasBody";details.append(extra);
  const services=[
  {name:"Tubi",free:true,search:q=>"https://tubitv.com/search/"+encodeURIComponent(q),home:"https://tubitv.com/"},
@@ -765,7 +765,21 @@ function sullyTitleSearch(q){
  {name:"Peacock",search:q=>"https://www.peacocktv.com/",home:"https://www.peacocktv.com/"},
  {name:"STARZ",search:q=>"https://www.starz.com/",home:"https://www.starz.com/"},
  {name:"AMC+",search:q=>"https://www.amcplus.com/",home:"https://www.amcplus.com/"},
- {name:"Crunchyroll",search:q=>"https://www.crunchyroll.com/search?q="+encodeURIComponent(q),home:"https://www.crunchyroll.com/"}
+ {name:"Crunchyroll",search:q=>"https://www.crunchyroll.com/search?q="+encodeURIComponent(q),home:"https://www.crunchyroll.com/"},
+ {name:"BBC iPlayer (UK)",free:true,search:q=>"https://www.bbc.co.uk/iplayer/search?q="+encodeURIComponent(q),home:"https://www.bbc.co.uk/iplayer"},
+ {name:"ITVX (UK)",free:true,search:q=>"https://www.itv.com/",home:"https://www.itv.com/"},
+ {name:"Channel 4 (UK)",free:true,search:q=>"https://www.channel4.com/",home:"https://www.channel4.com/"},
+ {name:"CBC Gem (Canada)",free:true,search:q=>"https://gem.cbc.ca/",home:"https://gem.cbc.ca/"},
+ {name:"ABC iview (Australia)",free:true,search:q=>"https://iview.abc.net.au/",home:"https://iview.abc.net.au/"},
+ {name:"SBS On Demand (Australia)",free:true,search:q=>"https://www.sbs.com.au/ondemand/",home:"https://www.sbs.com.au/ondemand/"},
+ {name:"Arte (Europe)",free:true,search:q=>"https://www.arte.tv/",home:"https://www.arte.tv/"},
+ {name:"Rakuten TV",free:true,search:q=>"https://www.rakuten.tv/",home:"https://www.rakuten.tv/"},
+ {name:"Internet Archive",free:true,search:q=>"https://archive.org/search?query="+encodeURIComponent(q),home:"https://archive.org/details/movies"},
+ {name:"Vimeo",free:true,search:q=>"https://vimeo.com/search?q="+encodeURIComponent(q),home:"https://vimeo.com/"},
+ {name:"Dailymotion",free:true,search:q=>"https://www.dailymotion.com/search/"+encodeURIComponent(q),home:"https://www.dailymotion.com/"},
+ {name:"MUBI",search:q=>"https://mubi.com/",home:"https://mubi.com/"},
+ {name:"BritBox",search:q=>"https://www.britbox.com/",home:"https://www.britbox.com/"},
+ {name:"Viki",free:true,search:q=>"https://www.viki.com/search?q="+encodeURIComponent(q),home:"https://www.viki.com/"}
  ];
  let owned=[];try{owned=JSON.parse(localStorage.getItem("sullySubscribedServices")||"[]");if(!Array.isArray(owned))owned=[]}catch(e){owned=[]}
  const title=document.createElement("h3");title.textContent="My streaming subscriptions";extra.append(title);
