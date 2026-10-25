@@ -286,6 +286,13 @@ header .top>div:first-of-type{padding-left:85px}
 header .top>div:first-of-type{padding-left:0!important}
 @media(max-width:600px){#sullyBack{top:max(7px,env(safe-area-inset-top))!important;left:max(7px,env(safe-area-inset-left))!important;min-height:38px!important;min-width:66px!important}}
 
+
+.sullyFloat{position:fixed;right:12px;bottom:65px;z-index:990;display:flex;gap:6px}.sullyFloat button{background:#1a416e;border:1px solid #dbb674;border-radius:30px;color:white;padding:10px;font-size:12px;box-shadow:0 3px 12px #0009}
+.sullyMenu{position:fixed;z-index:995;right:10px;bottom:115px;max-height:65vh;overflow:auto;width:min(355px,calc(100vw - 20px));background:#0b2040;border:2px solid #dbb674;border-radius:14px;padding:10px;box-shadow:0 5px 24px #000c;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.sullyMenu[hidden]{display:none}.sullyMenu button{background:#244771;color:#fff;border:1px solid #d4b174;border-radius:8px;padding:10px;text-align:left;font-size:12px}.sullyMenu .sullyMenuClose{grid-column:span 2;text-align:center}
+.sullySwipe{display:flex;justify-content:space-between;align-items:center;gap:5px;border:1px solid #bc9d68;border-radius:10px;margin-top:10px;padding:7px;touch-action:pan-y;user-select:none}.sullySwipe span{font-size:11px;color:#d4dcf0;text-align:center}.sullySwipe button{background:#224876;border:1px solid #d7b577;border-radius:8px;padding:8px;color:white}
+@media(max-width:500px){.sullyFloat{bottom:60px;right:7px}.sullyFloat button{padding:8px;font-size:11px}}
+
 </style>
 </head>
 <body>
@@ -315,6 +322,7 @@ header .top>div:first-of-type{padding-left:0!important}
 <div id="sullyQuickPanel" class="sullyQuickPanel" hidden></div>
 </header>
 
+<div class="sullyFloat"><button onclick="sullyMenu()">☰ Categories</button><button onclick="sullySearch()">🔎 Search</button></div><div id="sullyMenu" class="sullyMenu" hidden></div>
 <main>
 <nav id="nav" class="categoryTiles" aria-label="Sully TV categories"></nav>
 <section class="hero" id="viewer" hidden>
@@ -337,10 +345,10 @@ header .top>div:first-of-type{padding-left:0!important}
 <button onclick="openGuide()">📋 Guide</button>
 <button onclick="skip(10)">10s ↷</button>
 <button id="record" hidden onclick="toggleRecord()">🔴 Record</button>
-<button onclick="fullscreen()">⛶ Fullscreen</button>
+<button onclick="sullyPiP()">▣ Mini Player</button><button onclick="fullscreen()">⛶ Fullscreen</button>
 <button onclick="stopVideo()">■ Stop</button>
 </div>
-<div id="notice"></div>
+<div id="notice"></div><div id="sullySwipe" class="sullySwipe"><button onclick="changeChannel(-1)">◀ Previous</button><span>Swipe to change channel</span><button onclick="changeChannel(1)">Next ▶</button></div>
 </div>
 </section>
 
@@ -351,7 +359,7 @@ header .top>div:first-of-type{padding-left:0!important}
 <select id="category"><option value="">All Categories</option></select>
 <select id="sort">
 <option value="featured">Featured First</option>
-<option value="az">A to Z</option>
+<option value="az">A to Z</option><option value="za">Z to A</option><option value="country">By Country</option><option value="favorites">Favorites First</option><option value="recent">Recently Watched</option>
 </select>
 </div>
 <p id="status">Loading channels...</p>
@@ -466,6 +474,19 @@ function sullyGoBack(){
  requestAnimationFrame(()=>window.scrollTo({top:Math.max(0,previous.scrollY),behavior:"instant"}));
 }
 
+
+/* Sully navigation suite */
+function sullyCategory(t){if(t!==tab)sullyRememberScreen();tab=t;page=0;$("search").value="";$("sullyMenu").hidden=true;nav();render();jumpToCategory();sullySavePlace()}
+function sullyMenu(){const m=$("sullyMenu");m.hidden=!m.hidden;if(!m.hidden){m.replaceChildren();const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyMenuClose";close.onclick=()=>m.hidden=true;m.append(close);tabs.forEach(t=>{const b=document.createElement("button");b.textContent=t;b.onclick=()=>sullyCategory(t);m.append(b)})}}
+function sullySearch(){const m=$("sullyMenu");m.hidden=true;const el=$("search");window.scrollTo({top:Math.max(0,window.scrollY+el.getBoundingClientRect().top-90),behavior:"instant"});el.focus({preventScroll:true});el.select()}
+async function sullyPiP(){try{if(document.pictureInPictureElement){await document.exitPictureInPicture();return}if(!document.pictureInPictureEnabled||!player.requestPictureInPicture||player.readyState<2)throw Error("unsupported");await player.requestPictureInPicture()}catch(e){setNotice("Mini Player is unavailable for this stream or browser.")}}
+let sullyTouch=null;
+$("sullySwipe").addEventListener("touchstart",e=>{if(e.target.closest("button"))return;const t=e.changedTouches[0];sullyTouch=[t.clientX,t.clientY]},{passive:true});
+$("sullySwipe").addEventListener("touchend",e=>{if(!sullyTouch||e.target.closest("button"))return;const t=e.changedTouches[0],dx=t.clientX-sullyTouch[0],dy=t.clientY-sullyTouch[1];sullyTouch=null;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.5)changeChannel(dx<0?1:-1)},{passive:true});
+function sullySavePlace(){try{localStorage.setItem("sully-last-place",JSON.stringify({tab,scrollY:window.scrollY,sort:$("sort").value,country:$("country").value,category:$("category").value}))}catch(e){}}
+let sullyScrollSave;window.addEventListener("scroll",()=>{clearTimeout(sullyScrollSave);sullyScrollSave=setTimeout(sullySavePlace,400)},{passive:true});window.addEventListener("pagehide",sullySavePlace);
+function sullyRestorePlace(){try{const p=JSON.parse(localStorage.getItem("sully-last-place")||"null");if(!p||!tabs.includes(p.tab))return;tab=p.tab;if(p.sort)$("sort").value=p.sort;if(p.country&&[...$("country").options].some(o=>o.value===p.country))$("country").value=p.country;if(p.category&&[...$("category").options].some(o=>o.value===p.category))$("category").value=p.category;nav();render();setTimeout(()=>window.scrollTo({top:Math.max(0,p.scrollY||0),behavior:"instant"}),400)}catch(e){}}
+
 function jumpToCategory(){
  const target=$("content");
  if(!target)return;
@@ -490,6 +511,7 @@ $("search").value="";
 nav();
 render();
 jumpToCategory();
+sullySavePlace();
 };
 $("nav").append(b);
 });
@@ -544,6 +566,10 @@ list.sort((a,b)=>
 history.findIndex(h=>h.id===a.id)-
 history.findIndex(h=>h.id===b.id)
 );
+}else if($("sort").value==="recent"){list.sort((a,b)=>{const ai=history.findIndex(h=>h.id===a.id),bi=history.findIndex(h=>h.id===b.id);return (ai<0?99999:ai)-(bi<0?99999:bi)})
+}else if($("sort").value==="favorites"){list.sort((a,b)=>Number(favorites.has(b.id))-Number(favorites.has(a.id))||a.name.localeCompare(b.name))
+}else if($("sort").value==="country"){list.sort((a,b)=>(a.countryName||a.country||"").localeCompare(b.countryName||b.country||"")||a.name.localeCompare(b.name))
+}else if($("sort").value==="za"){list.sort((a,b)=>b.name.localeCompare(a.name))
 }else if($("sort").value==="az"){
 list.sort((a,b)=>a.name.localeCompare(b.name));
 }else{
@@ -758,6 +784,7 @@ function openGuide(){
 if(tab!=="📋 TV Guide")sullyRememberScreen();
 tab="📋 TV Guide";nav();render();
 jumpToCategory();
+sullySavePlace();
 }
 function renderGuide(){
 const root=$("content");
