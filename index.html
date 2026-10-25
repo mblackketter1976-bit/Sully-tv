@@ -1822,18 +1822,18 @@ function sullyDetectLanguage(item){
  if(declared.length)return {codes:declared,confidence:"confirmed",reason:"Provider language metadata"};
  const text=String([item.name,item.title,item.description].filter(Boolean).join(" ")).toLowerCase();
  const hints=[
- ["en",/\\b(english|eng dub|english dubbed|english audio)\\b/],
- ["es",/\\b(spanish|español|castellano|latino dub)\\b/],
- ["fr",/\\b(french|français|francais)\\b/],
- ["de",/\\b(german|deutsch)\\b/],
- ["pt",/\\b(portuguese|português|portugues)\\b/],
- ["it",/\\b(italian|italiano)\\b/],
- ["ja",/\\b(japanese|日本語)\\b/],
- ["ko",/\\b(korean|한국어)\\b/],
- ["zh",/\\b(chinese|mandarin|cantonese|中文)\\b/],
- ["hi",/\\b(hindi|हिन्दी)\\b/],
- ["ar",/\\b(arabic|العربية)\\b/],
- ["ru",/\\b(russian|русский)\\b/]
+ ["en",/\b(english|eng dub|english dubbed|english audio)\b/],
+ ["es",/\b(spanish|español|castellano|latino dub)\b/],
+ ["fr",/\b(french|français|francais)\b/],
+ ["de",/\b(german|deutsch)\b/],
+ ["pt",/\b(portuguese|português|portugues)\b/],
+ ["it",/\b(italian|italiano)\b/],
+ ["ja",/\b(japanese|日本語)\b/],
+ ["ko",/\b(korean|한국어)\b/],
+ ["zh",/\b(chinese|mandarin|cantonese|中文)\b/],
+ ["hi",/\b(hindi|हिन्दी)\b/],
+ ["ar",/\b(arabic|العربية)\b/],
+ ["ru",/\b(russian|русский)\b/]
  ];
  const titleHits=hints.filter(([code,re])=>re.test(text)).map(([code])=>code);
  if(titleHits.length)return {codes:titleHits,confidence:"likely",reason:"Program or channel description"};
@@ -1873,7 +1873,7 @@ function sullyLanguageFilter(root,rerender){
  const label=document.createElement("label");label.style.cssText="display:flex;gap:8px;align-items:center;margin:12px 0";
  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=sullyEnglishOnly;
  checkbox.onchange=()=>{sullyEnglishOnly=checkbox.checked;sullySelectedLanguage=checkbox.checked?"en":"all";render()};
- label.append(checkbox,document.createTextNode("English-language only (confirmed)"));root.append(label);
+ label.append(checkbox,document.createTextNode("English-language only (listed or likely)"));root.append(label);
 }
 function sullyPlayableGenre(root,term,scope="all"){
  const section=document.createElement("section");section.className="sullyLegalLibrary";root.append(section);
@@ -1896,19 +1896,19 @@ function sullyPlayableGenre(root,term,scope="all"){
    const hay=[item.title,item.kind,item.description,...(item.genres||[])].join(" ").toLowerCase();
    return tokens.some(t=>hay.includes(t))
   });
-  const visible=found.filter(i=>{const chosen=sullyEnglishOnly?"en":sullySelectedLanguage;return chosen==="all"||sullyItemLanguages(i).includes(chosen)});
+  const visible=found.filter(i=>sullyLanguageMatches(i));
   status.textContent=visible.length?visible.length+" verified playable title(s)":"No verified playable titles in this section yet. We only show programs with a confirmed legal source and the needed category information.";
   visible.slice(0,72).forEach(item=>{
    const card=document.createElement("article");card.className="sullyLibraryEntry";
    const name=document.createElement("strong");name.textContent=item.title;card.append(name);
-   const lang=document.createElement("small");lang.textContent=sullyLanguageLabel(item);card.append(lang);
+   const lang=document.createElement("small");lang.textContent=sullyLanguageDisplay(item);card.append(lang);
    const watch=document.createElement("button");watch.textContent="▶ Watch";watch.onclick=()=>{
     const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";const panel=document.createElement("div");panel.className="sullyInfoPanel";
     const close=document.createElement("button");close.textContent="✕ Close";close.className="sullyInfoClose";
     const video=document.createElement("video");video.controls=true;video.playsInline=true;video.preload="metadata";video.src=item.playback.url;video.style.cssText="width:100%;max-height:55vh";
     const source=document.createElement("a");source.href=item.rights.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent="Source and license ↗";
     const dismiss=()=>{video.pause();overlay.remove()};close.onclick=dismiss;overlay.onclick=e=>{if(e.target===overlay)dismiss()};
-    const language=document.createElement("p");language.textContent=sullyLanguageLabel(item);panel.append(close,language,video,source);overlay.append(panel);document.body.append(overlay)
+    const language=document.createElement("p");language.textContent=sullyLanguageDisplay(item);panel.append(close,language,video,source);overlay.append(panel);document.body.append(overlay)
    };card.append(watch);list.append(card)
   })
  }).catch(()=>{if(section.isConnected)status.textContent="Library temporarily unavailable."})
