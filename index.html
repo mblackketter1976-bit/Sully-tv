@@ -726,6 +726,25 @@ function sullyTitleSearch(q){
  root.append(liveActions);
  const line=document.createElement("hr");line.style.margin="20px 0";line.style.borderColor="#546987";root.append(line);
  const panel=document.createElement("section");panel.className="sullyDiscovery";root.append(panel);
+ sullyGetProviderTitles().then(items=>{
+  if(generation!==sullySearchGeneration||!root.isConnected)return;
+  const normalized=t=>String(t||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const query=normalized(q);
+  const matches=items.filter(item=>[item.title,...(item.aliases||[])].some(t=>normalized(t).includes(query)||query.includes(normalized(t)))).slice(0,15);
+  if(!matches.length)return;
+  const section=document.createElement("section");section.className="sullyDiscovery";
+  const title=document.createElement("h3");title.textContent="🎬 Found titles — official viewing links";section.append(title);
+  matches.forEach(item=>{
+   const a=document.createElement("a");a.className="sullyProgramButton";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+   const name=document.createElement("strong");name.textContent="▶ "+item.title+(item.year?" ("+item.year+")":"");
+   const info=document.createElement("small");info.textContent=[item.kind==="show"?"TV series":"Movie",item.provider,item.access].filter(Boolean).join(" · ");
+   a.append(name,info);section.append(a);
+  });
+  panel.replaceChildren();
+  const note=document.createElement("p");note.className="muted";note.textContent="These titles exist in our viewing directory. Playback opens the authorized provider; a subscription may be required.";panel.append(note);
+  root.insertBefore(section,panel);
+ });
+
  const headingMain=document.createElement("h3");headingMain.textContent="🎬 No verified playable match for “"+q+"”";panel.append(headingMain);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Sully TV hasn't verified a playable source for this title yet. That doesn't mean it's unavailable everywhere. We're expanding our legal catalog; meanwhile, see related recommendations below.";panel.append(intro);
  const details=document.createElement("details");details.className="sullySearchExtras";root.append(details);
