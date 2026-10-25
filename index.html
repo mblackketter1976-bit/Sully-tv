@@ -1275,7 +1275,7 @@ $("more").hidden=true;
 
 // The homepage is a lobby, not an endless live-channel listing.
 // All channel cards remain available inside their category rooms.
-if(tab==="☰ More Channels"){$("filters").hidden=true;sullyDirectory();return;}
+if(tab==="☰ More Channels"){$("filters").hidden=true;try{sullyDirectory()}catch(e){console.error("Directory error",e);const p=document.createElement("p");p.className="panel";p.textContent="Channel directory could not load: "+e.message;root.append(p)}return;}
 
 if(tab==="🏠 Home"){
  $("filters").hidden=true;
@@ -1290,7 +1290,7 @@ if(tab==="🏠 Home"){
  return;
 }
 
-if(sullyFanHubs[tab]){$("filters").hidden=true;sullyFanLive();if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup();sullyFanHub();return;}
+if(sullyFanHubs[tab]){$("filters").hidden=true;try{sullyFanHub()}catch(e){console.error("Video discovery error",e)}try{if(tab==="🎤 Mike\'s Standup")sullyNetflixStandup()}catch(e){console.error("Comedy links error",e)}try{sullyFanLive()}catch(e){console.error("Live hub error",e)}return;}
 
 if(tab==="🐾 Luna on the Streets"){
 $("filters").hidden=true;
