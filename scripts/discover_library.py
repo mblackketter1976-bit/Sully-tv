@@ -22,7 +22,7 @@ SEARCHES = [
     "filetype:video comedy film", "filetype:video animation",
     "filetype:video silent film", "filetype:video educational film",
 ]
-ALLOWED = {"cc0", "public domain", "pd", "cc-by-4.0", "cc-by-3.0", "cc-by-sa-4.0", "cc-by-sa-3.0"}
+ALLOWED = {"cc0", "public-domain", "pd", "cc-by-4.0", "cc-by-3.0", "cc-by-sa-4.0", "cc-by-sa-3.0"}
 VIDEO_EXT = (".webm", ".ogv", ".ogg", ".mp4")
 LIMIT_PER_RUN = 45
 
@@ -80,12 +80,12 @@ def discover():
             metadata = info.get("extmetadata") or {}
             def field(name):
                 return plain((metadata.get(name) or {}).get("value",""))
-            license_code = field("LicenseShortName").lower().strip()
+            license_code = re.sub(r"\\s+", "-", field("LicenseShortName").lower().strip())
             license_url = field("LicenseUrl")
             if license_code not in ALLOWED:
                 continue
             # Require a source and a recognizable license; do not assume all Commons uploads are free.
-            if license_code not in {"cc0","pd","public domain"} and not license_url.startswith("https://"):
+            if license_code not in {"cc0","pd","public-domain"} and not license_url.startswith("https://"):
                 continue
             description = field("ImageDescription")
             attribution = field("Artist") or field("Credit")
