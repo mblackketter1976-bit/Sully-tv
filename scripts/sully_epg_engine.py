@@ -4,8 +4,10 @@
 No network requests, no unverified schedule fabrication, no publication.
 """
 from __future__ import annotations
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import json
+import os
+import tempfile
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -33,7 +35,6 @@ def parse_timestamp(raw: str) -> str:
         if hours > 23 or mins > 59:
             raise ValueError("Invalid timezone offset")
         minutes = sign * (hours * 60 + mins)
-    from datetime import timedelta
     return (dt.replace(tzinfo=timezone(timedelta(minutes=minutes)))
             .astimezone(timezone.utc).isoformat().replace("+00:00", "Z"))
 
@@ -45,6 +46,8 @@ def normalize(xml_bytes: bytes, channel_map: dict[str, str], source_id: str) -> 
         raise ValueError("Source identifier required")
     if not isinstance(channel_map, dict):
         raise ValueError("Channel mapping required")
+    # Expat rejects entity expansion, and the explicit declaration check avoids
+    # accepting DTD-based input even if parser behavior changes.
     if b"<!DOCTYPE" in xml_bytes.upper() or b"<!ENTITY" in xml_bytes.upper():
         raise ValueError("DTD/entity declarations are not accepted")
     root = ET.fromstring(xml_bytes)
@@ -71,6 +74,10 @@ def normalize(xml_bytes: bytes, channel_map: dict[str, str], source_id: str) -> 
             continue
         if stop <= start:
             continue
+        start_dt = datetime.fromisoformat(start.replace("Z", "+00:00"))
+        stop_dt = datetime.fromisoformat(stop.replace("Z", "+00:00"))
+        if stop_dt - start_dt > timedelta(hours=24):
+            continue
         programme = {"title": title, "start": start, "stop": stop, "source": source_id}
         result.setdefault(channel, []).append(programme)
     for programmes in result.values():
@@ -93,7 +100,21 @@ def main(argv: list[str]) -> int:
     if not data["programmes"]:
         print("No verified mapped programmes; refusing empty output", file=sys.stderr)
         return 1
-    Path(output_path).write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # Write completely before replacing the destination; never publish partial JSON.
+    destination = Path(output_path)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=destination.parent,
+                                         prefix=".sully-guide-", suffix=".tmp", delete=False) as handle:
+            temporary = Path(handle.name)
+            json.dump(data, handle, indent=2, ensure_ascii=False)
+            handle.write("\\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, destination)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
     print(f"Validated {data['programmes']} programmes across {data['matched_channels']} channels")
     return 0
 
