@@ -360,6 +360,7 @@ body[data-station] .watch{background:var(--station-header);border:1px solid var(
 .sullyDiscovery{background:#172c4b;border:1px solid #617995;border-radius:14px;padding:16px;margin:18px 0}.sullyDiscovery h3{margin:0 0 8px}.sullyDiscovery p{margin:0 0 12px}.sullySearchExtras{border:1px solid #617995;border-radius:12px;margin:12px 0 28px;overflow:hidden}.sullySearchExtras>summary{cursor:pointer;padding:16px;background:#1a304f;color:#f5d38e;font-weight:750}.sullySearchExtrasBody{padding:14px}.sullySearchExtrasBody .sullyServiceCard{padding:10px}.sullyAvailabilityGuides a{text-align:center}@media(max-width:650px){.sullyAvailabilityGuides{grid-template-columns:1fr}.sullyServiceGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sullySearchExtrasBody{padding:10px}}@media(max-width:400px){.sullyServiceGrid{grid-template-columns:1fr}}
 .sullyRecommendations{margin:18px 0;padding:15px;border:1px solid #526c8a;border-radius:13px;background:#142743}.sullyRecommendations h3{margin:0 0 6px}.sullyRecommendations p{margin:0 0 12px}.sullyRecGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sullyRecButton{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#24476d;color:white;border:1px solid #8ca2bb;border-radius:10px;padding:12px;cursor:pointer}.sullyRecButton small{color:#c9d7e9}@media(max-width:440px){.sullyRecGrid{grid-template-columns:1fr}}
 .sullyLegalLibrary{margin:14px 0 26px;padding:14px;border:1px solid #637d9c;border-radius:14px;background:#162b49}.sullyLegalGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.sullyLegalCard{display:flex;flex-direction:column;gap:10px;background:#213d60;border:1px solid #526e8f;border-radius:11px;padding:13px;overflow-wrap:anywhere}.sullyLegalCard small{color:#c9d7e9}.sullyLegalCard button{padding:11px;background:#e0bb69;color:#172840;border:0;border-radius:8px;font-weight:800}.sullyLegalCard a{color:#e5d09a;font-size:12px}.sullyInfoPanel video{margin:12px 0}
+.sullyAlphabet{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}.sullyLetter{min-width:38px;min-height:40px;padding:8px;border-radius:8px;background:#25486d;color:white;border:1px solid #6e87a3;font-weight:800;cursor:pointer}.sullyLetter.selected{background:#e2bf76;color:#182a43;border-color:#e2bf76}.sullyLetter:disabled{opacity:.3;cursor:default}.sullyLibraryResults{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.sullyLibraryEntry{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#1b3455;border:1px solid #55718e;border-radius:10px;padding:13px}.sullyLibraryEntryInfo{display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.sullyLibraryEntryInfo small{color:#b9cce0}.sullyLibraryEntry button{flex-shrink:0;background:#e0bb69;color:#182a43;border:0;border-radius:8px;padding:10px;font-weight:800}@media(max-width:450px){.sullyLibraryResults{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -460,6 +461,7 @@ const tabs=[
 "🇺🇸 USA",
 "👻 Robinson's Horror Channel",
 "🍿 On Demand",
+"📚 Library",
 "🔴 My Recordings",
 "▶ Continue Watching",
 "📍 Local News",
@@ -770,7 +772,7 @@ function sullyMenu(){
  ["🎬 Watch by Genre",["🎬 Movies","🎤 Mike's Standup","🍥 Summy's Anime","🎀 Hello Kitty","🏰 Disney","🦸 Marvel","⚡ DC","🏆 Sports","🧠 Documentaries","⭐ Reality","👻 Robinson's Horror Channel","🔎 Michele's Murder Mystery Channel"]],
  ["📺 Live TV",["🇺🇸 USA","📍 Local News","🌎 Worldwide","⭐ Featured","🆕 Recently Added"]],
  ["💙 Your Channels",["🐾 Luna on the Streets","💖 Nicol's Station","❤️ Favorites","▶ Continue Watching","🔴 My Recordings"]],
- ["🏠 More",["🍿 On Demand","📋 TV Guide"]]
+ ["🏠 More",["🍿 On Demand","📚 Library","📋 TV Guide"]]
  ];
  groups.forEach(([label,items])=>{
   const title=document.createElement("div");title.className="sullyMenuGroup";title.textContent=label;m.append(title);
@@ -1213,6 +1215,11 @@ return;
 if(tab==="🍿 On Demand"){
 $("filters").hidden=true;
 renderDemand();
+return;
+}
+if(tab==="📚 Library"){
+$("filters").hidden=true;
+renderLibrary();
 return;
 }
 
@@ -1660,6 +1667,62 @@ b.onclick=()=>window.open(url,"_blank","noopener,noreferrer");
 info.append(h,p,b);
 box.append(art,info);
 return box;
+}
+
+function sullyLibrarySortTitle(title){
+ return String(title||"").trim().replace(/^(?:a|the)\s+/i,"").trim()||String(title||"").trim();
+}
+function sullyLibraryLetter(title){
+ const c=sullyLibrarySortTitle(title).charAt(0).toUpperCase();
+ return /^[A-Z]$/.test(c)?c:"#";
+}
+let sullyLibraryActiveLetter="All";
+async function renderLibrary(){
+ const root=$("content");
+ const heading=document.createElement("h2");heading.textContent="📚 Sully TV Library";root.append(heading);
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Browse the playable collection alphabetically. Titles beginning with A or The are filed under the next word (The Adventures → A).";root.append(intro);
+ const alphabet=document.createElement("div");alphabet.className="sullyAlphabet";root.append(alphabet);
+ const count=document.createElement("p");count.className="muted";root.append(count);
+ const results=document.createElement("div");results.className="sullyLibraryResults";root.append(results);
+ count.textContent="Loading library...";
+ try{
+  const response=await fetch("./data/legal-library.json?cache="+Math.floor(Date.now()/3600000));
+  if(!response.ok)throw Error("Catalog unavailable");
+  const data=await response.json();
+  if(tab!=="📚 Library")return;
+  const items=(data.items||[]).filter(x=>x.status==="verified"&&x.playback?.url&&x.title).sort((a,b)=>sullyLibrarySortTitle(a.title).localeCompare(sullyLibrarySortTitle(b.title),undefined,{numeric:true,sensitivity:"base"}));
+  const letters=["All",..."ABCDEFGHIJKLMNOPQRSTUVWXYZ","#"];
+  function paint(){
+   alphabet.replaceChildren();results.replaceChildren();
+   const available=new Set(items.map(i=>sullyLibraryLetter(i.title)));
+   letters.forEach(letter=>{
+    const button=document.createElement("button");button.type="button";button.textContent=letter;button.className="sullyLetter"+(sullyLibraryActiveLetter===letter?" selected":"");button.disabled=letter!=="All"&&!available.has(letter);
+    button.setAttribute("aria-pressed",String(sullyLibraryActiveLetter===letter));
+    button.onclick=()=>{sullyLibraryActiveLetter=letter;paint()};alphabet.append(button)
+   });
+   const chosen=items.filter(i=>sullyLibraryActiveLetter==="All"||sullyLibraryLetter(i.title)===sullyLibraryActiveLetter);
+   count.textContent=chosen.length+" title"+(chosen.length===1?"":"s")+(sullyLibraryActiveLetter==="All"?" in library":" under "+sullyLibraryActiveLetter);
+   if(!chosen.length){const p=document.createElement("p");p.className="panel";p.textContent=items.length?"No titles under this letter yet.":"No verified playable programs imported yet. Discovery runs will fill this library.";results.append(p);return}
+   chosen.forEach(item=>{
+    const card=document.createElement("article");card.className="sullyLibraryEntry";
+    const info=document.createElement("div");info.className="sullyLibraryEntryInfo";
+    const name=document.createElement("strong");name.textContent=item.title;info.append(name);
+    const license=document.createElement("small");license.textContent="License: "+(item.rights?.basis||"See source");info.append(license);
+    card.append(info);
+    const watch=document.createElement("button");watch.type="button";watch.textContent="▶ Watch";watch.onclick=()=>{
+      const overlay=document.createElement("div");overlay.className="sullyInfoOverlay";
+      const panel=document.createElement("div");panel.className="sullyInfoPanel";
+      const close=document.createElement("button");close.className="sullyInfoClose";close.textContent="✕ Close";
+      const title=document.createElement("h3");title.textContent=item.title;
+      const video=document.createElement("video");video.controls=true;video.playsInline=true;video.preload="metadata";video.src=item.playback.url;video.style.cssText="width:100%;max-height:55vh";
+      const source=document.createElement("a");source.href=item.rights?.source||"#";source.target="_blank";source.rel="noopener noreferrer";source.textContent="Source & license ↗";
+      const dismiss=()=>{video.pause();overlay.remove()};close.onclick=dismiss;overlay.onclick=e=>{if(e.target===overlay)dismiss()};
+      panel.append(close,title,video,source);overlay.append(panel);document.body.append(overlay)
+    };card.append(watch);results.append(card)
+   })
+  }
+  paint()
+ }catch(e){count.textContent="Library temporarily unavailable. Please try again.";results.replaceChildren()}
 }
 
 function renderDemand(){
