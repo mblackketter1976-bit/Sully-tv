@@ -36,3 +36,6 @@ The owner approved local 2D test 01 movement and blink. Preserve it. Artwork was
 
 ## Authorized ownership challenge — first three minutes
 The owner started the three-minute opening challenge with “lets see it” and confirmed “go.” A 17-shot, 180-second narrated limited-2D prototype has been assembled; it is not a finished production cartoon or a demonstrated Runway replacement. Preserve the accepted 2D test 01. New narrator is separate from Luna’s established voice. Original local score/foley, no Runway service or source-video motion. See LUNA_OWNERSHIP_CHALLENGE_008.md and source under studio/pilot_3min. Owner review determines whether to continue or slow down.
+
+## Latest owner series rules — dialogue, voice and cast
+Dialogue-led animal cartoon; only Mike and Nicol are the humans who understand Luna. Narration only when a specific scene needs explanation. The narrator prototype is not the series format. Lock Luna’s permanent character voice only after explicit sample approval, saving exact settings and a reference. No new character voice is currently approved. Blue/Duke/Sterling animal sketches are proposals, not final cast/likeness approvals. YouTube movement link supplied but not viewed: browser auto-review blocked a Google-origin access request, so an uploaded clip/excerpt is needed. See LUNA_SERIES_BIBLE_009.md before continuing.
