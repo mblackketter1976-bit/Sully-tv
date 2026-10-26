@@ -73,3 +73,10 @@ The owner now prefers the main villain to be female: “I wonder if we should ma
 The owner enthusiastically praised the immersive environment-motion proof (“Wow!!”, “That looks like disney”) and requested opening animation. Keep that accepted visual/environment direction, retaining original character identity. Opening pass 01 adds registered eye-expression drawings, independent blinks, localized head response and cookie-hand offer. It is restrained 2D deformation, not full-body redrawn cel acting or a finished episode opening.
 
 See LUNA_OPENING_024.md for the ten-second opening pass and verification.
+
+
+## Latest Luna walk study
+Owner requested Luna walking. Six-second boardwalk walk study uses six selected pose drawings, 18 inferred intermediates in a 24-frame cycle, eye-based horizontal registration, support-line placement, forward travel, contact shadow, foreground post overlap, original synthesized paw taps and ambience. First satchel registration and five-key attempt were revised for head drift and a ghosted leg transition; all final 24 cycle frames inspected. Full A/V decode and 144-frame export verified. Still approximate support/stride matching, not a verified no-slip rig or production walk approval. Luna voice and female Rook direction retained. See LUNA_BOARDWALK_WALK_026.md.
+
+Video: https://chatgpt.com/library?file_id=libfile_27c51a5a76148191bafd31dc297d1b33&account_id=personal
+Assets: https://chatgpt.com/library?file_id=libfile_466fb92891648191bdfd1dec81de98c5&account_id=personal

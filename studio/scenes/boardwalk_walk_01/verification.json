@@ -1,0 +1,122 @@
+{
+  "seconds": 6,
+  "fps": 24,
+  "frames": 144,
+  "sourceSheetCells": 8,
+  "usedCells": [
+    0,
+    1,
+    2,
+    5,
+    6,
+    7
+  ],
+  "keyPoseFrames": [
+    0,
+    6,
+    10,
+    14,
+    18,
+    22
+  ],
+  "cycleFrames": 24,
+  "registration": [
+    {
+      "sourceCell": 0,
+      "blueEyeAnchorX": 339.53731343283584,
+      "groundY": 417,
+      "placement": [
+        30,
+        63
+      ]
+    },
+    {
+      "sourceCell": 1,
+      "blueEyeAnchorX": 323.793893129771,
+      "groundY": 423,
+      "placement": [
+        46,
+        57
+      ]
+    },
+    {
+      "sourceCell": 2,
+      "blueEyeAnchorX": 298.08088235294116,
+      "groundY": 420,
+      "placement": [
+        72,
+        60
+      ]
+    },
+    {
+      "sourceCell": 5,
+      "blueEyeAnchorX": 305.53076923076924,
+      "groundY": 401,
+      "placement": [
+        64,
+        79
+      ]
+    },
+    {
+      "sourceCell": 6,
+      "blueEyeAnchorX": 298.44444444444446,
+      "groundY": 397,
+      "placement": [
+        72,
+        83
+      ]
+    },
+    {
+      "sourceCell": 7,
+      "blueEyeAnchorX": 319.3467741935484,
+      "groundY": 394,
+      "placement": [
+        51,
+        86
+      ]
+    }
+  ],
+  "groundLine": 645,
+  "pixelsPerSecond": 125.0,
+  "foregroundOcclusionPinned": true,
+  "headMeshDeformation": false,
+  "fullAVDecodePassed": true,
+  "limitation": "First illustrated walk-cycle study; six selected drawings with inferred intermediates, approximate support registration and footfall sound. Not a verified no-slip quadruped rig.",
+  "sha256": "d881d557b07928bd90c9320fa49a917503defea5cc36e8118ed1e6846586a999",
+  "decodedFrameCount": 144,
+  "decodedAudioPeak": 0.4001770317554474,
+  "cycleFramesInspected": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "decodedReviewTimes": [
+    0.25,
+    1.5,
+    2.75,
+    3.5,
+    4.75,
+    5.9
+  ]
+}
