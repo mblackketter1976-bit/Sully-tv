@@ -44,6 +44,7 @@ const {chromium}=require('playwright');
        reserved:parseFloat(getComputedStyle(document.body).paddingBottom)>=rect.height};
      });
      assert.equal(layout.fixed,'fixed');assert(Math.abs(layout.bottom-layout.viewport)<1,JSON.stringify(layout));
+     if(layout.overflow){console.log('OVERFLOW',width,theme,await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(el=>{const r=el.getBoundingClientRect();return r.width&&r.right>innerWidth+1}).map(el=>({tag:el.tagName,id:el.id,cls:el.className,left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right})).slice(0,20)));await page.screenshot({path:'navigation-'+width+'.png',fullPage:true})}
      assert(layout.hits,JSON.stringify(layout));assert(!layout.overlap);assert(!layout.overflow);assert(layout.reserved);
     }
     await page.locator('#sullyCategories').click();
