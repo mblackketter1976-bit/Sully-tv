@@ -1,0 +1,27 @@
+{
+  "title":"Luna on the Streets",
+  "episode":"The Secret Under Old Sac",
+  "duration":180,
+  "fps":24,
+  "narrator":"af_heart",
+  "voice_note":"New narrator only; not a replacement for Luna's established character voice.",
+  "shots":[
+    {"start":0,"end":12,"scene":"establish","text":"Old Sacramento had a sound for everything. Riverboats. Bicycle bells. Boots on the boardwalk. And one very small dog, listening for a very big adventure.","say":1.2},
+    {"start":12,"end":19,"scene":"title","text":"","say":0},
+    {"start":19,"end":32,"scene":"arrive","text":"This was Luna. Official shop greeter. Unofficial neighborhood detective. And, when nobody was looking, a highly trained inspector of suspicious snacks.","say":19.8},
+    {"start":32,"end":43,"scene":"fry","text":"Today's case appeared to be a French fry. Golden. Abandoned. And clearly in need of immediate supervision.","say":32.6},
+    {"start":43,"end":54,"scene":"temptation","text":"Mike had a rule about street food. Luna had a question about why anyone would put perfectly good evidence on the street.","say":43.7},
+    {"start":54,"end":65,"scene":"boots","text":"She checked the fry. She checked Mike. She checked the fry again. This investigation was going extremely well.","say":54.5},
+    {"start":65,"end":76,"scene":"alert","text":"Then, underneath the boardwalk, something answered. Three tiny taps. A pause. Then three more.","say":67.1},
+    {"start":76,"end":87,"scene":"listen","text":"Luna forgot to sniff. One ear tipped toward the wood. The other stayed on Mike, just in case he needed supervision too.","say":76.5},
+    {"start":87,"end":98,"scene":"gap","text":"It wasn't a bicycle. It wasn't the river. And it certainly wasn't a French fry. French fries were usually much quieter.","say":87.6},
+    {"start":98,"end":110,"scene":"listen_close","text":"She lowered her nose. Something cool brushed her whiskers. From the gap between two planks came a little flash of gold.","say":98.6},
+    {"start":110,"end":122,"scene":"clue","text":"A brass key. Small enough to lose. Old enough to have a story. And right at the top, a tiny paw print.","say":110.7},
+    {"start":122,"end":133,"scene":"wonder","text":"Luna looked at her own paw. Then at the key. Well. That was either a coincidence, or someone had very good taste.","say":122.6},
+    {"start":133,"end":144,"scene":"below","text":"Under the boards, where the sunset couldn't quite reach, a small brass box waited in the dust.","say":134.0},
+    {"start":144,"end":155,"scene":"keyhole","text":"Its lock held the faintest blue light. Not bright enough for a person to notice. Exactly bright enough for Luna.","say":144.6},
+    {"start":155,"end":166,"scene":"resolve","text":"Mike was still beside her. The shop was still warm behind them. But the ordinary afternoon had quietly become something else.","say":155.7},
+    {"start":166,"end":175,"scene":"key_return","text":"The tapping stopped. The key gave one last little shiver. And somewhere below, a latch clicked.","say":166.5},
+    {"start":175,"end":180,"scene":"hook","text":"For once, Luna forgot all about the fry.","say":175.3}
+  ]
+}

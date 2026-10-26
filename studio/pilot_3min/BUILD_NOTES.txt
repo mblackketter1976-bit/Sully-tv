@@ -1,0 +1,9 @@
+Rebuild picture with the included scripts and existing generated narration:
+
+python make_sound.py
+python render_picture.py --output picture.mp4
+
+ffmpeg -i audio/mix.wav -af loudnorm=I=-16:TP=-1.5:LRA=8 -ar 48000 audio/mix-master.wav
+ffmpeg -i picture.mp4 -i audio/mix-master.wav -vf ass=captions.ass -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -c:a aac -b:a 160k -t 180 -movflags +faststart Luna_First_Three_Minutes_Prototype_01.mp4
+
+The delivered source package includes captions.ass and captions.srt. Narration is a new narrator, not Luna's approved character voice. Existing speech files allow offline rebuild with no ONNX Runtime import. If creating new narration, keep ORT_DISABLE_TELEMETRY=1 set before runtime import; the speech script also enforces it.

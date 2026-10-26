@@ -1,0 +1,19 @@
+{
+  "seconds": 180,
+  "frames": 4320,
+  "fps": 24,
+  "resolution": [
+    1280,
+    720
+  ],
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "audioStreamSeconds": 180,
+  "decodedAudioSecondsIncludingAACPadding": 180.01066666666668,
+  "aacPaddingSeconds": 0.010666666666679703,
+  "decodedAudioPeak": 0.848358154296875,
+  "fullDecodeErrors": 0,
+  "contiguousStoryShots": 17,
+  "narrationSegments": 16,
+  "review": "18 picture proofs and 12 decoded final poses inspected; captions checked at full size. Complete human-style audiovisual playback review not claimed. Limited 2D animation, not production-ready full-body acting."
+}

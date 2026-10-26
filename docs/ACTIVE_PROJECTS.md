@@ -33,3 +33,6 @@ Both projects remain active. Preserve the charter, accepted movement files and w
 
 ## Accepted 2D baseline and expression follow-up
 The owner approved local 2D test 01 movement and blink. Preserve it. Artwork was created with the assistant; only earlier reference motion was Runway. Test 02 adds a small fry-directed glance and asymmetric ear perk while retaining accepted timing. Seven sampled neutral/blink/return images match baseline exactly; raw paws/outer-background differences remain zero. Test 02 awaits review. No Runway dependency or new image-generation call. See LUNA_2D_EXPRESSION_007.md.
+
+## Authorized ownership challenge — first three minutes
+The owner started the three-minute opening challenge with “lets see it” and confirmed “go.” A 17-shot, 180-second narrated limited-2D prototype has been assembled; it is not a finished production cartoon or a demonstrated Runway replacement. Preserve the accepted 2D test 01. New narrator is separate from Luna’s established voice. Original local score/foley, no Runway service or source-video motion. See LUNA_OWNERSHIP_CHALLENGE_008.md and source under studio/pilot_3min. Owner review determines whether to continue or slow down.
