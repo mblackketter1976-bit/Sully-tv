@@ -30,3 +30,6 @@ Both projects remain active. Preserve the charter, accepted movement files and w
 - Primary reference: 1156.mp4 (Library libfile_aa8a278a4cc88191983cff3536784ec9); captioned references 1135/1149 also supplied.
 - New Luna_2D_Acting_Test_01.mp4 uses one approved still, local 2D deformation, edited eyelid patches, two blinks and subtle breathing. Eight seconds, 24 fps, 1280×720. It does not replay or retime the source clip. Raw paws and outer background are pinned; no full walking/turn rig or episode pipeline is claimed.
 - Historical 3D files remain preserved as experiments only. New 2D test awaits owner review.
+
+## Accepted 2D baseline and expression follow-up
+The owner approved local 2D test 01 movement and blink. Preserve it. Artwork was created with the assistant; only earlier reference motion was Runway. Test 02 adds a small fry-directed glance and asymmetric ear perk while retaining accepted timing. Seven sampled neutral/blink/return images match baseline exactly; raw paws/outer-background differences remain zero. Test 02 awaits review. No Runway dependency or new image-generation call. See LUNA_2D_EXPRESSION_007.md.

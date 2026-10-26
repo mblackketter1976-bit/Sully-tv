@@ -2,6 +2,8 @@
 
 ## Governing owner correction
 
+The owner clarified provenance: the artwork was created with this assistant; only the reference motion was Runway's. Do not describe the artwork as Runway-created. The local tests use our artwork and independently programmed motion, with no Runway service/API/credits or proprietary code dependency.
+
 The owner explicitly rejected continuing the 3D shape/model appearance direction. Earlier approval was of movement, not the desired visual style. The project target is the detailed illustrated Luna and Old Sacramento artwork in the supplied Runway references. Preserve historical 3D files as experiments; do not resume model appearance work without a new explicit instruction.
 
 References supplied and sampled directly:
