@@ -65,3 +65,11 @@ Eight-second immersive staging proof with independent water/reflections and foli
 
 Video: https://chatgpt.com/library?file_id=libfile_8ede3994732481918958032d2c82fa86&account_id=personal
 Layers: https://chatgpt.com/library?file_id=libfile_fc223bfd1c9481919d8235a277a052aa&account_id=personal
+
+
+## The Rook — female direction, October 25, 2026 (Pacific)
+The owner now prefers the main villain to be female: “I wonder if we should make the villain female. I like that better I think.” Proceed with The Rook as she/her. Preserve the existing majestic raven design Nicol called majestically beautiful: iridescent blue-green feathers, elegant cloak, beak and silver clasp. No visual redesign or stereotyped gender cues are needed. She is charming, witty, courteous and mischievous, with family-friendly schemes. Earlier male pronouns and bm_george audition are historical, not a locked identity or permanent voice. Her voice remains uncast; Luna's approved permanent voice is unchanged.
+
+The owner enthusiastically praised the immersive environment-motion proof (“Wow!!”, “That looks like disney”) and requested opening animation. Keep that accepted visual/environment direction, retaining original character identity. Opening pass 01 adds registered eye-expression drawings, independent blinks, localized head response and cookie-hand offer. It is restrained 2D deformation, not full-body redrawn cel acting or a finished episode opening.
+
+See LUNA_OPENING_024.md for the ten-second opening pass and verification.

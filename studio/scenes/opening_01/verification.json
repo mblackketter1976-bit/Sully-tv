@@ -1,0 +1,61 @@
+{
+  "seconds": 10,
+  "frames": 240,
+  "fps": 24,
+  "characters": {
+    "Luna": "female; permanent voice unchanged; no dialogue in this pass",
+    "The Rook": "female, majestic existing visual retained; voice uncast"
+  },
+  "expressionRegistration": {
+    "closed": {
+      "inliers": 1484,
+      "matrix": [
+        [
+          1.0000722767248564,
+          2.9693264181054245e-05,
+          0.0631570565203637
+        ],
+        [
+          -2.9693264181054245e-05,
+          1.0000722767248564,
+          -0.004696655164793401
+        ]
+      ]
+    },
+    "notice": {
+      "inliers": 1411,
+      "matrix": [
+        [
+          1.0000912386641034,
+          -5.433140745948713e-05,
+          0.0770291363580562
+        ],
+        [
+          5.433140745948713e-05,
+          1.0000912386641034,
+          -0.07966359101133576
+        ]
+      ]
+    }
+  },
+  "motion": [
+    "registered eye expression drawings with RIFE intermediates",
+    "localized bounded head nod, lean and cookie-hand offer",
+    "independent river, tree and flowering foliage"
+  ],
+  "rawPlantedContactsUnchanged": true,
+  "fullAVDecodePassed": true,
+  "limitation": "Restrained 2D deformation opening study, not full-body redrawn acting or a completed episode. No realtime listening/playback claim.",
+  "sha256": "9d3bc475e82a1ba69a3e993cf0c6bf28e1600f42a13c9c06a66331b5c7a40bee",
+  "decodedFrameCount": 240,
+  "decodedAudioPeak": 0.2802904546260834,
+  "audioSampleRate": 48000,
+  "decodedSamplesVisuallyInspected": [
+    0.95,
+    2.05,
+    3.25,
+    4.6,
+    6.85,
+    9.0
+  ]
+}

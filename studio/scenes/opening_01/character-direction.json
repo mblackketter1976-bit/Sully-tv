@@ -1,0 +1,24 @@
+{
+  "The Rook": {
+    "gender": "female",
+    "pronouns": [
+      "she",
+      "her"
+    ],
+    "owner_direction": "I wonder if we should make the villain female. I like that better I think",
+    "visual": "Retain the majestic raven design Nicol loves; do not replace it or add stereotyped human gender cues",
+    "personality": [
+      "charming",
+      "witty",
+      "courteous",
+      "clever",
+      "mischievous"
+    ],
+    "voice_status": "uncast; previous male voice audition not permanent"
+  },
+  "Luna": {
+    "gender": "female",
+    "permanent_voice": "studio/voices/luna/voice-lock.json",
+    "voice_change": false
+  }
+}
