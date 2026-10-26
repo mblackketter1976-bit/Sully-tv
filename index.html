@@ -941,6 +941,17 @@ header .sullyQuickBar .headerGuide{min-height:44px!important;font-size:12px!impo
 @media(max-width:650px){header .sullySearchForm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:100%;flex-basis:100%}header .sullySearchForm #search{grid-column:1/-1;box-sizing:border-box;width:100%;min-height:44px;margin:0}header .sullySearchForm button{min-width:0;padding:8px 3px!important;font-size:12px;white-space:normal}}
 @media(min-width:760px){#sullyNavigationDock{grid-template-columns:repeat(5,minmax(0,130px))!important;justify-content:center}}
 </style>
+<style id="sullySportsDiscoveryStyle">
+.sullySportsDiscovery{margin:16px 0 20px;padding:16px;background:linear-gradient(135deg,#18364a,#14243a);border:1px solid #5d8d8b;border-radius:16px}
+.sullySportsDiscovery h3{margin:0 0 6px;color:#e3fff3;font-size:20px}.sullySportsDiscovery p{margin:0 0 12px;color:#ccdae8;line-height:1.45}
+.sullySportsControls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.sullySportsControls label{display:grid;gap:5px;color:#e5edf7;font-weight:700}.sullySportsControls select{width:100%;min-height:48px;border:1px solid #7899a3;border-radius:10px;padding:10px;background:#182d43;color:#fff}
+.sullySportsResults{display:grid;gap:8px}.sullySportsResult{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;background:#102338;border:1px solid #426274;border-radius:12px}
+.sullySportsResult strong{display:block;font-size:17px}.sullySportsResult small{display:block;color:#c4d0dc;margin-top:4px}
+.sullySportsActions{display:flex;flex-wrap:wrap;gap:8px}.sullySportsActions a{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;background:#a5e6c7;color:#10291f;font-weight:800;text-decoration:none}
+.sullySportsActions a.secondary{background:#314c62;color:#fff;border:1px solid #7190a4}.sullySportsActions a:focus-visible,.sullySportsControls select:focus-visible{outline:4px solid #ffe18b;outline-offset:2px}
+.sullySportsStatus{font-size:13px;color:#b9cad8;margin-top:10px}@media(max-width:640px){.sullySportsControls,.sullySportsResult{grid-template-columns:1fr}.sullySportsActions a{flex:1}}
+</style>
 </head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2881,6 +2892,39 @@ function renderGuide(){
  const root=$("content");$("status").textContent="TV Guide · Live channel lineup";
  const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only sourced, current program data is shown.";root.append(intro);
+  const sportsPanel=document.createElement("section");sportsPanel.className="sullySportsDiscovery";sportsPanel.setAttribute("aria-labelledby","sullySportsTitle");
+ const sportsTitle=document.createElement("h3");sportsTitle.id="sullySportsTitle";sportsTitle.textContent="Sports & Local";sportsPanel.append(sportsTitle);
+ const sportsIntro=document.createElement("p");sportsIntro.textContent="Choose a region and team. Open the official schedule for current dates and broadcast details, or go straight to its official watch guide.";sportsPanel.append(sportsIntro);
+ const sportsControls=document.createElement("div");sportsControls.className="sullySportsControls";
+ const regionWrap=document.createElement("label");regionWrap.append("Region");const regionSelect=document.createElement("select");regionSelect.setAttribute("aria-label","Sports region");
+ [["sacramento","Sacramento area"],["bay","Bay Area"]].forEach(([v,t])=>regionSelect.add(new Option(t,v)));regionWrap.append(regionSelect);
+ const teamWrap=document.createElement("label");teamWrap.append("Team");const teamSelect=document.createElement("select");teamSelect.setAttribute("aria-label","Sports team");teamWrap.append(teamSelect);
+ sportsControls.append(regionWrap,teamWrap);sportsPanel.append(sportsControls);
+ const sportsCard=document.createElement("div");sportsCard.className="sullySportsResults";sportsCard.setAttribute("aria-live","polite");sportsPanel.append(sportsCard);
+ const sportsStatus=document.createElement("div");sportsStatus.className="sullySportsStatus";sportsStatus.textContent="Links open official team, league or broadcaster pages in a new tab. Game availability and blackout rules depend on location and provider.";sportsPanel.append(sportsStatus);
+ const sportsTeams=[
+  {region:"sacramento",id:"kings",name:"Sacramento Kings",sport:"NBA",schedule:"https://www.nba.com/team/1610612758/schedule",watch:"https://www.nbcsportsbayarea.com/streaming-faqs-kings/",watchLabel:"Where to watch"},
+  {region:"sacramento",id:"rivercats",name:"Sacramento River Cats",sport:"MiLB",schedule:"https://www.milb.com/sacramento/schedule",watch:"https://www.milb.com/live-stream-games",watchLabel:"MiLB.TV options"},
+  {region:"sacramento",id:"republic",name:"Sacramento Republic FC",sport:"USL",schedule:"https://www.sacrepublicfc.com/schedule/",watch:"https://www.sacrepublicfc.com/broadcast/",watchLabel:"Broadcast guide"},
+  {region:"sacramento",id:"athletics",name:"Athletics",sport:"MLB",schedule:"https://www.mlb.com/athletics/schedule",watch:"https://www.nbcsportsbayarea.com/news/where-to-watch-nbc-sports-california/1831147/",watchLabel:"Where to watch"},
+  {region:"bay",id:"warriors",name:"Golden State Warriors",sport:"NBA",schedule:"https://www.nba.com/warriors/schedule",watch:"https://www.nbcsportsbayarea.com/streaming-faqs-warriors/",watchLabel:"Where to watch"},
+  {region:"bay",id:"giants",name:"San Francisco Giants",sport:"MLB",schedule:"https://www.mlb.com/giants/schedule",watch:"https://www.mlb.com/giants/schedule/tv",watchLabel:"Broadcast guide"},
+  {region:"bay",id:"49ers",name:"San Francisco 49ers",sport:"NFL",schedule:"https://www.49ers.com/schedule/",watch:"https://www.49ers.com/watch-live-games/ways-to-watch",watchLabel:"Ways to watch"},
+  {region:"bay",id:"sharks",name:"San Jose Sharks",sport:"NHL",schedule:"https://www.nhl.com/sharks/schedule",watch:"https://www.nbcsportsbayarea.com/news/where-to-watch-nbc-sports-bay-area/1831148/",watchLabel:"Where to watch"}];
+ function drawSportsDiscovery(){
+  const list=sportsTeams.filter(x=>x.region===regionSelect.value),previous=teamSelect.value;teamSelect.replaceChildren(new Option("All teams in this region","all"));
+  list.forEach(x=>teamSelect.add(new Option(x.name,x.id)));if(list.some(x=>x.id===previous))teamSelect.value=previous;
+  const chosenTeams=teamSelect.value==="all"?list:list.filter(x=>x.id===teamSelect.value);sportsCard.replaceChildren();
+  chosenTeams.forEach(chosen=>{
+   const card=document.createElement("article");card.className="sullySportsResult";
+   const info=document.createElement("div"),name=document.createElement("strong");name.textContent=chosen.name+" · "+chosen.sport;info.append(name);
+   const detail=document.createElement("small");detail.textContent="Official schedule and watch information";info.append(detail);
+   const actions=document.createElement("div");actions.className="sullySportsActions";
+   [[chosen.schedule,"Official schedule",""],[chosen.watch,chosen.watchLabel,"secondary"]].forEach(([href,label,kind])=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=label;if(kind)a.className=kind;actions.append(a)});
+   card.append(info,actions);sportsCard.append(card);
+  });
+ }
+ regionSelect.addEventListener("change",drawSportsDiscovery);teamSelect.addEventListener("change",drawSportsDiscovery);drawSportsDiscovery();root.append(sportsPanel);
  const guideStatus=document.createElement("p");guideStatus.className="muted";guideStatus.setAttribute("role","status");root.append(guideStatus);
  const attribution=document.createElement("p");attribution.className="muted";root.append(attribution);
  const toolbar=document.createElement("div");toolbar.className="sullyGuideToolbar";
