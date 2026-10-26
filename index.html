@@ -911,6 +911,7 @@ body{padding-bottom:calc(var(--sully-dock-height) + 16px)!important}
 #sullyMenu{position:fixed!important;inset:auto 8px calc(var(--sully-dock-height) + 8px) auto!important;z-index:1101!important;box-sizing:border-box;width:min(355px,calc(100vw - 16px))!important;max-height:calc(100dvh - var(--sully-dock-height) - 24px)!important;overflow:auto!important;margin:0!important}
 header .sullyQuickBar{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))!important;gap:6px!important}
 header .sullyQuickBar .headerGuide{min-height:44px!important;font-size:12px!important;padding:8px 5px!important}
+@media(max-width:650px){header .sullySearchForm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:100%;flex-basis:100%}header .sullySearchForm #search{grid-column:1/-1;box-sizing:border-box;width:100%;min-height:44px;margin:0}header .sullySearchForm button{min-width:0;padding:8px 3px!important;font-size:12px;white-space:normal}}
 @media(min-width:760px){#sullyNavigationDock{grid-template-columns:repeat(5,minmax(0,130px))!important;justify-content:center}}
 </style>
 </head>
