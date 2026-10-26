@@ -46,3 +46,11 @@ The owner uploaded 1785.mp4 (Library libfile_b5601b9604b881919630e5e6938df141), 
 
 ## Authored cel workflow — 2026-10-26
 The owner authorizes traditional frame-by-frame drawing and custom production tools. See `LUNA_CEL_WORKFLOW_011.md` and `studio/CEL_ANIMATION.md`. The new local PNG-cel compositor passed five unit tests and a 24-frame FFmpeg export/decode smoke test. It provides assembly and timing; a new Luna acting sequence is still to be drawn and judged.
+
+
+## Latest Luna review deliverable: ten-second Cookie Caper sound scene
+Owner requested an independently completed ten-second picture-and-sound example. Delivered 1280x720/24fps, 240 frames, ten seconds, dialogue-led G-target cookie gag with The Rook and snow-white Luna. Candidate voices are not locked. See `LUNA_TEN_SECOND_SOUND_SCENE_017.md` for result, actual verification and remaining limits.
+
+Video: https://chatgpt.com/library?file_id=libfile_89d2e6a8e24c81919f1d007ad79f2c95&account_id=personal
+
+Asset/audio package: https://chatgpt.com/library?file_id=libfile_962d9302f924819187cd01a48bca5e26&account_id=personal

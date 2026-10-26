@@ -1,0 +1,53 @@
+{
+  "status": "Candidate character voices, not permanently approved",
+  "lines": [
+    {
+      "id": "rook_1",
+      "character": "The Rook",
+      "text": "A little misdirection.",
+      "voice": "bm_george",
+      "lang": "en-gb",
+      "speed": 1.03,
+      "start": 0.6,
+      "file": "rook_1.wav",
+      "sampleRate": 24000,
+      "samples": 38400,
+      "seconds": 1.6,
+      "sha256": "7aa40801fc6518588350657c71d6eced91d622e06c8d1e6fd47d2e75afbcecc3"
+    },
+    {
+      "id": "luna",
+      "character": "Luna",
+      "text": "Nice trick. Now give back my cookie.",
+      "voice": "af_bella",
+      "lang": "en-us",
+      "speed": 0.95,
+      "start": 3.0,
+      "file": "luna.wav",
+      "sampleRate": 24000,
+      "samples": 57344,
+      "seconds": 2.3893333333333335,
+      "sha256": "1875ea71574f35c88270627f3411a8a8d7e8f66a090b9ce392418c29eecec26d"
+    },
+    {
+      "id": "rook_2",
+      "character": "The Rook",
+      "text": "Worth a try.",
+      "voice": "bm_george",
+      "lang": "en-gb",
+      "speed": 1.03,
+      "start": 7.0,
+      "file": "rook_2.wav",
+      "sampleRate": 24000,
+      "samples": 29184,
+      "seconds": 1.216,
+      "sha256": "985102637001361e28820c00befb3cfe14d80de5345172054bd52e42f7ad2313"
+    }
+  ],
+  "model": "Kokoro v1.0 ONNX",
+  "modelSha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+  "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "voiceProcessing": "No pitch shift, no added reverb, no echo; level mix only",
+  "license": "Kokoro model Apache-2.0; kokoro-onnx wrapper MIT",
+  "telemetry": "ORT_DISABLE_TELEMETRY=1 set before runtime import; runtime opt-out too"
+}

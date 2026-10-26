@@ -1,0 +1,25 @@
+{
+  "file": "Luna_and_The_Rook_Cookie_Caper_10s.mp4",
+  "sha256": "606119abcc5f7ae062a0bbcd7831b4c79862f673f4fdc2f09cb6cf0ca5dd51ef",
+  "bytes": 3381972,
+  "seconds": 10,
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "decodedVideoFrames": 240,
+  "audioCodec": "aac",
+  "audioSampleRate": 48000,
+  "audioChannels": 2,
+  "audioMetadataSeconds": 10.0,
+  "decodedAudioSeconds": 10.005333333333333,
+  "decodedAudioPeak": 0.6324409246444702,
+  "fullDecodePassed": true,
+  "videoTimestampsVerified": true,
+  "visualReview": "21 composed proof frames inspected, plus six decoded final-video samples at 1.50, 3.08, 4.38, 6.83, 7.58 and 9.08 seconds. No full realtime playback or auditory listening claim.",
+  "voiceStatus": "Candidate, not permanently approved",
+  "limitations": [
+    "Remaining slight source/model variation",
+    "The Rook beak motion follows body poses rather than fine phoneme timing",
+    "Luna mouth cues derived with Rhubarb and adjusted by audio energy; not guaranteed exact phonemes"
+  ]
+}
