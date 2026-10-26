@@ -87,3 +87,7 @@ The owner rejected the first walk as unnatural and clumsy, requested the entire 
 
 Video: https://chatgpt.com/library?file_id=libfile_95df8249631c8191939722cac8ea62bf&account_id=personal
 Assets: https://chatgpt.com/library?file_id=libfile_9ac7c492f18c8191b53232f982ee7a9f&account_id=personal
+
+
+## Movement research: four routes, implementation paused
+Owner requested research and findings before further animation. See LUNA_FOUR_METHODS_RESEARCH_028.md: authored cels; flexible mesh plus corrective drawings; full-body reference-guided 2D retarget/redraw; and a small custom hybrid. Recommendation is a bounded custom combination, with existing OpenToonz Plastic as benchmark/fallback. These are researched candidates, not proven Luna results. Correct the reference proportions before motion work; internal normal-speed artistic review is essential. Owner wants polished movement for this phase and does not want intermediate clips with known defects. Try a few focused revisions, then change angle if progress stalls. AnimeInbet excluded for noncommercial code/data restrictions; other research dependencies are not automatically commercially cleared. No new animation was created during this research task.
