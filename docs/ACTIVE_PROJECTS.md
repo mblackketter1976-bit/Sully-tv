@@ -7,7 +7,7 @@ Both projects remain active. Preserve the charter, accepted movement files and w
 - Licensed partial TVmaze schedules for three exactly mapped US networks, source/license credit, browser refresh/cache/failure preservation and current-data download remain implemented.
 - Guide navigation now sits in normal page flow with 44px action targets. Duplicate room controls and overlapping floating navigation are hidden only while the guide is open.
 - Verified 25 Python tests, JS normalization, isolated and full-HTML browser tests at 1280px/390px. Phone/desktop screenshots inspected. Functional run: https://github.com/mblackketter1976-bit/Sully-tv/actions/runs/40247545090 .
-- Limits: partial episode coverage; no assertion listings match each stream; no real device/Safari/install test. Main/live release unchanged; owner approval remains the release gate.
+- Limits: partial episode coverage; no assertion listings match each stream; no real device/Safari/install test. The owner-approved navigation repair is live on main (13344a0). The sourced-guide build remains in development.
 - Evidence: `docs/TV_GUIDE_PROVIDER_003.md`, `data/TV_GUIDE_LICENSE.md`.
 
 ## Luna
@@ -18,3 +18,8 @@ Both projects remain active. Preserve the charter, accepted movement files and w
 - Deliverable: https://chatgpt.com/library?file_id=libfile_8292cdce421c8191bf92157f724cbab4&account_id=personal . Open and press Space. No scripts need running for playback.
 - Evidence on Luna branch: `docs/LUNA_V41_AUDIT_002.md`, `docs/LUNA_V41_TURN_003.md`, `docs/LUNA_V41_SEQUENCE_004.md`. Rebuilders under `studio/`.
 - Limits: movement prototype, existing art/proportions, mesh-pose approach, no calibrated physical mass model or Windows playback benchmark. Do not ask again for the already supplied V41 or treat movement approval as final appearance approval.
+
+## Current handoff — 2026-10-26
+- Accepted live navigation: one bottom bar for Back, Home, Categories, Search and Top, responsive quick controls/search, restored app icons. Main navigation CI and Pages deployment passed; public HTTP verified.
+- Guide development now incorporates that exact accepted navigation, removes duplicate guide controls and makes dock Search focus the station field. Python, guide browser and four-width navigation tests passed in run 40249222384. Real provider fetch returned 52 current/future episode entries across three reviewed networks; coverage remains partial. No guide release was made.
+- Luna appearance is now requested. First native 3D visual proposal: rest-coordinate silver merle, retained blue eyes, sculpted bat ears, warm studio. All 432 frames preserve evaluated paw vertices and root matrices exactly (zero difference from accepted sequence). Representative poses inspected; six-second rendered turn excerpt and full 18-second Blender scene are being prepared for owner appearance review. Preserve earlier motion files and do not assume final likeness approval. See docs/LUNA_VISUAL_005.md on the Luna branch.
