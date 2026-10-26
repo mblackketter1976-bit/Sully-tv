@@ -45,9 +45,12 @@ jobs:
           node tests/guide-source.cjs
           node tests/guide-browser.cjs
           node tests/guide-full-app.cjs
+          node tests/navigation-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: guide-browser-screenshots
-          path: guide-*.png
+          path: |
+            guide-*.png
+            navigation-*.png
           retention-days: 7
