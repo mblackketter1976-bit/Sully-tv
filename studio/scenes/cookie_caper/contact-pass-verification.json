@@ -1,0 +1,16 @@
+{
+  "seconds": 10,
+  "frames": 240,
+  "fps": 24,
+  "contactTime": 7.55,
+  "planeY": 503,
+  "contactContinuous": true,
+  "groundPenetrationCheckPassed": true,
+  "audio": "Unchanged accepted candidate dialogue/music/foley master; tap remains at 7.55s",
+  "voiceStatus": "Not permanently approved",
+  "fullDecodePassed": true,
+  "sha256": "d9d311a876593d13eeffbc6db8883f44919dd7468fe56c8c2bdde7a4fb513ecc",
+  "limitation": "Simple cartoon prop motion, not a full physics simulation; parent scene detail/beak-sync limitations remain.",
+  "decodedAudioPeak": 0.6324409246444702,
+  "visualReview": "Six decoded landing detail samples inspected, plus the computed contact/bounce trajectory. No realtime playback claim."
+}

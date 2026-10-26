@@ -52,3 +52,7 @@ The owner authorizes traditional frame-by-frame animation, including thousands o
 
 ## Restart rather than over-patch — 2026-10-26
 The owner reiterates the philosophy: if replacing the first 16 cels with a fresh 24-cel sequence would be simpler and waste less time, take that route. Do not let sunk effort or a locally working patch determine the method. Preserve useful prior versions, but restart a weak implementation when a fresh coherent design is more reliable. Plan sequential poses and exposure timing together, verify alignment and actual encoded playback timing, and distinguish these checks from artistic smoothness. Luna's white fur must be snow-white with gray merle markings, not orange or tan.
+
+
+## Luna series finish level — owner clarification, October 25 (Pacific)
+Aim for a nice, lively, family-friendly cartoon rather than a masterpiece. Children are the primary audience, with clear action, warmth, character appeal and humor engaging enough for parents. Fix distracting problems (for example a prop's clumsy landing), keep successful work, and move the story forward. Reserve painstaking cinematic polish for the movie. This is not permission to ignore visible mistakes, but it is a direction against overthinking and endless refinements.

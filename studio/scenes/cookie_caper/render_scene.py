@@ -47,13 +47,16 @@ HAND=[(100,220)]*3+[(112,195),(92,214),(93,211),(94,221),(92,219),(100,211),(66,
 
 def rook_at(frame):
  path=ROOT/'rook-cache'/f'{frame:03d}.png'
- if path.exists():return Image.open(path).convert('RGBA')
+ if path.exists():
+  try:
+   with Image.open(path) as cached:return cached.convert('RGBA')
+  except OSError:path.unlink(missing_ok=True)
  i=max(i for i,f in enumerate(ROOK_TIMES) if f<=frame)
  if i==11:im=ROOK_KEYS[i]
  elif i==6 and frame<138:im=ROOK_KEYS[6]
  else:
   t=(frame-ROOK_TIMES[i])/(ROOK_TIMES[i+1]-ROOK_TIMES[i]);im=infer(ROOK_KEYS[i],ROOK_KEYS[i+1],t)
- result=matte(Image.fromarray(im));result.save(path);return result
+ result=matte(Image.fromarray(im));pending=path.with_suffix('.partial.png');result.save(pending);pending.replace(path);return result
 
 def hand_at(frame):
  i=max(i for i,f in enumerate(ROOK_TIMES) if f<=frame)
@@ -100,7 +103,10 @@ speech_pair_cache={}
 
 def speaking(frame):
  path=ROOT/'speech-cache'/f'{frame:03d}.png'
- if path.exists():return Image.open(path).convert('RGBA')
+ if path.exists():
+  try:
+   with Image.open(path) as cached:return cached.convert('RGBA')
+  except OSError:path.unlink(missing_ok=True)
  state=speech_states[frame];previous=speech_states[max(0,frame-1)]
  rgb=SPEECH[state]
  if previous!=state:
@@ -115,7 +121,7 @@ def speaking(frame):
  turned=cv2.warpAffine(rgb,M,(512,512),borderValue=(255,255,255))
  blend=np.clip((300-np.arange(512)[:,None])/24,0,1)[:,:,None]
  rgb=np.rint(turned*blend+rgb*(1-blend)).astype('uint8')
- im=matte(Image.fromarray(rgb));im.save(path);return im
+ im=matte(Image.fromarray(rgb));pending=path.with_suffix('.partial.png');im.save(pending);pending.replace(path);return im
 
 def luna_at(frame):
  t=frame/24
