@@ -48,3 +48,7 @@ This file is a durable project brief, not a substitute for checking current code
 
 ## Luna animation method — 2026-10-26
 The owner authorizes traditional frame-by-frame animation, including thousands of drawings if needed, and building tools Sully can use to execute it. Preserve the approved illustrated artwork and pursue convincing character acting. Choose the method by the visible result; drawing count alone is not quality. Prove a short authored acting sequence before expanding production. Keep the dialogue-led format, Mike and Nicol's unique ability to understand Luna, and the requirement to approve and record her permanent voice.
+
+
+## Restart rather than over-patch — 2026-10-26
+The owner reiterates the philosophy: if replacing the first 16 cels with a fresh 24-cel sequence would be simpler and waste less time, take that route. Do not let sunk effort or a locally working patch determine the method. Preserve useful prior versions, but restart a weak implementation when a fresh coherent design is more reliable. Plan sequential poses and exposure timing together, verify alignment and actual encoded playback timing, and distinguish these checks from artistic smoothness. Luna's white fur must be snow-white with gray merle markings, not orange or tan.
