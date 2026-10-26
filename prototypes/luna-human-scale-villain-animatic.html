@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luna — Human-Scale Villain Blocking Animatic</title>
+<style>
+:root{color-scheme:dark;--ink:#f3f0e9;--muted:#a9b2bd;--panel:#121820;--line:#445260;--amber:#f0b75b;--blue:#92d4f3}
+*{box-sizing:border-box}body{margin:0;background:#0d1117;color:var(--ink);font:16px/1.45 system-ui, sans-serif}main{max-width:1120px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px}.eyebrow{letter-spacing:.14em;color:var(--amber);font-weight:800;font-size:.78rem}.badge{border:1px solid #657383;border-radius:999px;padding:6px 10px;color:var(--muted);font-size:.78rem}h1{font-size:clamp(1.6rem,4vw,2.8rem);line-height:1.1;margin:.25em 0}p{color:var(--muted);max-width:780px}.stage{background:linear-gradient(#1a2632,#17202a 64%,#171a1c 64%);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 60px #0006}.stage svg{display:block;width:100%;height:auto}.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:14px 0}button{background:#202c38;color:var(--ink);border:1px solid #697887;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer;min-height:46px}button:focus-visible{outline:3px solid var(--amber);outline-offset:3px}input{flex:1;min-width:190px;accent-color:var(--amber)}.time{font-variant-numeric:tabular-nums;color:var(--muted);min-width:100px;text-align:right}.note{font-size:.88rem}.beats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.beat{border-top:2px solid #475360;padding:9px 5px;color:var(--muted);font-size:.78rem}.beat b{display:block;color:var(--ink);font-size:.82rem}
+.floor{fill:#5f5547}.shadow{fill:#090d11;opacity:.55}.companion{fill:#92d4f3;opacity:.76}.villainShape{fill:#171b21;stroke:#d6dde2;stroke-width:2}.face{fill:#29303a;stroke:#d6dde2;stroke-width:2}.eye{fill:#f1f0e8}.limb{stroke:#171b21;stroke-width:20;stroke-linecap:round;fill:none}.limbLine{stroke:#d6dde2;stroke-width:2;stroke-linecap:round;fill:none}.guide{stroke:#7e8d99;stroke-width:1;stroke-dasharray:5 7;opacity:.45}.label{fill:#dbe3e8;font:13px system-ui}.eyeline{stroke:#f0b75b;stroke-width:2;stroke-dasharray:5 5;opacity:.65}
+#villainRoot{animation:rootMove 8s linear infinite;transform-box:view-box;transform-origin:300px 440px}
+#torso{animation:torsoSettle 8s linear infinite;transform-box:view-box;transform-origin:300px 335px}
+#head{animation:headLead 8s linear infinite;transform-box:view-box;transform-origin:300px 240px}
+#frontArm{animation:armAction 8s linear infinite;transform-box:view-box;transform-origin:287px 305px}
+#backArm{animation:backArmAction 8s linear infinite;transform-box:view-box;transform-origin:314px 305px}
+#frontLeg{animation:frontStep 8s linear infinite;transform-box:view-box;transform-origin:294px 365px}
+#backLeg{animation:backStep 8s linear infinite;transform-box:view-box;transform-origin:306px 365px}
+#disc{animation:none}
+@keyframes rootMove{0%,29%{transform:translateX(0)}43%,100%{transform:translateX(44px)}}
+@keyframes torsoSettle{0%,25%{transform:rotate(0)}31%{transform:rotate(-2deg) translateY(-2px)}42%{transform:rotate(2deg) translateY(2px)}50%,100%{transform:rotate(0)}}
+@keyframes headLead{0%,21%{transform:rotate(0)}25%,49%{transform:rotate(9deg)}53%,100%{transform:rotate(2deg)}}
+@keyframes frontStep{0%,30%{transform:rotate(0)}35%{transform:rotate(-16deg)}42%{transform:rotate(5deg)}47%,100%{transform:rotate(0)}}
+@keyframes backStep{0%,30%{transform:rotate(0)}37%{transform:rotate(8deg)}43%{transform:rotate(-5deg)}48%,100%{transform:rotate(0)}}
+@keyframes armAction{0%,30%{transform:rotate(0)}38%{transform:rotate(-9deg)}47%,58%{transform:rotate(3deg)}64%{transform:rotate(-24deg)}69%,100%{transform:rotate(0)}}
+@keyframes backArmAction{0%,30%{transform:rotate(0)}40%{transform:rotate(8deg)}48%,100%{transform:rotate(0)}}
+@media(prefers-reduced-motion:reduce){#villainRoot,#torso,#head,#frontArm,#backArm,#frontLeg,#backLeg{animation-play-state:paused!important}}
+@media(max-width:620px){main{padding:16px}.beats{grid-template-columns:repeat(3,1fr)}header{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body><main>
+<header><div><div class="eyebrow">LUNA ANIMATION · MOTION STUDY</div><h1>Human-scale villain blocking</h1></div><span class="badge">ROUGH PROXY · NOT APPROVED ART</span></header>
+<p>Eight-second timing pass: hold, gaze-led intention, one grounded step, settle, a brief pace break, then stillness. The two figures share the same floor and eye-level staging to keep the villain human-sized.</p>
+<div class="stage">
+<svg viewBox="0 0 960 540" role="img" aria-labelledby="svgTitle svgDesc">
+<title id="svgTitle">Rough 2D blocking animatic for a human-scale villain</title>
+<desc id="svgDesc">A dark neutral human silhouette holds, turns its head, takes one small step toward a blue scale-reference figure, settles, makes one quick hand action, then holds still.</desc>
+<rect width="960" height="540" fill="transparent"/>
+<path class="guide" d="M0 110H960M0 205H960M0 300H960M0 395H960"/>
+<path class="eyeline" d="M355 220H560"/>
+<text class="label" x="34" y="36">EYE-LEVEL STAGING · SHARED FLOOR PLANE</text>
+<ellipse class="shadow" cx="600" cy="453" rx="45" ry="8"/>
+<!-- Blue figure is a scale reference, not a specified character design -->
+<g aria-label="neutral height reference">
+<circle class="companion" cx="600" cy="193" r="22"/><path class="companion" d="M581 220Q600 209 619 220L628 305H572Z"/>
+<path class="limb" d="M583 235L562 292M617 235L638 292M585 303L580 425M615 303L620 425"/>
+<circle cx="593" cy="190" r="2.5" fill="#10202a"/><circle cx="607" cy="190" r="2.5" fill="#10202a"/>
+<text class="label" x="555" y="480">SCALE REF</text></g>
+<g id="villainRoot">
+<ellipse class="shadow" cx="300" cy="453" rx="46" ry="8"/>
+<g id="backLeg"><path class="limb" d="M306 357L318 408L322 442"/><path class="limbLine" d="M306 357L318 408L322 442"/></g>
+<g id="frontLeg"><path class="limb" d="M294 357L285 408L280 442"/><path class="limbLine" d="M294 357L285 408L280 442"/></g>
+<g id="torso"><path class="villainShape" d="M278 263Q300 250 322 263L331 355Q301 371 270 355Z"/>
+<g id="backArm"><path class="limb" d="M319 278L343 318L338 345"/><path class="limbLine" d="M319 278L343 318L338 345"/></g>
+<g id="frontArm"><path class="limb" d="M280 278L259 319L263 345"/><path class="limbLine" d="M280 278L259 319L263 345"/></g></g>
+<g id="head"><circle class="face" cx="300" cy="234" r="27"/><path d="M275 228Q300 194 325 225" fill="#171b21" stroke="#d6dde2" stroke-width="2"/><circle class="eye" cx="309" cy="232" r="2.5"/><path d="M311 245q-6 4-12 0" fill="none" stroke="#d6dde2" stroke-width="1.5"/></g>
+</g>
+<text class="label" x="244" y="480">HUMAN SCALE</text>
+<text class="label" x="682" y="505">One step · no camera push · contact before travel</text>
+</svg></div>
+<div class="controls"><button id="toggle" type="button" aria-pressed="false">Pause</button><button id="restart" type="button">Replay</button><input id="scrub" type="range" min="0" max="8000" value="0" step="40" aria-label="Scrub the eight-second motion study"><span class="time" id="clock">0.0 / 8.0 s</span></div>
+<div class="beats" aria-label="Timing beats"><div class="beat"><b>0.0–1.7</b>Hold</div><div class="beat"><b>1.7–2.5</b>Gaze leads</div><div class="beat"><b>2.5–3.8</b>One step</div><div class="beat"><b>3.8–4.8</b>Settle</div><div class="beat"><b>4.8–5.5</b>Pace break</div><div class="beat"><b>5.5–8.0</b>Hold</div></div>
+<p class="note">This is a rough timing proxy only. It uses no supplied Luna or villain artwork, adds no story or dialogue, and does not approve the pose design. Foot contact is suggested with a planted, short step; detailed overlap, character-specific acting, and on-model drawing await the correct source art and storyboard.</p>
+</main>
+<script>
+const root=document.querySelector("#villainRoot"),parts=["torso","head","frontArm","backArm","frontLeg","backLeg"].map(id=>document.getElementById(id));
+const toggle=document.querySelector("#toggle"),restart=document.querySelector("#restart"),scrub=document.querySelector("#scrub"),clock=document.querySelector("#clock");
+let paused=false,offset=0,last=performance.now(),elapsed=0;
+function paint(now){if(!paused)elapsed=(now-last+elapsed)%8000;last=now;const t=Number(scrub.value);clock.textContent=(t/1000).toFixed(1)+" / 8.0 s";if(scrub.dataset.dragging==="true")for(const p of [root,...parts])p.style.animationDelay="-"+t+"ms";requestAnimationFrame(paint)}
+toggle.addEventListener("click",()=>{paused=!paused;for(const p of [root,...parts])p.style.animationPlayState=paused?"paused":"running";toggle.textContent=paused?"Play":"Pause";toggle.setAttribute("aria-pressed",String(paused))});
+restart.addEventListener("click",()=>{for(const p of [root,...parts]){p.style.animation="none";void p.getBoundingClientRect();p.style.animation=""}scrub.value="0";scrub.dataset.dragging="false";paused=false;toggle.textContent="Pause";toggle.setAttribute("aria-pressed","false");for(const p of [root,...parts])p.style.animationPlayState="running";last=performance.now()});
+scrub.addEventListener("input",()=>{scrub.dataset.dragging="true";const t=Number(scrub.value);for(const p of [root,...parts])p.style.animationDelay="-"+t+"ms";clock.textContent=(t/1000).toFixed(1)+" / 8.0 s"});
+scrub.addEventListener("change",()=>{scrub.dataset.dragging="false";paused=true;for(const p of [root,...parts])p.style.animationPlayState="paused";toggle.textContent="Play";toggle.setAttribute("aria-pressed","true")});
+requestAnimationFrame(paint);
+</script></body></html>
