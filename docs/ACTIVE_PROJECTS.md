@@ -58,3 +58,10 @@ Asset/audio package: https://chatgpt.com/library?file_id=libfile_962d9302f924819
 
 ## Permanent Luna voice — APPROVED, October 25, 2026 (Pacific)
 The owner explicitly approved the younger Voice B audition with “That's Luna.” This is now Luna's permanent character voice. Canonical settings: `studio/voices/luna/voice-lock.json`. Base Kokoro v1.0 ONNX / af_nova / speed1.0 / en-us, followed by Praat formant1.18, target median310Hz, range1.08, duration1.0 and the documented level rule. Preserve this pipeline and approved reference WAV rather than the older af_bella scene voice or unprocessed adult B. Model/voice-bank/reference hashes and exact runtime versions are recorded. Reference WAV: https://chatgpt.com/library?file_id=libfile_463bcad4e1488191837470d46d52b62f&account_id=personal . This supersedes earlier candidate status only for Luna. Rook's voice is not approved by this decision. Do not change Luna's age/tone/voice identity without the owner's direction.
+
+
+## Latest environment-motion proof
+Eight-second immersive staging proof with independent water/reflections and foliage, protected actor/prop contacts, and quiet ambience. Actors intentionally hold pose; future performance layers are documented rather than claimed complete. Approved Luna voice remains locked. See `LUNA_ENVIRONMENT_MOTION_023.md`.
+
+Video: https://chatgpt.com/library?file_id=libfile_8ede3994732481918958032d2c82fa86&account_id=personal
+Layers: https://chatgpt.com/library?file_id=libfile_fc223bfd1c9481919d8235a277a052aa&account_id=personal

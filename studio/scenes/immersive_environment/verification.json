@@ -1,0 +1,30 @@
+{
+  "seconds": 8,
+  "frames": 192,
+  "fps": 24,
+  "sourceDrawings": 1,
+  "characterAnimation": "Held staging pose, deliberately static",
+  "environmentLayers": [
+    "water plus reflected light",
+    "root-anchored tree sway",
+    "flower/leaf movement"
+  ],
+  "rawProtectedContactsUnchanged": true,
+  "rawStaticPixelsUnchanged": true,
+  "mathematicalLoopEndpointIdentical": true,
+  "changedPixelRange": [
+    8044,
+    12654
+  ],
+  "fullDecodePassed": true,
+  "sha256": "027f74745bd376755b89939d5f0b949143fffdfa34b02aebfe6aa688a5ca794f",
+  "limitation": "Environment proof, not a completed character scene. Simple extracted 2D layers; concealed foliage backing is approximate. No realtime playback claim.",
+  "movingPixelsBetween0and2SecondsByLayer": {
+    "water": 6777,
+    "tree": 3646,
+    "flowers": 1130
+  },
+  "edgeCompositing": "Sky-decontaminated foliage RGB, premultiplied-alpha warp/composite",
+  "decodedAudioPeak": 0.09807523339986801,
+  "ambientMastering": "loudnorm target -30 LUFS, true-peak ceiling -9dBTP"
+}

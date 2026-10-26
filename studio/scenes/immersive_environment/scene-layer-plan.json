@@ -1,0 +1,44 @@
+{
+  "heldCharacters": true,
+  "futureCharacterWork": "Replace held contact group with newly drawn Luna/Rook performance layers, clean backing and prop occlusion masks before moving the actors. This test does not claim those actor layers already exist.",
+  "nominalContactAnchorsPx": {
+    "luna_paw_crate": [
+      512,
+      481
+    ],
+    "rook_hand_crate": [
+      900,
+      476
+    ],
+    "rook_cookie_hand": [
+      634,
+      385
+    ]
+  },
+  "layerControls": {
+    "water": [
+      "flow speed",
+      "ripple amplitude",
+      "reflected-light intensity"
+    ],
+    "tree": [
+      "wind phase",
+      "tip amplitude",
+      "root anchor"
+    ],
+    "flowers": [
+      "independent wind response"
+    ],
+    "foreground": [
+      "occlusion mask",
+      "fixed contact regions"
+    ]
+  },
+  "depthOrder": [
+    "backing",
+    "water",
+    "foliage",
+    "held actors+crate+foreground"
+  ],
+  "cameraMotion": "Not implemented in this proof; a future camera needs depth layers and corrected hidden surfaces."
+}

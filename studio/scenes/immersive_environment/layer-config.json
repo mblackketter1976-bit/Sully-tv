@@ -1,0 +1,34 @@
+{
+  "size": [
+    1280,
+    720
+  ],
+  "fps": 24,
+  "seconds": 8,
+  "cleanPlateSimilarity": [
+    [
+      0.999942123076176,
+      -7.284959486118567e-05,
+      0.10279231333275766
+    ],
+    [
+      7.284959486118567e-05,
+      0.999942123076176,
+      -0.057190210440039795
+    ]
+  ],
+  "registrationInliers": 1005,
+  "layerPixelCounts": {
+    "tree": 5792,
+    "flowers": 2356
+  },
+  "waterPixels": 7151,
+  "layerOrder": [
+    "static-backing",
+    "water/reflections",
+    "tree",
+    "flowers",
+    "protected foreground/characters/crate"
+  ],
+  "contactPolicy": "Restore exact source pixels inside protected actor/prop/contact masks after environment passes."
+}
