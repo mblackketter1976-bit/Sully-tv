@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STV — Sports & Local Discovery Prototype</title>
+<style>
+:root{color-scheme:dark;--bg:#101318;--panel:#1b2029;--muted:#aab4c4;--text:#f6f7fa;--accent:#95e3c0;--ring:#fff29a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -15%,#263548 0,transparent 48%),var(--bg);color:var(--text);font:18px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1320px;margin:auto;padding:clamp(20px,4vw,56px)}header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:42px}.brand{font-size:1.1rem;font-weight:800;letter-spacing:.16em}.tag{color:var(--muted);font-size:.82rem}
+h1{font-size:clamp(2.2rem,5vw,4.3rem);line-height:1.02;letter-spacing:-.045em;margin:0 0 12px}p{margin:.25em 0 0;color:var(--muted)}.intro{max-width:680px;margin-bottom:32px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:24px 0}select,button,a{font:inherit}select{background:var(--panel);color:var(--text);border:1px solid #586273;border-radius:12px;padding:13px 38px 13px 14px;min-height:52px}
+button{border:1px solid #556070;border-radius:999px;padding:11px 18px;background:var(--panel);color:var(--text);cursor:pointer}button[aria-pressed=true]{border-color:var(--accent);background:#20392f;color:#dcfff0}
+button:focus-visible,select:focus-visible,a:focus-visible{outline:4px solid var(--ring);outline-offset:3px}
+h2{font-size:1.35rem;margin:38px 0 16px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px}.fresh{font-size:.8rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:linear-gradient(150deg,#222a36,var(--panel));border:1px solid #343e4e;border-radius:20px;padding:20px;min-height:225px;display:flex;flex-direction:column;gap:10px}.league{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:700}.match{font-weight:750;font-size:1.2rem}.meta{color:#d3dae5;font-size:.92rem}.state{display:inline-flex;align-self:flex-start;border-radius:999px;padding:4px 10px;background:#343b47;color:#d8deea;font-size:.78rem}.state.live{background:#51292b;color:#ffd4d5}.action{margin-top:auto;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.link{display:inline-flex;text-decoration:none;color:#071b15;background:var(--accent);font-weight:800;border-radius:11px;padding:11px 15px;min-height:48px;align-items:center}.link.disabled{background:#49515c;color:#c5cad2;pointer-events:none}.watchwhere{font-size:.82rem;color:var(--muted)}.empty{display:none;border:1px dashed #667184;padding:24px;border-radius:16px;color:var(--muted)}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid #353d49;color:var(--muted);font-size:.84rem}.demo{color:#ffe7a3}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){main{padding:20px}.grid{grid-template-columns:1fr}header{margin-bottom:30px}.card{min-height:205px}.section-head{align-items:start;flex-direction:column}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand">STV</div><div class="tag">SPORTS + LOCAL DISCOVERY</div></header>
+<section class="intro" aria-labelledby="title">
+<h1 id="title">Find the game.<br>Know where to watch.</h1>
+<p>Choose a team and region to see a sample of what’s on and its destination.</p>
+</section>
+<div class="controls" aria-label="Discovery filters">
+<label for="team">Team</label><select id="team"><option value="all">All teams</option><option value="kings">Sacramento Kings</option><option value="rivercats">Sacramento River Cats</option><option value="republic">Sacramento Republic FC</option></select>
+<label for="region">Region</label><select id="region"><option value="sacramento">Sacramento</option><option value="bay">Bay Area</option></select>
+</div>
+<div class="section-head"><h2 id="events-title">Upcoming in Sacramento</h2><span class="fresh">Sample listings · source and freshness shown per event</span></div>
+<div class="grid" id="events" aria-labelledby="events-title">
+<article class="card" data-team="kings" data-region="sacramento">
+<span class="league">NBA · Sample event</span><span class="match">Sacramento Kings vs. Phoenix Suns</span>
+<span class="meta">Tonight · 7:00 PM PT</span><span class="meta">Where: Local sports channel · availability unverified</span>
+<span class="state">Sample time · not a live schedule</span>
+<div class="action"><a class="link disabled" href="#" aria-disabled="true" tabindex="-1">Destination not verified</a><span class="watchwhere">Link activates only after validation</span></div>
+</article>
+<article class="card" data-team="rivercats" data-region="sacramento">
+<span class="league">MiLB · Sample event</span><span class="match">Sacramento River Cats vs. Reno Aces</span>
+<span class="meta">Tomorrow · 6:45 PM PT</span><span class="meta">Where: Team broadcast · availability unverified</span>
+<span class="state">Sample time · not a live schedule</span>
+<div class="action"><a class="link disabled" href="#" aria-disabled="true" tabindex="-1">Destination not verified</a><span class="watchwhere">Link activates only after validation</span></div>
+</article>
+<article class="card" data-team="republic" data-region="sacramento">
+<span class="league">USL · Sample event</span><span class="match">Sacramento Republic FC vs. Oakland Roots</span>
+<span class="meta">Saturday · 7:00 PM PT</span><span class="meta">Where: Local broadcast · availability unverified</span>
+<span class="state">Sample time · not a live schedule</span>
+<div class="action"><a class="link disabled" href="#" aria-disabled="true" tabindex="-1">Destination not verified</a><span class="watchwhere">Link activates only after validation</span></div>
+</article>
+<article class="card" data-team="kings" data-region="bay">
+<span class="league">NBA · Sample event</span><span class="match">Sacramento Kings vs. Golden State Warriors</span>
+<span class="meta">Next week · 7:30 PM PT</span><span class="meta">Where: Regional sports channel · availability unverified</span>
+<span class="state">Sample time · not a live schedule</span>
+<div class="action"><a class="link disabled" href="#" aria-disabled="true" tabindex="-1">Destination not verified</a><span class="watchwhere">Link activates only after validation</span></div>
+</article>
+</div>
+<p class="empty" id="empty" role="status">No sample events match both choices. Try All teams or Sacramento.</p>
+<footer><span class="demo">PROTOTYPE DATA ONLY.</span> Teams, times, channels and destinations are illustrative placeholders. Production listings need an authorized schedule source, a verified market/channel mapping, a freshness timestamp, and a checked destination URL. This screen makes no live availability claim.</footer>
+</main>
+<script>
+const team=document.querySelector("#team"),region=document.querySelector("#region"),cards=[...document.querySelectorAll(".card")],empty=document.querySelector("#empty"),heading=document.querySelector("#events-title");
+function update(){let visible=0;for(const card of cards){const show=(team.value==="all"||team.value===card.dataset.team)&&region.value===card.dataset.region;card.hidden=!show;if(show)visible++}empty.style.display=visible?"none":"block";heading.textContent=region.options[region.selectedIndex].text+" · "+(team.value==="all"?"All teams":team.options[team.selectedIndex].text)}
+team.addEventListener("change",update);region.addEventListener("change",update);update();
+</script>
+</body>
+</html>
