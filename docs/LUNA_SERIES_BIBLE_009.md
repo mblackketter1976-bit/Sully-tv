@@ -38,3 +38,11 @@ The artwork is ours; only earlier reference motion was Runway's. New animation m
 The owner selected **The Rook**, the raven from the lower-left panel of the four-villain concept sheet, and requested a charming bad guy. The choice has personal meaning: the owner describes the raven as Nicol's spirit animal. Preserve the approved raven design: layered dark feather cloak, blue-green iridescence, long avian beak, silver clasp and tall silhouette. Refine him as charismatic, witty, courteous and calculating; he can make a scheme sound like a favor. Avoid turning him into a grim, perpetually snarling brute. His charm is a performance tool and source of comedy, not a decision that he is redeemed. Other villain candidates are unselected. Sterling's liked design remains; selection of The Rook does not automatically make Sterling the main antagonist.
 
 Dialogue draft for personality only, not approved permanent voice: “Luna, my dear. I prefer to think of it as borrowing tomorrow's luck.” Neither villain voice nor a final revised character sheet is approved merely by creating a sample.
+
+
+## All-ages family standard — owner instruction, 2026-10-26
+The series is for all ages and targets G-rated family entertainment. Apply this to scripts, dialogue, designs, character acting, voices, music, sound effects and promotional material. This is a creative target, not a claim of an official classification.
+
+Keep humor warm, clever and accessible to children and adults. Exclude profanity, sexual material, graphic injury, cruelty and intense frightening imagery. Use gentle adventure stakes, mild brief suspense, harmless visual comedy and reassuring resolutions. Do not rely on adult innuendo to entertain adults.
+
+The Rook remains a charming bad guy: witty schemes, playful trickery, vanity and comic setbacks, rather than brutality, disturbing threats or horror. His silhouette and expressions may be theatrical, but scenes should keep him enjoyable rather than terrifying. Let Luna counter him through kindness, courage, curiosity and cleverness. Preserve meaningful conflict without harsh punishment or humiliating vulnerable characters.
