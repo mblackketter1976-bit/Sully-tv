@@ -1,0 +1,47 @@
+{
+  "status": "Two younger-direction auditions; neither approved or permanently locked",
+  "rejectedPreviousDirection": "af_bella sounded older than intended to the owner",
+  "model": "Kokoro v1.0 ONNX",
+  "modelSha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+  "voiceBankSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "options": [
+    {
+      "option": "A",
+      "preset": "af_sky",
+      "speed": 1.0,
+      "language": "en-us",
+      "pitchShift": 0,
+      "processing": "No pitch shift, reverb or echo; audition-reel level matching only",
+      "seconds": 2.3466666666666667,
+      "sampleRate": 24000,
+      "sha256": "65fb3792a306cefea06fb18053674a461a9c080d31b298a6e608fa84a35f40fa",
+      "file": "Luna_Younger_Voice_A.wav"
+    },
+    {
+      "option": "B",
+      "preset": "af_nova",
+      "speed": 1.0,
+      "language": "en-us",
+      "pitchShift": 0,
+      "processing": "No pitch shift, reverb or echo; audition-reel level matching only",
+      "seconds": 2.752,
+      "sampleRate": 24000,
+      "sha256": "8b8aaf47277967e84ac827f66d891a3af31ef365e64cb02a4075249a4a2bb82c",
+      "file": "Luna_Younger_Voice_B.wav"
+    }
+  ],
+  "reel": {
+    "seconds": 7,
+    "firstOption": "A",
+    "secondOption": "B",
+    "startTimes": [
+      0.25,
+      3.75
+    ],
+    "gains": [
+      1.1539903559625075,
+      1.8103867403314917
+    ],
+    "picture": "Static art-direction preview; no new animation is claimed"
+  }
+}
