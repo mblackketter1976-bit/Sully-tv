@@ -58,7 +58,6 @@ for ob in scene.objects:
   base=np.array([tuple(v.co) for v in (keys[0].data if keys else ob.data.vertices)])
   centre,lo,hi=min(outer_bounds,key=lambda item:abs(item[0][1]-base.mean(axis=0)[1]))
   inner=name.startswith('Inner');height=(hi[2]-lo[2])*1.22;bottom=lo[2]-.06
-  if inner:bottom+=height*.12;height*=.76
   new=[];faces=[];rings=15;around=32
   for ring in range(rings):
    u=ring/(rings-1);profile=math.sin(math.pi*u)**.6
@@ -66,9 +65,20 @@ for ob in scene.objects:
    depth=(.012 if inner else (hi[0]-lo[0])*.48)*math.sin(math.pi*u)**.5
    for j in range(around):
     theta=2*math.pi*j/around
-    new.append((centre[0]+((hi[0]-lo[0])*.6+.02 if inner else 0)+depth*math.sin(theta)-.025*u,centre[1]+half_width*math.cos(theta),bottom+height*u))
+    if inner:
+     # A single inset patch hugs the actual convex front of the outer ear.
+     # A constant-offset second ellipsoid can either pierce it or float away.
+     outer_u=.14+.72*u
+     outer_profile=math.sin(math.pi*outer_u)**.6
+     outer_width=(hi[1]-lo[1])*.35*outer_profile*(1-.28*outer_u)
+     outer_depth=(hi[0]-lo[0])*.48*math.sin(math.pi*outer_u)**.5
+     across=2*j/(around-1)-1
+     y=outer_width*.70*math.sin(math.pi*u)**.5*across
+     x=centre[0]+outer_depth*math.sqrt(max(0,1-(y/outer_width)**2))-.025*outer_u+.002
+     new.append((x,centre[1]+y,bottom+height*outer_u))
+    else:new.append((centre[0]+depth*math.sin(theta)-.025*u,centre[1]+half_width*math.cos(theta),bottom+height*u))
   for ring in range(rings-1):
-   for j in range(around):
+   for j in range(around-1 if inner else around):
     x=ring*around+j;y=ring*around+(j+1)%around;faces.append((x,y,y+around,x+around))
   new=np.array(new)
   design=np.column_stack([base,np.ones(len(base))])

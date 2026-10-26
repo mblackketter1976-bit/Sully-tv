@@ -10,7 +10,7 @@ The owner requested an aesthetically pleasing Luna with smooth movement today. T
 - Smooth shading, selective surface subdivision, warm studio floor and three soft lights. Paws deliberately retain their original evaluated surfaces to preserve contact.
 - Material-preview viewport, embedded readme/rebuilder and relative output path. No runtime scripts required for playback.
 
-The first ear stretching approach looked too long. A second reconstruction exposed the outer ear through the inner patch; the inner surface placement and silhouette were corrected and representative poses re-rendered. Appearance is proposed for owner review, not claimed as a final approved likeness. No approved poster/photo reference was retrieved in the current Library search, so prior prototype geometry and the established blue-eye/Frenchie/merle constraints grounded this pass.
+The first ear stretching approach looked too long. A second reconstruction exposed the outer ear through the inner patch; a constant offset then made that patch appear detached in three-quarter view. The final patch follows the convex front of the outer ear with a small surface offset. Representative three-quarter/front/blink poses were re-rendered and inspected. Appearance is proposed for owner review, not claimed as a final approved likeness. No approved poster/photo reference was retrieved in the current Library search, so prior prototype geometry and the established blue-eye/Frenchie/merle constraints grounded this pass.
 
 ## Actual saved-file checks
 
