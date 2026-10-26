@@ -1,0 +1,29 @@
+{
+  "status": "Younger, approximately five-year-old creative target; owner listening review required",
+  "interpretation": "Boyz II interpreted as Voice B from the preceding A/B comparison",
+  "sourcePreset": "af_nova",
+  "sourceSpeed": 1.0,
+  "sourceLanguage": "en-us",
+  "sourceModel": "Kokoro v1.0 ONNX",
+  "sourceSha256": "8b8aaf47277967e84ac827f66d891a3af31ef365e64cb02a4075249a4a2bb82c",
+  "sourceMedianPitchHz": 171.61334932548775,
+  "processing": "Praat pitch-synchronous resynthesis with separately set formants, pitch and range; no added reverb/echo",
+  "praatParselmouthVersion": "0.4.7",
+  "settings": {
+    "formantRatio": 1.18,
+    "targetMedianPitchHz": 310.0,
+    "pitchRangeFactor": 1.08,
+    "durationFactor": 1.0
+  },
+  "gain": 1.5870842302111583,
+  "sampleRate": 24000,
+  "seconds": 2.752,
+  "peak": 0.68,
+  "wavSha256": "c18895822b3c0a13f5c1a66095c9da8c498bb03914f50efca703d8538bb36b8f",
+  "approved": false,
+  "sourceModelSha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+  "sourceVoiceBankSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "measuredOutputMedianPitchHz": 308.021493871733,
+  "documentation": "https://fon.hum.uva.nl/praat/manual/Sound__Change_gender___.html",
+  "fullDecodeAllFormatsPassed": true
+}
