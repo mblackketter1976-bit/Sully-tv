@@ -1,0 +1,79 @@
+{
+  "status": "Approved permanent Luna voice",
+  "interpretation": "Boyz II interpreted as Voice B from the preceding A/B comparison",
+  "sourcePreset": "af_nova",
+  "sourceSpeed": 1,
+  "sourceLanguage": "en-us",
+  "sourceModel": "Kokoro v1.0 ONNX",
+  "sourceSha256": "8b8aaf47277967e84ac827f66d891a3af31ef365e64cb02a4075249a4a2bb82c",
+  "sourceMedianPitchHz": 171.61334932548775,
+  "processing": "Praat pitch-synchronous resynthesis with separately set formants, pitch and range; no added reverb/echo",
+  "praatParselmouthVersion": "0.4.7",
+  "settings": {
+    "formantRatio": 1.18,
+    "targetMedianPitchHz": 310,
+    "pitchRangeFactor": 1.08,
+    "durationFactor": 1
+  },
+  "gain": 1.5870842302111583,
+  "sampleRate": 24000,
+  "seconds": 2.752,
+  "peak": 0.68,
+  "wavSha256": "c18895822b3c0a13f5c1a66095c9da8c498bb03914f50efca703d8538bb36b8f",
+  "approved": true,
+  "sourceModelSha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+  "sourceVoiceBankSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "measuredOutputMedianPitchHz": 308.021493871733,
+  "documentation": "https://fon.hum.uva.nl/praat/manual/Sound__Change_gender___.html",
+  "fullDecodeAllFormatsPassed": true,
+  "approval": {
+    "ownerQuote": "That's Luna.",
+    "localDate": "2026-10-25",
+    "timezone": "America/Los_Angeles",
+    "scope": "Permanent Luna character voice; exact younger Voice B audition",
+    "source": "Explicit owner response to Luna_Young_Voice_B_Preview.mp4"
+  },
+  "reference": {
+    "text": "Nice trick. Now give back my cookie.",
+    "filename": "Luna_Young_Voice_B.wav",
+    "library_file_id": "libfile_463bcad4e1488191837470d46d52b62f",
+    "url": "https://chatgpt.com/library?file_id=libfile_463bcad4e1488191837470d46d52b62f&account_id=personal",
+    "sha256": "c18895822b3c0a13f5c1a66095c9da8c498bb03914f50efca703d8538bb36b8f",
+    "sampleRate": 24000,
+    "channels": 1,
+    "sampleFormat": "PCM 24-bit",
+    "samples": 66048,
+    "seconds": 2.752
+  },
+  "downloadMP3": {
+    "library_file_id": "libfile_58364709bb3c81918176573dc85ada2a",
+    "url": "https://chatgpt.com/library?file_id=libfile_58364709bb3c81918176573dc85ada2a&account_id=personal"
+  },
+  "productionPolicy": {
+    "preset": "af_nova",
+    "speed": 1,
+    "language": "en-us",
+    "processing": {
+      "formantRatio": 1.18,
+      "targetMedianPitchHz": 310,
+      "pitchRangeFactor": 1.08,
+      "durationFactor": 1
+    },
+    "levelRule": "For each synthesized line, gain = min(0.68/peak, 0.13/RMS); ordinary scene mixing may adjust level without changing identity.",
+    "pronunciationGuide": "No special overrides have been approved yet; preserve a pronunciation dictionary as new names are approved.",
+    "voiceEffects": "No added voice echo, reverb or extra aging/pitch processing.",
+    "changeRule": "Use this exact pipeline and reference for future Luna dialogue. Change voice identity or age only at owner's request. Other character voices remain independently unapproved."
+  },
+  "licenseProvenance": {
+    "kokoroWeights": "Apache-2.0 — https://huggingface.co/hexgrad/Kokoro-82M",
+    "kokoroOnnxWrapper": "MIT — https://github.com/thewh1teagle/kokoro-onnx",
+    "praatProcessing": "Praat-Parselmouth 0.4.7 — https://github.com/YannickJadoul/Parselmouth; software dependency, not a voice provider"
+  },
+  "runtimeVersions": {
+    "kokoroOnnx": "0.6.1",
+    "onnxRuntime": "1.31.0",
+    "praatParselmouth": "0.4.7",
+    "numpy": "2.5.4",
+    "soundfile": "0.14.0"
+  }
+}
