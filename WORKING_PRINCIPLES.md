@@ -44,3 +44,7 @@ Sully TV is a streaming discovery/player web application. Keep Kids TV picture-f
 
 ## Continuity
 This file is a durable project brief, not a substitute for checking current code, current licensing, and the user's latest instructions. Update it when the owner changes these principles.
+
+
+## Luna animation method — 2026-10-26
+The owner authorizes traditional frame-by-frame animation, including thousands of drawings if needed, and building tools Sully can use to execute it. Preserve the approved illustrated artwork and pursue convincing character acting. Choose the method by the visible result; drawing count alone is not quality. Prove a short authored acting sequence before expanding production. Keep the dialogue-led format, Mike and Nicol's unique ability to understand Luna, and the requirement to approve and record her permanent voice.

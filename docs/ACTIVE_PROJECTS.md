@@ -42,3 +42,7 @@ Dialogue-led animal cartoon; only Mike and Nicol are the humans who understand L
 
 ## Movement reference now supplied and inspected
 The owner uploaded 1785.mp4 (Library libfile_b5601b9604b881919630e5e6938df141), resolving the need for accessible video after the Google-origin browser block. Local timeline/consecutive samples show pose-to-pose acting, prop interaction, meaningful holds/quick accents and expressive mouth/body changes. Keep our illustrated art; do not copy the reference cartoon’s designs/footage. The narrated prototype is below this acting target. Next gate is a short speaking/acting proof with deliberate mouth/expression poses and a purposeful paw/prop action, before expanding length again. See LUNA_MOVEMENT_REFERENCE_010.md.
+
+
+## Authored cel workflow — 2026-10-26
+The owner authorizes traditional frame-by-frame drawing and custom production tools. See `LUNA_CEL_WORKFLOW_011.md` and `studio/CEL_ANIMATION.md`. The new local PNG-cel compositor passed five unit tests and a 24-frame FFmpeg export/decode smoke test. It provides assembly and timing; a new Luna acting sequence is still to be drawn and judged.
