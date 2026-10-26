@@ -1,0 +1,56 @@
+{
+  "seconds": 4,
+  "frames": 96,
+  "fps": 24,
+  "method": "Single fixed-shape body; independently articulated raster limbs; exact stance locks; no RIFE or image morphing",
+  "reference": "Catavitello et al. 2015, doi:10.1371/journal.pone.0133936, CC BY, DogS walking second stride contact timing",
+  "forePhase": 0.14285714285714285,
+  "hindDuty": 0.6190476190476191,
+  "foreDuty": 0.5641025641025641,
+  "period": 0.9,
+  "stride": 140.0,
+  "bodyPlateRegistration": {
+    "inliers": 569,
+    "matrix": [
+      [
+        1.0005793131148666,
+        -0.0004762196454463813,
+        -0.053125969233529156
+      ],
+      [
+        0.0004762196454463813,
+        1.0005793131148666,
+        -0.5310581912630922
+      ]
+    ]
+  },
+  "maxBoneLengthError": 7.105427357601002e-14,
+  "minSupportingFeet": 2,
+  "stanceFootWorldPositionsConstant": true,
+  "fullAVDecodePassed": true,
+  "sha256": "9d059e5ffc67f1593a2d4d271e77d56fc18ab859ab41656d7d4e4585d031af95",
+  "decodedFrameCount": 96,
+  "decodedAudioPeak": 0.3478787839412689,
+  "actualPawPatchTracking": {
+    "comparisons": 108,
+    "maxAbsolutePixelShift": 1,
+    "minimumCorrelation": 0.8985742330551147
+  },
+  "decodedFramesInspected": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    30,
+    36,
+    42,
+    48,
+    60,
+    72,
+    84,
+    95
+  ],
+  "limitations": "Short 2D articulated-cutout mechanics proof. Joint seams and stiff body/backpack remain possible; not a finished natural cartoon walk. No realtime visual playback/listening claim. Rig ground locks are exact; encoded/raster pixels can jitter slightly."
+}

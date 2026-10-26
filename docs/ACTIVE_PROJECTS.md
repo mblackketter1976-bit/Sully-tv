@@ -80,3 +80,10 @@ Owner requested Luna walking. Six-second boardwalk walk study uses six selected 
 
 Video: https://chatgpt.com/library?file_id=libfile_27c51a5a76148191bafd31dc297d1b33&account_id=personal
 Assets: https://chatgpt.com/library?file_id=libfile_466fb92891648191bdfd1dec81de98c5&account_id=personal
+
+
+## Walk 01 rejected; full philosophy review and mechanics restart
+The owner rejected the first walk as unnatural and clumsy, requested the entire philosophy reread, then authorized restart with Go. WORKING_PRINCIPLES.md was read in full. Retire the walk-01 image-morph approach; no movement approval is implied by its earlier technical checks. New four-second walk-restart-02 uses one head/torso layer, rigid articulated leg pieces, exact world-space support locks and measured canine contact timing from the CC BY Catavitello et al. 2015 DogS dataset. No RIFE gait or head mesh deformation. Checks: 96 frames/24fps, full A/V decode, constant limb lengths, two or more supporting feet, 108 encoded near-paw patch comparisons with at most one pixel shift. Consecutive-cycle/14 decoded samples inspected. This is PARTIAL mechanics progress, not finished natural acting: rigid body/satchel and joint transitions remain an artistic limit; no realtime playback/listening claim. Do not expand episode length on the strength of these numerical checks. Preserve approved art, voice, environment and female Rook direction. See LUNA_WALK_RESTART_027.md.
+
+Video: https://chatgpt.com/library?file_id=libfile_95df8249631c8191939722cac8ea62bf&account_id=personal
+Assets: https://chatgpt.com/library?file_id=libfile_9ac7c492f18c8191b53232f982ee7a9f&account_id=personal
