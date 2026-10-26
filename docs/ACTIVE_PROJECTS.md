@@ -1,5 +1,7 @@
 # Active Blackketter Entertainment work — 2026-10-26
 
+> OWNER DIRECTION: Luna is 2D illustrated animation matching the supplied 1156/1135/1149 Runway references. 3D appearance work was explicitly rejected; earlier movement approval did not approve the 3D visual direction. Read `docs/LUNA_2D_TARGET_006.md` on the Luna branch before continuing Luna.
+
 Both projects remain active. Preserve the charter, accepted movement files and working features.
 
 ## Sully TV
@@ -23,3 +25,8 @@ Both projects remain active. Preserve the charter, accepted movement files and w
 - Accepted live navigation: one bottom bar for Back, Home, Categories, Search and Top, responsive quick controls/search, restored app icons. Main navigation CI and Pages deployment passed; public HTTP verified.
 - Guide development now incorporates that exact accepted navigation, removes duplicate guide controls and makes dock Search focus the station field. Python, guide browser and four-width navigation tests passed in run 40249222384. Real provider fetch returned 52 current/future episode entries across three reviewed networks; coverage remains partial. No guide release was made.
 - Luna appearance is now requested. First native 3D visual proposal: rest-coordinate silver merle, retained blue eyes, sculpted bat ears, warm studio. All 432 frames preserve evaluated paw vertices and root matrices exactly (zero difference from accepted sequence). Representative poses inspected; six-second rendered turn excerpt and full 18-second Blender scene are being prepared for owner appearance review. Preserve earlier motion files and do not assume final likeness approval. See docs/LUNA_VISUAL_005.md on the Luna branch.
+
+## Luna correction and first 2D test
+- Primary reference: 1156.mp4 (Library libfile_aa8a278a4cc88191983cff3536784ec9); captioned references 1135/1149 also supplied.
+- New Luna_2D_Acting_Test_01.mp4 uses one approved still, local 2D deformation, edited eyelid patches, two blinks and subtle breathing. Eight seconds, 24 fps, 1280×720. It does not replay or retime the source clip. Raw paws and outer background are pinned; no full walking/turn rig or episode pipeline is claimed.
+- Historical 3D files remain preserved as experiments only. New 2D test awaits owner review.
