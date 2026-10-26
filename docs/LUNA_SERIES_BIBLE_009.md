@@ -62,3 +62,11 @@ Revision 07 starts with 24 new drawings, no old-16 or rejected-32 art reused. Pe
 
 ## Permanent Luna voice — APPROVED, October 25, 2026 (Pacific)
 The owner explicitly approved the younger Voice B audition with “That's Luna.” This is now Luna's permanent character voice. Canonical settings: `studio/voices/luna/voice-lock.json`. Base Kokoro v1.0 ONNX / af_nova / speed1.0 / en-us, followed by Praat formant1.18, target median310Hz, range1.08, duration1.0 and the documented level rule. Preserve this pipeline and approved reference WAV rather than the older af_bella scene voice or unprocessed adult B. Model/voice-bank/reference hashes and exact runtime versions are recorded. Reference WAV: https://chatgpt.com/library?file_id=libfile_463bcad4e1488191837470d46d52b62f&account_id=personal . This supersedes earlier candidate status only for Luna. Rook's voice is not approved by this decision. Do not change Luna's age/tone/voice identity without the owner's direction.
+
+
+## Environmental immersion — owner correction
+The owner explicitly says the characters must feel immersed in the setting, not like puppets placed in front of a backdrop. Drawing the background alone is insufficient. Stage the action with shared perspective, multiple depths, foreground overlap, physical hand/paw/prop contact, coherent light and attached shadows. Let the environment occlude characters where appropriate. Use closer diagonal conversational framing rather than a front-facing two-character lineup.
+
+A new scene-layout still (exec-fd04cf7e-6c4c-4788-8b91-61c2d002b1c2.png) tests this: near-left foreground post/rail, Luna's paw resting at the crate rim, The Rook leaning from its far side with one hand planted and the cookie in the other, crate occupying the foreground and overlapping silhouettes. The bridge is a distant setting cue. The image is an art-direction proposal, not yet owner-approved animation. It does not replace approved character or voice references.
+
+For animation, retain separate foreground, crate, character and background layers with explicit contact/occlusion anchors. Maintain planted contact when moving the camera or limbs; do not treat a camera move over the flattened still as solved character/environment interaction. Keep the practical nice-family-cartoon standard rather than escalating to movie-level polish.
