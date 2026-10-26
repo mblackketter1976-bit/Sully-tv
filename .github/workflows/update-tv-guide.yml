@@ -8,8 +8,11 @@ on:
     paths:
       - 'scripts/update_tv_guide.py'
       - '.github/workflows/update-tv-guide.yml'
+      - 'scripts/sully_epg_engine.py'
+      - 'scripts/tvmaze_guide.py'
+      - 'data/guide-sources.json'
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: sully-epg-update
   cancel-in-progress: false
@@ -22,14 +25,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fetch and validate public XMLTV guide sources
+      - name: Test normalization and refresh before fetching
+        run: python -m unittest discover -s tests -v
+      - name: Refresh reviewed XMLTV providers
         run: python scripts/update_tv_guide.py
-      - name: Publish schedule updates
-        run: |
-          if ! git diff --quiet -- data/tv-guide.json; then
-            git config user.name "sully-guide-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/tv-guide.json
-            git commit -m "Refresh sourced TV Guide program listings"
-            git push
-          fi
+      - name: Retain guide candidate for review (no deployment)
+        uses: actions/upload-artifact@v4
+        with:
+          name: sully-guide-candidate
+          path: data/tv-guide.json
+          retention-days: 7

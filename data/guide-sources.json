@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "providers": [
+    {
+      "id": "tvmaze-us",
+      "type": "tvmaze",
+      "name": "TVmaze",
+      "enabled": true,
+      "url": "https://api.tvmaze.com/schedule",
+      "country": "US",
+      "channelMap": {
+        "40": "CNN.us",
+        "201": "MSNOW.us",
+        "467": "BYUTV.us"
+      },
+      "networkNames": {
+        "40": "CNN",
+        "201": "MS NOW",
+        "467": "BYUtv"
+      },
+      "coverage": "Partial episode listings; not a complete channel schedule. Stream feeds may differ.",
+      "rights": {
+        "publicRedistribution": true,
+        "commercialUse": true,
+        "evidenceUrl": "https://www.tvmaze.com/api#licensing",
+        "reviewedAt": "2026-10-25",
+        "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "TVmaze schedule data. Filtered to reviewed networks, converted to UTC and Sully JSON. Adapted data: CC BY-SA 4.0."
+      }
+    }
+  ]
+}

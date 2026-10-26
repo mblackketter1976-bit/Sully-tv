@@ -1,5 +1,303 @@
 {
-  "updated": null,
-  "channels": {},
-  "sourceCounts": {}
+  "updated": "2026-10-25T22:51:12.378040Z",
+  "channels": {
+    "CNN.us": [
+      {
+        "title": "The Source with Kaitlan Collins · Midterms 2026: Countdown To Election Night",
+        "start": "2026-10-26T00:00:00Z",
+        "end": "2026-10-26T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795503/the-source-with-kaitlan-collins-2026-special-midterms-2026-countdown-to-election-night"
+      },
+      {
+        "title": "The Arena with Kasie Hunt · Episode 213",
+        "start": "2026-10-26T20:00:00Z",
+        "end": "2026-10-26T21:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3787502/the-arena-with-kasie-hunt-2026-10-26-episode-213"
+      },
+      {
+        "title": "Anderson Cooper 360° · Episode 161",
+        "start": "2026-10-27T00:00:00Z",
+        "end": "2026-10-27T01:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3790279/anderson-cooper-360-2026-10-26-episode-161"
+      },
+      {
+        "title": "The Source with Kaitlan Collins · Episode 200",
+        "start": "2026-10-27T01:00:00Z",
+        "end": "2026-10-27T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3790274/the-source-with-kaitlan-collins-2026-10-26-episode-200"
+      },
+      {
+        "title": "CNN NewsNight with Abby Phillip · Episode 206",
+        "start": "2026-10-27T02:00:00Z",
+        "end": "2026-10-27T03:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3790284/cnn-newsnight-with-abby-phillip-2026-10-26-episode-206"
+      },
+      {
+        "title": "Laura Coates Live · Episode 195",
+        "start": "2026-10-27T03:00:00Z",
+        "end": "2026-10-27T04:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795524/laura-coates-live-2026-10-26-episode-195"
+      },
+      {
+        "title": "The Story Is with Elex Michaelson · Episode 209",
+        "start": "2026-10-27T04:00:00Z",
+        "end": "2026-10-27T06:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3790290/the-story-is-with-elex-michaelson-2026-10-26-episode-209"
+      },
+      {
+        "title": "The Arena with Kasie Hunt · Episode 214",
+        "start": "2026-10-27T20:00:00Z",
+        "end": "2026-10-27T21:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3787503/the-arena-with-kasie-hunt-2026-10-27-episode-214"
+      },
+      {
+        "title": "Anderson Cooper 360° · Episode 162",
+        "start": "2026-10-28T00:00:00Z",
+        "end": "2026-10-28T01:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795509/anderson-cooper-360-2026-10-27-episode-162"
+      },
+      {
+        "title": "The Source with Kaitlan Collins · Episode 201",
+        "start": "2026-10-28T01:00:00Z",
+        "end": "2026-10-28T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795504/the-source-with-kaitlan-collins-2026-10-27-episode-201"
+      },
+      {
+        "title": "CNN NewsNight with Abby Phillip · Episode 207",
+        "start": "2026-10-28T02:00:00Z",
+        "end": "2026-10-28T03:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795514/cnn-newsnight-with-abby-phillip-2026-10-27-episode-207"
+      },
+      {
+        "title": "Laura Coates Live · Episode 196",
+        "start": "2026-10-28T03:00:00Z",
+        "end": "2026-10-28T04:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795525/laura-coates-live-2026-10-27-episode-196"
+      },
+      {
+        "title": "The Story Is with Elex Michaelson · Episode 210",
+        "start": "2026-10-28T04:00:00Z",
+        "end": "2026-10-28T06:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3795530/the-story-is-with-elex-michaelson-2026-10-27-episode-210"
+      }
+    ],
+    "MSNOW.us": [
+      {
+        "title": "Way Too Early · Episode 208",
+        "start": "2026-10-26T09:00:00Z",
+        "end": "2026-10-26T10:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774539/way-too-early-2026-10-26-episode-208"
+      },
+      {
+        "title": "Morning Joe · Episode 211",
+        "start": "2026-10-26T10:00:00Z",
+        "end": "2026-10-26T13:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774559/morning-joe-2026-10-26-episode-211"
+      },
+      {
+        "title": "Money, Power, Politics with Stephanie Ruhle · Episode 93",
+        "start": "2026-10-26T13:00:00Z",
+        "end": "2026-10-26T15:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775921/money-power-politics-with-stephanie-ruhle-2026-10-26-episode-93"
+      },
+      {
+        "title": "State of Play with Peter Alexander · Episode 57",
+        "start": "2026-10-26T15:00:00Z",
+        "end": "2026-10-26T16:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775902/state-of-play-with-peter-alexander-1x57-episode-57"
+      },
+      {
+        "title": "On the Line with Alicia Menendez · Episode 93",
+        "start": "2026-10-26T16:00:00Z",
+        "end": "2026-10-26T18:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775881/on-the-line-with-alicia-menendez-2026-10-26-episode-93"
+      },
+      {
+        "title": "The Moment with Katy Tur · Episode 94",
+        "start": "2026-10-26T18:00:00Z",
+        "end": "2026-10-26T20:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775857/the-moment-with-katy-tur-2026-10-26-episode-94"
+      },
+      {
+        "title": "Deadline: White House · Episode 211",
+        "start": "2026-10-26T20:00:00Z",
+        "end": "2026-10-26T22:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774519/deadline-white-house-2026-10-26-episode-211"
+      },
+      {
+        "title": "The Beat with Ari Melber · Episode 210",
+        "start": "2026-10-26T22:00:00Z",
+        "end": "2026-10-26T23:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774498/the-beat-with-ari-melber-2026-10-26-episode-210"
+      },
+      {
+        "title": "The Weeknight · Episode 205",
+        "start": "2026-10-26T23:00:00Z",
+        "end": "2026-10-27T00:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774090/the-weeknight-2026-10-26-episode-205"
+      },
+      {
+        "title": "All In with Chris Hayes · Episode 182",
+        "start": "2026-10-27T00:00:00Z",
+        "end": "2026-10-27T01:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773419/all-in-with-chris-hayes-2026-10-26-episode-182"
+      },
+      {
+        "title": "The Rachel Maddow Show · Episode 40",
+        "start": "2026-10-27T01:00:00Z",
+        "end": "2026-10-27T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773429/the-rachel-maddow-show-2026-10-26-episode-40"
+      },
+      {
+        "title": "The Last Word with Lawrence O'Donnell · Episode 201",
+        "start": "2026-10-27T02:00:00Z",
+        "end": "2026-10-27T03:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773460/the-last-word-with-lawrence-odonnell-2026-10-26-episode-201"
+      },
+      {
+        "title": "The 11th Hour with Ali Velshi · Episode 203",
+        "start": "2026-10-27T03:00:00Z",
+        "end": "2026-10-27T04:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774039/the-11th-hour-with-ali-velshi-2026-10-26-episode-203"
+      },
+      {
+        "title": "Way Too Early · Episode 209",
+        "start": "2026-10-27T09:00:00Z",
+        "end": "2026-10-27T10:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774540/way-too-early-2026-10-27-episode-209"
+      },
+      {
+        "title": "Morning Joe · Episode 212",
+        "start": "2026-10-27T10:00:00Z",
+        "end": "2026-10-27T13:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774560/morning-joe-2026-10-27-episode-212"
+      },
+      {
+        "title": "Money, Power, Politics with Stephanie Ruhle · Episode 94",
+        "start": "2026-10-27T13:00:00Z",
+        "end": "2026-10-27T15:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775922/money-power-politics-with-stephanie-ruhle-2026-10-27-episode-94"
+      },
+      {
+        "title": "State of Play with Peter Alexander · Episode 58",
+        "start": "2026-10-27T15:00:00Z",
+        "end": "2026-10-27T16:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775903/state-of-play-with-peter-alexander-1x58-episode-58"
+      },
+      {
+        "title": "On the Line with Alicia Menendez · Episode 94",
+        "start": "2026-10-27T16:00:00Z",
+        "end": "2026-10-27T18:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775882/on-the-line-with-alicia-menendez-2026-10-27-episode-94"
+      },
+      {
+        "title": "The Moment with Katy Tur · Episode 95",
+        "start": "2026-10-27T18:00:00Z",
+        "end": "2026-10-27T20:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3775858/the-moment-with-katy-tur-2026-10-27-episode-95"
+      },
+      {
+        "title": "Deadline: White House · Episode 212",
+        "start": "2026-10-27T20:00:00Z",
+        "end": "2026-10-27T22:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774520/deadline-white-house-2026-10-27-episode-212"
+      },
+      {
+        "title": "The Beat with Ari Melber · Episode 211",
+        "start": "2026-10-27T22:00:00Z",
+        "end": "2026-10-27T23:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774499/the-beat-with-ari-melber-2026-10-27-episode-211"
+      },
+      {
+        "title": "The Weeknight · Episode 206",
+        "start": "2026-10-27T23:00:00Z",
+        "end": "2026-10-28T00:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774091/the-weeknight-2026-10-27-episode-206"
+      },
+      {
+        "title": "All In with Chris Hayes · Episode 183",
+        "start": "2026-10-28T00:00:00Z",
+        "end": "2026-10-28T01:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773420/all-in-with-chris-hayes-2026-10-27-episode-183"
+      },
+      {
+        "title": "The Briefing with Jen Psaki · Episode 164",
+        "start": "2026-10-28T01:00:00Z",
+        "end": "2026-10-28T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773442/the-briefing-with-jen-psaki-2026-10-27-episode-164"
+      },
+      {
+        "title": "The Last Word with Lawrence O'Donnell · Episode 202",
+        "start": "2026-10-28T02:00:00Z",
+        "end": "2026-10-28T03:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3773461/the-last-word-with-lawrence-odonnell-2026-10-27-episode-202"
+      },
+      {
+        "title": "The 11th Hour with Ali Velshi · Episode 204",
+        "start": "2026-10-28T03:00:00Z",
+        "end": "2026-10-28T04:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774040/the-11th-hour-with-ali-velshi-2026-10-27-episode-204"
+      }
+    ],
+    "BYUTV.us": [
+      {
+        "title": "Relative Race · Episode 7",
+        "start": "2026-10-26T01:00:00Z",
+        "end": "2026-10-26T02:00:00Z",
+        "source": "tvmaze-us",
+        "url": "https://www.tvmaze.com/episodes/3774956/relative-race-17x07-episode-7"
+      }
+    ]
+  },
+  "sourceCounts": {
+    "tvmaze-us": 40
+  },
+  "sources": {
+    "tvmaze-us": {
+      "name": "TVmaze",
+      "url": "https://www.tvmaze.com/api#licensing",
+      "attribution": "TVmaze schedule data. Filtered to reviewed networks, converted to UTC and Sully JSON. Adapted data: CC BY-SA 4.0.",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "coverage": "Partial episode listings; not a complete channel schedule. Stream feeds may differ."
+    }
+  }
 }

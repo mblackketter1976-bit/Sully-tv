@@ -1,0 +1,56 @@
+name: Sully Guide Engine offline tests
+on:
+  push:
+    branches: [sully-phase1-foundation-audit]
+    paths:
+      - 'scripts/sully_epg_engine.py'
+      - 'tests/**'
+      - 'scripts/update_tv_guide.py'
+      - 'scripts/tvmaze_guide.py'
+      - 'index.html'
+      - 'guide-source.js'
+      - 'data/guide-sources.json'
+      - '.github/workflows/sully-epg-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile source
+        run: python -m py_compile scripts/sully_epg_engine.py tests/test_sully_epg_engine.py
+      - name: Run synthetic XMLTV unit tests
+        run: python -m unittest discover -s tests -v
+
+  guide-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Check guide rendering with synthetic data at desktop and phone sizes
+        run: |
+          node tests/guide-source.cjs
+          node tests/guide-browser.cjs
+          node tests/guide-full-app.cjs
+          node tests/navigation-browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: guide-browser-screenshots
+          path: |
+            guide-*.png
+            navigation-*.png
+          retention-days: 7
