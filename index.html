@@ -946,7 +946,7 @@ header .sullyQuickBar .headerGuide{min-height:44px!important;font-size:12px!impo
 .sullySportsDiscovery h3{margin:0 0 6px;color:#e3fff3;font-size:20px}.sullySportsDiscovery p{margin:0 0 12px;color:#ccdae8;line-height:1.45}
 .sullySportsControls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
 .sullySportsControls label{display:grid;gap:5px;color:#e5edf7;font-weight:700}.sullySportsControls select{width:100%;min-height:48px;border:1px solid #7899a3;border-radius:10px;padding:10px;background:#182d43;color:#fff}
-.sullySportsResult{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;background:#102338;border:1px solid #426274;border-radius:12px}
+.sullySportsResults{display:grid;gap:8px}.sullySportsResult{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;background:#102338;border:1px solid #426274;border-radius:12px}
 .sullySportsResult strong{display:block;font-size:17px}.sullySportsResult small{display:block;color:#c4d0dc;margin-top:4px}
 .sullySportsActions{display:flex;flex-wrap:wrap;gap:8px}.sullySportsActions a{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;background:#a5e6c7;color:#10291f;font-weight:800;text-decoration:none}
 .sullySportsActions a.secondary{background:#314c62;color:#fff;border:1px solid #7190a4}.sullySportsActions a:focus-visible,.sullySportsControls select:focus-visible{outline:4px solid #ffe18b;outline-offset:2px}
@@ -2900,7 +2900,7 @@ function renderGuide(){
  [["sacramento","Sacramento area"],["bay","Bay Area"]].forEach(([v,t])=>regionSelect.add(new Option(t,v)));regionWrap.append(regionSelect);
  const teamWrap=document.createElement("label");teamWrap.append("Team");const teamSelect=document.createElement("select");teamSelect.setAttribute("aria-label","Sports team");teamWrap.append(teamSelect);
  sportsControls.append(regionWrap,teamWrap);sportsPanel.append(sportsControls);
- const sportsCard=document.createElement("div");sportsCard.className="sullySportsResult";sportsCard.setAttribute("aria-live","polite");sportsPanel.append(sportsCard);
+ const sportsCard=document.createElement("div");sportsCard.className="sullySportsResults";sportsCard.setAttribute("aria-live","polite");sportsPanel.append(sportsCard);
  const sportsStatus=document.createElement("div");sportsStatus.className="sullySportsStatus";sportsStatus.textContent="Links open official team, league or broadcaster pages in a new tab. Game availability and blackout rules depend on location and provider.";sportsPanel.append(sportsStatus);
  const sportsTeams=[
   {region:"sacramento",id:"kings",name:"Sacramento Kings",sport:"NBA",schedule:"https://www.nba.com/team/1610612758/schedule",watch:"https://www.nbcsportsbayarea.com/streaming-faqs-kings/",watchLabel:"Where to watch"},
@@ -2914,12 +2914,15 @@ function renderGuide(){
  function drawSportsDiscovery(){
   const list=sportsTeams.filter(x=>x.region===regionSelect.value),previous=teamSelect.value;teamSelect.replaceChildren(new Option("All teams in this region","all"));
   list.forEach(x=>teamSelect.add(new Option(x.name,x.id)));if(list.some(x=>x.id===previous))teamSelect.value=previous;
-  const chosen=list.find(x=>x.id===teamSelect.value)||list[0];sportsCard.replaceChildren();
-  const info=document.createElement("div"),name=document.createElement("strong");name.textContent=chosen.name+" · "+chosen.sport;info.append(name);
-  const detail=document.createElement("small");detail.textContent="Official links · current schedule and watch details are maintained by the team, league or broadcaster.";info.append(detail);
-  const actions=document.createElement("div");actions.className="sullySportsActions";
-  [[chosen.schedule,"Official schedule",""],[chosen.watch,chosen.watchLabel,"secondary"]].forEach(([href,label,kind])=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=label;if(kind)a.className=kind;actions.append(a)});
-  sportsCard.append(info,actions);
+  const chosenTeams=teamSelect.value==="all"?list:list.filter(x=>x.id===teamSelect.value);sportsCard.replaceChildren();
+  chosenTeams.forEach(chosen=>{
+   const card=document.createElement("article");card.className="sullySportsResult";
+   const info=document.createElement("div"),name=document.createElement("strong");name.textContent=chosen.name+" · "+chosen.sport;info.append(name);
+   const detail=document.createElement("small");detail.textContent="Official schedule and watch information";info.append(detail);
+   const actions=document.createElement("div");actions.className="sullySportsActions";
+   [[chosen.schedule,"Official schedule",""],[chosen.watch,chosen.watchLabel,"secondary"]].forEach(([href,label,kind])=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=label;if(kind)a.className=kind;actions.append(a)});
+   card.append(info,actions);sportsCard.append(card);
+  });
  }
  regionSelect.addEventListener("change",drawSportsDiscovery);teamSelect.addEventListener("change",drawSportsDiscovery);drawSportsDiscovery();root.append(sportsPanel);
  const guideStatus=document.createElement("p");guideStatus.className="muted";guideStatus.setAttribute("role","status");root.append(guideStatus);
