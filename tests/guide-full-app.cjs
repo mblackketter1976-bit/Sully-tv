@@ -68,15 +68,18 @@ const {chromium}=require('playwright');
    assert.equal(await page.getByRole('link',{name:'CC BY-SA 4.0',exact:true}).count(),1);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Document should not overflow horizontally');
    await page.locator('.sullyRetroGuideScroll').scrollIntoViewIfNeeded();
-   const clear=await page.locator('.sullyRetroGuideProgram').first().evaluate(button=>{
-    const bounds=button.getBoundingClientRect(),scroll=button.closest('.sullyRetroGuideScroll').getBoundingClientRect();
-    const station=button.closest('.sullyRetroGuideRow').firstElementChild.getBoundingClientRect();
-    const x=Math.max(bounds.left,scroll.left,station.right)+10;
-    const y=Math.max(0,Math.min(innerHeight-5,bounds.top+bounds.height/2));
-    return document.elementFromPoint(x,y)?.closest('.sullyRetroGuideProgram')===button;
+   const clear=await page.locator('.sullyRetroGuideProgram').evaluateAll(buttons=>{
+    return buttons.some(button=>{
+     const bounds=button.getBoundingClientRect(),scroll=button.closest('.sullyRetroGuideScroll').getBoundingClientRect();
+     const station=button.closest('.sullyRetroGuideRow').firstElementChild.getBoundingClientRect();
+     const left=Math.max(bounds.left,scroll.left,station.right),right=Math.min(bounds.right,scroll.right,innerWidth);
+     const top=Math.max(bounds.top,scroll.top,0),bottom=Math.min(bounds.bottom,scroll.bottom,innerHeight);
+     if(right-left<4||bottom-top<4)return false;
+     return document.elementFromPoint((left+right)/2,(top+bottom)/2)?.closest('.sullyRetroGuideProgram')===button;
+    });
    });
-   assert.equal(clear,true,'Visible guide programme must not be covered by navigation');
    await page.screenshot({path:'guide-full-app-'+width+'.png',fullPage:true});
+   assert.equal(clear,true,'Visible guide programme must not be covered by navigation');
    await page.evaluate(async()=>{sullyGuideData.updated=new Date(Date.now()-2*3600000).toISOString();await sullyRefreshGuideData()});
    assert.equal(sourceCalls,4,'Refresh should make exactly four bounded schedule requests');
    await page.locator('.quickGuide').click();
