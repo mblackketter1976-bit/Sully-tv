@@ -918,6 +918,15 @@ body.sullyKidsMode .sullyKidsShow{box-shadow:0 7px 0 #8bb3cc88,0 10px 18px #294f
 .sullyRetroGuideTime{background:#202226!important;color:#d4d7dc!important}
 @media(max-width:600px){.sullyRetroGuideTable{min-width:760px!important}.sullyGuideToolbar{gap:7px!important}.sullyRetroGuideTitle{font-size:22px}}
 </style>
+<style id="sullyGuideUnobstructedControls">
+body.sullyGuideMode .sullyFloat,body.sullyGuideMode .backTop,body.sullyGuideMode #sullyBack,body.sullyGuideMode #sullyHome{display:none!important}
+.sullyGuideActions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.sullyGuideActions button{min-height:44px;padding:10px 16px;border:1px solid #707b88;border-radius:8px;background:#26384e;color:#f5f7fc;font-weight:700;cursor:pointer}
+.sullyGuideActions button:focus-visible{outline:3px solid #ffcd69;outline-offset:2px}
+body.sullyGuideMode .sullyGuideToolbar input,body.sullyGuideMode .sullyGuideToolbar select{min-height:44px}
+body.sullyGuideMode .sullyRetroGuideCell{font-size:14px}
+body.sullyGuideMode .sullyRetroGuideName{font-size:13px}
+</style>
 </head>
 <body>
 <canvas id="sullyAtmosphereCanvas" aria-hidden="true"></canvas>
@@ -2354,9 +2363,10 @@ function sullyKidsRoom(){
 }
 function render(){
 document.body.classList.toggle("sullyKidsMode",tab==="🧸 Kids TV (2–8)");
+document.body.classList.toggle("sullyGuideMode",tab==="📋 TV Guide");
 const root=$("content");
 root.innerHTML="";
-if(tab!=="🏠 Home"){
+if(tab!=="🏠 Home"&&tab!=="📋 TV Guide"){
  const room=document.createElement("section");room.className="sullyRoomHeading";
  const heading=document.createElement("h1");heading.textContent=tab;room.append(heading);
  const desc=document.createElement("p");desc.textContent=tab==="🧸 Kids TV (2–8)"?"Big pictures, favorite shows, and easy choices.":"Your "+tab.replace(/^[^\\p{L}]+/u,"").trim()+" room · Browse and watch available programs below.";room.append(desc);
@@ -2855,6 +2865,8 @@ function sullyRefreshGuideData(){
 }
 function renderGuide(){
  const root=$("content");$("status").textContent="TV Guide · Live channel lineup";
+ const guideNav=document.createElement("div");guideNav.className="sullyGuideActions";guideNav.setAttribute("aria-label","Guide navigation");
+ for(const [label,action] of [["← Back",sullyGoBack],["⌂ Home",sullyGoHome],["☰ Categories",sullyMenu]]){const button=document.createElement("button");button.type="button";button.textContent=label;button.onclick=action;guideNav.append(button)}root.append(guideNav);
  const title=document.createElement("h2");title.textContent="SULLY TV · CHANNEL GUIDE";title.className="sullyRetroGuideTitle";root.append(title);
  const intro=document.createElement("p");intro.className="muted";intro.textContent="Inspired by 1980s television listings. Times are local. Only sourced, current program data is shown.";root.append(intro);
  const guideStatus=document.createElement("p");guideStatus.className="muted";guideStatus.setAttribute("role","status");root.append(guideStatus);
@@ -2870,7 +2882,7 @@ function renderGuide(){
  language.value=sullyEnglishOnly?"en":sullySelectedLanguage;
  const englishOnly=document.createElement("button");englishOnly.type="button";englishOnly.className="sullyGuideEnglishOnly";englishOnly.setAttribute("aria-label","Show English-language channels only");
  function updateEnglishButton(){const active=language.value==="en";englishOnly.textContent="🇺🇸 English Only"+(active?" ✓":"");englishOnly.setAttribute("aria-pressed",String(active));englishOnly.classList.toggle("selected",active)}
- englishOnly.onclick=()=>{language.value=language.value==="en"?"all":"en";limit=36;updateEnglishButton();draw()};
+ englishOnly.onclick=()=>{language.value=language.value==="en"?"all":"en";sullySelectedLanguage=language.value;sullyEnglishOnly=language.value==="en";limit=36;updateEnglishButton();draw()};
  updateEnglishButton();
  const back=document.createElement("button");back.textContent="◀ Earlier";back.type="button";
  const now=document.createElement("button");now.textContent="NOW";now.type="button";
@@ -2880,6 +2892,9 @@ function renderGuide(){
  toolbar.append(search,genre,country,englishOnly,language,back,now,forward,clock,count);root.append(toolbar);
  const scroller=document.createElement("div");scroller.className="sullyRetroGuideScroll";root.append(scroller);
  const more=document.createElement("button");more.className="watch";more.textContent="Show more stations";root.append(more);
+ const guideActions=document.createElement("div");guideActions.className="sullyGuideActions";
+ const findStation=document.createElement("button");findStation.type="button";findStation.textContent="Find a station";findStation.onclick=()=>{search.scrollIntoView({block:"center",behavior:"smooth"});search.focus({preventScroll:true})};
+ const topButton=document.createElement("button");topButton.type="button";topButton.textContent="↑ Top";topButton.setAttribute("aria-label","Back to top");topButton.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});guideActions.append(findStation,topButton);root.append(guideActions);
  let offset=0,limit=36;
  function group(c){
   const t=[c.name,...(c.categories||[])].join(" ").toLowerCase();
@@ -2964,7 +2979,7 @@ function renderGuide(){
  }
  back.onclick=()=>{offset-=6;draw()};forward.onclick=()=>{offset+=6;draw()};now.onclick=()=>{offset=0;draw()};
  more.onclick=()=>{limit+=36;draw()};
- [search,genre,country,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{limit=36;updateEnglishButton();draw()}));
+ [search,genre,country,language].forEach(el=>el.addEventListener(el===search?"input":"change",()=>{if(el===language){sullySelectedLanguage=language.value;sullyEnglishOnly=language.value==="en"}limit=36;updateEnglishButton();draw()}));
  draw();
  sullyLoadGuideData().then(()=>{
   if(scroller.isConnected&&tab==="📋 TV Guide")draw();

@@ -17,6 +17,7 @@ const {chromium}=require('playwright');
    window.sullyEnglishOnly=false;window.sullySelectedLanguage='all';
    window.sullyDetectLanguage=c=>({confidence:'known',codes:[c.id==='news'?'en':'es']});
    window.tab='📋 TV Guide';window.watchChannel=c=>window.chosen=c.id;
+   window.sullyGoBack=()=>{};window.sullyGoHome=()=>{};window.sullyMenu=()=>{};
    window.fetch=async()=>({ok:true,json:async()=>window.fixture});
    window.fixture={updated:new Date().toISOString(),channels:{}};
    (0,eval)(source+';window.renderGuide=renderGuide;window.setGuide=d=>{sullyGuideData=d;document.getElementById("content").replaceChildren();renderGuide()};');
