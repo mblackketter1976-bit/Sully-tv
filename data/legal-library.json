@@ -1780,6 +1780,995 @@
       },
       "lastChecked": "2026-10-26",
       "status": "verified"
+    },
+    {
+      "id": "commons:36644512",
+      "title": "Plzeň - documentary, part 1",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Plze%C5%88_-_documentary%2C_part_1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Plze%C5%88_-_documentary%2C_part_1.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Jiří Pálka (A-video)",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:36644515",
+      "title": "Plzeň - documentary, part 2",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Plze%C5%88_-_documentary%2C_part_2.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Plze%C5%88_-_documentary%2C_part_2.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Jiří Pálka (A-video)",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:37088258",
+      "title": "Odia-Silalekharu mobile (Documentary)",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Odia-Silalekharu_mobile_%28Documentary%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Odia-Silalekharu_mobile_%28Documentary%29.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Subhashish Panigrahi",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:37207436",
+      "title": "Short documentary on Ramakrushna Nanda",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Short_documentary_on_Ramakrushna_Nanda.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Short_documentary_on_Ramakrushna_Nanda.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Subhashish Panigrahi",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:45096475",
+      "title": "Soriano Documentary segment",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Soriano_Documentary_segment.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Soriano_Documentary_segment.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Eduardo Montes-Bradley",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:49725614",
+      "title": "Wikimania 2016 - How to make a short documentary with a smartphone",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Wikimania_2016_-_How_to_make_a_short_documentary_with_a_smartphone.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Wikimania_2016_-_How_to_make_a_short_documentary_with_a_smartphone.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Jan Ainali",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:54226426",
+      "title": "Documentary - The Fourth Industrial Revolution",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Documentary_-_The_Fourth_Industrial_Revolution.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Documentary_-_The_Fourth_Industrial_Revolution.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "World Economic Forum",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:54320092",
+      "title": "FULL DOCUMENTARY - Panopticon privacy - Peter Vlemmix",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/FULL_DOCUMENTARY_-_Panopticon_privacy_-_Peter_Vlemmix.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:FULL_DOCUMENTARY_-_Panopticon_privacy_-_Peter_Vlemmix.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Peter Vlemmix",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:65997729",
+      "title": "Saman (2000), A Promotional documentary by Mohammad Hossein Sabahi",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Saman_%282000%29%2C_A_Promotional_documentary_by_Mohammad_Hossein_Sabahi.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Saman_%282000%29%2C_A_Promotional_documentary_by_Mohammad_Hossein_Sabahi.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Mohammad Hosein Sabahi",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:83477402",
+      "title": "Nature Documentary Reel - 2017",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Nature_Documentary_Reel_-_2017.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nature_Documentary_Reel_-_2017.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Michael Pisano",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719272",
+      "title": "BBS The Documentary, Episode 2",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/BBS_The_Documentary%2C_Episode_2.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_2.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719273",
+      "title": "BBS The Documentary, Episode 1",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/BBS_The_Documentary%2C_Episode_1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_1.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719275",
+      "title": "BBS The Documentary, Episode 3",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/BBS_The_Documentary%2C_Episode_3.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_3.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719288",
+      "title": "BBS The Documentary, Episode 4",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/BBS_The_Documentary%2C_Episode_4.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_4.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719290",
+      "title": "BBS The Documentary, Episode 6",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/BBS_The_Documentary%2C_Episode_6.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_6.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719296",
+      "title": "BBS The Documentary, Episode 5",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/BBS_The_Documentary%2C_Episode_5.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_5.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719297",
+      "title": "BBS The Documentary, Episode 8",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/BBS_The_Documentary%2C_Episode_8.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_8.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:93719300",
+      "title": "BBS The Documentary, Episode 7",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/BBS_The_Documentary%2C_Episode_7.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:BBS_The_Documentary%2C_Episode_7.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Jason Scott",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:105541573",
+      "title": "Mage Porob (2019 documentary)",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Mage_Porob_%282019_documentary%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mage_Porob_%282019_documentary%29.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Subhashish Panigrahi",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:111161481",
+      "title": "'تيفراتين ن برطقيز' هل وصل البرتغال إلى الجنوب الشرقي؟",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/%27%D8%AA%D9%8A%D9%81%D8%B1%D8%A7%D8%AA%D9%8A%D9%86_%D9%86_%D8%A8%D8%B1%D8%B7%D9%82%D9%8A%D8%B2%27_%D9%87%D9%84_%D9%88%D8%B5%D9%84_%D8%A7%D9%84%D8%A8%D8%B1%D8%AA%D8%BA%D8%A7%D9%84_%D8%A5%D9%84%D9%89_%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8_%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%D8%9F.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%27%D8%AA%D9%8A%D9%81%D8%B1%D8%A7%D8%AA%D9%8A%D9%86_%D9%86_%D8%A8%D8%B1%D8%B7%D9%82%D9%8A%D8%B2%27_%D9%87%D9%84_%D9%88%D8%B5%D9%84_%D8%A7%D9%84%D8%A8%D8%B1%D8%AA%D8%BA%D8%A7%D9%84_%D8%A5%D9%84%D9%89_%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8_%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%D8%9F.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Amazigh Geographic Channel",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:112192508",
+      "title": "حضارات قديمة",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/%D8%AD%D8%B6%D8%A7%D8%B1%D8%A7%D8%AA_%D9%82%D8%AF%D9%8A%D9%85%D8%A9.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D8%AD%D8%B6%D8%A7%D8%B1%D8%A7%D8%AA_%D9%82%D8%AF%D9%8A%D9%85%D8%A9.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Ghost Magic 100",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:118338126",
+      "title": "Cultural heritage of Adis - documentary film by RIWATCH",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Cultural_heritage_of_Adis_-_documentary_film_by_RIWATCH.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Cultural_heritage_of_Adis_-_documentary_film_by_RIWATCH.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Research Institute of World’s Ancient Traditions Cultures and Heritage",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:119012335",
+      "title": "Tasnim Documentary - Persian Resurgence",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Tasnim_Documentary_-_Persian_Resurgence.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tasnim_Documentary_-_Persian_Resurgence.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Tasnim News Agency",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:119015968",
+      "title": "Tasnim Documentary - New Era",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Tasnim_Documentary_-_New_Era.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tasnim_Documentary_-_New_Era.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Tasnim News Agency",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:119026234",
+      "title": "Tasnim Documentary - Warfare (1)",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Tasnim_Documentary_-_Warfare_%281%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tasnim_Documentary_-_Warfare_%281%29.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Tasnim News Agency",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:121451413",
+      "title": "The audiovisual documentary of Bayobri language by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/28/The_audiovisual_documentary_of_Bayobri_language_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Bayobri_language_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:121469544",
+      "title": "The audiovisual documentary of Becheve language by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/The_audiovisual_documentary_of_Becheve_language_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Becheve_language_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:121885892",
+      "title": "The audiovisual documentary of Ejagam Bendege by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/The_audiovisual_documentary_of_Ejagam_Bendege_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Ejagam_Bendege_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:121886894",
+      "title": "The audiovisual documentary of Ejakuk by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/31/The_audiovisual_documentary_of_Ejakuk_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Ejakuk_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:122311683",
+      "title": "The audiovisual documentary of Ofutop by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/The_audiovisual_documentary_of_Ofutop_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Ofutop_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:127509596",
+      "title": "Tasnim Documentary - Naghz",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Tasnim_Documentary_-_Naghz.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tasnim_Documentary_-_Naghz.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Mohammad Karbalai-Esmail",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:130580162",
+      "title": "Interviewing about Purushavesha during Karavali Wikimedians Documentary Day1",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Interviewing_about_Purushavesha_during_Karavali_Wikimedians_Documentary_Day1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Interviewing_about_Purushavesha_during_Karavali_Wikimedians_Documentary_Day1.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Yakshitha",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:140877326",
+      "title": "WikiEmakumeOK DOnK ZINEBI65",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/WikiEmakumeOK_DOnK_ZINEBI65.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:WikiEmakumeOK_DOnK_ZINEBI65.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Josi",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:147151139",
+      "title": "Pusarke festival — \"Remosam\" (2019 documentary)",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Pusarke_festival_%E2%80%94_%22Remosam%22_%282019_documentary%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pusarke_festival_%E2%80%94_%22Remosam%22_%282019_documentary%29.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Psubhashish",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:147915229",
+      "title": "The Master Carver and a Message - A Documentary By Green Wilfred Somoni",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/The_Master_Carver_and_a_Message_-_A_Documentary_By_Green_Wilfred_Somoni.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Master_Carver_and_a_Message_-_A_Documentary_By_Green_Wilfred_Somoni.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Green Wilfred Somoni",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:152523056",
+      "title": "Kodak 16mm film (nature documentary) - Nature of Australia",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Kodak_16mm_film_%28nature_documentary%29_-_Nature_of_Australia.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kodak_16mm_film_%28nature_documentary%29_-_Nature_of_Australia.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "ssimple",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:155354224",
+      "title": "Etá Ekpeye Documentary Video",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Et%C3%A1_Ekpeye_Documentary_Video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Et%C3%A1_Ekpeye_Documentary_Video.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Ekpeye Wikimedia",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:157263388",
+      "title": "WIKI GLAM DOCUMENTARY - Captions Available",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/WIKI_GLAM_DOCUMENTARY_-_Captions_Available.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:WIKI_GLAM_DOCUMENTARY_-_Captions_Available.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Fiktube",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:178075188",
+      "title": "Documentary on Making Terracotta in Asharikandi Vi",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Documentary_on_Making_Terracotta_in_Asharikandi_Vi.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Documentary_on_Making_Terracotta_in_Asharikandi_Vi.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "হানিফ আলী",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:179963987",
+      "title": "“ သတ်လိုက်ဖို့ကအလွယ်လေးပဲ။ လက်ညှိုးလေးတစ်ချက်ကွေးလိုက်ရုံပဲ။ ရှင်အောင်ထားဖို့ကတေ",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/%E2%80%9C_%E1%80%9E%E1%80%90%E1%80%BA%E1%80%9C%E1%80%AD%E1%80%AF%E1%80%80%E1%80%BA%E1%80%96%E1%80%AD%E1%80%AF%E1%80%B7%E1%80%80%E1%80%A1%E1%80%9C%E1%80%BD%E1%80%9A%E1%80%BA%E1%80%9C%E1%80%B1%E1%80%B8%E1%80%95%E1%80%B2%E1%81%8B_%E1%80%9C%E1%80%80%E1%80%BA%E1%80%8A%E1%80%BE%E1%80%AD%E1%80%AF%E1%80%B8%E1%80%9C%E1%80%B1%E1%80%B8%E1%80%90%E1%80%85%E1%80%BA%E1%80%81%E1%80%BB%E1%80%80%E1%80%BA%E1%80%80%E1%80%BD%E1%80%B1%E1%80%B8%E1%80%9C%E1%80%AD%E1%80%AF%E1%80%80%E1%80%BA%E1%80%9B%E1%80%AF%E1%80%B6%E1%80%95%E1%80%B2%E1%81%8B_%E1%80%9B%E1%80%BE%E1%80%84%E1%80%BA%E1%80%A1%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%91%E1%80%AC%E1%80%B8%E1%80%96%E1%80%AD%E1%80%AF%E1%80%B7%E1%80%80%E1%80%90%E1%80%B1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%E2%80%9C_%E1%80%9E%E1%80%90%E1%80%BA%E1%80%9C%E1%80%AD%E1%80%AF%E1%80%80%E1%80%BA%E1%80%96%E1%80%AD%E1%80%AF%E1%80%B7%E1%80%80%E1%80%A1%E1%80%9C%E1%80%BD%E1%80%9A%E1%80%BA%E1%80%9C%E1%80%B1%E1%80%B8%E1%80%95%E1%80%B2%E1%81%8B_%E1%80%9C%E1%80%80%E1%80%BA%E1%80%8A%E1%80%BE%E1%80%AD%E1%80%AF%E1%80%B8%E1%80%9C%E1%80%B1%E1%80%B8%E1%80%90%E1%80%85%E1%80%BA%E1%80%81%E1%80%BB%E1%80%80%E1%80%BA%E1%80%80%E1%80%BD%E1%80%B1%E1%80%B8%E1%80%9C%E1%80%AD%E1%80%AF%E1%80%80%E1%80%BA%E1%80%9B%E1%80%AF%E1%80%B6%E1%80%95%E1%80%B2%E1%81%8B_%E1%80%9B%E1%80%BE%E1%80%84%E1%80%BA%E1%80%A1%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%E1%80%91%E1%80%AC%E1%80%B8%E1%80%96%E1%80%AD%E1%80%AF%E1%80%B7%E1%80%80%E1%80%90%E1%80%B1.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Myanmar Pressphoto Agency",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:190723003",
+      "title": "Agiri Festival Video Documentary 2026",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Agiri_Festival_Video_Documentary_2026.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Agiri_Festival_Video_Documentary_2026.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Dappasolomon001",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:190817051",
+      "title": "RITES & RITUALS(Pattern Of Obedience) - a Documentary Film",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/RITES_%26_RITUALS%28Pattern_Of_Obedience%29_-_a_Documentary_Film.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:RITES_%26_RITUALS%28Pattern_Of_Obedience%29_-_a_Documentary_Film.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "JoshuaIsraelfilms",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
+    },
+    {
+      "id": "commons:190840289",
+      "title": "Aṣọ òkè - A Documentary By Ayodele Isaac Ifeoluwa",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/A%E1%B9%A3%E1%BB%8D_%C3%B2k%C3%A8_-_A_Documentary_By_Ayodele_Isaac_Ifeoluwa.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:A%E1%B9%A3%E1%BB%8D_%C3%B2k%C3%A8_-_A_Documentary_By_Ayodele_Isaac_Ifeoluwa.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Isaacayodele32",
+        "verifiedAt": "2026-10-27",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "lastChecked": "2026-10-27",
+      "status": "verified"
     }
   ],
   "itemSchema": {
@@ -1807,6 +2796,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-10-26",
+  "lastDiscovery": "2026-10-27",
   "lastCurated": "2026-10-24"
 }
