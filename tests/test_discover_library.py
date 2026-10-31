@@ -34,6 +34,8 @@ class DiscoveryTests(unittest.TestCase):
                 self.assertEqual(len(data['items']), 3)
                 item = data['items'][1]
                 self.assertEqual(item['title'], 'Nature documentary')
+                self.assertEqual(item['status'], 'pending-playback')
+                self.assertNotIn('lastChecked', item)
                 self.assertEqual(item['genres'], ['Documentary', 'Nature'])
                 self.assertEqual(item['rights']['basis'], 'cc-by-4.0')
                 self.assertEqual(item['rights']['attribution'], 'Filmmaker')

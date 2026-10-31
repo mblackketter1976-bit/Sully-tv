@@ -4171,8 +4171,8 @@
         "attribution": "NASA",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:114718536",
@@ -4195,8 +4195,8 @@
         "attribution": "National Front of Iran",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:162753683",
@@ -4219,8 +4219,8 @@
         "attribution": "Ekpeye Wikimedia",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:164230058",
@@ -4245,8 +4245,8 @@
         "attribution": "NASA",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:179364868",
@@ -4273,8 +4273,8 @@
         "attribution": "The Shell Film Unit",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:40108642",
@@ -4295,8 +4295,8 @@
         "attribution": "Blender Foundation",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:81104599",
@@ -4319,8 +4319,8 @@
         "attribution": "BeeScene",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:83802840",
@@ -4341,8 +4341,8 @@
         "attribution": "Fateme Ahmadi",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:123237928",
@@ -4363,8 +4363,8 @@
         "attribution": "Hal Roach Studios",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:130114426",
@@ -4385,8 +4385,8 @@
         "attribution": "Vladimir Usoltsev",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:143289839",
@@ -4407,8 +4407,8 @@
         "attribution": "Lee Savage and Milton Glaser",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:145366376",
@@ -4429,8 +4429,8 @@
         "attribution": "Adnan mohamuud",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:145367681",
@@ -4451,8 +4451,8 @@
         "attribution": "Adnan mohamuud",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:146190031",
@@ -4473,8 +4473,8 @@
         "attribution": "Dalano’s Films",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:146190180",
@@ -4495,8 +4495,8 @@
         "attribution": "Daylight Pictures",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:146190291",
@@ -4517,8 +4517,8 @@
         "attribution": "MARS RED SKY",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:147139544",
@@ -4539,8 +4539,8 @@
         "attribution": "Scarlett",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:149639821",
@@ -4561,8 +4561,8 @@
         "attribution": "Polaris Pictures",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:149937184",
@@ -4583,8 +4583,8 @@
         "attribution": "MrKlay",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:153536119",
@@ -4605,8 +4605,8 @@
         "attribution": "Vincent Chang Deng",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:158639344",
@@ -4627,8 +4627,8 @@
         "attribution": "The Vitaphone Corporation",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:162971804",
@@ -4649,8 +4649,8 @@
         "attribution": "Пайза",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:179574287",
@@ -4673,8 +4673,8 @@
         "attribution": "Bruno Cailloux",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:183835534",
@@ -4695,8 +4695,8 @@
         "attribution": "David Wark Griffith",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:197148047",
@@ -4719,8 +4719,8 @@
         "attribution": "Osro",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:197148187",
@@ -4743,8 +4743,8 @@
         "attribution": "Osro",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:197148274",
@@ -4767,8 +4767,8 @@
         "attribution": "Zean",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:69873979",
@@ -4791,8 +4791,8 @@
         "attribution": "Paul Leni",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:75489164",
@@ -4815,8 +4815,8 @@
         "attribution": "Fred C. Newmeyer and Sam Taylor",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:98951889",
@@ -4837,8 +4837,8 @@
         "attribution": "This file is licensed under the Creative Commons Attribution 4.0 International license.Attribution:  O Foundation (OFDN)\nYou are free:\nto share – to copy, distribute and transmit the work\nto remix – to adapt the work\nUnder the following conditions:\nattribution – You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.\nhttps://creativecommons.org/licenses/by/4.0CC BY 4.0 Creative Commons Attribution 4.0 truetrue",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:195581524",
@@ -4861,8 +4861,8 @@
         "attribution": "Киностудия «Союзмультфильм»; режиссёры Леонид Амальрик и Владимир Полковников",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:65460342",
@@ -4885,8 +4885,8 @@
         "attribution": "Department of Energy",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:67121517",
@@ -4909,8 +4909,8 @@
         "attribution": "https://archive.org/details/gov.doe.0800019",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:67121521",
@@ -4933,8 +4933,8 @@
         "attribution": "https://archive.org/details/gov.doe.0800009",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:70982337",
@@ -4957,8 +4957,8 @@
         "attribution": "Department of Energy",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:73681500",
@@ -4981,8 +4981,8 @@
         "attribution": "ITU",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:76935264",
@@ -5005,8 +5005,8 @@
         "attribution": "US National Archives",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:91363344",
@@ -5029,8 +5029,8 @@
         "attribution": "Department of Energy",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:114833605",
@@ -5053,8 +5053,8 @@
         "attribution": "Jonas Nilsson, Palaestra Media",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:114950911",
@@ -5077,8 +5077,8 @@
         "attribution": "Jonas Nilsson, Palaestra Media",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:150700076",
@@ -5101,8 +5101,8 @@
         "attribution": "Sergei Eisenstein",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:140928975",
@@ -5126,8 +5126,8 @@
         "attribution": "U.S. Fish & Wildlife Service",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:146183544",
@@ -5150,8 +5150,8 @@
         "attribution": "Vishal Jadhav",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165966126",
@@ -5174,8 +5174,8 @@
         "attribution": "USFWS Headquarters",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165968340",
@@ -5198,8 +5198,8 @@
         "attribution": "U.S. Fish and Wildlife Service - Midwest Region",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165969734",
@@ -5222,8 +5222,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165969775",
@@ -5246,8 +5246,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970452",
@@ -5270,8 +5270,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970569",
@@ -5294,8 +5294,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970618",
@@ -5318,8 +5318,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970805",
@@ -5342,8 +5342,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970890",
@@ -5366,8 +5366,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970950",
@@ -5390,8 +5390,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165970990",
@@ -5415,8 +5415,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971319",
@@ -5439,8 +5439,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971426",
@@ -5463,8 +5463,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971545",
@@ -5487,8 +5487,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971559",
@@ -5511,8 +5511,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971656",
@@ -5535,8 +5535,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     },
     {
       "id": "commons:165971662",
@@ -5559,8 +5559,8 @@
         "attribution": "USFWS Mountain Prairie",
         "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
       },
-      "status": "verified",
-      "lastChecked": "2026-10-31"
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     }
   ],
   "itemSchema": {

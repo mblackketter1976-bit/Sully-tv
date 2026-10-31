@@ -131,7 +131,7 @@ def discover():
                     "poster":"","playback":{"type":"direct","url":url},
                     "rights":{"basis":license_code,"source":source,"licenseUrl":license_url,
                               "attribution":attribution,"notes":"License metadata from Wikimedia Commons; review third-party rights for redistribution"},
-                    "status":"verified","lastChecked":time.strftime("%Y-%m-%d")}
+                    "status":"pending-playback","metadataChecked":time.strftime("%Y-%m-%d")}
             items.append(item)
             seen.add(key)
             added += 1
