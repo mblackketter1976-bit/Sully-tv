@@ -47,3 +47,14 @@ information pages; no full-game media playback has been verified.
 The broader charter remains in docs/REFERENCE_START_HERE.md on branch
 sully-phase1-foundation-audit. This file records the current STV work on main
 without importing unfinished Luna/guide work from that branch.
+
+## Release evidence — 2026-10-30
+Sports & Local merged as PR #6. GitHub Pages deployment succeeded. Navigation
+and sports assertions passed at 320, 390, 768 and 1920px, across three themes.
+
+Library discovery repair: failed workflow 41153744853 showed a NameError for
+missing genres_for. Added conservative source-text tags, corrected license
+whitespace/title-extension matching and JSON newline output. Fixture tests cover
+readable output, attribution/license handling, rejecting unsupported licenses,
+existing entry preservation, deduplication on repeat runs and upstream failure.
+These tests do not establish media playback or third-party rights clearance.
