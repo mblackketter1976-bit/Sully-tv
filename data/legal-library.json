@@ -8183,6 +8183,30 @@
       },
       "metadataChecked": "2026-10-31",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:163471130",
+      "title": "IMAP Testing and Integration at NASA's Marshall Space Flight Center (SVS14816 IMAP TVACtesting Part3 4K ProRes)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "B-Roll: 4K - Part 3The IMAP spacecraft is moved into the TVAC chamber and the door is closed.Credit: NASA/Tyson Eason",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/IMAP_Testing_and_Integration_at_NASA%27s_Marshall_Space_Flight_Center_%28SVS14816_IMAP_TVACtesting_Part3_4K_ProRes%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:IMAP_Testing_and_Integration_at_NASA%27s_Marshall_Space_Flight_Center_(SVS14816_IMAP_TVACtesting_Part3_4K_ProRes).webm",
+        "licenseUrl": "",
+        "attribution": "NASA's Scientific Visualization Studio - eMITS/Lacey Young, Media Fusion/Tyson Eason",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     }
   ],
   "itemSchema": {
