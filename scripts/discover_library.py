@@ -51,6 +51,25 @@ def classify(title, description):
         return "show"
     return "other"
 
+def genres_for(title, description):
+    """Return conservative catalog tags from source title/description."""
+    text = title + " " + description
+    patterns = {
+        "Animation": r"animation|animated|cartoon",
+        "Documentary": r"documentary|educational film",
+        "Nature": r"nature|wildlife",
+        "Science": r"science|scientific|astronomy",
+        "Space": r"nasa|space|astronomy|lunar|telescope",
+        "History": r"history|historical|silent film",
+        "Comedy": r"comedy|comic",
+        "Horror": r"horror",
+        "Western": r"western",
+        "Sports": r"sports?|football|baseball|basketball",
+        "Travel": r"travel",
+    }
+    return [genre for genre, pattern in patterns.items()
+            if re.search(r"\b(?:" + pattern + r")\b", text, re.I)]
+
 def worthwhile(title, description, kind):
     text=(title+" "+description).lower()
     junk=r"test footage|logo|sample clip|animation test|loop animation|render test|tutorial demo|test animation|screensaver|stock footage"
@@ -91,7 +110,7 @@ def discover():
             metadata = info.get("extmetadata") or {}
             def field(name):
                 return plain((metadata.get(name) or {}).get("value",""))
-            license_code = re.sub(r"\\s+", "-", field("LicenseShortName").lower().strip())
+            license_code = re.sub(r"\s+", "-", field("LicenseShortName").lower().strip())
             license_url = field("LicenseUrl")
             if license_code not in ALLOWED:
                 continue
@@ -101,7 +120,7 @@ def discover():
             description = field("ImageDescription")
             attribution = field("Artist") or field("Credit")
             source = "https://commons.wikimedia.org/wiki/" + urllib.parse.quote(page["title"].replace(" ","_"),safe=":/_()")
-            clean_title = re.sub(r"\\.(webm|ogv|ogg|mp4)$","",title,flags=re.I).replace("_"," ").strip()
+            clean_title = re.sub(r"\.(webm|ogv|ogg|mp4)$","",title,flags=re.I).replace("_"," ").strip()
             if not clean_title:
                 continue
             kind=classify(clean_title,description)
@@ -118,7 +137,7 @@ def discover():
             added += 1
         time.sleep(1)
     if added:
-        CATALOG.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+        CATALOG.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("Added",added,"new videos; total",len(items))
 
 if __name__ == "__main__":
