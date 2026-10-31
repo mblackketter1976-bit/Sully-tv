@@ -8207,6 +8207,30 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-10-31"
+    },
+    {
+      "id": "commons:165971278",
+      "title": "White-faced ibis on Seedskadee National Wildlife Refuge (36211851164)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Nature"
+      ],
+      "description": "White-faced ibis migrate through Seedskadee and Cokeville Meadows NWRs. They stop to rest and forage before moving on to wetlands in Utah and Idaho for the breeding season.\nVideo: Tom Koerner/USFWS",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/White-faced_ibis_on_Seedskadee_National_Wildlife_Refuge_%2836211851164%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:White-faced_ibis_on_Seedskadee_National_Wildlife_Refuge_(36211851164).webm",
+        "licenseUrl": "",
+        "attribution": "USFWS Mountain Prairie",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-10-31"
     }
   ],
   "itemSchema": {
