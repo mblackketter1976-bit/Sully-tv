@@ -8114,6 +8114,75 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-10-31"
+    },
+    {
+      "id": "commons:195708496",
+      "title": "The Param Science Experience Centre, Jayanagar, Bengaluru (2026) 04",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_04.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_04.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Gpkp",
+        "verifiedAt": "2026-10-31",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-10-31",
+      "status": "pending-playback"
+    },
+    {
+      "id": "commons:196224611",
+      "title": "The Param Science Experience Centre, Whitefield, Bengaluru (2026) 01",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/31/The_Param_Science_Experience_Centre%2C_Whitefield%2C_Bengaluru_%282026%29_01.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Param_Science_Experience_Centre%2C_Whitefield%2C_Bengaluru_%282026%29_01.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Gpkp",
+        "verifiedAt": "2026-10-31",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-10-31",
+      "status": "pending-playback"
+    },
+    {
+      "id": "commons:196224627",
+      "title": "The Param Science Experience Centre, Whitefield, Bengaluru (2026) 09",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/14/The_Param_Science_Experience_Centre%2C_Whitefield%2C_Bengaluru_%282026%29_09.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Param_Science_Experience_Centre%2C_Whitefield%2C_Bengaluru_%282026%29_09.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Gpkp",
+        "verifiedAt": "2026-10-31",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-10-31",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8141,6 +8210,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-10-30",
+  "lastDiscovery": "2026-10-31",
   "lastCurated": "2026-10-24"
 }
