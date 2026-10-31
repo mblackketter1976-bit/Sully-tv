@@ -1,7 +1,9 @@
 name: Navigation layout checks
 on:
   push:
-    branches: [sully-navigation-hotfix, main]
+    branches: [sully-navigation-hotfix, stv-sports-local-release, main]
+    paths: ['index.html', 'tests/navigation-browser.cjs', '.github/workflows/navigation-check.yml']
+  pull_request:
     paths: ['index.html', 'tests/navigation-browser.cjs', '.github/workflows/navigation-check.yml']
   workflow_dispatch:
 permissions:
