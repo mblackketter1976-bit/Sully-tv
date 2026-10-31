@@ -58,3 +58,9 @@ whitespace/title-extension matching and JSON newline output. Fixture tests cover
 readable output, attribution/license handling, rejecting unsupported licenses,
 existing entry preservation, deduplication on repeat runs and upstream failure.
 These tests do not establish media playback or third-party rights clearance.
+
+The repaired discovery workflow completed successfully and found 60 new entries
+(239 catalog records total). Those 60 records are pending-playback and excluded
+by the existing verified-only UI filters. Both Commons importers now use that
+state for new entries; source metadata dates are separate from playback checks.
+Existing pre-release records are preserved; their playback audit remains open.

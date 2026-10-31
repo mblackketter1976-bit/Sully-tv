@@ -1,10 +1,10 @@
 name: Library discovery checks
 on:
   push:
-    branches: [main, stv-library-discovery-repair]
-    paths: ['scripts/discover_library.py', 'tests/test_discover_library.py', '.github/workflows/library-check.yml']
+    branches: [main, stv-library-discovery-repair, stv-catalog-playback-gate]
+    paths: ['scripts/discover_library.py', 'scripts/discover_legal_videos.py', 'tests/test_discover_library.py', '.github/workflows/library-check.yml']
   pull_request:
-    paths: ['scripts/discover_library.py', 'tests/test_discover_library.py', '.github/workflows/library-check.yml']
+    paths: ['scripts/discover_library.py', 'scripts/discover_legal_videos.py', 'tests/test_discover_library.py', '.github/workflows/library-check.yml']
 permissions:
   contents: read
 jobs:

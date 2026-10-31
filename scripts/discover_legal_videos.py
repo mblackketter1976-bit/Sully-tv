@@ -39,7 +39,7 @@ def main():
         if pid in known:continue
         title=page.get("title","").removeprefix("File:").rsplit(".",1)[0].replace("_"," ")
         pageurl="https://commons.wikimedia.org/wiki/"+urllib.parse.quote(page["title"].replace(" ","_"),safe=":/")
-        items.append({"id":pid,"title":title,"kind":"other","year":"","genres":[],"description":"Openly licensed video from Wikimedia Commons","poster":"","playback":{"type":"direct","url":url},"rights":{"basis":license_name,"source":pageurl,"licenseUrl":get("LicenseUrl"),"attribution":get("Artist")[:500],"verifiedAt":today,"notes":"Machine-readable Commons license; verify any third-party material before redistribution"},"lastChecked":today,"status":"verified"})
+        items.append({"id":pid,"title":title,"kind":"other","year":"","genres":[],"description":"Openly licensed video from Wikimedia Commons","poster":"","playback":{"type":"direct","url":url},"rights":{"basis":license_name,"source":pageurl,"licenseUrl":get("LicenseUrl"),"attribution":get("Artist")[:500],"verifiedAt":today,"notes":"Machine-readable Commons license; verify any third-party material before redistribution"},"metadataChecked":today,"status":"pending-playback"})
         known.add(pid);added+=1
     data["items"]=items[:3000]
     data["lastDiscovery"]=today
