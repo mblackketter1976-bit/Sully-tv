@@ -62,6 +62,32 @@ const {chromium}=require('playwright');
     assert.equal(await page.evaluate(()=>tab),'🏠 Home');
     await page.locator('.quickGuide').click();
     assert.equal(await page.evaluate(()=>tab),'📋 TV Guide');
+    const region=page.getByLabel('Sports region',{exact:true}),team=page.getByLabel('Sports team',{exact:true});
+    const cards=page.locator('.sullySportsResult');
+    await region.selectOption('sacramento');await team.selectOption('all');
+    assert.equal(await cards.count(),4,'All Sacramento teams must be visible');
+    await team.selectOption('kings');assert.equal(await cards.count(),1);
+    assert.match(await cards.innerText(),/Sacramento Kings/);
+    await region.selectOption('bay');assert.equal(await team.inputValue(),'all','Region switch must clear incompatible team');
+    assert.equal(await cards.count(),4);
+    await team.selectOption('sharks');assert.equal(await cards.count(),1);
+    assert.equal(await cards.getByRole('link',{name:/Where to watch/}).getAttribute('href'),'https://www.nhl.com/sharks/team/broadcast');
+    for(const a of await page.locator('.sullySportsActions a').all()){
+     assert.equal(new URL(await a.getAttribute('href')).protocol,'https:');
+     assert.equal(await a.getAttribute('target'),'_blank');
+     assert.match(await a.getAttribute('rel'),/noopener/);
+     assert.match(await a.getAttribute('aria-label'),/San Jose Sharks/);
+    }
+    await region.press('Tab');assert.equal(await team.evaluate(el=>el===document.activeElement),true);
+    await page.locator('#sullyHome').click();await page.locator('.quickGuide').click();
+    assert.equal(await region.inputValue(),'bay');assert.equal(await team.inputValue(),'sharks');
+    assert.equal(await cards.count(),1,'Saved selection must survive room navigation');
+    const sportsLayout=await page.locator('.sullySportsDiscovery').evaluate(panel=>{
+     const boxes=[...panel.querySelectorAll('select,a')].map(el=>el.getBoundingClientRect());
+     return {overflow:document.documentElement.scrollWidth>innerWidth,targets:boxes.every(r=>r.height>=44&&r.left>=0&&r.right<=innerWidth)};
+    });
+    assert(!sportsLayout.overflow&&sportsLayout.targets,JSON.stringify(sportsLayout));
+
     await page.locator('#sullyHome').click();
     await page.evaluate(()=>{scrollTo(0,document.documentElement.scrollHeight)});
     if(theme==='space')await page.screenshot({path:'navigation-'+width+'.png',fullPage:true});
