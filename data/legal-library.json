@@ -8255,6 +8255,29 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-01"
+    },
+    {
+      "id": "commons:162066442",
+      "title": "Torwali oral history by Dilaram Oral History episode-4",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Torwali_oral_history_by_Dilaram_Oral_History_episode-4.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Torwali_oral_history_by_Dilaram_Oral_History_episode-4.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Zubair Torwali",
+        "verifiedAt": "2026-11-01",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-01",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8282,6 +8305,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-10-31",
+  "lastDiscovery": "2026-11-01",
   "lastCurated": "2026-10-24"
 }
