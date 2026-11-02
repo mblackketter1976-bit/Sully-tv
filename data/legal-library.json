@@ -8302,6 +8302,29 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-02"
+    },
+    {
+      "id": "commons:190839300",
+      "title": "Popo Carnaval, les coulisses de l’héritage",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Popo_Carnaval%2C_les_coulisses_de_l%E2%80%99h%C3%A9ritage.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Popo_Carnaval%2C_les_coulisses_de_l%E2%80%99h%C3%A9ritage.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Ecran bleu",
+        "verifiedAt": "2026-11-02",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-02",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8329,6 +8352,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-01",
+  "lastDiscovery": "2026-11-02",
   "lastCurated": "2026-10-24"
 }
