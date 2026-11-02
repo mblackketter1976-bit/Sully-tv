@@ -8278,6 +8278,30 @@
       },
       "metadataChecked": "2026-11-01",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:181399423",
+      "title": "BADASS Instrument Testing at NASA’s Goddard Space Flight Center (SVS14944 BADASS InstrumentVacuumTest 4k ProRes)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "B-RollEmma Mirizio, primary instrument tester, and Albert Risco Patino, electrical engineer, prepare the CHIMPS instrument for a high-voltage vacuum test in the LEO2Lunar Laboratory at NASA’s Goddard Space Flight Center in Greenbelt, Maryland.Video Credit: NASA/Lacey Young",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/13/BADASS_Instrument_Testing_at_NASA%E2%80%99s_Goddard_Space_Flight_Center_%28SVS14944_BADASS_InstrumentVacuumTest_4k_ProRes%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:BADASS_Instrument_Testing_at_NASA%E2%80%99s_Goddard_Space_Flight_Center_(SVS14944_BADASS_InstrumentVacuumTest_4k_ProRes).webm",
+        "licenseUrl": "",
+        "attribution": "NASA's Scientific Visualization Studio - NASA/Lacey Young",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-02"
     }
   ],
   "itemSchema": {
