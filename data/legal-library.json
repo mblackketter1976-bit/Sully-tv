@@ -8325,6 +8325,30 @@
       },
       "metadataChecked": "2026-11-02",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:165970796",
+      "title": "Greater sandhill cranes on Seedskadee National Wildlife Refuge (25955750417)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Nature"
+      ],
+      "description": "Greater sandhill cranes nest in the developed wetland units and along the the 36 river miles of riparian and wetland habitats at Seedskadee NWR. Their haunting calls can be heard in early mornings as they establish a territory and build a nest. Once eggs are laid, they become silent and secretive. They do not want to draw a predators attention to the nest or the colts that will soon hatch. \nVideo: Tom Koerner/USFWS",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Greater_sandhill_cranes_on_Seedskadee_National_Wildlife_Refuge_%2825955750417%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Greater_sandhill_cranes_on_Seedskadee_National_Wildlife_Refuge_(25955750417).webm",
+        "licenseUrl": "",
+        "attribution": "USFWS Mountain Prairie",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-03"
     }
   ],
   "itemSchema": {
