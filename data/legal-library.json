@@ -8349,6 +8349,29 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-03"
+    },
+    {
+      "id": "commons:195404371",
+      "title": "Birds of Sulaibikhat Marine Nature Reserve 4",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Birds_of_Sulaibikhat_Marine_Nature_Reserve_4.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Birds_of_Sulaibikhat_Marine_Nature_Reserve_4.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Di7ane",
+        "verifiedAt": "2026-11-04",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-04",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8376,6 +8399,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-03",
+  "lastDiscovery": "2026-11-04",
   "lastCurated": "2026-10-24"
 }
