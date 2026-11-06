@@ -8396,6 +8396,75 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-05"
+    },
+    {
+      "id": "commons:195708491",
+      "title": "The Param Science Experience Centre, Jayanagar, Bengaluru (2026) 02",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_02.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_02.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Gpkp",
+        "verifiedAt": "2026-11-06",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-06",
+      "status": "pending-playback"
+    },
+    {
+      "id": "commons:195708497",
+      "title": "The Param Science Experience Centre, Jayanagar, Bengaluru (2026) 05",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_05.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Param_Science_Experience_Centre%2C_Jayanagar%2C_Bengaluru_%282026%29_05.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Gpkp",
+        "verifiedAt": "2026-11-06",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-06",
+      "status": "pending-playback"
+    },
+    {
+      "id": "commons:202780925",
+      "title": "Open Knowledge Maps, Bridging scientific knowledge gaps in Wikimedia projects – Lightning Talks — Wikimania 2018 in Cape Town, South Africa",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Open_Knowledge_Maps%2C_Bridging_scientific_knowledge_gaps_in_Wikimedia_projects_%E2%80%93_Lightning_Talks_%E2%80%94_Wikimania_2018_in_Cape_Town%2C_South_Africa.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Open_Knowledge_Maps%2C_Bridging_scientific_knowledge_gaps_in_Wikimedia_projects_%E2%80%93_Lightning_Talks_%E2%80%94_Wikimania_2018_in_Cape_Town%2C_South_Africa.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "User:Fuzheado through his YouTube channel",
+        "verifiedAt": "2026-11-06",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-06",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8423,6 +8492,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-05",
+  "lastDiscovery": "2026-11-06",
   "lastCurated": "2026-10-24"
 }
