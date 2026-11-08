@@ -8488,6 +8488,29 @@
       },
       "metadataChecked": "2026-11-07",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:121591130",
+      "title": "The audiovisual documentary of Belinge language by a native speaker",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/The_audiovisual_documentary_of_Belinge_language_by_a_native_speaker.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-sa-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_audiovisual_documentary_of_Belinge_language_by_a_native_speaker.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wikimedia Nigeria Foundation Inc",
+        "verifiedAt": "2026-11-08",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-08",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8515,6 +8538,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-07",
+  "lastDiscovery": "2026-11-08",
   "lastCurated": "2026-10-24"
 }
