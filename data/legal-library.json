@@ -8511,6 +8511,29 @@
       },
       "metadataChecked": "2026-11-08",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:175065588",
+      "title": "VID20250910124444 THE NATURE OF MAYURBHANJ ODISHA",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/VID20250910124444_THE_NATURE_OF_MAYURBHANJ_ODISHA.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:VID20250910124444_THE_NATURE_OF_MAYURBHANJ_ODISHA.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "087AM",
+        "verifiedAt": "2026-11-10",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-10",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -8538,6 +8561,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-09",
+  "lastDiscovery": "2026-11-10",
   "lastCurated": "2026-10-24"
 }
