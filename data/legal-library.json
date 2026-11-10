@@ -8534,6 +8534,443 @@
       },
       "metadataChecked": "2026-11-10",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:34148924",
+      "title": "Urmia lake drought",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "Lake Urmia drought (NASA images mixed using cross dissolve transition in adobe-premiere)",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Urmia_lake_drought.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Urmia_lake_drought.webm",
+        "licenseUrl": "",
+        "attribution": "Own work using NASA pictures",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:80496367",
+      "title": "Documentary clip of Viking 1 landing (JPL-19760720-VIKINGf-0002-AVC2002151)",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary"
+      ],
+      "description": "Viking 1, First Spacecraft on Mars",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Documentary_clip_of_Viking_1_landing_%28JPL-19760720-VIKINGf-0002-AVC2002151%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Documentary_clip_of_Viking_1_landing_(JPL-19760720-VIKINGf-0002-AVC2002151).webm",
+        "licenseUrl": "",
+        "attribution": "JPL/NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:121059209",
+      "title": "Approach and Landing Tests Film Documentary",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary"
+      ],
+      "description": "Documentary of shuttle Enterprise on the Shuttle Carrier Aircraft (SCA), separating from the SCA in flight, and in free-flight. Footage shows SCA pilots Fitzhugh “Fitz” Fulton and Tom McMurtry heading to the aircraft, and Gordon Fullerton and Fred Haise following a flight in the prototype shuttle. During the nearly one-year-long series of tests, Enterprise was taken aloft on the SCA to study the aerodynamics of the mated vehicles and, in a series",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Approach_and_Landing_Tests_Film_Documentary.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Approach_and_Landing_Tests_Film_Documentary.webm",
+        "licenseUrl": "",
+        "attribution": "NASA/AFRC",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:142991830",
+      "title": "Running in Space!",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "NASA astronaut Karen Nyberg, an Expedition 37 flight engineer aboard the International Space Station, demonstrates how astronauts run on the COLBERT treadmill in a weightless environment.  Station crew members exercise for at least two hours every day to keep fit and to prevent the loss of muscle mass and bone density that occurs during long-duration spaceflight.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Running_in_Space%21.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Running_in_Space%21.webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:147372127",
+      "title": "Space Station Live- Nutrition in Space",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "NASA Commentator Lori Meggs at the Marshall Space Flight Center speaks with Scott Smith, a nutritional biochemist at the Johnson Space Center, about his Nutrition study on the International Space Station and how the things we’ve learned relate to most everyone on Earth. Watch Space Station Live, weekdays at 11am eastern.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Space_Station_Live-_Nutrition_in_Space.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Space_Station_Live-_Nutrition_in_Space.webm",
+        "licenseUrl": "",
+        "attribution": "NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:147372237",
+      "title": "Space Station Live- Tracking How Astronauts Run in Space",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "Do we run differently in space than we do on Earth? The answer may surprise you. NASA Public Affairs Officer Lori Meggs talks with John DeWitt, principal investigator for the Treadmill Kinematics experiment aboard the International Space Station. Treadmill Kinematics is the first rigorous investigation to quantify the biomechanics of treadmill exercise conditions during long duration space flight on the station. Watch the full Space Station Live ",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Space_Station_Live-_Tracking_How_Astronauts_Run_in_Space.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Space_Station_Live-_Tracking_How_Astronauts_Run_in_Space.webm",
+        "licenseUrl": "",
+        "attribution": "NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:147372533",
+      "title": "Space Station Live- Designing an Exercise Program for Space",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "NASA Public Affairs Officer Amiko Kauderer conducts an interview with Mark Guilliams, Astronaut Strength, Conditioning and Rehabilitation Specialist. Guilliams worked with Hopkins to design an inflight exercise regimen during his mission on board the International Space Station. Hopkins preferred a more intense exercise program with less rest and multiple workouts and worked with Guilliams during preflight training. Watch a video showing Hopkins ",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Space_Station_Live-_Designing_an_Exercise_Program_for_Space.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Space_Station_Live-_Designing_an_Exercise_Program_for_Space.webm",
+        "licenseUrl": "",
+        "attribution": "NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:157594349",
+      "title": "Space Down to Earth (1970)",
+      "kind": "movie",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "Creator(s): National Aeronautics and Space Administration. 10/1/1958-  (Most Recent)\nSeries: Headquarters' Films Relating to Aeronautics, 1962 - 1981\nRecord Group 255: Records of the National Aeronautics and Space Administration, 1903 - 2006\nProduction Date: 1970\nScope & Content: This film shows the role of applications satellites in solving Earthbound problems. The film illustrates what such satellites were doing in 1970, and what can be expecte",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Space_Down_to_Earth_%281970%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Space_Down_to_Earth_(1970).webm",
+        "licenseUrl": "",
+        "attribution": "NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:158528838",
+      "title": "The Color of Space - A NASA Documentary Showcasing the Stories of Black Astronauts",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary",
+        "Space"
+      ],
+      "description": "The Color of Space captures the personal stories of seven current and former astronauts, each selected to become part of NASA's astronaut corps and train for space missions. Current NASA astronauts Stephanie Wilson, Victor Glover, Jeanette Epps, as well as retired astronauts Leland Melvin, Bernard Harris, Robert Curbeam, and Bobby Satcher, speak about their journeys and their motivations in a panel hosted by NASA Johnson Space Center Director Van",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/The_Color_of_Space_-_A_NASA_Documentary_Showcasing_the_Stories_of_Black_Astronauts.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Color_of_Space_-_A_NASA_Documentary_Showcasing_the_Stories_of_Black_Astronauts.webm",
+        "licenseUrl": "",
+        "attribution": "NASA",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:159317936",
+      "title": "Space for Women",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "This film contains interviews with women employed in the National Aeronautics and Space Administration's (NASA) space transportation program and shows the variety of positions held by women in the agency. The film, intended for use in career education and guidance classes, notes how the women obtained their training and qualified for their positions.\nDirected by William Greaves",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Space_for_Women.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Space_for_Women.webm",
+        "licenseUrl": "",
+        "attribution": "William Greaves",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:187134441",
+      "title": "NASA astronaut Jonny Kim discusses life in space with administrator of South Korea Space Agency - 9-25-2025 (iss073m262681114)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "NASA ASTRONAUT DISCUSSES LIFE IN SPACE WITH ADMINISTRATOR OF SOUTH KOREAN SPACE AGENCY - 9-25-2025",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/NASA_astronaut_Jonny_Kim_discusses_life_in_space_with_administrator_of_South_Korea_Space_Agency_-_9-25-2025_%28iss073m262681114%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:NASA_astronaut_Jonny_Kim_discusses_life_in_space_with_administrator_of_South_Korea_Space_Agency_-_9-25-2025_(iss073m262681114).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson Space Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:187781182",
+      "title": "How To Eat In Space (jsc2025m000036)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "During their mission around the Moon and back, the Artemis II crew will need to be nourished inside their Orion spacecraft. The food the four astronauts will eat will play a key role in maintaining their health and ensuring they can perform their mission objectives to the best of their abilities. Long before launch, teams at Johnson Space Center prepare so that the crew has everything they need to enjoy their “around-the-Moon-meals.” It starts wi",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/How_To_Eat_In_Space_%28jsc2025m000036%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:How_To_Eat_In_Space_(jsc2025m000036).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson Space Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:187795972",
+      "title": "How To Dress For Space (jsc2026m000045)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "Before the crew launches on the Artemis II mission to the Moon, they’ll suit up in a bright orange spacesuit called the Orion Crew Survival System (OCSS). This spacesuit, worn inside NASA’s Orion spacecraft, helps protect the astronauts on launch day, in emergency situations, throughout high-risk parts of missions near the Moon, and during the high-speed return to Earth. Managed by a team in the OCSS Lab at NASA’s Johnson Space Center in Houston,",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/How_To_Dress_For_Space_%28jsc2026m000045%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:How_To_Dress_For_Space_(jsc2026m000045).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson Space Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:187796202",
+      "title": "WSTF NASA Fire Department's mini documentary about the memorial they did for their fallen brothers during 911 (NASA FD In Memory largeform)",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary",
+        "Space"
+      ],
+      "description": "WSTF NASA Fire Department's mini documentary about the memorial they did for their fallen brothers during 911",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/WSTF_NASA_Fire_Department%27s_mini_documentary_about_the_memorial_they_did_for_their_fallen_brothers_during_911_%28NASA_FD_In_Memory_largeform%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:WSTF_NASA_Fire_Department%27s_mini_documentary_about_the_memorial_they_did_for_their_fallen_brothers_during_911_(NASA_FD_In_Memory_largeform).webm",
+        "licenseUrl": "",
+        "attribution": "NASA White Sands Test Facility",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:187810636",
+      "title": "NASA’s upcoming documentary, \"Planetary Defenders\", takes you inside the high-stakes world of asteroid hunting (NASA Trailer)",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary",
+        "Space"
+      ],
+      "description": "How would humanity respond if we discovered an asteroid headed for Earth? NASA’s upcoming documentary, \"Planetary Defenders,\" takes you inside the high-stakes world of asteroid hunting and planetary defense. Follow dedicated scientists and astronomers as they work to protect Earth from potential impacts. With stunning visuals and compelling stories, this gripping documentary reveals the human spirit behind the quest to safeguard our planet.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/NASA%E2%80%99s_upcoming_documentary%2C_%22Planetary_Defenders%22%2C_takes_you_inside_the_high-stakes_world_of_asteroid_hunting_%28NASA_Trailer%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:NASA%E2%80%99s_upcoming_documentary%2C_%22Planetary_Defenders%22%2C_takes_you_inside_the_high-stakes_world_of_asteroid_hunting_(NASA_Trailer).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Langley Research Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:188602241",
+      "title": "Artemis II and Space Station Expedition 74 Astronauts Call in Space (jsc2026m000083)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "The Artemis II crew of NASA astronauts Reid Wiseman, Victor Glover, and Christina Koch, and CSA (Canadian Space Agency) Jeremy Hansen spoke with Expedition 74 astronauts, Chris Williams, Jack Hathaway, and Jessica Meir of NASA, and Sophie Adenot of ESA (European Space Agency) on board the International Space Station. In the first-of-its-kind ship-to-ship call between astronauts on deep space and low Earth orbit missions, the station crew expresse",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Artemis_II_and_Space_Station_Expedition_74_Astronauts_Call_in_Space_%28jsc2026m000083%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Artemis_II_and_Space_Station_Expedition_74_Astronauts_Call_in_Space_(jsc2026m000083).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson Space Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:188810601",
+      "title": "Tour the ISS- 25 Years of Humans in Space (jsc2025m000041)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Science",
+        "Space"
+      ],
+      "description": "Tour the International Space Station with NASA astronauts Nicole Mann and Kjell Lindgren as they celebrate 25 years of continuous human presence in orbit. Explore what it’s like to live in microgravity, float through the station, and conduct science that benefits people on Earth and enables NASA’s missions to the Moon and Mars. Celebrate with us at https://www.nasa.gov/international-space-station/iss25/.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Tour_the_ISS-_25_Years_of_Humans_in_Space_%28jsc2025m000041%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Tour_the_ISS-_25_Years_of_Humans_in_Space_(jsc2025m000041).webm",
+        "licenseUrl": "",
+        "attribution": "NASA Johnson Space Center",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:196029419",
+      "title": "STS-51 IMAX footage part 1",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary",
+        "Space"
+      ],
+      "description": "\"Spectacular footage of Space Shuttle Discovery (STS-51) shot using an IMAX camera! It is part of the footage in a 1994 documentary titled Destiny in Space\"\nThis is part 1 containing the first 3 clips from the 1 min 55 second video available on Reddit, focusing on closeup shots of the Space Shuttle. The video was split into two parts to avoid any compilation copyright in the documentary film.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/STS-51_IMAX_footage_part_1.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:STS-51_IMAX_footage_part_1.webm",
+        "licenseUrl": "",
+        "attribution": "NASA / STS-51 crew",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-10"
     }
   ],
   "itemSchema": {
