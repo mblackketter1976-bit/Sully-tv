@@ -8971,6 +8971,30 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-10"
+    },
+    {
+      "id": "commons:203087389",
+      "title": "SCP- The Stairwell (SCP-087 Live Action Short Film)",
+      "kind": "short",
+      "year": "",
+      "genres": [
+        "Horror"
+      ],
+      "description": "Join this channel to get access to perks:\nhttps://www.youtube.com/channel/UC5di-P67lQouaT6XdkzsRHg/join\nSCP-087: The Stairwell – A Live-Action Short Film\nPrepare to descend into darkness with SCP-087: The Stairwell – A Live-Action Short Film, bringing one of the SCP Foundation’s most terrifying anomalies to life. This SCP-087 short film immerses viewers in the horrifying depths of the endless stairwell, where an unknown entity lurks in the shadow",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/SCP-_The_Stairwell_%28SCP-087_Live_Action_Short_Film%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:SCP-_The_Stairwell_(SCP-087_Live_Action_Short_Film).webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Paranormal Declassified",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-12"
     }
   ],
   "itemSchema": {
