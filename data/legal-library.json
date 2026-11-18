@@ -9018,6 +9018,54 @@
       },
       "metadataChecked": "2026-11-14",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:203395877",
+      "title": "A Documentary Record of Foreskin Restoration",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary",
+        "Science",
+        "History"
+      ],
+      "description": "This documentary presents a personal, visual record of an adult male's experience with foreskin restoration following circumcision during infancy in the early 1980s. Its purpose is to document the subject's anatomy, present-day skin coverage, restoration progress, physical characteristics, and the methods and equipment used throughout his restoration journey.\nRather than relying exclusively on written descriptions or isolated photographs, the doc",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/36/A_Documentary_Record_of_Foreskin_Restoration.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc0",
+        "source": "https://commons.wikimedia.org/wiki/File:A_Documentary_Record_of_Foreskin_Restoration.webm",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "NuManDavid",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-18"
+    },
+    {
+      "id": "commons:179676757",
+      "title": "A short film about 20 years of work and existence of Wikimedia Serbia",
+      "kind": "short",
+      "year": "",
+      "genres": [],
+      "description": "A short film about 20 years of work and existence of Wikimedia Serbia",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/A_short_film_about_20_years_of_work_and_existence_of_Wikimedia_Serbia.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:A_short_film_about_20_years_of_work_and_existence_of_Wikimedia_Serbia.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Milena Milenkovic (VMRS)",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-18"
     }
   ],
   "itemSchema": {
