@@ -9366,6 +9366,30 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-20"
+    },
+    {
+      "id": "commons:163471148",
+      "title": "IMAP Testing and Integration at NASA's Marshall Space Flight Center (SVS14816 IMAP TVACtesting Part1 1080 ProRes)",
+      "kind": "other",
+      "year": "",
+      "genres": [
+        "Space"
+      ],
+      "description": "B-Roll: 1080 - Part 1The IMAP spacecraft is unloaded from the transport vehicle and unboxed.Credit: NASA/Tyson Eason",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/IMAP_Testing_and_Integration_at_NASA%27s_Marshall_Space_Flight_Center_%28SVS14816_IMAP_TVACtesting_Part1_1080_ProRes%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:IMAP_Testing_and_Integration_at_NASA%27s_Marshall_Space_Flight_Center_(SVS14816_IMAP_TVACtesting_Part1_1080_ProRes).webm",
+        "licenseUrl": "",
+        "attribution": "NASA's Scientific Visualization Studio - eMITS/Lacey Young, Media Fusion/Tyson Eason",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-21"
     }
   ],
   "itemSchema": {
