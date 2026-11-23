@@ -9390,6 +9390,29 @@
       },
       "status": "pending-playback",
       "metadataChecked": "2026-11-21"
+    },
+    {
+      "id": "commons:191556858",
+      "title": "Disney Artist Teaches Animation - Create Smoother Animation",
+      "kind": "other",
+      "year": "",
+      "genres": [],
+      "description": "Openly licensed video from Wikimedia Commons",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Disney_Artist_Teaches_Animation_-_Create_Smoother_Animation.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "cc-by-3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Disney_Artist_Teaches_Animation_-_Create_Smoother_Animation.webm",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Pomeroy Art Academy",
+        "verifiedAt": "2026-11-23",
+        "notes": "Machine-readable Commons license; verify any third-party material before redistribution"
+      },
+      "metadataChecked": "2026-11-23",
+      "status": "pending-playback"
     }
   ],
   "itemSchema": {
@@ -9417,6 +9440,6 @@
     "lastChecked": "YYYY-MM-DD",
     "status": "verified|needs_recheck|unavailable"
   },
-  "lastDiscovery": "2026-11-22",
+  "lastDiscovery": "2026-11-23",
   "lastCurated": "2026-10-24"
 }
