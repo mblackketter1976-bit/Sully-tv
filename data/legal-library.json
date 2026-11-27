@@ -9459,6 +9459,30 @@
       },
       "metadataChecked": "2026-11-25",
       "status": "pending-playback"
+    },
+    {
+      "id": "commons:154230628",
+      "title": "Ingagi (1930 film)",
+      "kind": "documentary",
+      "year": "",
+      "genres": [
+        "Documentary"
+      ],
+      "description": "Ingagi, American pseudo-documentary exploitation film.",
+      "poster": "",
+      "playback": {
+        "type": "direct",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Ingagi_%281930_film%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      },
+      "rights": {
+        "basis": "public-domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Ingagi_(1930_film).webm",
+        "licenseUrl": "",
+        "attribution": "Congo Pictures",
+        "notes": "License metadata from Wikimedia Commons; review third-party rights for redistribution"
+      },
+      "status": "pending-playback",
+      "metadataChecked": "2026-11-27"
     }
   ],
   "itemSchema": {
